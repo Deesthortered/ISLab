@@ -1,0 +1,26 @@
+/// Минизаметки/черновик/копипастабуфер или называйтекакхотите)
+
+// Эти запросы нужны для создания нового пользователя в базе данных, ибо через SQL Developer создается юзер, через которого невозможно залогинится.
+SHOW PARAMETER SEC_CASE_SENSITIVE_LOGON
+ALTER SYSTEM SET SEC_CASE_SENSITIVE_LOGON = FALSE;
+CREATE USER user_name IDENTIFIED BY new_password;
+
+* Название таблиц/атрибутов нужно пихать в скобки [], что бы они точно не конфликтовали с зарезервироваными словами.
+* Никаких ТОЧЕК С ЗАПЯТОЙ в запросах!!! нихуя не будет работать
+* В PreparedStatement нельзя в качетсве параметра писать имя таблицы
+
+// Создать таблицу в базе данных (к которой мы подключены) + пример
+// Это скопипастеный пример с инета - на Оракле не работает, ибо у него нет AUTO_INCREMENT и я не проверял на IF NOT EXIST
+CREATE TABLE name (field_name1 type1 PARAMETERS1, ...);
+// фишка с "IF NOT EXIST" в оракле не работает(
+CREATE TABLE IF NOT EXIST Books (id MEDIUMINT NOT NULL AUTO_INCREMENT, name CHAR(20) NOT NULL, PRIMARY KEY (id));
+
+// Вставить в бд запись
+INSERT INTO [TableName] ([Attribute1], [Attribute2], ...) VALUES (value1, value2, ...);
+
+// Обновить запись
+
+// Запрос с условие с маской
+SELECT *
+FROM People
+WHERE Surname Like "Грозн%"; //Грозный/Грозная/Грозное и тд.
