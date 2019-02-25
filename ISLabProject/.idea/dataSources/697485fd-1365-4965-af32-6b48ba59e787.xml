@@ -1115,322 +1115,346 @@
     <table id="283" parent="3" name="importsummary"/>
     <table id="284" parent="3" name="provider"/>
     <table id="285" parent="3" name="storage"/>
-    <column id="286" parent="278" name="Customer_ID">
+    <table id="286" parent="3" name="systemusers"/>
+    <column id="287" parent="278" name="Customer_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="278" name="Customer_Name">
+    <column id="288" parent="278" name="Customer_Name">
       <Position>2</Position>
       <DataType>char(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="288" parent="278" name="PRIMARY">
+    <key id="289" parent="278" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Customer_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="289" parent="279" name="Export_ID">
+    <column id="290" parent="279" name="Export_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="290" parent="279" name="Customer_ID">
+    <column id="291" parent="279" name="Customer_ID">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="291" parent="279" name="Storage_ID">
+    <column id="292" parent="279" name="Storage_ID">
       <Position>3</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="292" parent="279" name="Goods_ID">
+    <column id="293" parent="279" name="Goods_ID">
       <Position>4</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="293" parent="279" name="Export_Date">
+    <column id="294" parent="279" name="Export_Date">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="294" parent="279" name="Price">
+    <column id="295" parent="279" name="Price">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="295" parent="279" name="Customer_ID">
+    <index id="296" parent="279" name="Customer_ID">
       <ColNames>Customer_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="296" parent="279" name="Storage_ID">
+    <index id="297" parent="279" name="Storage_ID">
       <ColNames>Storage_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="297" parent="279" name="Goods_ID">
+    <index id="298" parent="279" name="Goods_ID">
       <ColNames>Goods_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="298" parent="279" name="PRIMARY">
+    <key id="299" parent="279" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Export_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="299" parent="279" name="export_ibfk_1">
+    <foreign-key id="300" parent="279" name="export_ibfk_1">
       <ColNames>Customer_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>customer</RefTableName>
       <RefColNames>Customer_ID</RefColNames>
     </foreign-key>
-    <foreign-key id="300" parent="279" name="export_ibfk_2">
+    <foreign-key id="301" parent="279" name="export_ibfk_2">
       <ColNames>Storage_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>storage</RefTableName>
       <RefColNames>Storage_ID</RefColNames>
     </foreign-key>
-    <foreign-key id="301" parent="279" name="export_ibfk_3">
+    <foreign-key id="302" parent="279" name="export_ibfk_3">
       <ColNames>Goods_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>goods</RefTableName>
       <RefColNames>Goods_ID</RefColNames>
     </foreign-key>
-    <column id="302" parent="280" name="Summary_ID">
+    <column id="303" parent="280" name="Summary_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="280" name="StartDate">
+    <column id="304" parent="280" name="StartDate">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="280" name="EndDate">
+    <column id="305" parent="280" name="EndDate">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="280" name="ExportAmount">
+    <column id="306" parent="280" name="ExportAmount">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="280" name="SummaryPrice">
+    <column id="307" parent="280" name="SummaryPrice">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="280" name="MaxPrice">
+    <column id="308" parent="280" name="MaxPrice">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="280" name="MinPrice">
+    <column id="309" parent="280" name="MinPrice">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="309" parent="280" name="PRIMARY">
+    <key id="310" parent="280" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Summary_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="310" parent="281" name="Goods_ID">
+    <column id="311" parent="281" name="Goods_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="281" name="Goods_Name">
+    <column id="312" parent="281" name="Goods_Name">
       <Position>2</Position>
       <DataType>char(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="281" name="Goods_Average_Price">
+    <column id="313" parent="281" name="Goods_Average_Price">
       <Position>3</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="313" parent="281" name="PRIMARY">
+    <key id="314" parent="281" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Goods_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="314" parent="282" name="Import_ID">
+    <column id="315" parent="282" name="Import_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="282" name="Provider_ID">
+    <column id="316" parent="282" name="Provider_ID">
       <Position>2</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="316" parent="282" name="Storage_ID">
+    <column id="317" parent="282" name="Storage_ID">
       <Position>3</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="282" name="Goods_ID">
+    <column id="318" parent="282" name="Goods_ID">
       <Position>4</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="282" name="Import_Date">
+    <column id="319" parent="282" name="Import_Date">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="319" parent="282" name="Price">
+    <column id="320" parent="282" name="Price">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="320" parent="282" name="Provider_ID">
+    <index id="321" parent="282" name="Provider_ID">
       <ColNames>Provider_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="321" parent="282" name="Storage_ID">
+    <index id="322" parent="282" name="Storage_ID">
       <ColNames>Storage_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="322" parent="282" name="Goods_ID">
+    <index id="323" parent="282" name="Goods_ID">
       <ColNames>Goods_ID</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="323" parent="282" name="PRIMARY">
+    <key id="324" parent="282" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Import_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="324" parent="282" name="import_ibfk_1">
+    <foreign-key id="325" parent="282" name="import_ibfk_1">
       <ColNames>Provider_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>provider</RefTableName>
       <RefColNames>Provider_ID</RefColNames>
     </foreign-key>
-    <foreign-key id="325" parent="282" name="import_ibfk_2">
+    <foreign-key id="326" parent="282" name="import_ibfk_2">
       <ColNames>Storage_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>storage</RefTableName>
       <RefColNames>Storage_ID</RefColNames>
     </foreign-key>
-    <foreign-key id="326" parent="282" name="import_ibfk_3">
+    <foreign-key id="327" parent="282" name="import_ibfk_3">
       <ColNames>Goods_ID</ColNames>
       <RefSchemaName>islabdb</RefSchemaName>
       <RefTableName>goods</RefTableName>
       <RefColNames>Goods_ID</RefColNames>
     </foreign-key>
-    <column id="327" parent="283" name="Summary_ID">
+    <column id="328" parent="283" name="Summary_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="283" name="StartDate">
+    <column id="329" parent="283" name="StartDate">
       <Position>2</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="283" name="EndDate">
+    <column id="330" parent="283" name="EndDate">
       <Position>3</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="283" name="ImportsAmount">
+    <column id="331" parent="283" name="ImportsAmount">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="283" name="SummaryPrice">
+    <column id="332" parent="283" name="SummaryPrice">
       <Position>5</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="332" parent="283" name="MaxPrice">
+    <column id="333" parent="283" name="MaxPrice">
       <Position>6</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="283" name="MinPrice">
+    <column id="334" parent="283" name="MinPrice">
       <Position>7</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="334" parent="283" name="PRIMARY">
+    <key id="335" parent="283" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Summary_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="335" parent="284" name="Provider_ID">
+    <column id="336" parent="284" name="Provider_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="284" name="Provider_Name">
+    <column id="337" parent="284" name="Provider_Name">
       <Position>2</Position>
       <DataType>char(30)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="337" parent="284" name="PRIMARY">
+    <key id="338" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Provider_ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="338" parent="285" name="Storage_ID">
+    <column id="339" parent="285" name="Storage_ID">
       <Position>1</Position>
       <DataType>bigint(20)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="339" parent="285" name="Storage_Number">
+    <column id="340" parent="285" name="Storage_Number">
       <Position>2</Position>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="340" parent="285" name="PRIMARY">
+    <key id="341" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Storage_ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="342" parent="286" name="user_login">
+      <Position>1</Position>
+      <DataType>char(30)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="343" parent="286" name="user_password">
+      <Position>2</Position>
+      <DataType>char(30)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="344" parent="286" name="user_role">
+      <Position>3</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="345" parent="286" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>user_login</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>
