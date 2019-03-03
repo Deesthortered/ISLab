@@ -1,10 +1,11 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>*! Little Storage !* Login Page</title>
-    <link href="../css/login_page.css" rel="stylesheet">
-    <script src="../js/login_page.js"></script>
+
+    <style><%@include file="../css/login_page.css"%></style>
+    <script><%@include file="../js/login_page.js"%></script>
 </head>
 <body>
     <h1>Welcome to the System!</h1>

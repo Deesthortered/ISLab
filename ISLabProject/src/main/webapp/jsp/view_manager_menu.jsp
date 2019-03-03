@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="../css/view_manager_menu.css" rel="stylesheet">
-    <script src="../js/view_manager_menu.js"></script>
+
+    <style><%@include file="../css/view_manager_menu.css"%></style>
+    <script><%@include file="../js/view_manager_menu.js"%></script>
 
     <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
     <meta http-equiv="cache-control" content="max-age=0" />

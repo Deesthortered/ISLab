@@ -16,14 +16,16 @@ public class Common {
     public static String url_login;
     public static String url_menu;
 
+    public static String par_logout = "logout";
+
     public static String atr_logged = "logged";
     public static String atr_role   = "role";
 
-    public static String html_login                 = "/html/login_page.html";
-    public static String html_menu_admin            = "/html/admin_menu.html";
-    public static String html_menu_view_manager     = "/html/view_manager_menu.html";
-    public static String html_menu_import_manager   = "/html/import_manager_menu.html";
-    public static String html_menu_export_manager   = "/html/export_manager_menu.html";
+    public static String jsp_login               = "/jsp/login_page.jsp";
+    public static String jsp_menu_admin          = "/jsp/admin_menu.jsp";
+    public static String jsp_menu_view_manager   = "/jsp/view_manager_menu.jsp";
+    public static String jsp_menu_import_manager = "/jsp/import_manager_menu.jsp";
+    public static String jsp_menu_export_manager = "/jsp/export_manager_menu.jsp";
 
     public static int session_max_age = 60;
     public static int cookies_max_age = 60*60*24;

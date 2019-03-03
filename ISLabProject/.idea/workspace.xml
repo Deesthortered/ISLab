@@ -7,42 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/697485fd-1365-4965-af32-6b48ba59e787.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/697485fd-1365-4965-af32-6b48ba59e787.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/webapp/jsp/admin_menu.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Export.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/ExportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/ExportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/Goods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Import.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/ImportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/ImportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Provider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/Provider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/admin_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/admin_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/make_users.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/Export.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/Import.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/create_tables.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/fill_export.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/fill_goods.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/fill_imports.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/fill_providers_n_customers.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/sql-queries prepare/fill_storages.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../db/схема.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utility_package/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility_package/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/admin_menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/admin_menu.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/admin_menu.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/export_manager_menu.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/import_manager_menu.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/login_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/view_manager_menu.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/admin_menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/admin_menu.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -101,6 +77,7 @@
         <option value="JavaScript File" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Jsp File" />
       </list>
     </option>
   </component>
@@ -110,28 +87,13 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/main_package/MainServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/DataAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/java/database_package/DataAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/java/database_package/Database.java" />
-        <option value="$PROJECT_DIR$/src/main/java/data_model/Export.java" />
-        <option value="$PROJECT_DIR$/src/main/java/data_model/Import.java" />
-        <option value="$PROJECT_DIR$/src/test/java/main_package/MainServletTest.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/login_page.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/login_page.css" />
-        <option value="$PROJECT_DIR$/src/main/java/data_model/SystemUsers.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/AutorizationServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/web.xml" />
         <option value="$PROJECT_DIR$/src/main/index.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/export_manager_menu.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/import_manager_menu.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/view_manager_menu.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/admin_menu.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/export_manager_menu.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/import_manager_menu.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/view_manager_menu.css" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/admin_menu.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/login_page.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/login_page.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
@@ -140,9 +102,6 @@
         <option value="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" />
         <option value="$PROJECT_DIR$/src/main/java/data_model/UserRole.java" />
         <option value="$PROJECT_DIR$/src/main/java/utility_package/CommonData.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/html/admin_menu.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.html" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.html" />
@@ -161,6 +120,24 @@
         <option value="$PROJECT_DIR$/src/main/java/data_model/ImportGoods.java" />
         <option value="$PROJECT_DIR$/src/main/java/data_model/ImportMoveDocument.java" />
         <option value="$PROJECT_DIR$/src/main/java/data_model/ExportMoveDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/admin_menu.css" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/admin_menu.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/admin_menu.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/admin_menu.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/asd.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/admin_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/login_page.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/admin_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/view_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/import_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/jsp/export_manager_menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
       </list>
     </option>
   </component>
@@ -200,6 +177,12 @@
             <path>
               <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="build" type="462c0819:PsiDirectoryNode" />
+              <item name="libs" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -214,30 +197,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="data_model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="main_package" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="utility_package" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
@@ -245,6 +204,30 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="jsp" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -263,7 +246,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551613790418" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1551643915191" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
     <property name="database.console.LAST_STATE" value="false" />
@@ -272,9 +255,11 @@
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.32528734" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
@@ -284,8 +269,9 @@
       <recent name="" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp\WEB_INF" />
       <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp\html" />
+      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp" />
+      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp\WEB_INF" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -321,6 +307,7 @@
       <method v="2" />
     </configuration>
     <configuration name="Tomcat 9.0.16" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.16" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
       <option name="UPDATING_POLICY" value="redeploy-artifacts" />
       <deployment>
         <artifact name="Gradle : ISLabProjectGroup : ISLabProject-1.0-SNAPSHOT.war">
@@ -435,6 +422,7 @@
       <workItem from="1551383200826" duration="598000" />
       <workItem from="1551512697720" duration="17774000" />
       <workItem from="1551563564822" duration="3969000" />
+      <workItem from="1551613933563" duration="17879000" />
     </task>
     <servers />
   </component>
@@ -444,7 +432,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="80789000" />
+    <option name="totallyTimeSpent" value="98668000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -458,7 +446,7 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.22416107" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.22751679" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -540,20 +528,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/Filterwew.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/Servlet232.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/index.html" />
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/AdminMenuServlet.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/ViewManagerMenuServlet.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/ExportManagerMenuServlet.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/ImportManagerMenuServlet.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/export_manager_menu.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/import_manager_menu.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -562,16 +540,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/view_manager_menu.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/login_page.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/admin_menu.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
@@ -588,9 +556,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/export_manager_menu.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/admin_menu.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="jar://$PROJECT_DIR$/mysql-connector-java-5.1.47.jar!/org/gjt/mm/mysql/Driver.class" />
@@ -625,13 +590,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -652,44 +610,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/UserRole.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-          <folding>
-            <element signature="method#toString#0;class#UserRole#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/admin_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="6" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/export_manager_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/import_manager_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/view_manager_menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -698,36 +618,6 @@
             <element signature="method#init#0;class#SessionFilter#0" />
             <element signature="method#destroy#0;class#SessionFilter#0" />
             <element signature="method#doFilter#0;class#SessionFilter#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/login_page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="7" lean-forward="true" selection-end-line="20" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Common.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="27" column="43" lean-forward="true" selection-start-line="27" selection-start-column="43" selection-end-line="27" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Initialize#0;class#CommonData#0" />
-            <element signature="method#readCookie#0;class#CommonData#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="40" lean-forward="true" selection-start-line="24" selection-start-column="40" selection-end-line="24" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
           </folding>
         </state>
       </provider>
@@ -851,6 +741,128 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="37" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/UserRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+          <folding>
+            <element signature="method#toString#0;class#UserRole#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="16681" column="52" selection-start-line="16681" selection-start-column="38" selection-end-line="16681" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="121" selection-start-line="14" selection-start-column="121" selection-end-line="14" selection-end-column="121" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/export_manager_menu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="1" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/login_page.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/asd.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" selection-start-line="7" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/admin_menu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/admin_menu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/admin_menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/import_manager_menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/export_manager_menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/view_manager_menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Common.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="22" lean-forward="true" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Initialize#0;class#Common#0" />
+            <element signature="method#readCookie#0;class#Common#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
   </component>
   <component name="masterDetails">
     <states>
@@ -909,7 +921,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.3494253" />
+                <option value="0.32528734" />
                 <option value="0.6" />
               </list>
             </option>
