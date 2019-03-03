@@ -1,13 +1,13 @@
 package main_package;
 
+import utility_package.Common;
+import utility_package.UserRole;
 import database_package.DAOSystemUser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -21,12 +21,64 @@ public class AuthorizationServlet extends HttpServlet {
         DAOSystemUser dao = DAOSystemUser.getInstance();
         boolean is_ok = dao.ConfirmateAuthorizaion(login, password);
 
-        PrintWriter writer = response.getWriter();
-        writer.println(is_ok ? "ok" : "bad");
+        if (is_ok) {
+            int role = dao.getUserRole(login);
+
+            HttpSession session = request.getSession();
+            session.setAttribute(Common.atr_logged, Common.str_true);
+
+            Cookie auth_cookie = new Cookie(Common.atr_logged, Common.str_true);
+            Cookie role_cookie = null;
+
+            session.setMaxInactiveInterval(Common.session_max_age);
+            auth_cookie.setMaxAge(Common.cookies_max_age);
+
+            switch (role) {
+                case 0: {   // Admin
+                    session.setAttribute(Common.atr_role, UserRole.Admin.toString());
+                    role_cookie = new Cookie(Common.atr_role, UserRole.Admin.toString());
+                } break;
+                case 1: {   // View Manager
+                    session.setAttribute(Common.atr_role, UserRole.ViewManager.toString());
+                    role_cookie = new Cookie(Common.atr_role, UserRole.ViewManager.toString());
+                } break;
+                case 2: {   // Import Manager
+                    session.setAttribute(Common.atr_role, UserRole.ImportManager.toString());
+                    role_cookie = new Cookie(Common.atr_role, UserRole.ImportManager.toString());
+                } break;
+                case 3: {   // Export Manager
+                    session.setAttribute(Common.atr_role, UserRole.ExportManager.toString());
+                    role_cookie = new Cookie(Common.atr_role, UserRole.ExportManager.toString());
+                } break;
+                default:
+                    PrintWriter writer = response.getWriter();
+                    writer.println("ERROR");
+            }
+            role_cookie.setMaxAge(Common.cookies_max_age);
+            if (stay_in_system_flag) {
+                response.addCookie(auth_cookie);
+                response.addCookie(role_cookie);
+            }
+
+            response.sendRedirect(Common.url_menu);
+        } else {
+            PrintWriter writer = response.getWriter();
+            writer.println("ERROR");
+        }
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher view = request.getRequestDispatcher("/html/login_page.html");
-        view.forward(request, response);
+        HttpSession session = request.getSession();
+        String logged = (String) session.getAttribute(Common.atr_logged);
+
+        if (logged == null || logged.equals(Common.str_false)) {
+            session.setAttribute(Common.atr_logged, Common.str_false);
+            RequestDispatcher view = request.getRequestDispatcher(Common.html_login);
+            view.forward(request, response);
+        } else {
+            PrintWriter writer = response.getWriter();
+            writer.println("ERROR");
+        }
     }
 }

@@ -2,10 +2,14 @@ package data_model;
 
 public class Storage {
     private long   id;
-    private String number;
+    private String name;
+    private String description;
 
-    public Storage(long id, String number) {
+    public Storage(long id, String name, String description) {
         this.id = id;
-        this.number = number;
+        this.name = name;
+        if (description == null || description.equals(""))
+            this.description = null;
+        else this.description = description;
     }
 }
