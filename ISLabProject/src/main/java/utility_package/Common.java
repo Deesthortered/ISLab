@@ -21,13 +21,10 @@ public class Common {
     public static String atr_logged = "logged";
     public static String atr_role   = "role";
 
-    public static String jsp_login               = "/jsp/login_page.jsp";
-    public static String jsp_menu_admin          = "/jsp/admin_menu.jsp";
-    public static String jsp_menu_view_manager   = "/jsp/view_manager_menu.jsp";
-    public static String jsp_menu_import_manager = "/jsp/import_manager_menu.jsp";
-    public static String jsp_menu_export_manager = "/jsp/export_manager_menu.jsp";
+    public static String jsp_login = "/jsp/login_page.jsp";
+    public static String jsp_menu  = "/jsp/menu.jsp";
 
-    public static int session_max_age = 60;
+    public static int session_max_age = 60*60;
     public static int cookies_max_age = 60*60*24;
 
     public static boolean isInitialized() {
