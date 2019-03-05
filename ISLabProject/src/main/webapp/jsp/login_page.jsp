@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>*! Little Storage !* Login Page</title>
 
     <style><%@include file="../css/login_page.css"%></style>
-    <script><%@include file="../js/login_page.js"%></script>
+
 </head>
 <body>
     <h1>Welcome to the System!</h1>
@@ -18,5 +18,7 @@
         <p><input type="checkbox" name="save_session"> Stay in system</p>
         <p><input type="submit"></p>
     </form>
+
+    <script><%@include file="../js/login_page.js"%></script>
 </body>
 </html>

@@ -78,9 +78,11 @@ CREATE TABLE `ExportMoveDocument` (
 );
 
 CREATE TABLE `AvailableGoods` (
+	`Available_ID` bigint NOT NULL,
 	`Available_GoodsID` bigint NOT NULL,
 	`Available_ProviderID` bigint NOT NULL,
-	`Available_StorageID` bigint NOT NULL
+	`Available_StorageID` bigint NOT NULL,
+	PRIMARY KEY (`Available_ID`)
 );
 
 CREATE TABLE `ImportSummary` (

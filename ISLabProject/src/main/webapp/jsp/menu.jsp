@@ -22,63 +22,13 @@
             <div id="username_field" class="logout_corner"></div>
         </header>
         <div class="content">
-
             <div class="menu">
                 <nav class="dws-menu">
-                    <ul>
-                        <li><a href="#">Start Page</a></li>
-                        <li><a href="#provider">Provider</a>
-                            <ul>
-                                <li><a href="#provider_list">List of Providers (10 by step)</a></li>
-                                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
-                                <li><a href="#provider_add">Add new Provider</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#customer">Customer</a>
-                            <ul>
-                                <li><a href="#customer_list">List of Customers (10 by step)</a></li>
-                                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
-                                <li><a href="#customer_add">Add new Customer</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#goods">Goods</a>
-                            <ul>
-                                <li><a href="#goods_list">List of Goods (10 by step)</a></li>
-                                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
-                                <li><a href="#goods_add">Add new Goods</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#storage">Storage</a>
-                            <ul>
-                                <li><a href="#storage_available">Show available goods</a></li>
-                                <li><a href="#storage_info">Show storage info</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#imports">Imports</a>
-                            <ul>
-                                <li><a href="#import_action">Import goods</a></li>
-                                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#exports">Exports</a>
-                            <ul>
-                                <li><a href="#export_action">Export goods</a></li>
-                                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#reports">Reports</a>
-                            <ul>
-                                <li><a href="#report_last">Show last report</a></li>
-                                <li><a href="#report_list">Show reports list (10 by step)</a></li>
-                                <li><a href="#report_make">Make report</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#system">System</a></li>
-                    </ul>
+                    <ul id="menu_ul" ></ul>
                 </nav>
             </div>
 
-            <div class="dynamic_panel"></div>
+            <div id="dynamic_panel" class="dynamic_panel"></div>
 
         </div>
         <footer></footer>
@@ -90,8 +40,175 @@
         <button class="logout" onclick="Logout()">Logout</button>
     </script>
 
+    <script id="admin_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers (10 by step)</a></li>
+                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
+                <li><a href="#provider_add">Add new Provider</a></li>
+            </ul>
+        </li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers (10 by step)</a></li>
+                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
+                <li><a href="#customer_add">Add new Customer</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods (10 by step)</a></li>
+                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
+                <li><a href="#goods_add">Add new Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_action">Import goods</a></li>
+                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_action">Export goods</a></li>
+                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_last">Show last report</a></li>
+                <li><a href="#report_list">Show reports list (10 by step)</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+        <li><a href="#system">System</a></li>
+
+    </script>
+    <script id="view_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers (10 by step)</a></li>
+                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers (10 by step)</a></li>
+                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods (10 by step)</a></li>
+                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_last">Show last report</a></li>
+                <li><a href="#report_list">Show reports list (10 by step)</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+    <script id="import_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers (10 by step)</a></li>
+                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
+                <li><a href="#provider_add">Add new Provider</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods (10 by step)</a></li>
+                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
+                <li><a href="#goods_add">Add new Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_action">Import goods</a></li>
+                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_last">Show last report</a></li>
+                <li><a href="#report_list">Show reports list (10 by step)</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+    <script id="export_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers (10 by step)</a></li>
+                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
+                <li><a href="#customer_add">Add new Customer</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods (10 by step)</a></li>
+                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
+                <li><a href="#goods_add">Add new Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_action">Export goods</a></li>
+                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_last">Show last report</a></li>
+                <li><a href="#report_list">Show reports list (10 by step)</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+
     <script><%@include file="../js/menu.js"%></script>
     <!--  -->
-
 </body>
 </html>
