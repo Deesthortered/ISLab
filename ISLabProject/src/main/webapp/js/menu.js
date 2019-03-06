@@ -36,7 +36,7 @@ class Router {
 
             case '#reports'           : { InterfaceHandler.Reports();          } break;
             case '#report_last'       : { InterfaceHandler.ReportLast();       } break;
-            case '#report_list'       : { InterfaceHandler.ReportLsst();       } break;
+            case '#report_list'       : { InterfaceHandler.ReportList();       } break;
             case '#report_make'       : { InterfaceHandler.ReportMake();       } break;
 
             case '#system'            : { InterfaceHandler.System();           } break;
@@ -54,6 +54,32 @@ class TemplateHandler {
     }
 }
 class InterfaceHandler {
+    static role;
+    static DefineUser() {
+        document.location.hash = '';
+        InterfaceHandler.role = '${role}';
+
+        const username_field = document.getElementById('username_field');
+        username_field.innerHTML = TemplateHandler.Render('username_template', { username: InterfaceHandler.role});
+
+        let menu_startpage = document.getElementById('menu_ul');
+        switch (InterfaceHandler.role) {
+            case 'Admin': {
+                menu_startpage.innerHTML = TemplateHandler.Render('admin_menu_template')
+            } break;
+            case 'ViewManager': {
+                menu_startpage.innerHTML = TemplateHandler.Render('view_menu_template')
+            } break;
+            case 'ImportManager': {
+                menu_startpage.innerHTML = TemplateHandler.Render('import_menu_template')
+            } break;
+            case 'ExportManager': {
+                menu_startpage.innerHTML = TemplateHandler.Render('export_menu_template')
+            } break;
+            default: alert("Unknown role");
+        }
+    }
+
     static StartPage() {
 
     }
@@ -133,7 +159,7 @@ class InterfaceHandler {
     static ReportLast() {
 
     }
-    static ReportLsst() {
+    static ReportList() {
 
     }
     static ReportMake() {
@@ -145,30 +171,6 @@ class InterfaceHandler {
     }
 }
 
-function DefineUser() {
-    document.location.hash = '';
-    let role = '${role}';
-
-    const username_field = document.getElementById('username_field');
-    username_field.innerHTML = TemplateHandler.Render('username_template', { username: role});
-
-    let menu_startpage = document.getElementById('menu_ul');
-    switch (role) {
-        case 'Admin': {
-            menu_startpage.innerHTML = TemplateHandler.Render('admin_menu_template')
-        } break;
-        case 'ViewManager': {
-            menu_startpage.innerHTML = TemplateHandler.Render('view_menu_template')
-        } break;
-        case 'ImportManager': {
-            menu_startpage.innerHTML = TemplateHandler.Render('import_menu_template')
-        } break;
-        case 'ExportManager': {
-            menu_startpage.innerHTML = TemplateHandler.Render('export_menu_template')
-        } break;
-        default: alert("Unknown role");
-    }
-}
 function Logout() {
     document.location.hash = '';
     let Http = new XMLHttpRequest();
@@ -181,7 +183,7 @@ function Logout() {
 }
 
 (async () => {
-    DefineUser();
+    InterfaceHandler.DefineUser();
     Router.initialize();
 })();
 

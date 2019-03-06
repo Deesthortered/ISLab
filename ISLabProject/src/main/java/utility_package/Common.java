@@ -20,6 +20,7 @@ public class Common {
 
     public static String atr_logged = "logged";
     public static String atr_role   = "role";
+    public static String art_invalid_credentials = "invalid_credentials";
 
     public static String jsp_login = "/jsp/login_page.jsp";
     public static String jsp_menu  = "/jsp/menu.jsp";

@@ -208,6 +208,44 @@
         </li>
     </script>
 
+    <script id="startpage_template" type="text/template">
+
+    </script>
+
+    <script id="provider_template" type="text/template"> </script>
+    <script id="provider_list_template" type="text/template"> </script>
+    <script id="provider_find_template" type="text/template"> </script>
+    <script id="provider_add_template" type="text/template"> </script>
+
+    <script id="customer_template" type="text/template"> </script>
+    <script id="customer_list_template" type="text/template"> </script>
+    <script id="customer_find_template" type="text/template"> </script>
+    <script id="customer_add_template" type="text/template"> </script>
+
+    <script id="goods_template" type="text/template"> </script>
+    <script id="goods_list_template" type="text/template"> </script>
+    <script id="goods_find_template" type="text/template"> </script>
+    <script id="goods_add_template" type="text/template"> </script>
+
+    <script id="storage_template" type="text/template"> </script>
+    <script id="storage_available_template" type="text/template"> </script>
+    <script id="storage_info_template" type="text/template"> </script>
+
+    <script id="imports_template" type="text/template"> </script>
+    <script id="import_action_template" type="text/template"> </script>
+    <script id="import_find_template" type="text/template"> </script>
+
+    <script id="exports_template" type="text/template"> </script>
+    <script id="export_action_template" type="text/template"> </script>
+    <script id="export_find_template" type="text/template"> </script>
+
+    <script id="reports_template" type="text/template"> </script>
+    <script id="report_last_template" type="text/template"> </script>
+    <script id="report_list_template" type="text/template"> </script>
+    <script id="report_make_template" type="text/template"> </script>
+
+    <script id="system_template" type="text/template"> </script>
+
     <script><%@include file="../js/menu.js"%></script>
     <!--  -->
 </body>

@@ -22,6 +22,7 @@ public class AuthorizationServlet extends HttpServlet {
         boolean is_ok = dao.ConfirmateAuthorizaion(login, password);
 
         if (is_ok) {
+            request.removeAttribute(Common.art_invalid_credentials);
             int role = dao.getUserRole(login);
 
             HttpSession session = request.getSession();
@@ -62,13 +63,14 @@ public class AuthorizationServlet extends HttpServlet {
 
             response.sendRedirect(Common.url_menu);
         } else {
-            PrintWriter writer = response.getWriter();
-            writer.println("ERROR");
+            request.setAttribute(Common.art_invalid_credentials, Common.str_true);
+            request.getRequestDispatcher(Common.jsp_login).forward(request, response);
         }
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.removeAttribute(Common.art_invalid_credentials);
         HttpSession session = request.getSession();
         String logged = (String) session.getAttribute(Common.atr_logged);
 
