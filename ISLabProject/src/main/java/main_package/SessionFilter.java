@@ -54,16 +54,10 @@ public class SessionFilter implements Filter {
 
             if (url_current.equals(Common.url_login) || url_current.equals(Common.url_basic))
                 response.sendRedirect(Common.url_menu);
-            else if (url_current.substring(0, Common.url_menu.length()).equals(Common.url_menu))
-                chain.doFilter(req, resp);
-            else {
-                PrintWriter writer = response.getWriter();
-                writer.println("ERROR");
-            }
-
+            else chain.doFilter(req, resp);
         } else {
             PrintWriter writer = response.getWriter();
-            writer.println("ERROR");
+            writer.println("ERROR 66");
         }
     }
 }

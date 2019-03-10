@@ -2,18 +2,25 @@ package main_package;
 
 import utility_package.Common;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
 
-        System.out.println("OK");
+        String title = reader.readLine();
+        if (title.equals("get_role")) {
+            writer.print(request.getSession().getAttribute("role"));
+        } else {
+            writer.println("ERROR: title = " + title);
+        }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (Logout(request, response))
@@ -24,8 +31,7 @@ public class UserHandlerServlet extends HttpServlet {
         if (logged.equals(Common.str_true)) {
             String role = (String) session.getAttribute(Common.atr_role);
             request.setAttribute(Common.atr_role, role);
-            RequestDispatcher view = request.getRequestDispatcher(Common.jsp_menu);
-            view.forward(request, response);
+            request.getRequestDispatcher(Common.jsp_menu).forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();
             writer.println("ERROR");

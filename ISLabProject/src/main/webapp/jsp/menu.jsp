@@ -9,9 +9,12 @@
 
     <title>Title</title>
 
-    <style><%@include file="../css/menu.css"%></style>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="css/addons/datatables.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <link href="css/menu.css" rel="stylesheet">
 </head>
 <body>
     <div class="wrap">
@@ -184,7 +187,6 @@
             <ul>
                 <li><a href="#goods_list">List of Goods (10 by step)</a></li>
                 <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
-                <li><a href="#goods_add">Add new Goods</a></li>
             </ul>
         </li>
         <li><a href="#storage">Storage</a>
@@ -209,44 +211,294 @@
     </script>
 
     <script id="startpage_template" type="text/template">
-
+        <h1> Hello, {{ user_name }}, Welcome to the ISLabStorage!</h1>
+        <p> Yours role is {{ user_role }} and you have relevant permissions: {{ user_permissions }}. </p>
+        <br>
+        <h3> Short list of latest info: </h3>
+        <ul class="content_ul">
+            <li>Last visit: {{ last_visit }}.</li>
+        </ul>
     </script>
 
-    <script id="provider_template" type="text/template"> </script>
-    <script id="provider_list_template" type="text/template"> </script>
+    <script id="provider_template" type="text/template">
+        <h1>Provider menu</h1>
+        <p> In the menu you can review provider's info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#provider_list"><u>List of Providers</u></a> - show first 10 providers, you can expand list by each 10 next providers.</li>
+            <li><a href="#provider_find"><u>Find Provider(s)</u></a> - you can find one (by using ID) or more providers by using filter of fields.</li>
+            <li><a href="#provider_add"><u>Add new Provider</u></a> - you can add new provider if you need to import some goods, but provider is not exist in the database.</li>
+        </ul>
+    </script>
+    <script id="provider_list_template" type="text/template">
+        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
+               width="100%">
+            <thead>
+            <tr>
+                <th class="th-sm">Name
+                </th>
+                <th class="th-sm">Position
+                </th>
+                <th class="th-sm">Office
+                </th>
+                <th class="th-sm">Age
+                </th>
+                <th class="th-sm">Start date
+                </th>
+                <th class="th-sm">Salary
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+            </tr>
+            <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+            </tr>
+            <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012/03/29</td>
+                <td>$433,060</td>
+            </tr>
+            <tr>
+                <td>Airi Satou</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>33</td>
+                <td>2008/11/28</td>
+                <td>$162,700</td>
+            </tr>
+            <tr>
+                <td>Brielle Williamson</td>
+                <td>Integration Specialist</td>
+                <td>New York</td>
+                <td>61</td>
+                <td>2012/12/02</td>
+                <td>$372,000</td>
+            </tr>
+            <tr>
+                <td>Herrod Chandler</td>
+                <td>Sales Assistant</td>
+                <td>San Francisco</td>
+                <td>59</td>
+                <td>2012/08/06</td>
+                <td>$137,500</td>
+            </tr>
+            <tr>
+                <td>Rhona Davidson</td>
+                <td>Integration Specialist</td>
+                <td>Tokyo</td>
+                <td>55</td>
+                <td>2010/10/14</td>
+                <td>$327,900</td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>Name
+                </th>
+                <th>Position
+                </th>
+                <th>Office
+                </th>
+                <th>Age
+                </th>
+                <th>Start date
+                </th>
+                <th>Salary
+                </th>
+            </tr>
+            </tfoot>
+        </table>
+    </script>
     <script id="provider_find_template" type="text/template"> </script>
     <script id="provider_add_template" type="text/template"> </script>
 
-    <script id="customer_template" type="text/template"> </script>
+    <script id="customer_template" type="text/template">
+        <h1>Customer menu</h1>
+        <p> In the menu you can review customer's info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#customer_list"><u>List of Customers</u></a> - show first 10 customers, you can expand list by each 10 next customers.</li>
+            <li><a href="#customer_find"><u>Find Customer(s)</u></a> - you can find one (by using ID) or more customers by using filter of fields.</li>
+            <li><a href="#customer_add"><u>Add new Customer</u></a> - you can add new customer if you need to export some goods, but customer is not exist in the database.</li>
+        </ul>
+    </script>
     <script id="customer_list_template" type="text/template"> </script>
     <script id="customer_find_template" type="text/template"> </script>
     <script id="customer_add_template" type="text/template"> </script>
 
-    <script id="goods_template" type="text/template"> </script>
+    <script id="goods_template" type="text/template">
+        <h1>Goods menu</h1>
+        <p> In the menu you can review goods info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#goods_list"><u>List of Goods</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
+            <li><a href="#goods_find"><u>Find Goods</u></a> - you can find one (by using ID) or more goods by using filter of fields.</li>
+            <li><a href="#goods_add"><u>Add new Goods</u></a> - you can add new one if you need to export some goods, but it is not exist in the database.</li>
+        </ul>
+    </script>
     <script id="goods_list_template" type="text/template"> </script>
     <script id="goods_find_template" type="text/template"> </script>
     <script id="goods_add_template" type="text/template"> </script>
 
-    <script id="storage_template" type="text/template"> </script>
+    <script id="storage_template" type="text/template">
+        <h1>Storage menu</h1>
+        <p> In the menu you can review available goods and storage info.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#storage_available"><u>List of available Goods</u></a> - show first 10 goods in one of storages, you can expand list by each 10 next goods.</li>
+            <li><a href="#storage_info"><u>Review storage info</u></a> - you can choose one storage and review all necessary info (choose point above to review goods).</li>
+        </ul>
+    </script>
     <script id="storage_available_template" type="text/template"> </script>
     <script id="storage_info_template" type="text/template"> </script>
 
-    <script id="imports_template" type="text/template"> </script>
+    <script id="imports_template" type="text/template">
+        <h1>Import menu</h1>
+        <p> In the menu you can review all imports, check imports info and make new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#import_action"><u>Make new Import</u></a> - Choose the point if you are going to import some new goods.
+                <b>!Be sure goods and provider already exist in the database!</b>.</li>
+            <li><a href="#import_find"><u>Find Import Document</u></a> - you can find one (by using ID) or more document by using filter of fields.</li>
+        </ul>
+    </script>
     <script id="import_action_template" type="text/template"> </script>
     <script id="import_find_template" type="text/template"> </script>
 
-    <script id="exports_template" type="text/template"> </script>
+    <script id="exports_template" type="text/template">
+        <h1>Export menu</h1>
+        <p> In the menu you can review all exports, check exports info and make new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#import_action"><u>Make new Export</u></a> - Choose the point if you are going to export some goods.
+                <b>!Be sure customer already exist in the database!</b>.</li>
+            <li><a href="#import_find"><u>Find Export Document</u></a> - you can find one (by using ID) or more document by using filter of fields.</li>
+        </ul>
+    </script>
     <script id="export_action_template" type="text/template"> </script>
     <script id="export_find_template" type="text/template"> </script>
 
-    <script id="reports_template" type="text/template"> </script>
+    <script id="reports_template" type="text/template">
+        <h1>Report menu</h1>
+        <p> In the menu you can review reports and create new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#report_last"><u>Show last Report</u></a> - show last made Report by any user.</li>
+            <li><a href="#report_list"><u>Show Report list</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
+            <li><a href="#report_make"><u>Make new Report</u></a> - you can make new Report for custom date period.</li>
+        </ul>
+    </script>
     <script id="report_last_template" type="text/template"> </script>
     <script id="report_list_template" type="text/template"> </script>
     <script id="report_make_template" type="text/template"> </script>
 
-    <script id="system_template" type="text/template"> </script>
+    <script id="system_template" type="text/template">
+        <h1>System settings</h1>
+        <p><b>Be careful!</b> There are important settings which can break system.</p>
+        <h3><i>System info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+        </ul>
+        <br>
+        <h3>System action</h3>
+        <ul class="content_ul">
+            <li><a><u>Rebuild base of available goods</u></a> - available goods data writes in base relatively import nd export documents
+                                                                If available goods data are damaged, choose the point to rebuild the base.</li>
+            <li><a href="#"><u>Show users last visits</u></a> - you can see the date of last visit of every user registered in the system.</li>
+        </ul>
+    </script>
+    <script id="forbidden_template" type="text/template">
+        <h1>Forbidden!!!</h1>
+        <p>You don't have permissions for access to this section.</p>
+    </script>
 
-    <script><%@include file="../js/menu.js"%></script>
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/addons/datatables.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/mdb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="js/menu.js" ></script>
     <!--  -->
 </body>
 </html>

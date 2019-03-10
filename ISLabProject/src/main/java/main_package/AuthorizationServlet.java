@@ -53,7 +53,7 @@ public class AuthorizationServlet extends HttpServlet {
                 } break;
                 default:
                     PrintWriter writer = response.getWriter();
-                    writer.println("ERROR");
+                    writer.println("ERROR 56");
             }
             role_cookie.setMaxAge(Common.cookies_max_age);
             if (stay_in_system_flag) {
@@ -80,7 +80,7 @@ public class AuthorizationServlet extends HttpServlet {
             view.forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();
-            writer.println("ERROR");
+            writer.println("ERROR 83");
         }
     }
 }
