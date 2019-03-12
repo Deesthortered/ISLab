@@ -1,5 +1,6 @@
 package main_package;
 
+import database_package.ConnectionPool;
 import utility_package.Common;
 import utility_package.UserRole;
 import database_package.DAOSystemUser;
@@ -10,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 
 @WebServlet(name = "AuthorizationServlet")
 public class AuthorizationServlet extends HttpServlet {
@@ -18,12 +20,19 @@ public class AuthorizationServlet extends HttpServlet {
         String password = request.getParameter("pass_input");
         boolean stay_in_system_flag = request.getParameter("save_session") != null;
 
+        ConnectionPool pool = ConnectionPool.getInstance();
         DAOSystemUser dao = DAOSystemUser.getInstance();
-        boolean is_ok = dao.ConfirmateAuthorizaion(login, password);
+
+        Connection auth_conn = pool.GetConnection();
+        boolean is_ok = dao.ConfirmationAuthoritarian(auth_conn, login, password);
+        pool.DropConnection(auth_conn);
 
         if (is_ok) {
             request.removeAttribute(Common.art_invalid_credentials);
-            int role = dao.getUserRole(login);
+
+            Connection role_conn = pool.GetConnection();
+            int role = dao.getUserRole(role_conn, login);
+            pool.DropConnection(role_conn);
 
             HttpSession session = request.getSession();
             session.setAttribute(Common.atr_logged, Common.str_true);
@@ -55,6 +64,7 @@ public class AuthorizationServlet extends HttpServlet {
                     PrintWriter writer = response.getWriter();
                     writer.println("ERROR 56");
             }
+            assert role_cookie != null;
             role_cookie.setMaxAge(Common.cookies_max_age);
             if (stay_in_system_flag) {
                 response.addCookie(auth_cookie);

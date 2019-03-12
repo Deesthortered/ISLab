@@ -1,5 +1,11 @@
 package main_package;
 
+import data_model.Provider;
+import database_package.ConnectionPool;
+import database_package.DAOProviders;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import utility_package.Common;
 
 import javax.servlet.ServletException;
@@ -8,18 +14,21 @@ import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.ArrayList;
 
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         BufferedReader reader = request.getReader();
-        PrintWriter writer = response.getWriter();
 
         String title = reader.readLine();
-        if (title.equals("get_role")) {
-            writer.print(request.getSession().getAttribute("role"));
+        if (title.equals(Common.q_get_role)) {
+            GetRole(request, response);
+        } else if (title.equals(Common.q_get_provider_list)) {
+            GetProviderList(request, response);
         } else {
-            writer.println("ERROR: title = " + title);
+            SendError(request, response);
         }
     }
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,6 +45,50 @@ public class UserHandlerServlet extends HttpServlet {
             PrintWriter writer = response.getWriter();
             writer.println("ERROR");
         }
+    }
+
+    private void GetRole(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        PrintWriter writer = response.getWriter();
+        writer.print(request.getSession().getAttribute(Common.atr_role));
+    }
+    private void GetProviderList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        int begin_index = Integer.parseInt(reader.readLine());
+        int count_of_records = Integer.parseInt(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOProviders dao = DAOProviders.getInstance();
+
+        Connection connection = pool.GetConnection();
+        ArrayList<Provider> list = dao.GetProvidersLIst(connection, begin_index, count_of_records);
+        pool.DropConnection(connection);
+
+        JSONArray json_list = new JSONArray();
+        for (Provider provider : list) {
+            JSONObject one = new JSONObject();
+            try {
+                one.put("id", provider.getId());
+                one.put("name", provider.getName());
+                one.put("country", provider.getCountry());
+                one.put("description", provider.getDescription() == null ? "" : provider.getDescription());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            json_list.put(one);
+        }
+
+        writer.write(json_list.toString());
+    }
+    private void SendError(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        reader.reset();
+        String error = "ERROR: Client query title = " + reader.readLine();
+        writer.println(error);
+        System.out.println(error);
     }
 
     private boolean Logout(HttpServletRequest request, HttpServletResponse response) throws IOException {

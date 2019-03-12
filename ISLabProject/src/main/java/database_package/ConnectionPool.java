@@ -51,6 +51,8 @@ public class ConnectionPool {
         return result;
     }
     public void DropConnection(Connection connection) {
+        if (!connections.contains(connection))
+            return;
         int i = connections.indexOf(connection);
         free_connections.addFirst(i);
         connection_distributor.release();

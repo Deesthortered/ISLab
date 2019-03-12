@@ -12,21 +12,23 @@ public class Common {
     public static String str_true  = "true";
     public static String str_false = "false";
 
+    public static String jsp_login = "/jsp/login_page.jsp";
+    public static String jsp_menu  = "/jsp/menu.jsp";
+
     public static String url_basic;
     public static String url_login;
     public static String url_menu;
 
-    public static String par_logout = "logout";
+    public static int session_max_age = 60*60;
+    public static int cookies_max_age = 60*60*24;
 
     public static String atr_logged = "logged";
     public static String atr_role   = "role";
     public static String art_invalid_credentials = "invalid_credentials";
 
-    public static String jsp_login = "/jsp/login_page.jsp";
-    public static String jsp_menu  = "/jsp/menu.jsp";
-
-    public static int session_max_age = 60*60;
-    public static int cookies_max_age = 60*60*24;
+    public static String par_logout          = "logout";
+    public static String q_get_role          = "get_role";
+    public static String q_get_provider_list = "get_provider_list";
 
     public static boolean isInitialized() {
         return initialized;

@@ -5,7 +5,17 @@ class Common {
         ImportManager : 'ImportManager',
         ExportManager : 'ExportManager',
     };
-    static list_size = 10;
+    static list_size = 5;
+
+    // Temporary
+    static role;
+    static list_begin_ind;
+    static table_data;
+
+    static ClearTemporary() {
+        this.list_begin_ind = 0;
+        this.table_data = [];
+    }
 }
 class Router {
     static initialize(){
@@ -13,6 +23,7 @@ class Router {
         Router.handleHash();
     }
     static handleHash() {
+        Common.ClearTemporary();
         switch (location.hash) {
             case ''                   : { InterfaceHashHandler.StartPage();        } break;
 
@@ -65,7 +76,6 @@ class TemplateHandler {
 }
 
 class InterfaceHashHandler {
-    static role;
 
     static DefineUser() {
         document.location.hash = '';
@@ -73,15 +83,15 @@ class InterfaceHashHandler {
         let http = new XMLHttpRequest();
         http.open('POST', window.location.href, false);
         http.onreadystatechange = function () {
-            InterfaceHashHandler.role = http.responseText;
+            Common.role = http.responseText;
         };
-        http.send('get_role\n');
+        http.send('get_role');
 
         const username_field = document.getElementById('username_field');
         username_field.innerHTML = TemplateHandler.Render('username_template', { username: InterfaceHashHandler.role});
 
         let menu_startpage = document.getElementById('menu_ul');
-        switch (InterfaceHashHandler.role) {
+        switch (Common.role) {
             case Common.roles.Admin: {
                 menu_startpage.innerHTML = TemplateHandler.Render('admin_menu_template')
             } break;
@@ -94,12 +104,12 @@ class InterfaceHashHandler {
             case Common.roles.ExportManager: {
                 menu_startpage.innerHTML = TemplateHandler.Render('export_menu_template')
             } break;
-            default: alert("Unknown role: " + InterfaceHashHandler.role);
+            default: alert("Unknown role: " + Common.role);
         }
     }
     static CheckPermission(privileged_users) {
         for (let i = 0; i < privileged_users.length; i++) {
-            if (privileged_users[i] === this.role)
+            if (privileged_users[i] === Common.role)
                 return false;
         }
         alert('forbidden');
@@ -109,8 +119,7 @@ class InterfaceHashHandler {
 
     static StartPage() {
         let data = InterfaceActionHandler.StartPage_Load();
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('startpage_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('startpage_template', data);
     }
 
     static Provider() {
@@ -120,9 +129,11 @@ class InterfaceHashHandler {
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        Common.list_size = 10;
-        let data = InterfaceActionHandler.ProviderTable_Load(Common.list_size);
-        InterfaceActionHandler.ProviderTable_Fill(data);
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
+        InterfaceActionHandler.ProviderTable_Load(function(data) {
+            InterfaceActionHandler.ProviderTable_Fill(data);
+        });
     }
     static ProviderFind() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
@@ -293,24 +304,24 @@ class InterfaceActionHandler {
     static Provider_Load() {
         return {};
     }
-
-    static ProviderTable_Load(count) {
-        let res = [];
-        for (let i = 0; i < count; i++)
-            res.push(
-                {
-                    id : i,
-                    name : "Vasili",
-                    country : "Ukraine",
-                    description : "bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla-bla",
-                }
-            );
-        return res;
+    static ProviderTable_Load(callback) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            let new_data = JSON.parse(http.responseText);
+            Common.table_data = Common.table_data.concat(new_data);
+            callback(Common.table_data);
+        };
+        let query_body =
+            "get_provider_list\n" +
+            String(Common.list_begin_ind) + "\n" +
+            String(Common.list_size) + "\n";
+        http.send(query_body);
     }
     static ProviderTable_Fill(data) {
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('provider_list_template', {});
-        let table_body = dynamic_panel.getElementsByTagName('tbody')[0];
+        const table_place = document.getElementById('table_place');
+        table_place.innerHTML = TemplateHandler.Render('provider_list_table', {});
+        let table_body = table_place.getElementsByTagName('tbody')[0];
 
         for (let i = 0; i < data.length; i++)
             table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('provider_datatable_row', data[i]));
@@ -334,9 +345,10 @@ class InterfaceActionHandler {
         }
     }
     static ProviderTable_ExtendList() {
-        Common.list_size += 10;
-        let data = this.ProviderTable_Load(Common.list_size);
-        this.ProviderTable_Fill(data);
+        Common.list_begin_ind += Common.list_size;
+        InterfaceActionHandler.ProviderTable_Load(function(data) {
+            InterfaceActionHandler.ProviderTable_Fill(data);
+        });
     }
 
     static Customer_Load() {

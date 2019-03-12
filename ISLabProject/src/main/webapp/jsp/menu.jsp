@@ -241,6 +241,11 @@
     </script>
 
     <script id="provider_list_template" type="text/template">
+        <p>Some text before table</p>
+        <div id="table_place"></div>
+        <p>Some text after table</p>
+    </script>
+    <script id="provider_list_table" type="text/template">
         <table id="dtProviderTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
             <tr>
@@ -263,7 +268,7 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList()">Load more (+10)</button>
+        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList()">Load more (+5)</button>
     </script>
     <script id="provider_datatable_row" type="text/template">
         <tr>
