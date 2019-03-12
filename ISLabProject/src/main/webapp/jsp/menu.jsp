@@ -40,7 +40,7 @@
     <!-- There are scripts -->
     <script id="username_template" type="text/template" >
         <p class="username_corner"><b>User:</b> <u>{{ username }}</u></p>
-        <button class="logout" onclick="Logout()">Logout</button>
+        <button class="logout" onclick="InterfaceActionHandler.Logout()">Logout</button>
     </script>
 
     <script id="admin_menu_template" type="text/template">
@@ -220,6 +220,7 @@
         </ul>
     </script>
 
+    <!-- Provider section scripts -->
     <script id="provider_template" type="text/template">
         <h1>Provider menu</h1>
         <p> In the menu you can review provider's info and control data.</p>
@@ -238,111 +239,48 @@
             <li><a href="#provider_add"><u>Add new Provider</u></a> - you can add new provider if you need to import some goods, but provider is not exist in the database.</li>
         </ul>
     </script>
+
     <script id="provider_list_template" type="text/template">
-        <table id="dtDynamicVerticalScrollExample" class="table table-striped table-bordered table-sm" cellspacing="0"
-               width="100%">
+        <table id="dtProviderTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
             <tr>
-                <th class="th-sm">Name
-                </th>
-                <th class="th-sm">Position
-                </th>
-                <th class="th-sm">Office
-                </th>
-                <th class="th-sm">Age
-                </th>
-                <th class="th-sm">Start date
-                </th>
-                <th class="th-sm">Salary
-                </th>
+                <th class="th-sm">ID </th>
+                <th class="th-sm">Name </th>
+                <th class="th-sm">Country </th>
+                <th class="th-sm">Description </th>
+                <th class="th-sm">Actions </th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-            </tr>
-            <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-            </tr>
-            <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-            </tr>
-            <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-            </tr>
-            <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008/11/28</td>
-                <td>$162,700</td>
-            </tr>
-            <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012/12/02</td>
-                <td>$372,000</td>
-            </tr>
-            <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012/08/06</td>
-                <td>$137,500</td>
-            </tr>
-            <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010/10/14</td>
-                <td>$327,900</td>
-            </tr>
             </tbody>
             <tfoot>
             <tr>
-                <th>Name
-                </th>
-                <th>Position
-                </th>
-                <th>Office
-                </th>
-                <th>Age
-                </th>
-                <th>Start date
-                </th>
-                <th>Salary
-                </th>
+                <th>ID </th>
+                <th>Name </th>
+                <th>Country </th>
+                <th>Description </th>
+                <th>Actions </th>
             </tr>
             </tfoot>
         </table>
+        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList()">Load more (+10)</button>
     </script>
+    <script id="provider_datatable_row" type="text/template">
+        <tr>
+            <td>{{ id }}</td>
+            <td>{{ name }}</td>
+            <td>{{ country }}</td>
+            <td>{{ description }}</td>
+            <td>
+                <button class="table_action" onclick="InterfaceActionHandler.ProviderTable_EditRow( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="InterfaceActionHandler.ProviderTable_DeleteRow( {{ id }} );">Delete</button>
+            </td>
+        </tr>
+    </script>
+
     <script id="provider_find_template" type="text/template"> </script>
     <script id="provider_add_template" type="text/template"> </script>
+    <!--  -->
 
     <script id="customer_template" type="text/template">
         <h1>Customer menu</h1>

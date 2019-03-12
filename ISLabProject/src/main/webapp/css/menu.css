@@ -1,6 +1,5 @@
 /* Default */
-*
-{
+* {
     margin: 0;
     padding: 0;
     -webkit-box-sizing: border-box;
@@ -142,6 +141,11 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
     bottom: .5em;
 }
+
+button.table_action {
+    cursor: pointer;
+    padding: 3px 15px;
+    margin-right: 5px;}
 
 /* Footer */
 footer {
