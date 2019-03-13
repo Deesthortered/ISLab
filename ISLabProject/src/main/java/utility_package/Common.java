@@ -29,6 +29,10 @@ public class Common {
     public static String par_logout          = "logout";
     public static String q_get_role          = "get_role";
     public static String q_get_provider_list = "get_provider_list";
+    public static String q_add_provider      = "add_provider";
+    public static String q_delete_provider   = "delete_provider";
+    public static String q_edit_provider     = "edit_provider";
+    public static String q_get_one_provider  = "get_one_provider";
 
     public static boolean isInitialized() {
         return initialized;

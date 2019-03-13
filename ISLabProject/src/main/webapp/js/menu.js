@@ -88,7 +88,7 @@ class InterfaceHashHandler {
         http.send('get_role');
 
         const username_field = document.getElementById('username_field');
-        username_field.innerHTML = TemplateHandler.Render('username_template', { username: InterfaceHashHandler.role});
+        username_field.innerHTML = TemplateHandler.Render('username_template', { username: Common.role});
 
         let menu_startpage = document.getElementById('menu_ul');
         switch (Common.role) {
@@ -144,10 +144,13 @@ class InterfaceHashHandler {
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        const data = {
-        };
         const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('provider_add_template', data);
+        dynamic_panel.innerHTML = TemplateHandler.Render('provider_add_template', {});
+    }
+    static ProviderEdit(id) {
+        InterfaceActionHandler.Provider_LoadOne(id, function (data) {
+            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_edit_template', data);
+        });
     }
 
     static Customer() {
@@ -171,10 +174,8 @@ class InterfaceHashHandler {
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-        const data = {
-        };
         const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('customer_add_template', data);
+        dynamic_panel.innerHTML = TemplateHandler.Render('customer_add_template', {});
     }
 
     static Goods() {
@@ -327,6 +328,7 @@ class InterfaceActionHandler {
             table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('provider_datatable_row', data[i]));
 
         $('#dtProviderTable').DataTable({
+            "retrieve": true,
             "scrollY": "50vh",
             "scrollCollapse": true,
         });
@@ -334,14 +336,30 @@ class InterfaceActionHandler {
     }
     static ProviderTable_EditRow(id) {
         let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
-        if (sure) {
-
-        }
+        if (sure)
+            InterfaceHashHandler.ProviderEdit(id);
     }
     static ProviderTable_DeleteRow(id) {
         let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
         if (sure) {
-
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function () {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    if (http.responseText === "ok") {
+                        alert("Provider are deleted successfully");
+                        InterfaceActionHandler.ProviderTable_Refresh();
+                    }
+                    else
+                        alert("Provider was not deleted, some trouble happened on the server side.");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("Provider was not deleted, some trouble happened with the request.");
+                }
+            };
+            let query_body =
+                "delete_provider" + "\n" +
+                id + "\n";
+            http.send(query_body);
         }
     }
     static ProviderTable_ExtendList() {
@@ -349,6 +367,114 @@ class InterfaceActionHandler {
         InterfaceActionHandler.ProviderTable_Load(function(data) {
             InterfaceActionHandler.ProviderTable_Fill(data);
         });
+    }
+    static ProviderTable_Refresh() {
+
+        let prev_ind = Common.list_begin_ind;
+        let prev_size = Common.list_size;
+
+        Common.list_size += Common.list_begin_ind;
+        Common.list_begin_ind = 0;
+
+        Common.table_data = [];
+        let table_body = document.getElementById('table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+
+        this.ProviderTable_Load(function(data) {
+            InterfaceActionHandler.ProviderTable_Fill(data);
+        });
+
+        $('#dtProviderTable').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+        Common.list_begin_ind = prev_ind;
+        Common.list_size = prev_size;
+    }
+    static Provider_LoadOne(id, callback) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            callback(JSON.parse(http.responseText));
+        };
+        let query_body =
+            "get_one_provider\n" +
+            String(id) + "\n";
+        http.send(query_body);
+    }
+
+    static ProviderAdd_Send() {
+        let panel = $('.add_provider_panel');
+        let name = panel.find('input[name=\'input_name\']');
+        let country = panel.find('input[name=\'input_country\']');
+        let description = panel.find('input[name=\'input_description\']');
+
+        if (name.val() === '' || country.val() === '') {
+            alert("Fill all required fields!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Provider are added successfully");
+                    name.val('');
+                    country.val('');
+                    description.val('');
+                }
+                else
+                    alert("Provider was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Provider was not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "add_provider" + "\n" +
+            String(name.val()) + "\n" +
+            String(country.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
+    }
+    static ProviderEdit_Send() {
+        let panel = $('.edit_provider_panel');
+        let id = panel.find('input[name=\'input_id\']');
+        let name = panel.find('input[name=\'input_name\']');
+        let country = panel.find('input[name=\'input_country\']');
+        let description = panel.find('input[name=\'input_description\']');
+
+        if (name.val() === '' && country.val() === '' && description.val() === '') {
+            alert("Fill at least one field!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Provider are edited successfully");
+                    InterfaceHashHandler.ProviderList();
+                }
+                else
+                    alert("Provider was not edited, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Provider was not edited, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "edit_provider" + "\n" +
+            String(id.val()) + "\n" +
+            String(name.val()) + "\n" +
+            String(country.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
     }
 
     static Customer_Load() {

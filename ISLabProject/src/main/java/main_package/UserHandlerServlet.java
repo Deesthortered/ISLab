@@ -4,8 +4,6 @@ import data_model.Provider;
 import database_package.ConnectionPool;
 import database_package.DAOProviders;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import utility_package.Common;
 
 import javax.servlet.ServletException;
@@ -27,6 +25,14 @@ public class UserHandlerServlet extends HttpServlet {
             GetRole(request, response);
         } else if (title.equals(Common.q_get_provider_list)) {
             GetProviderList(request, response);
+        } else if (title.equals(Common.q_add_provider)) {
+            AddNewProvider(request, response);
+        } else if (title.equals(Common.q_delete_provider)) {
+            DeleteProvider(request, response);
+        } else if (title.equals(Common.q_edit_provider)) {
+            EditProvider(request, response);
+        } else if (title.equals(Common.q_get_one_provider)) {
+            GetOneProvider(request, response);
         } else {
             SendError(request, response);
         }
@@ -62,25 +68,104 @@ public class UserHandlerServlet extends HttpServlet {
         DAOProviders dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Provider> list = dao.GetProvidersLIst(connection, begin_index, count_of_records);
+        ArrayList<Provider> list = dao.GetProvidersList(connection, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
         for (Provider provider : list) {
-            JSONObject one = new JSONObject();
-            try {
-                one.put("id", provider.getId());
-                one.put("name", provider.getName());
-                one.put("country", provider.getCountry());
-                one.put("description", provider.getDescription() == null ? "" : provider.getDescription());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            json_list.put(one);
+            json_list.put(provider.getJSON());
         }
 
         writer.write(json_list.toString());
     }
+    private void AddNewProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        Provider provider = new Provider(name, country, description);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOProviders dao = DAOProviders.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.AddProvider(connection, provider))
+            writer.print("ok");
+        else
+            writer.print("bad");
+        pool.DropConnection(connection);
+
+    }
+    private void DeleteProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOProviders dao = DAOProviders.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsProvider(connection, id)) {
+            if (dao.DeleteProvider(connection, id))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+
+        pool.DropConnection(connection);
+    }
+    private void EditProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOProviders dao = DAOProviders.getInstance();
+
+        Connection connection = pool.GetConnection();
+        Provider old_version = dao.GetOneProvider(connection, id);
+
+        if (name.isEmpty()) name = old_version.getName();
+        if (description.isEmpty()) name = old_version.getCountry();
+        if (description.isEmpty()) name = old_version.getDescription();
+
+        if (dao.IsExistsProvider(connection, id)) {
+            if (dao.EditProvider(connection, new Provider(id, name, country, description)))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+    private void GetOneProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOProviders dao = DAOProviders.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsProvider(connection, id)) {
+            Provider provider = dao.GetOneProvider(connection, id);
+            writer.print(provider.getJSON().toString());
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+
     private void SendError(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
@@ -90,7 +175,6 @@ public class UserHandlerServlet extends HttpServlet {
         writer.println(error);
         System.out.println(error);
     }
-
     private boolean Logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         String logout = request.getParameter(Common.par_logout);

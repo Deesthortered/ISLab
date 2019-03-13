@@ -241,9 +241,10 @@
     </script>
 
     <script id="provider_list_template" type="text/template">
-        <p>Some text before table</p>
+        <h1>Provider list</h1>
+        <p>There you can review list of providers and edit it.</p>
         <div id="table_place"></div>
-        <p>Some text after table</p>
+        <br>
     </script>
     <script id="provider_list_table" type="text/template">
         <table id="dtProviderTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
@@ -269,6 +270,7 @@
             </tfoot>
         </table>
         <button onclick="InterfaceActionHandler.ProviderTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.ProviderTable_Refresh()">Refresh</button>
     </script>
     <script id="provider_datatable_row" type="text/template">
         <tr>
@@ -284,7 +286,34 @@
     </script>
 
     <script id="provider_find_template" type="text/template"> </script>
-    <script id="provider_add_template" type="text/template"> </script>
+    <script id="provider_add_template" type="text/template">
+        <h1>Add provider</h1>
+        <p> There you can add new provider to base.</p>
+        <div class = "add_provider_panel">
+            <p><b>*</b> Name:</p>
+                <input type="text" name="input_name">
+            <p><b>*</b> Country:</p>
+                <input type="text" name="input_country">
+            <p>Description:</p>
+                <input type="text" name="input_description">
+            <p><button onclick="InterfaceActionHandler.ProviderAdd_Send()">Send data</button></p>
+        </div>
+    </script>
+    <script id="provider_edit_template" type="text/template">
+        <h1>Edit provider</h1>
+        <p> There you can edit provider in the base.</p>
+        <p> Edit field which you to change, <b>others leave empty</b>.</p>
+        <div class = "edit_provider_panel">
+            <input type="hidden" name="input_id" value="{{ id }}" />
+            <p> Name:</p>
+            <input type="text" name="input_name" value="{{ name }}">
+            <p> Country:</p>
+            <input type="text" name="input_country" value="{{ country }}">
+            <p> Description:</p>
+            <input type="text" name="input_description"  value="{{ description }}">
+            <p><button onclick="InterfaceActionHandler.ProviderEdit_Send()">Send data</button></p>
+        </div>
+    </script>
     <!--  -->
 
     <script id="customer_template" type="text/template">
@@ -434,6 +463,7 @@
         <h1>Forbidden!!!</h1>
         <p>You don't have permissions for access to this section.</p>
     </script>
+
 
     <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="js/addons/datatables.min.js"></script>

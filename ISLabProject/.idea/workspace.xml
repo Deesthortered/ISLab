@@ -7,16 +7,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data_model/Provider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data_model/Provider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/ConnectionPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/ConnectionPool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/DAOProviders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/DAOProviders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/utility_package/Common.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility_package/Common.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/menu.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/menu.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/menu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" afterDir="false" />
     </list>
@@ -69,8 +65,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="242" column="60" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
+            <state relative-caret-position="-175">
+              <caret line="301" column="60" selection-start-line="301" selection-start-column="60" selection-end-line="301" selection-end-column="60" />
               <folding>
                 <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
@@ -82,15 +78,17 @@
                 <element signature="n#script#6;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#7;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#8;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#8;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#9;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#11;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#15;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#19;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#22;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#25;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#28;n#body#0;n#html#0;n#!!top" />
-                <element signature="n#script#32;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#16;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#20;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#23;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#26;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#29;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#33;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#34;n#body#0;n#html#0;n#!!top" />
               </folding>
             </state>
           </provider>
@@ -99,14 +97,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="129" column="26" selection-start-line="129" selection-start-column="26" selection-end-line="129" selection-end-column="26" />
+            <state relative-caret-position="63">
+              <caret line="302" column="5" lean-forward="true" selection-start-line="302" selection-start-column="5" selection-end-line="302" selection-end-column="5" />
               <folding>
                 <element signature="n#Common#0" />
-                <element signature="e#34#189#0" />
                 <element signature="n#!!block;n#ClearTemporary#0;n#Common#0" />
                 <element signature="n#Router#0" />
                 <element signature="n#!!block;n#initialize#0;n#Router#0" />
+                <element signature="n#!!block;n#handleHash#0;n#Router#0" />
                 <element signature="n#TemplateHandler#0" />
                 <element signature="n#!!block;n#DefineUser#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#CheckPermission#0;n#InterfaceHashHandler#0" />
@@ -115,6 +113,7 @@
                 <element signature="n#!!block;n#ProviderList#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#ProviderFind#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#ProviderAdd#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ProviderEdit#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#Customer#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#CustomerList#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#CustomerFind#0;n#InterfaceHashHandler#0" />
@@ -145,32 +144,18 @@
                 <element signature="n#!!block;n#ProviderTable_EditRow#0;n#InterfaceActionHandler#0" />
                 <element signature="n#!!block;n#ProviderTable_DeleteRow#0;n#InterfaceActionHandler#0" />
                 <element signature="n#!!block;n#ProviderTable_ExtendList#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#ProviderTable_Refresh#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Provider_LoadOne#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#ProviderAdd_Send#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#ProviderEdit_Send#0;n#InterfaceActionHandler#0" />
                 <element signature="n#!!block;n#Customer_Load#0;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Customer_Load#1;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Storage_Load#1;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Customer_Load#2;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Customer_Load#3;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Customer_Load#4;n#InterfaceActionHandler#0" />
-                <element signature="n#!!block;n#Report_Load#1;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Goods_Load#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Storage_Load#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Import_Load#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Export_Load#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#Report_Load#0;n#InterfaceActionHandler#0" />
+                <element signature="n#!!block;n#System_Load#0;n#InterfaceActionHandler#0" />
                 <element signature="n#!!block;n#Logout#0;n#InterfaceActionHandler#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
-              <caret line="53" column="110" selection-start-line="53" selection-start-column="110" selection-end-line="53" selection-end-column="110" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#doPost#0;class#UserHandlerServlet#0" />
-                <element signature="method#doGet#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
-                <element signature="method#SendError#0;class#UserHandlerServlet#0" />
-                <element signature="method#Logout#0;class#UserHandlerServlet#0" />
               </folding>
             </state>
           </provider>
@@ -197,9 +182,9 @@
       <find>Datatables</find>
       <find>dtDynamicVerticalScrollExample</find>
       <find>role</find>
-      <find>role</find>
       <find>list_begin_ind</find>
       <find>table_data</find>
+      <find>$('#dtProviderTable').DataTable(</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -247,17 +232,17 @@
         <option value="$PROJECT_DIR$/src/main/webapp/js/login_page.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/css/menu.css" />
-        <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/ConnectionPool.java" />
         <option value="$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/src/main/java/data_model/Provider.java" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/697485fd-1365-4965-af32-6b48ba59e787/console.sql" />
-        <option value="$PROJECT_DIR$/src/main/java/database_package/DAOProviders.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/css/menu.css" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Provider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/DAOProviders.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
       </list>
     </option>
@@ -272,8 +257,8 @@
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
-    <option name="width" value="1939" />
-    <option name="height" value="1049" />
+    <option name="width" value="1940" />
+    <option name="height" value="1050" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -283,6 +268,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -314,7 +301,7 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="main_package" type="462c0819:PsiDirectoryNode" />
+              <item name="utility_package" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
@@ -327,8 +314,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -340,7 +325,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552421128780" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552512102727" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="MySQL&#10;PostgreSQL" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -537,6 +522,11 @@
       <workItem from="1552228022597" duration="4790000" />
       <workItem from="1552251077314" duration="733000" />
       <workItem from="1552293172279" duration="33921000" />
+      <workItem from="1552421219940" duration="40000" />
+      <workItem from="1552459710106" duration="9984000" />
+      <workItem from="1552472427260" duration="3367000" />
+      <workItem from="1552480335136" duration="1514000" />
+      <workItem from="1552505267375" duration="6780000" />
     </task>
     <servers />
   </component>
@@ -546,7 +536,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="204470000" />
+    <option name="totallyTimeSpent" value="226155000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -561,7 +551,7 @@
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.23087248" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.24765101" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Capture Tool" order="3" />
@@ -587,8 +577,8 @@
       <window_info anchor="bottom" id="Database Changes" order="15" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="16" weight="0.3286119" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.24965326" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.24899329" />
       <window_info anchor="right" id="Maven" order="3" />
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
@@ -729,13 +719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="13" lean-forward="true" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Customer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -765,42 +748,6 @@
         <state>
           <folding>
             <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/menu.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="723">
-          <caret line="144" column="20" selection-start-line="144" selection-start-column="20" selection-end-line="144" selection-end-column="20" />
-          <folding>
-            <element signature="e#16#147#0" />
-            <element signature="e#159#242#0" />
-            <element signature="e#252#301#0" />
-            <element signature="e#324#445#0" />
-            <element signature="e#461#518#0" />
-            <element signature="e#528#552#0" />
-            <element signature="e#571#654#0" />
-            <element signature="e#673#719#0" />
-            <element signature="e#734#802#0" />
-            <element signature="e#831#973#0" />
-            <element signature="e#1001#1113#0" />
-            <element signature="e#1127#1169#0" />
-            <element signature="e#1203#1228#0" />
-            <element signature="e#1247#1298#0" />
-            <element signature="e#1322#1501#0" />
-            <element signature="e#1523#1562#0" />
-            <element signature="e#1596#1634#0" />
-            <element signature="e#1667#1706#0" />
-            <element signature="e#1731#1779#0" />
-            <element signature="e#1815#1883#0" />
-            <element signature="e#1908#1942#0" />
-            <element signature="e#1969#2064#0" />
-            <element signature="e#2092#2115#0" />
-            <element signature="e#2146#2173#0" />
-            <element signature="e#2631#2652#0" />
-            <element signature="e#2674#2682#0" />
-            <element signature="e#2674#2810#0" />
           </folding>
         </state>
       </provider>
@@ -864,31 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="123" selection-start-line="20" selection-start-column="123" selection-end-line="20" selection-end-column="123" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#init#0;class#SessionFilter#0" />
-            <element signature="method#destroy#0;class#SessionFilter#0" />
-            <element signature="method#doFilter#0;class#SessionFilter#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="17" column="121" selection-start-line="17" selection-start-column="121" selection-end-line="17" selection-end-column="121" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doPost#0;class#AuthorizationServlet#0" />
-            <element signature="method#doGet#0;class#AuthorizationServlet#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/database_package/ConnectionPool.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -911,17 +833,115 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/697485fd-1365-4965-af32-6b48ba59e787/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/css/menu.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="149" selection-start-line="149" selection-end-line="149" />
+          <folding>
+            <element signature="e#16#147#0" />
+            <element signature="e#159#242#0" />
+            <element signature="e#252#301#0" />
+            <element signature="e#324#445#0" />
+            <element signature="e#461#518#0" />
+            <element signature="e#528#552#0" />
+            <element signature="e#571#654#0" />
+            <element signature="e#673#719#0" />
+            <element signature="e#734#802#0" />
+            <element signature="e#831#973#0" />
+            <element signature="e#1001#1113#0" />
+            <element signature="e#1127#1169#0" />
+            <element signature="e#1203#1228#0" />
+            <element signature="e#1247#1298#0" />
+            <element signature="e#1322#1501#0" />
+            <element signature="e#1523#1562#0" />
+            <element signature="e#1596#1634#0" />
+            <element signature="e#1667#1706#0" />
+            <element signature="e#1731#1779#0" />
+            <element signature="e#1815#1883#0" />
+            <element signature="e#1908#1942#0" />
+            <element signature="e#1969#2064#0" />
+            <element signature="e#2092#2115#0" />
+            <element signature="e#2146#2173#0" />
+            <element signature="e#2631#2652#0" />
+            <element signature="e#2674#2743#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="121" selection-start-line="17" selection-start-column="121" selection-end-line="17" selection-end-column="121" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#AuthorizationServlet#0" />
+            <element signature="method#doGet#0;class#AuthorizationServlet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/login_page.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="20" column="123" selection-start-line="20" selection-start-column="123" selection-end-line="20" selection-end-column="123" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#init#0;class#SessionFilter#0" />
+            <element signature="method#destroy#0;class#SessionFilter#0" />
+            <element signature="method#doFilter#0;class#SessionFilter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="18" column="99" selection-start-line="18" selection-start-column="99" selection-end-line="18" selection-end-column="99" />
+          <folding>
+            <element signature="method#DAOSystemUser#0;class#DAOSystemUser#0" />
+            <element signature="method#getInstance#0;class#DAOSystemUser#0" />
+            <element signature="method#ConfirmationAuthoritarian#0;class#DAOSystemUser#0" />
+            <element signature="method#getUserRole#0;class#DAOSystemUser#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="38" column="25" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+        <state relative-caret-position="510">
+          <caret line="30" column="28" selection-start-line="30" selection-start-column="28" selection-end-line="30" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Provider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Provider#0;class#Provider#0" />
+            <element signature="method#Provider#0;class#Provider#0" />
+            <element signature="method#Provider#1;class#Provider#0" />
+            <element signature="method#getDescription#0;class#Provider#0" />
+            <element signature="method#getJSON#0;class#Provider#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Common.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="460">
-          <caret line="30" column="65" selection-start-line="30" selection-start-column="48" selection-end-line="30" selection-end-column="65" />
+        <state relative-caret-position="46">
+          <caret line="11" column="44" lean-forward="true" selection-start-line="11" selection-start-column="44" selection-end-line="11" selection-end-column="44" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Initialize#0;class#Common#0" />
@@ -930,48 +950,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Provider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="27" selection-start-line="27" selection-end-line="27" />
-          <folding>
-            <element signature="method#Provider#0;class#Provider#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/DAOSystemUser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="556">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
-          <folding>
-            <element signature="method#DAOSystemUser#0;class#DAOSystemUser#0" />
-            <element signature="method#getInstance#0;class#DAOSystemUser#0" />
-            <element signature="method#ConfirmationAuthoritarian#0;class#DAOSystemUser#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/697485fd-1365-4965-af32-6b48ba59e787/console.sql">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/database_package/DAOProviders.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="21" column="110" selection-start-line="21" selection-start-column="110" selection-end-line="21" selection-end-column="110" />
+        <state relative-caret-position="323">
+          <caret line="100" column="68" lean-forward="true" selection-start-line="100" selection-start-column="68" selection-end-line="100" selection-end-column="68" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#DAOSystemUser#0;class#DAOProviders#0" />
+            <element signature="method#DAOProviders#0;class#DAOProviders#0" />
             <element signature="method#getInstance#0;class#DAOProviders#0" />
-            <element signature="method#GetProvidersLIst#0;class#DAOProviders#0" />
+            <element signature="method#GetProvidersList#0;class#DAOProviders#0" />
+            <element signature="method#GetOneProvider#0;class#DAOProviders#0" />
+            <element signature="method#IsExistsProvider#0;class#DAOProviders#0" />
+            <element signature="method#AddProvider#0;class#DAOProviders#0" />
+            <element signature="method#DeleteProvider#0;class#DAOProviders#0" />
+            <element signature="method#EditProvider#0;class#DAOProviders#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="121" column="61" lean-forward="true" selection-start-line="121" selection-start-column="61" selection-end-line="121" selection-end-column="61" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
+            <element signature="method#AddNewProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#DeleteProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#EditProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetOneProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
+            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="242" column="60" selection-start-line="242" selection-start-column="60" selection-end-line="242" selection-end-column="60" />
+        <state relative-caret-position="-175">
+          <caret line="301" column="60" selection-start-line="301" selection-start-column="60" selection-end-line="301" selection-end-column="60" />
           <folding>
             <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
@@ -983,45 +1003,31 @@
             <element signature="n#script#6;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#7;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#8;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#8;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#9;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#11;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#15;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#19;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#22;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#25;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#28;n#body#0;n#html#0;n#!!top" />
-            <element signature="n#script#32;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#16;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#20;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#23;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#26;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#29;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#33;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="53" column="110" selection-start-line="53" selection-start-column="110" selection-end-line="53" selection-end-column="110" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
-            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
-            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
-            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+            <element signature="n#script#34;n#body#0;n#html#0;n#!!top" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="129" column="26" selection-start-line="129" selection-start-column="26" selection-end-line="129" selection-end-column="26" />
+        <state relative-caret-position="63">
+          <caret line="302" column="5" lean-forward="true" selection-start-line="302" selection-start-column="5" selection-end-line="302" selection-end-column="5" />
           <folding>
             <element signature="n#Common#0" />
-            <element signature="e#34#189#0" />
             <element signature="n#!!block;n#ClearTemporary#0;n#Common#0" />
             <element signature="n#Router#0" />
             <element signature="n#!!block;n#initialize#0;n#Router#0" />
+            <element signature="n#!!block;n#handleHash#0;n#Router#0" />
             <element signature="n#TemplateHandler#0" />
             <element signature="n#!!block;n#DefineUser#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#CheckPermission#0;n#InterfaceHashHandler#0" />
@@ -1030,6 +1036,7 @@
             <element signature="n#!!block;n#ProviderList#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ProviderFind#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ProviderAdd#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ProviderEdit#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#Customer#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#CustomerList#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#CustomerFind#0;n#InterfaceHashHandler#0" />
@@ -1060,13 +1067,17 @@
             <element signature="n#!!block;n#ProviderTable_EditRow#0;n#InterfaceActionHandler#0" />
             <element signature="n#!!block;n#ProviderTable_DeleteRow#0;n#InterfaceActionHandler#0" />
             <element signature="n#!!block;n#ProviderTable_ExtendList#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#ProviderTable_Refresh#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Provider_LoadOne#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#ProviderAdd_Send#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#ProviderEdit_Send#0;n#InterfaceActionHandler#0" />
             <element signature="n#!!block;n#Customer_Load#0;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Customer_Load#1;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Storage_Load#1;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Customer_Load#2;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Customer_Load#3;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Customer_Load#4;n#InterfaceActionHandler#0" />
-            <element signature="n#!!block;n#Report_Load#1;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Goods_Load#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Storage_Load#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Import_Load#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Export_Load#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#Report_Load#0;n#InterfaceActionHandler#0" />
+            <element signature="n#!!block;n#System_Load#0;n#InterfaceActionHandler#0" />
             <element signature="n#!!block;n#Logout#0;n#InterfaceActionHandler#0" />
           </folding>
         </state>
