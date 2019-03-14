@@ -29,7 +29,6 @@ class Router {
 
             case '#provider'          : { InterfaceHashHandler.Provider();         } break;
             case '#provider_list'     : { InterfaceHashHandler.ProviderList();     } break;
-            case '#provider_find'     : { InterfaceHashHandler.ProviderFind();     } break;
             case '#provider_add'      : { InterfaceHashHandler.ProviderAdd();      } break;
 
             case '#customer'          : { InterfaceHashHandler.Customer();         } break;
@@ -135,13 +134,6 @@ class InterfaceHashHandler {
             InterfaceActionHandler.ProviderTable_Fill(data);
         });
     }
-    static ProviderFind() {
-        if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('provider_find_template', data);
-    }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
         const dynamic_panel = document.getElementById('dynamic_panel');
@@ -160,22 +152,20 @@ class InterfaceHashHandler {
     }
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('customer_list_template', data);
-    }
-    static CustomerFind() {
-        if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('customer_find_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
+        InterfaceActionHandler.CustomerTable_Load(function(data) {
+            InterfaceActionHandler.CustomerTable_Fill(data);
+        });
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
         const dynamic_panel = document.getElementById('dynamic_panel');
         dynamic_panel.innerHTML = TemplateHandler.Render('customer_add_template', {});
+    }
+    static CustomerEdit(id) {
+        InterfaceActionHandler.Customer_LoadOne(id, function (data) {
+            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_edit_template', data);
+        });
     }
 
     static Goods() {
@@ -320,7 +310,7 @@ class InterfaceActionHandler {
         http.send(query_body);
     }
     static ProviderTable_Fill(data) {
-        const table_place = document.getElementById('table_place');
+        const table_place = document.getElementById('provider_table_place');
         table_place.innerHTML = TemplateHandler.Render('provider_list_table', {});
         let table_body = table_place.getElementsByTagName('tbody')[0];
 
@@ -377,7 +367,7 @@ class InterfaceActionHandler {
         Common.list_begin_ind = 0;
 
         Common.table_data = [];
-        let table_body = document.getElementById('table_place').getElementsByTagName('tbody')[0];
+        let table_body = document.getElementById('provider_table_place').getElementsByTagName('tbody')[0];
         while (table_body.firstChild) {
             table_body.removeChild(table_body.firstChild);
         }
@@ -407,7 +397,6 @@ class InterfaceActionHandler {
             String(id) + "\n";
         http.send(query_body);
     }
-
     static ProviderAdd_Send() {
         let panel = $('.add_provider_panel');
         let name = panel.find('input[name=\'input_name\']');
@@ -480,6 +469,177 @@ class InterfaceActionHandler {
     static Customer_Load() {
         return {};
     }
+    static CustomerTable_Load(callback) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            let new_data = JSON.parse(http.responseText);
+            Common.table_data = Common.table_data.concat(new_data);
+            callback(Common.table_data);
+        };
+        let query_body =
+            "get_customer_list\n" +
+            String(Common.list_begin_ind) + "\n" +
+            String(Common.list_size) + "\n";
+        http.send(query_body);
+    }
+    static CustomerTable_Fill(data) {
+        const table_place = document.getElementById('customer_table_place');
+        table_place.innerHTML = TemplateHandler.Render('customer_list_table', {});
+        let table_body = table_place.getElementsByTagName('tbody')[0];
+
+        for (let i = 0; i < data.length; i++)
+            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('customer_datatable_row', data[i]));
+
+        $('#dtCustomerTable').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+    }
+    static CustomerTable_EditRow(id) {
+        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
+        if (sure)
+            InterfaceHashHandler.CustomerEdit(id);
+    }
+    static CustomerTable_DeleteRow(id) {
+        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
+        if (sure) {
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function () {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    if (http.responseText === "ok") {
+                        alert("Customer are deleted successfully");
+                        InterfaceActionHandler.CustomerTable_Refresh();
+                    }
+                    else
+                        alert("Customer was not deleted, some trouble happened on the server side.");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("Customer was not deleted, some trouble happened with the request.");
+                }
+            };
+            let query_body =
+                "delete_customer" + "\n" +
+                id + "\n";
+            http.send(query_body);
+        }
+    }
+    static CustomerTable_ExtendList() {
+        Common.list_begin_ind += Common.list_size;
+        InterfaceActionHandler.CustomerTable_Load(function(data) {
+            InterfaceActionHandler.CustomerTable_Fill(data);
+        });
+    }
+    static CustomerTable_Refresh() {
+
+        let prev_ind = Common.list_begin_ind;
+        let prev_size = Common.list_size;
+
+        Common.list_size += Common.list_begin_ind;
+        Common.list_begin_ind = 0;
+
+        Common.table_data = [];
+        let table_body = document.getElementById('customer_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+
+        this.CustomerTable_Load(function(data) {
+            InterfaceActionHandler.CustomerTable_Fill(data);
+        });
+
+        $('#dtCustomerTable').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+        Common.list_begin_ind = prev_ind;
+        Common.list_size = prev_size;
+    }
+    static Customer_LoadOne(id, callback) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            callback(JSON.parse(http.responseText));
+        };
+        let query_body =
+            "get_one_customer\n" +
+            String(id) + "\n";
+        http.send(query_body);
+    }
+    static CustomerAdd_Send() {
+        let panel = $('.add_customer_panel');
+        let name = panel.find('input[name=\'input_name\']');
+        let country = panel.find('input[name=\'input_country\']');
+        let description = panel.find('input[name=\'input_description\']');
+
+        if (name.val() === '' || country.val() === '') {
+            alert("Fill all required fields!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Customer are added successfully");
+                    name.val('');
+                    country.val('');
+                    description.val('');
+                }
+                else
+                    alert("Customer was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Customer was not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "add_customer" + "\n" +
+            String(name.val()) + "\n" +
+            String(country.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
+    }
+    static CustomerEdit_Send() {
+        let panel = $('.edit_customer_panel');
+        let id = panel.find('input[name=\'input_id\']');
+        let name = panel.find('input[name=\'input_name\']');
+        let country = panel.find('input[name=\'input_country\']');
+        let description = panel.find('input[name=\'input_description\']');
+
+        if (name.val() === '' && country.val() === '' && description.val() === '') {
+            alert("Fill at least one field!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Customer are edited successfully");
+                    InterfaceHashHandler.CustomerList();
+                }
+                else
+                    alert("Customer was not edited, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Customer was not edited, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "edit_customer" + "\n" +
+            String(id.val()) + "\n" +
+            String(name.val()) + "\n" +
+            String(country.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
+    }
+
     static Goods_Load() {
         return {};
     }

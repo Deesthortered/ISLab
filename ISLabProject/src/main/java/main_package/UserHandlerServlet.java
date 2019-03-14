@@ -1,7 +1,9 @@
 package main_package;
 
+import data_model.Customer;
 import data_model.Provider;
 import database_package.ConnectionPool;
+import database_package.DAOCustomer;
 import database_package.DAOProviders;
 import org.json.JSONArray;
 import utility_package.Common;
@@ -23,7 +25,9 @@ public class UserHandlerServlet extends HttpServlet {
         String title = reader.readLine();
         if (title.equals(Common.q_get_role)) {
             GetRole(request, response);
-        } else if (title.equals(Common.q_get_provider_list)) {
+        }
+
+        else if (title.equals(Common.q_get_provider_list)) {
             GetProviderList(request, response);
         } else if (title.equals(Common.q_add_provider)) {
             AddNewProvider(request, response);
@@ -33,7 +37,21 @@ public class UserHandlerServlet extends HttpServlet {
             EditProvider(request, response);
         } else if (title.equals(Common.q_get_one_provider)) {
             GetOneProvider(request, response);
-        } else {
+        }
+
+        else if (title.equals(Common.q_get_customer_list)) {
+            GetCustomerList(request, response);
+        } else if (title.equals(Common.q_add_customer)) {
+            AddNewCustomer(request, response);
+        } else if (title.equals(Common.q_delete_customer)) {
+            DeleteCustomer(request, response);
+        } else if (title.equals(Common.q_edit_customer)) {
+            EditCustomer(request, response);
+        } else if (title.equals(Common.q_get_one_customer)) {
+            GetOneCustomer(request, response);
+        }
+
+        else {
             SendError(request, response);
         }
     }
@@ -57,6 +75,7 @@ public class UserHandlerServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
         writer.print(request.getSession().getAttribute(Common.atr_role));
     }
+
     private void GetProviderList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
@@ -136,7 +155,7 @@ public class UserHandlerServlet extends HttpServlet {
         Provider old_version = dao.GetOneProvider(connection, id);
 
         if (name.isEmpty()) name = old_version.getName();
-        if (description.isEmpty()) name = old_version.getCountry();
+        if (country.isEmpty()) name = old_version.getCountry();
         if (description.isEmpty()) name = old_version.getDescription();
 
         if (dao.IsExistsProvider(connection, id)) {
@@ -161,6 +180,115 @@ public class UserHandlerServlet extends HttpServlet {
         if (dao.IsExistsProvider(connection, id)) {
             Provider provider = dao.GetOneProvider(connection, id);
             writer.print(provider.getJSON().toString());
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+
+    private void GetCustomerList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        int begin_index = Integer.parseInt(reader.readLine());
+        int count_of_records = Integer.parseInt(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOCustomer dao = DAOCustomer.getInstance();
+
+        Connection connection = pool.GetConnection();
+        ArrayList<Customer> list = dao.GetCustomersList(connection, begin_index, count_of_records);
+        pool.DropConnection(connection);
+
+        JSONArray json_list = new JSONArray();
+        for (Customer customer : list) {
+            json_list.put(customer.getJSON());
+        }
+
+        writer.write(json_list.toString());
+    }
+    private void AddNewCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        Customer customer = new Customer(name, country, description);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOCustomer dao = DAOCustomer.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.AddCustomer(connection, customer))
+            writer.print("ok");
+        else
+            writer.print("bad");
+        pool.DropConnection(connection);
+
+    }
+    private void DeleteCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOCustomer dao = DAOCustomer.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsCustomer(connection, id)) {
+            if (dao.DeleteCustomer(connection, id))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+
+        pool.DropConnection(connection);
+    }
+    private void EditCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOCustomer dao = DAOCustomer.getInstance();
+
+        Connection connection = pool.GetConnection();
+        Customer old_version = dao.GetOneCustomer(connection, id);
+
+        if (name.isEmpty()) name = old_version.getName();
+        if (country.isEmpty()) name = old_version.getCountry();
+        if (description.isEmpty()) name = old_version.getDescription();
+
+        if (dao.IsExistsCustomer(connection, id)) {
+            if (dao.EditCustomer(connection, new Customer(id, name, country, description)))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+    private void GetOneCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOCustomer dao = DAOCustomer.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsCustomer(connection, id)) {
+            Customer customer = dao.GetOneCustomer(connection, id);
+            writer.print(customer.getJSON().toString());
         } else
             writer.print("not exist");
         pool.DropConnection(connection);

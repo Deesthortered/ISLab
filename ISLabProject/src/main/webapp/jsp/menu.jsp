@@ -48,14 +48,12 @@
         <li><a href="#provider">Provider</a>
             <ul>
                 <li><a href="#provider_list">List of Providers (10 by step)</a></li>
-                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
                 <li><a href="#provider_add">Add new Provider</a></li>
             </ul>
         </li>
         <li><a href="#customer">Customer</a>
             <ul>
                 <li><a href="#customer_list">List of Customers (10 by step)</a></li>
-                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
                 <li><a href="#customer_add">Add new Customer</a></li>
             </ul>
         </li>
@@ -99,13 +97,11 @@
         <li><a href="#provider">Provider</a>
             <ul>
                 <li><a href="#provider_list">List of Providers (10 by step)</a></li>
-                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#customer">Customer</a>
             <ul>
                 <li><a href="#customer_list">List of Customers (10 by step)</a></li>
-                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#goods">Goods</a>
@@ -143,7 +139,6 @@
         <li><a href="#provider">Provider</a>
             <ul>
                 <li><a href="#provider_list">List of Providers (10 by step)</a></li>
-                <li><a href="#provider_find">Find Provider(s) (Filter/ID)</a></li>
                 <li><a href="#provider_add">Add new Provider</a></li>
             </ul>
         </li>
@@ -179,7 +174,6 @@
         <li><a href="#customer">Customer</a>
             <ul>
                 <li><a href="#customer_list">List of Customers (10 by step)</a></li>
-                <li><a href="#customer_find">Find Customer(s) (Filter/ID)</a></li>
                 <li><a href="#customer_add">Add new Customer</a></li>
             </ul>
         </li>
@@ -243,7 +237,7 @@
     <script id="provider_list_template" type="text/template">
         <h1>Provider list</h1>
         <p>There you can review list of providers and edit it.</p>
-        <div id="table_place"></div>
+        <div id="provider_table_place"></div>
         <br>
     </script>
     <script id="provider_list_table" type="text/template">
@@ -285,7 +279,6 @@
         </tr>
     </script>
 
-    <script id="provider_find_template" type="text/template"> </script>
     <script id="provider_add_template" type="text/template">
         <h1>Add provider</h1>
         <p> There you can add new provider to base.</p>
@@ -316,6 +309,7 @@
     </script>
     <!--  -->
 
+    <!-- Customer section scripts -->
     <script id="customer_template" type="text/template">
         <h1>Customer menu</h1>
         <p> In the menu you can review customer's info and control data.</p>
@@ -334,10 +328,82 @@
             <li><a href="#customer_add"><u>Add new Customer</u></a> - you can add new customer if you need to export some goods, but customer is not exist in the database.</li>
         </ul>
     </script>
-    <script id="customer_list_template" type="text/template"> </script>
-    <script id="customer_find_template" type="text/template"> </script>
-    <script id="customer_add_template" type="text/template"> </script>
 
+    <script id="customer_list_template" type="text/template">
+        <h1>Customer list</h1>
+        <p>There you can review list of providers and edit it.</p>
+        <div id="customer_table_place"></div>
+        <br>
+    </script>
+    <script id="customer_list_table" type="text/template">
+        <table id="dtCustomerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+            <thead>
+            <tr>
+                <th class="th-sm">ID </th>
+                <th class="th-sm">Name </th>
+                <th class="th-sm">Country </th>
+                <th class="th-sm">Description </th>
+                <th class="th-sm">Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>ID </th>
+                <th>Name </th>
+                <th>Country </th>
+                <th>Description </th>
+                <th>Actions </th>
+            </tr>
+            </tfoot>
+        </table>
+        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.CustomerTable_Refresh()">Refresh</button>
+    </script>
+    <script id="customer_datatable_row" type="text/template">
+        <tr>
+            <td>{{ id }}</td>
+            <td>{{ name }}</td>
+            <td>{{ country }}</td>
+            <td>{{ description }}</td>
+            <td>
+                <button class="table_action" onclick="InterfaceActionHandler.CustomerTable_EditRow( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="InterfaceActionHandler.CustomerTable_DeleteRow( {{ id }} );">Delete</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="customer_add_template" type="text/template">
+        <h1>Add customer</h1>
+        <p> There you can add new customer to base.</p>
+        <div class = "add_customer_panel">
+            <p><b>*</b> Name:</p>
+            <input type="text" name="input_name">
+            <p><b>*</b> Country:</p>
+            <input type="text" name="input_country">
+            <p>Description:</p>
+            <input type="text" name="input_description">
+            <p><button onclick="InterfaceActionHandler.CustomerAdd_Send()">Send data</button></p>
+        </div>
+    </script>
+    <script id="customer_edit_template" type="text/template">
+        <h1>Edit customer</h1>
+        <p> There you can edit customer in the base.</p>
+        <p> Edit field which you to change, <b>others leave empty</b>.</p>
+        <div class = "edit_customer_panel">
+            <input type="hidden" name="input_id" value="{{ id }}" />
+            <p> Name:</p>
+            <input type="text" name="input_name" value="{{ name }}">
+            <p> Country:</p>
+            <input type="text" name="input_country" value="{{ country }}">
+            <p> Description:</p>
+            <input type="text" name="input_description"  value="{{ description }}">
+            <p><button onclick="InterfaceActionHandler.CustomerEdit_Send()">Send data</button></p>
+        </div>
+    </script>
+    <!--  -->
+-
     <script id="goods_template" type="text/template">
         <h1>Goods menu</h1>
         <p> In the menu you can review goods info and control data.</p>
