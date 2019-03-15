@@ -237,6 +237,17 @@
     <script id="provider_list_template" type="text/template">
         <h1>Provider list</h1>
         <p>There you can review list of providers and edit it.</p>
+        <div id="provider_filter">
+            <h3>Filter.</h3>
+            <ul>
+                <li>ID: <input type="text" name="filter_id"></li>
+                <li>Name: <input type="text" name="filter_name"></li>
+                <li>Country: <input type="text" name="filter_country"></li>
+                <li>Description: <input type="text" name="filter_description"></li>
+            </ul>
+            <button onclick="InterfaceActionHandler.ProviderTable_SetFilter()">Send request</button>
+        </div>
+        <br>
         <div id="provider_table_place"></div>
         <br>
     </script>
@@ -332,6 +343,17 @@
     <script id="customer_list_template" type="text/template">
         <h1>Customer list</h1>
         <p>There you can review list of providers and edit it.</p>
+        <div id="customer_filter">
+            <h3>Filter.</h3>
+            <ul>
+                <li>ID: <input type="text" name="filter_id"></li>
+                <li>Name: <input type="text" name="filter_name"></li>
+                <li>Country: <input type="text" name="filter_country"></li>
+                <li>Description: <input type="text" name="filter_description"></li>
+            </ul>
+            <button onclick="InterfaceActionHandler.CustomerTable_SetFilter()">Send request</button>
+        </div>
+        <br>
         <div id="customer_table_place"></div>
         <br>
     </script>

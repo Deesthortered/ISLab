@@ -129,6 +129,13 @@ class InterfaceHashHandler {
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
 
+        Common.filter = {
+            id : -1,
+            name : '',
+            country : '',
+            description : ''
+        };
+
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
         InterfaceActionHandler.ProviderTable_Load(function(data) {
             InterfaceActionHandler.ProviderTable_Fill(data);
@@ -151,6 +158,14 @@ class InterfaceHashHandler {
     }
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
+
+        Common.filter = {
+            id : -1,
+            name : '',
+            country : '',
+            description : ''
+        };
+
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
         InterfaceActionHandler.CustomerTable_Load(function(data) {
             InterfaceActionHandler.CustomerTable_Fill(data);
@@ -303,10 +318,10 @@ class InterfaceActionHandler {
         };
         let query_body =
             "get_provider_list\n" +
-            "-1\n" +
-            "\n" +
-            "\n" +
-            "\n" +
+            String(Common.filter.id) + "\n" +
+            String(Common.filter.name) + "\n" +
+            String(Common.filter.country) + "\n" +
+            String(Common.filter.description) + "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);
@@ -467,6 +482,27 @@ class InterfaceActionHandler {
             String(description.val()) + "\n";
         http.send(query_body);
     }
+    static ProviderTable_SetFilter() {
+        Common.ClearTemporary();
+
+        let panel = $('#provider_filter');
+        let id = panel.find('input[name=\'filter_id\']');
+        let name = panel.find('input[name=\'filter_name\']');
+        let country = panel.find('input[name=\'filter_country\']');
+        let description = panel.find('input[name=\'filter_description\']');
+
+        Common.filter = {
+            id : String(id.val()) === '' ? -1 : Number(id.val()),
+            name : String(name.val()),
+            country : String(country.val()),
+            description : String(description.val())
+        };
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
+        InterfaceActionHandler.ProviderTable_Load(function(data) {
+            InterfaceActionHandler.ProviderTable_Fill(data);
+        });
+    }
 
     static Customer_Load() {
         return {};
@@ -481,10 +517,10 @@ class InterfaceActionHandler {
         };
         let query_body =
             "get_customer_list\n" +
-            "-1\n" +
-            "\n" +
-            "\n" +
-            "\n" +
+            String(Common.filter.id) + "\n" +
+            String(Common.filter.name) + "\n" +
+            String(Common.filter.country) + "\n" +
+            String(Common.filter.description) + "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);
@@ -644,6 +680,27 @@ class InterfaceActionHandler {
             String(country.val()) + "\n" +
             String(description.val()) + "\n";
         http.send(query_body);
+    }
+    static CustomerTable_SetFilter() {
+        Common.ClearTemporary();
+
+        let panel = $('#customer_filter');
+        let id = panel.find('input[name=\'filter_id\']');
+        let name = panel.find('input[name=\'filter_name\']');
+        let country = panel.find('input[name=\'filter_country\']');
+        let description = panel.find('input[name=\'filter_description\']');
+
+        Common.filter = {
+            id : String(id.val()) === '' ? -1 : Number(id.val()),
+            name : String(name.val()),
+            country : String(country.val()),
+            description : String(description.val())
+        };
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
+        InterfaceActionHandler.CustomerTable_Load(function(data) {
+            InterfaceActionHandler.CustomerTable_Fill(data);
+        });
     }
 
     static Goods_Load() {
