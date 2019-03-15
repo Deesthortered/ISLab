@@ -19,13 +19,28 @@ public class DAOProviders {
         return instance;
     }
 
-    public ArrayList<Provider> GetProvidersList(Connection connection, int start_index, int count_of_records) {
+    public ArrayList<Provider> GetProvidersList(Connection connection, Provider filter, long start_index, long count_of_records) {
         ArrayList<Provider> result = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM islabdb.provider limit ? offset ?");
-            statement.setInt(1, count_of_records);
-            statement.setInt(2, start_index);
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM islabdb.provider " +
+                        "WHERE   (Provider_ID = ? OR ? = -1) AND " +
+                                "(Provider_Name = ? OR ? = '') AND " +
+                                "(Provider_Country = ? OR ? = '') AND " +
+                                "(Provider_Description = ? OR ? = '') " +
+                        " limit ? offset ?");
+
+            statement.setLong(1, filter.getId());
+            statement.setLong(2, filter.getId());
+            statement.setString(3, filter.getName());
+            statement.setString(4, filter.getName());
+            statement.setString(5, filter.getCountry());
+            statement.setString(6, filter.getCountry());
+            statement.setString(7, filter.getDescription());
+            statement.setString(8, filter.getDescription());
+            statement.setLong(9, count_of_records);
+            statement.setLong(10, start_index);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -39,24 +54,6 @@ public class DAOProviders {
             e.printStackTrace();
         }
         return result;
-    }
-    public Provider GetOneProvider(Connection connection, long id) {
-        Provider provider;
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * from islabdb.provider where Provider_ID = ?");
-            statement.setLong(1, id);
-            ResultSet set = statement.executeQuery();
-            if (!set.next())
-                return new Provider();
-            String name = set.getString("Provider_Name");
-            String country = set.getString("Provider_Country");
-            String description = set.getString("Provider_Description");
-            provider = new Provider(id, name, country, description);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new Provider();
-        }
-        return provider;
     }
     public boolean IsExistsProvider(Connection connection, long id) {
         try {

@@ -17,16 +17,15 @@ public class Customer {
     }
     public Customer(long id, String name, String country, String description) {
         this.id = id;
-        this.name = name;
-        this.country = country;
-        if (description == null || description.equals(""))
-            this.description = null;
-        else this.description = description;
-    }
-    public Customer(String name, String country, String description) {
-        this.id = -1;
-        this.name = name;
-        this.country = country;
+
+        if (name == null || name.equals(""))
+            this.name = null;
+        else this.name = name;
+
+        if (country == null || country.equals(""))
+            this.country = null;
+        else this.country = country;
+
         if (description == null || description.equals(""))
             this.description = null;
         else this.description = description;
@@ -36,9 +35,13 @@ public class Customer {
         return id;
     }
     public String getName() {
+        if (name == null)
+            return "";
         return name;
     }
     public String getCountry() {
+        if (country == null)
+            return "";
         return country;
     }
     public String getDescription() {

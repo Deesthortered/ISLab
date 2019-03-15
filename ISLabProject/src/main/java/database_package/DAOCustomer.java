@@ -19,13 +19,28 @@ public class DAOCustomer {
         return instance;
     }
 
-    public ArrayList<Customer> GetCustomersList(Connection connection, int start_index, int count_of_records) {
+    public ArrayList<Customer> GetCustomersList(Connection connection, Customer filter, int start_index, int count_of_records) {
         ArrayList<Customer> result = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM islabdb.customer limit ? offset ?");
-            statement.setInt(1, count_of_records);
-            statement.setInt(2, start_index);
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM islabdb.customer " +
+                            "WHERE   (Customer_ID = ? OR ? = -1) AND " +
+                            "(Customer_Name = ? OR ? = '') AND " +
+                            "(Customer_Country = ? OR ? = '') AND " +
+                            "(Customer_Description = ? OR ? = '')" +
+                            " limit ? offset ?");
+
+            statement.setLong(1, filter.getId());
+            statement.setLong(2, filter.getId());
+            statement.setString(3, filter.getName());
+            statement.setString(4, filter.getName());
+            statement.setString(5, filter.getCountry());
+            statement.setString(6, filter.getCountry());
+            statement.setString(7, filter.getDescription());
+            statement.setString(8, filter.getDescription());
+            statement.setLong(9, count_of_records);
+            statement.setLong(10, start_index);
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -39,24 +54,6 @@ public class DAOCustomer {
             e.printStackTrace();
         }
         return result;
-    }
-    public Customer GetOneCustomer(Connection connection, long id) {
-        Customer customer;
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT * from islabdb.customer where Customer_ID = ?");
-            statement.setLong(1, id);
-            ResultSet set = statement.executeQuery();
-            if (!set.next())
-                return new Customer();
-            String name = set.getString("Customer_Name");
-            String country = set.getString("Customer_Country");
-            String description = set.getString("Customer_Description");
-            customer = new Customer(id, name, country, description);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return new Customer();
-        }
-        return customer;
     }
     public boolean IsExistsCustomer(Connection connection, long id) {
         try {

@@ -80,6 +80,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
+        long id = Long.parseLong(reader.readLine());
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        Provider filter = new Provider(id, name, country, description);
+
         int begin_index = Integer.parseInt(reader.readLine());
         int count_of_records = Integer.parseInt(reader.readLine());
 
@@ -87,7 +94,7 @@ public class UserHandlerServlet extends HttpServlet {
         DAOProviders dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Provider> list = dao.GetProvidersList(connection, begin_index, count_of_records);
+        ArrayList<Provider> list = dao.GetProvidersList(connection, filter, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
@@ -105,7 +112,7 @@ public class UserHandlerServlet extends HttpServlet {
         String country = reader.readLine();
         String description = reader.readLine();
 
-        Provider provider = new Provider(name, country, description);
+        Provider provider = new Provider(-1, name, country, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOProviders dao = DAOProviders.getInstance();
@@ -152,7 +159,7 @@ public class UserHandlerServlet extends HttpServlet {
         DAOProviders dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        Provider old_version = dao.GetOneProvider(connection, id);
+        Provider old_version = dao.GetProvidersList(connection, new Provider(id, null, null, null), 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
         if (country.isEmpty()) name = old_version.getCountry();
@@ -178,7 +185,7 @@ public class UserHandlerServlet extends HttpServlet {
 
         Connection connection = pool.GetConnection();
         if (dao.IsExistsProvider(connection, id)) {
-            Provider provider = dao.GetOneProvider(connection, id);
+            Provider provider = dao.GetProvidersList(connection, new Provider(id, null, null, null), 0, 1).get(0);
             writer.print(provider.getJSON().toString());
         } else
             writer.print("not exist");
@@ -189,6 +196,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
+        long id = Long.parseLong(reader.readLine());
+        String name = reader.readLine();
+        String country = reader.readLine();
+        String description = reader.readLine();
+
+        Customer filter = new Customer(id, name, country, description);
+
         int begin_index = Integer.parseInt(reader.readLine());
         int count_of_records = Integer.parseInt(reader.readLine());
 
@@ -196,7 +210,7 @@ public class UserHandlerServlet extends HttpServlet {
         DAOCustomer dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Customer> list = dao.GetCustomersList(connection, begin_index, count_of_records);
+        ArrayList<Customer> list = dao.GetCustomersList(connection, filter, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
@@ -214,7 +228,7 @@ public class UserHandlerServlet extends HttpServlet {
         String country = reader.readLine();
         String description = reader.readLine();
 
-        Customer customer = new Customer(name, country, description);
+        Customer customer = new Customer(-1, name, country, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOCustomer dao = DAOCustomer.getInstance();
@@ -261,7 +275,7 @@ public class UserHandlerServlet extends HttpServlet {
         DAOCustomer dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        Customer old_version = dao.GetOneCustomer(connection, id);
+        Customer old_version = dao.GetCustomersList(connection, new Customer(id, null, null, null), 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
         if (country.isEmpty()) name = old_version.getCountry();
@@ -287,7 +301,7 @@ public class UserHandlerServlet extends HttpServlet {
 
         Connection connection = pool.GetConnection();
         if (dao.IsExistsCustomer(connection, id)) {
-            Customer customer = dao.GetOneCustomer(connection, id);
+            Customer customer = dao.GetCustomersList(connection, new Customer(id, null, null, null), 0, 1).get(0);
             writer.print(customer.getJSON().toString());
         } else
             writer.print("not exist");

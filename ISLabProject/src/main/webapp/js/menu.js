@@ -11,6 +11,7 @@ class Common {
     static role;
     static list_begin_ind;
     static table_data;
+    static filter;
 
     static ClearTemporary() {
         this.list_begin_ind = 0;
@@ -33,7 +34,6 @@ class Router {
 
             case '#customer'          : { InterfaceHashHandler.Customer();         } break;
             case '#customer_list'     : { InterfaceHashHandler.CustomerList();     } break;
-            case '#customer_find'     : { InterfaceHashHandler.CustomerFind();     } break;
             case '#customer_add'      : { InterfaceHashHandler.CustomerAdd();      } break;
 
             case '#goods'             : { InterfaceHashHandler.Goods();            } break;
@@ -136,8 +136,7 @@ class InterfaceHashHandler {
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('provider_add_template', {});
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_add_template', {});
     }
     static ProviderEdit(id) {
         InterfaceActionHandler.Provider_LoadOne(id, function (data) {
@@ -159,8 +158,7 @@ class InterfaceHashHandler {
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('customer_add_template', {});
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_add_template', {});
     }
     static CustomerEdit(id) {
         InterfaceActionHandler.Customer_LoadOne(id, function (data) {
@@ -305,6 +303,10 @@ class InterfaceActionHandler {
         };
         let query_body =
             "get_provider_list\n" +
+            "-1\n" +
+            "\n" +
+            "\n" +
+            "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);
@@ -479,6 +481,10 @@ class InterfaceActionHandler {
         };
         let query_body =
             "get_customer_list\n" +
+            "-1\n" +
+            "\n" +
+            "\n" +
+            "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);

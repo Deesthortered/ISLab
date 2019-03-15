@@ -295,7 +295,7 @@
     <script id="provider_edit_template" type="text/template">
         <h1>Edit provider</h1>
         <p> There you can edit provider in the base.</p>
-        <p> Edit field which you to change, <b>others leave empty</b>.</p>
+        <p> Edit field which you want to change.</p>
         <div class = "edit_provider_panel">
             <input type="hidden" name="input_id" value="{{ id }}" />
             <p> Name:</p>
@@ -390,7 +390,7 @@
     <script id="customer_edit_template" type="text/template">
         <h1>Edit customer</h1>
         <p> There you can edit customer in the base.</p>
-        <p> Edit field which you to change, <b>others leave empty</b>.</p>
+        <p> Edit field which you want to change.</p>
         <div class = "edit_customer_panel">
             <input type="hidden" name="input_id" value="{{ id }}" />
             <p> Name:</p>
@@ -403,7 +403,7 @@
         </div>
     </script>
     <!--  -->
--
+
     <script id="goods_template" type="text/template">
         <h1>Goods menu</h1>
         <p> In the menu you can review goods info and control data.</p>
