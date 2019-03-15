@@ -56,7 +56,7 @@ public class Provider {
             object.put("id", id);
             object.put("name", name);
             object.put("country", country);
-            object.put("description",description == null ? "" : description);
+            object.put("description", description == null ? "" : description);
         } catch (JSONException e) {
             e.printStackTrace();
         }

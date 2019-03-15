@@ -38,7 +38,6 @@ class Router {
 
             case '#goods'             : { InterfaceHashHandler.Goods();            } break;
             case '#goods_list'        : { InterfaceHashHandler.GoodsList();        } break;
-            case '#goods_find'        : { InterfaceHashHandler.GoodsFind();        } break;
             case '#goods_add'         : { InterfaceHashHandler.GoodsAdd();         } break;
 
             case '#storage'           : { InterfaceHashHandler.Storage();          } break;
@@ -190,12 +189,6 @@ class InterfaceHashHandler {
         };
         const dynamic_panel = document.getElementById('dynamic_panel');
         dynamic_panel.innerHTML = TemplateHandler.Render('goods_list_template', data);
-    }
-    static GoodsFind() {
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('goods_find_template', data);
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
@@ -706,6 +699,37 @@ class InterfaceActionHandler {
     static Goods_Load() {
         return {};
     }
+    static GoodsTable_Load(callback){
+
+    }
+    static GoodsTable_Fill(data) {
+
+    }
+    static GoodsTable_EditRow() {
+
+    }
+    static GoodsTable_DeleteRow() {
+
+    }
+    static GoodsTable_ExtendList() {
+
+    }
+    static GoodsTable_Refresh() {
+
+    }
+    static Goods_LoadOne(id, callback) {
+
+    }
+    static GoodsAdd_Send() {
+
+    }
+    static GoodsEdit_Send() {
+
+    }
+    static GoodsTable_SetFilter() {
+
+    }
+
     static Storage_Load() {
         return {};
     }

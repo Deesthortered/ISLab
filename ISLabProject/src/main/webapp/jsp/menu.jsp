@@ -43,6 +43,7 @@
         <button class="logout" onclick="InterfaceActionHandler.Logout()">Logout</button>
     </script>
 
+    <!-- Menu for each role -->
     <script id="admin_menu_template" type="text/template">
         <li><a href="#">Start Page</a></li>
         <li><a href="#provider">Provider</a>
@@ -60,7 +61,6 @@
         <li><a href="#goods">Goods</a>
             <ul>
                 <li><a href="#goods_list">List of Goods (10 by step)</a></li>
-                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
                 <li><a href="#goods_add">Add new Goods</a></li>
             </ul>
         </li>
@@ -107,7 +107,6 @@
         <li><a href="#goods">Goods</a>
             <ul>
                 <li><a href="#goods_list">List of Goods (10 by step)</a></li>
-                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#storage">Storage</a>
@@ -145,7 +144,6 @@
         <li><a href="#goods">Goods</a>
             <ul>
                 <li><a href="#goods_list">List of Goods (10 by step)</a></li>
-                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
                 <li><a href="#goods_add">Add new Goods</a></li>
             </ul>
         </li>
@@ -180,7 +178,6 @@
         <li><a href="#goods">Goods</a>
             <ul>
                 <li><a href="#goods_list">List of Goods (10 by step)</a></li>
-                <li><a href="#goods_find">Find Goods (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#storage">Storage</a>
@@ -229,7 +226,6 @@
         <h3><i>Available actions:</i></h3>
         <ul class="content_ul">
             <li><a href="#provider_list"><u>List of Providers</u></a> - show first 10 providers, you can expand list by each 10 next providers.</li>
-            <li><a href="#provider_find"><u>Find Provider(s)</u></a> - you can find one (by using ID) or more providers by using filter of fields.</li>
             <li><a href="#provider_add"><u>Add new Provider</u></a> - you can add new provider if you need to import some goods, but provider is not exist in the database.</li>
         </ul>
     </script>
@@ -335,7 +331,6 @@
         <h3><i>Available actions:</i></h3>
         <ul class="content_ul">
             <li><a href="#customer_list"><u>List of Customers</u></a> - show first 10 customers, you can expand list by each 10 next customers.</li>
-            <li><a href="#customer_find"><u>Find Customer(s)</u></a> - you can find one (by using ID) or more customers by using filter of fields.</li>
             <li><a href="#customer_add"><u>Add new Customer</u></a> - you can add new customer if you need to export some goods, but customer is not exist in the database.</li>
         </ul>
     </script>
@@ -426,6 +421,7 @@
     </script>
     <!--  -->
 
+    <!-- Goods section scripts -->
     <script id="goods_template" type="text/template">
         <h1>Goods menu</h1>
         <p> In the menu you can review goods info and control data.</p>
@@ -440,13 +436,95 @@
         <h3><i>Available actions:</i></h3>
         <ul class="content_ul">
             <li><a href="#goods_list"><u>List of Goods</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
-            <li><a href="#goods_find"><u>Find Goods</u></a> - you can find one (by using ID) or more goods by using filter of fields.</li>
             <li><a href="#goods_add"><u>Add new Goods</u></a> - you can add new one if you need to export some goods, but it is not exist in the database.</li>
         </ul>
     </script>
-    <script id="goods_list_template" type="text/template"> </script>
-    <script id="goods_find_template" type="text/template"> </script>
-    <script id="goods_add_template" type="text/template"> </script>
+
+    <script id="goods_list_template" type="text/template">
+        <h1>Goods list</h1>
+        <p>There you can review list of goods and edit it.</p>
+        <div id="goods_filter">
+            <h3>Filter.</h3>
+            <ul>
+                <li>ID: <input type="text" name="filter_id"></li>
+                <li>Name: <input type="text" name="filter_name"></li>
+                <li>Average Price: <input type="text" name="filter_average_price"></li>
+                <li>Description: <input type="text" name="filter_description"></li>
+            </ul>
+            <button onclick="InterfaceActionHandler.GoodsTable_SetFilter()">Send request</button>
+        </div>
+        <br>
+        <div id="goods_table_place"></div>
+        <br>
+    </script>
+    <script id="goods_list_table" type="text/template">
+        <table id="dtGoodsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+            <thead>
+            <tr>
+                <th class="th-sm">ID </th>
+                <th class="th-sm">Name </th>
+                <th class="th-sm">Average Price </th>
+                <th class="th-sm">Description </th>
+                <th class="th-sm">Actions </th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th>ID </th>
+                <th>Name </th>
+                <th>Average Price </th>
+                <th>Description </th>
+                <th>Actions </th>
+            </tr>
+            </tfoot>
+        </table>
+        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.GoodsTable_Refresh()">Refresh</button>
+    </script>
+    <script id="goods_datatable_row" type="text/template">
+        <tr>
+            <td>{{ id }}</td>
+            <td>{{ name }}</td>
+            <td>{{ average_price }}</td>
+            <td>{{ description }}</td>
+            <td>
+                <button class="table_action" onclick="InterfaceActionHandler.GoodsTable_EditRow( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="InterfaceActionHandler.GoodsTable_DeleteRow( {{ id }} );">Delete</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="goods_add_template" type="text/template">
+        <h1>Add goods</h1>
+        <p> There you can add new goods to base.</p>
+        <div class = "add_goods_panel">
+            <p><b>*</b> Name:</p>
+            <input type="text" name="input_name">
+            <p><b>*</b> Average Price:</p>
+            <input type="text" name="input_average_price">
+            <p>Description:</p>
+            <input type="text" name="input_description">
+            <p><button onclick="InterfaceActionHandler.GoodsAdd_Send()">Send data</button></p>
+        </div>
+    </script>
+    <script id="goods_edit_template" type="text/template">
+        <h1>Edit goods</h1>
+        <p> There you can edit goods in the base.</p>
+        <p> Edit field which you want to change.</p>
+        <div class = "edit_customer_panel">
+            <input type="hidden" name="input_id" value="{{ id }}" />
+            <p> Name:</p>
+            <input type="text" name="input_name" value="{{ name }}">
+            <p> Average Price:</p>
+            <input type="text" name="input_average_price" value="{{ average_price }}">
+            <p> Description:</p>
+            <input type="text" name="input_description"  value="{{ description }}">
+            <p><button onclick="InterfaceActionHandler.GoodsEdit_Send()">Send data</button></p>
+        </div>
+    </script>
+    <!--  -->
 
     <script id="storage_template" type="text/template">
         <h1>Storage menu</h1>
