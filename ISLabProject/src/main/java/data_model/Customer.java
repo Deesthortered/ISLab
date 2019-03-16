@@ -10,7 +10,7 @@ public class Customer implements Entity {
     private String description;
 
     public Customer() {
-        this.id          = -1;
+        this.id          = Entity.undefined_long;
         this.name        = Entity.undefined_string;
         this.country     = Entity.undefined_string;
         this.description = Entity.undefined_string;
@@ -41,8 +41,6 @@ public class Customer implements Entity {
         return country;
     }
     public String getDescription() {
-        if (description.equals(Entity.undefined_string))
-            return "";
         return description;
     }
 

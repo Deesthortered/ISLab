@@ -10,24 +10,24 @@ public class Provider implements Entity {
     private String description;
 
     public Provider() {
-        this.id = -1;
-        this.name = null;
-        this.country = null;
-        this.description = null;
+        this.id          = Entity.undefined_long;
+        this.name        = Entity.undefined_string;
+        this.country     = Entity.undefined_string;
+        this.description = Entity.undefined_string;
     }
     public Provider(long id, String name, String country, String description) {
         this.id = id;
 
         if (name == null || name.equals(""))
-            this.name = null;
+            this.name = Entity.undefined_string;
         else this.name = name;
 
         if (country == null || country.equals(""))
-            this.country = null;
+            this.country = Entity.undefined_string;
         else this.country = country;
 
-        if (description == null || description.equals(""))
-            this.description = null;
+        if (description == null)
+            this.description = Entity.undefined_string;
         else this.description = description;
     }
 
@@ -35,18 +35,12 @@ public class Provider implements Entity {
         return id;
     }
     public String getName() {
-        if (name == null)
-            return "";
         return name;
     }
     public String getCountry() {
-        if (country == null)
-            return "";
         return country;
     }
     public String getDescription() {
-        if (description == null)
-            return "";
         return description;
     }
 
@@ -57,7 +51,7 @@ public class Provider implements Entity {
             object.put("id", id);
             object.put("name", name);
             object.put("country", country);
-            object.put("description", description == null ? "" : description);
+            object.put("description", description);
         } catch (JSONException e) {
             e.printStackTrace();
         }

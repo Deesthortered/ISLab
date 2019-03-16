@@ -1,5 +1,6 @@
 package database_package;
 
+import data_model.Entity;
 import data_model.Goods;
 
 import java.sql.*;
@@ -19,18 +20,18 @@ public class DAOGoods {
         return instance;
     }
 
-    public ArrayList<Goods> GetGoodsList(Connection connection, Goods filter, int start_index, int count_of_records) {
+    public ArrayList<Goods> GetGoodsList(Connection connection, Goods filter, boolean limited, int start_index, int count_of_records) {
         ArrayList<Goods> result = new ArrayList<>();
 
         try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM islabdb.goods " +
-                            "WHERE   (Goods_ID = ? OR ? = -1) AND " +
-                                    "(Goods_Name = ? OR ? = '') AND " +
-                                    "(Goods_AveragePrice = ? OR ? = -1) AND " +
-                                    "(Goods_Description = ? OR ? = '')" +
-                            " limit ? offset ?");
+            String sql_query = "SELECT * FROM islabdb.goods " +
+                      "WHERE (Goods_ID = ?           OR ? = "   + Entity.undefined_long   +   ") AND " +
+                            "(Goods_Name = ?         OR ? = \'" + Entity.undefined_string + "\') AND " +
+                            "(Goods_AveragePrice = ? OR ? = "   + Entity.undefined_long   +   ") AND " +
+                            "(Goods_Description = ?  OR ? = \'" + Entity.undefined_string + "\')" +
+                      ( limited ? " limit ? offset ?" : "");
 
+            PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, filter.getId());
             statement.setLong(2, filter.getId());
             statement.setString(3, filter.getName());
@@ -39,8 +40,10 @@ public class DAOGoods {
             statement.setLong(6, filter.getAverage_price());
             statement.setString(7, filter.getDescription());
             statement.setString(8, filter.getDescription());
-            statement.setLong(9, count_of_records);
-            statement.setLong(10, start_index);
+            if (limited) {
+                statement.setLong(9, count_of_records);
+                statement.setLong(10, start_index);
+            }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {

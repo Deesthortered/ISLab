@@ -11,11 +11,13 @@ class Common {
     static role;
     static list_begin_ind;
     static table_data;
+    static limited;
     static filter;
 
     static ClearTemporary() {
         this.list_begin_ind = 0;
         this.table_data = [];
+        this.limited = true;
     }
 }
 class Router {
@@ -70,6 +72,38 @@ class TemplateHandler {
         const templateSource = templateElement.innerHTML;
         const renderFn = Handlebars.compile(templateSource);
         return renderFn(data);
+    }
+}
+
+class EntityFilters {
+    static undefined_int    = -1;
+    static undefined_long   = -1;
+    static undefined_string = '____undefined____';
+    static undefined_date   = '292267155-11-0';
+
+    static getEmptyProvider() {
+        return {
+            id          : this.undefined_long,
+            name        : this.undefined_string,
+            country     : this.undefined_string,
+            description : this.undefined_string
+        }
+    }
+    static getEmptyCustomer() {
+        return {
+            id          : this.undefined_long,
+            name        : this.undefined_string,
+            country     : this.undefined_string,
+            description : this.undefined_string
+        }
+    }
+    static getEmptyGoods() {
+        return {
+            id            : this.undefined_long,
+            name          : this.undefined_string,
+            average_price : this.undefined_long,
+            description   : this.undefined_string
+        }
     }
 }
 
@@ -128,12 +162,7 @@ class InterfaceHashHandler {
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
 
-        Common.filter = {
-            id : -1,
-            name : '',
-            country : '',
-            description : ''
-        };
+        Common.filter = EntityFilters.getEmptyProvider();
 
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
         InterfaceActionHandler.ProviderTable_Load(function(data) {
@@ -158,12 +187,7 @@ class InterfaceHashHandler {
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
 
-        Common.filter = {
-            id : -1,
-            name : '',
-            country : '',
-            description : ''
-        };
+        Common.filter = EntityFilters.getEmptyCustomer();
 
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
         InterfaceActionHandler.CustomerTable_Load(function(data) {
@@ -185,12 +209,7 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', data);
     }
     static GoodsList() {
-        Common.filter = {
-            id : -1,
-            name : '',
-            average_price : -1,
-            description : ''
-        };
+        Common.filter = EntityFilters.getEmptyGoods();
 
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
         InterfaceActionHandler.GoodsTable_Load(function(data) {
@@ -324,6 +343,7 @@ class InterfaceActionHandler {
             String(Common.filter.name) + "\n" +
             String(Common.filter.country) + "\n" +
             String(Common.filter.description) + "\n" +
+            String(Common.limited) + "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);
@@ -523,6 +543,7 @@ class InterfaceActionHandler {
             String(Common.filter.name) + "\n" +
             String(Common.filter.country) + "\n" +
             String(Common.filter.description) + "\n" +
+            String(Common.limited) + "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);
@@ -722,6 +743,7 @@ class InterfaceActionHandler {
             String(Common.filter.name) + "\n" +
             String(Common.filter.average_price) + "\n" +
             String(Common.filter.description) + "\n" +
+            String(Common.limited) + "\n" +
             String(Common.list_begin_ind) + "\n" +
             String(Common.list_size) + "\n";
         http.send(query_body);

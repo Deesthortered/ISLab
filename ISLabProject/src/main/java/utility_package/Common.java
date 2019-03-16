@@ -4,6 +4,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Optional;
 
 public class Common {
@@ -71,5 +72,8 @@ public class Common {
         if (res.equals(Optional.empty().toString()))
             return null;
         return res.substring(9, res.length()-1);
+    }
+    public static String JavaDateToSQLDate(Date date) {
+        return "\'" + date.getYear() + "-" + date.getMonth() + "-" + date.getDay() + "\'";
     }
 }
