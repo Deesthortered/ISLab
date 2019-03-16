@@ -1,8 +1,9 @@
 package data_model;
 
+import org.json.JSONObject;
 import java.util.Date;
 
-public class SystemUsers {
+public class SystemUsers implements Entity {
     private String login;
     private String password;
     private int    role;
@@ -13,5 +14,10 @@ public class SystemUsers {
         this.password = password;
         this.role = role;
         this.last_visit = last_visit;
+    }
+
+    @Override
+    public JSONObject getJSON() {
+        return null;
     }
 }

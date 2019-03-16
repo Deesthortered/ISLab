@@ -47,6 +47,8 @@ public class Common {
     public static String q_edit_goods     = "edit_goods";
     public static String q_get_one_goods  = "get_one_goods";
 
+    public static String q_rebuild_base  = "rebuild_base";
+
     public static boolean isInitialized() {
         return initialized;
     }

@@ -3,7 +3,7 @@ package data_model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Provider {
+public class Provider implements Entity {
     private long   id;
     private String name;
     private String country;
@@ -50,6 +50,7 @@ public class Provider {
         return description;
     }
 
+    @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();
         try {

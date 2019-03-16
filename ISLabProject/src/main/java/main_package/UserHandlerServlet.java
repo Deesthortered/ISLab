@@ -65,6 +65,10 @@ public class UserHandlerServlet extends HttpServlet {
             GetOneGoods(request, response);
         }
 
+        else if (title.equals(Common.q_rebuild_base)) {
+            RebuildAvailableGoodsBase(request, response);
+        }
+
         else {
             SendError(request, response);
         }
@@ -435,6 +439,13 @@ public class UserHandlerServlet extends HttpServlet {
         } else
             writer.print("not exist");
         pool.DropConnection(connection);
+    }
+
+    private void RebuildAvailableGoodsBase(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+
     }
 
     private void SendError(HttpServletRequest request, HttpServletResponse response) throws IOException {
