@@ -513,7 +513,7 @@
         <h1>Edit goods</h1>
         <p> There you can edit goods in the base.</p>
         <p> Edit field which you want to change.</p>
-        <div class = "edit_customer_panel">
+        <div class = "edit_goods_panel">
             <input type="hidden" name="input_id" value="{{ id }}" />
             <p> Name:</p>
             <input type="text" name="input_name" value="{{ name }}">

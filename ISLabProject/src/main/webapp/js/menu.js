@@ -185,17 +185,26 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', data);
     }
     static GoodsList() {
-        const data = {
+        Common.filter = {
+            id : -1,
+            name : '',
+            average_price : -1,
+            description : ''
         };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('goods_list_template', data);
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
+        InterfaceActionHandler.GoodsTable_Load(function(data) {
+            InterfaceActionHandler.GoodsTable_Fill(data);
+        });
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('goods_add_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_add_template', {});
+    }
+    static GoodsEdit(id) {
+        InterfaceActionHandler.Goods_LoadOne(id, function (data) {
+            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_edit_template', data);
+        });
     }
 
     static Storage() {
@@ -413,7 +422,7 @@ class InterfaceActionHandler {
         let country = panel.find('input[name=\'input_country\']');
         let description = panel.find('input[name=\'input_description\']');
 
-        if (name.val() === '' || country.val() === '') {
+        if (String(name.val()) === '' || String(country.val()) === '') {
             alert("Fill all required fields!");
             return;
         }
@@ -423,7 +432,7 @@ class InterfaceActionHandler {
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
-                    alert("Provider are added successfully");
+                    alert("Provider is added successfully");
                     name.val('');
                     country.val('');
                     description.val('');
@@ -448,7 +457,7 @@ class InterfaceActionHandler {
         let country = panel.find('input[name=\'input_country\']');
         let description = panel.find('input[name=\'input_description\']');
 
-        if (name.val() === '' && country.val() === '' && description.val() === '') {
+        if (String(name.val()) === '' && String(country.val()) === '' && String(description.val()) === '') {
             alert("Fill at least one field!");
             return;
         }
@@ -458,7 +467,7 @@ class InterfaceActionHandler {
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
-                    alert("Provider are edited successfully");
+                    alert("Provider is edited successfully");
                     InterfaceHashHandler.ProviderList();
                 }
                 else
@@ -612,7 +621,7 @@ class InterfaceActionHandler {
         let country = panel.find('input[name=\'input_country\']');
         let description = panel.find('input[name=\'input_description\']');
 
-        if (name.val() === '' || country.val() === '') {
+        if (String(name.val()) === '' || String(country.val()) === '') {
             alert("Fill all required fields!");
             return;
         }
@@ -622,7 +631,7 @@ class InterfaceActionHandler {
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
-                    alert("Customer are added successfully");
+                    alert("Customer is added successfully");
                     name.val('');
                     country.val('');
                     description.val('');
@@ -647,7 +656,7 @@ class InterfaceActionHandler {
         let country = panel.find('input[name=\'input_country\']');
         let description = panel.find('input[name=\'input_description\']');
 
-        if (name.val() === '' && country.val() === '' && description.val() === '') {
+        if (String(name.val()) === '' && String(country.val()) === '' && String(description.val()) === '') {
             alert("Fill at least one field!");
             return;
         }
@@ -657,7 +666,7 @@ class InterfaceActionHandler {
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
-                    alert("Customer are edited successfully");
+                    alert("Customer is edited successfully");
                     InterfaceHashHandler.CustomerList();
                 }
                 else
@@ -700,34 +709,198 @@ class InterfaceActionHandler {
         return {};
     }
     static GoodsTable_Load(callback){
-
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            let new_data = JSON.parse(http.responseText);
+            Common.table_data = Common.table_data.concat(new_data);
+            callback(Common.table_data);
+        };
+        let query_body =
+            "get_goods_list\n" +
+            String(Common.filter.id) + "\n" +
+            String(Common.filter.name) + "\n" +
+            String(Common.filter.average_price) + "\n" +
+            String(Common.filter.description) + "\n" +
+            String(Common.list_begin_ind) + "\n" +
+            String(Common.list_size) + "\n";
+        http.send(query_body);
     }
     static GoodsTable_Fill(data) {
+        const table_place = document.getElementById('goods_table_place');
+        table_place.innerHTML = TemplateHandler.Render('goods_list_table', {});
+        let table_body = table_place.getElementsByTagName('tbody')[0];
 
+        for (let i = 0; i < data.length; i++)
+            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('goods_datatable_row', data[i]));
+
+        $('#dtGoodsTable').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
     }
-    static GoodsTable_EditRow() {
-
+    static GoodsTable_EditRow(id) {
+        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
+        if (sure)
+            InterfaceHashHandler.GoodsEdit(id);
     }
-    static GoodsTable_DeleteRow() {
-
+    static GoodsTable_DeleteRow(id) {
+        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
+        if (sure) {
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function () {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    if (http.responseText === "ok") {
+                        alert("Goods are deleted successfully");
+                        InterfaceActionHandler.GoodsTable_Refresh();
+                    }
+                    else
+                        alert("Goods were not deleted, some trouble happened on the server side.");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("Goods were not deleted, some trouble happened with the request.");
+                }
+            };
+            let query_body =
+                "delete_goods" + "\n" +
+                id + "\n";
+            http.send(query_body);
+        }
     }
     static GoodsTable_ExtendList() {
-
+        Common.list_begin_ind += Common.list_size;
+        InterfaceActionHandler.GoodsTable_Load(function(data) {
+            InterfaceActionHandler.GoodsTable_Fill(data);
+        });
     }
     static GoodsTable_Refresh() {
+        let prev_ind = Common.list_begin_ind;
+        let prev_size = Common.list_size;
 
+        Common.list_size += Common.list_begin_ind;
+        Common.list_begin_ind = 0;
+
+        Common.table_data = [];
+        let table_body = document.getElementById('goods_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+
+        this.GoodsTable_Load(function(data) {
+            InterfaceActionHandler.GoodsTable_Fill(data);
+        });
+
+        $('#dtGoodsTable').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+        Common.list_begin_ind = prev_ind;
+        Common.list_size = prev_size;
     }
     static Goods_LoadOne(id, callback) {
-
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            callback(JSON.parse(http.responseText));
+        };
+        let query_body =
+            "get_one_goods\n" +
+            String(id) + "\n";
+        http.send(query_body);
     }
     static GoodsAdd_Send() {
+        let panel = $('.add_goods_panel');
+        let name = panel.find('input[name=\'input_name\']');
+        let average = panel.find('input[name=\'input_average_price\']');
+        let description = panel.find('input[name=\'input_description\']');
 
+        if (String(name.val()) === '' || String(average.val()) === '') {
+            alert("Fill all required fields!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Goods are added successfully");
+                    name.val('');
+                    average.val('');
+                    description.val('');
+                }
+                else
+                    alert("Goods were not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Customer were not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "add_goods" + "\n" +
+            String(name.val()) + "\n" +
+            String(average.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
     }
     static GoodsEdit_Send() {
+        let panel = $('.edit_goods_panel');
+        let id = panel.find('input[name=\'input_id\']');
+        let name = panel.find('input[name=\'input_name\']');
+        let average = panel.find('input[name=\'input_average_price\']');
+        let description = panel.find('input[name=\'input_description\']');
 
+        if (String(name.val()) === '' && String(average.val()) === '' && String(description.val()) === '') {
+            alert("Fill at least one field!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("Goods are edited successfully");
+                    InterfaceHashHandler.GoodsList();
+                }
+                else
+                    alert("Goods were not edited, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("Goods were not edited, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "edit_goods" + "\n" +
+            String(id.val()) + "\n" +
+            String(name.val()) + "\n" +
+            String(average.val()) + "\n" +
+            String(description.val()) + "\n";
+        http.send(query_body);
     }
     static GoodsTable_SetFilter() {
+        Common.ClearTemporary();
 
+        let panel = $('#goods_filter');
+        let id = panel.find('input[name=\'filter_id\']');
+        let name = panel.find('input[name=\'filter_name\']');
+        let average = panel.find('input[name=\'filter_average_price\']');
+        let description = panel.find('input[name=\'filter_description\']');
+
+        Common.filter = {
+            id : String(id.val()) === '' ? -1 : Number(id.val()),
+            name : String(name.val()),
+            average_price : String(average.val()) === '' ? -1 : Number(average.val()),
+            description : String(description.val())
+        };
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
+        InterfaceActionHandler.GoodsTable_Load(function(data) {
+            InterfaceActionHandler.GoodsTable_Fill(data);
+        });
     }
 
     static Storage_Load() {

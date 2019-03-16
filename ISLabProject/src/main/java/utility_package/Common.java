@@ -41,6 +41,12 @@ public class Common {
     public static String q_edit_customer     = "edit_customer";
     public static String q_get_one_customer  = "get_one_customer";
 
+    public static String q_get_goods_list = "get_goods_list";
+    public static String q_add_goods      = "add_goods";
+    public static String q_delete_goods   = "delete_goods";
+    public static String q_edit_goods     = "edit_goods";
+    public static String q_get_one_goods  = "get_one_goods";
+
     public static boolean isInitialized() {
         return initialized;
     }

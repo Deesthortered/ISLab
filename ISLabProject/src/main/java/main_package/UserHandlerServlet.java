@@ -1,9 +1,11 @@
 package main_package;
 
 import data_model.Customer;
+import data_model.Goods;
 import data_model.Provider;
 import database_package.ConnectionPool;
 import database_package.DAOCustomer;
+import database_package.DAOGoods;
 import database_package.DAOProviders;
 import org.json.JSONArray;
 import utility_package.Common;
@@ -49,6 +51,18 @@ public class UserHandlerServlet extends HttpServlet {
             EditCustomer(request, response);
         } else if (title.equals(Common.q_get_one_customer)) {
             GetOneCustomer(request, response);
+        }
+
+        else if (title.equals(Common.q_get_goods_list)) {
+            GetGoodsList(request, response);
+        } else if (title.equals(Common.q_add_goods)) {
+            AddNewGoods(request, response);
+        } else if (title.equals(Common.q_delete_goods)) {
+            DeleteGoods(request, response);
+        } else if (title.equals(Common.q_edit_goods)) {
+            EditGoods(request, response);
+        } else if (title.equals(Common.q_get_one_goods)) {
+            GetOneGoods(request, response);
         }
 
         else {
@@ -162,8 +176,8 @@ public class UserHandlerServlet extends HttpServlet {
         Provider old_version = dao.GetProvidersList(connection, new Provider(id, null, null, null), 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
-        if (country.isEmpty()) name = old_version.getCountry();
-        if (description.isEmpty()) name = old_version.getDescription();
+        if (country.isEmpty()) country = old_version.getCountry();
+        if (description.isEmpty()) description = old_version.getDescription();
 
         if (dao.IsExistsProvider(connection, id)) {
             if (dao.EditProvider(connection, new Provider(id, name, country, description)))
@@ -278,8 +292,8 @@ public class UserHandlerServlet extends HttpServlet {
         Customer old_version = dao.GetCustomersList(connection, new Customer(id, null, null, null), 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
-        if (country.isEmpty()) name = old_version.getCountry();
-        if (description.isEmpty()) name = old_version.getDescription();
+        if (country.isEmpty()) country = old_version.getCountry();
+        if (description.isEmpty()) description = old_version.getDescription();
 
         if (dao.IsExistsCustomer(connection, id)) {
             if (dao.EditCustomer(connection, new Customer(id, name, country, description)))
@@ -303,6 +317,121 @@ public class UserHandlerServlet extends HttpServlet {
         if (dao.IsExistsCustomer(connection, id)) {
             Customer customer = dao.GetCustomersList(connection, new Customer(id, null, null, null), 0, 1).get(0);
             writer.print(customer.getJSON().toString());
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+
+    private void GetGoodsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+        String name = reader.readLine();
+        long average = Long.parseLong(reader.readLine());
+        String description = reader.readLine();
+
+        Goods filter = new Goods(id, name, average, description);
+
+        int begin_index = Integer.parseInt(reader.readLine());
+        int count_of_records = Integer.parseInt(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOGoods dao = DAOGoods.getInstance();
+
+        Connection connection = pool.GetConnection();
+        ArrayList<Goods> list = dao.GetGoodsList(connection, filter, begin_index, count_of_records);
+        pool.DropConnection(connection);
+
+        JSONArray json_list = new JSONArray();
+        for (Goods goods : list) {
+            json_list.put(goods.getJSON());
+        }
+
+        writer.write(json_list.toString());
+    }
+    private void AddNewGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        String name = reader.readLine();
+        long average = Long.parseLong(reader.readLine());
+        String description = reader.readLine();
+
+        Goods customer = new Goods(-1, name, average, description);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOGoods dao = DAOGoods.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.AddGoods(connection, customer))
+            writer.print("ok");
+        else
+            writer.print("bad");
+        pool.DropConnection(connection);
+    }
+    private void DeleteGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOGoods dao = DAOGoods.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsGoods(connection, id)) {
+            if (dao.DeleteGoods(connection, id))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+
+        pool.DropConnection(connection);
+    }
+    private void EditGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        String name = reader.readLine();
+        long average = Long.parseLong(reader.readLine());
+        String description = reader.readLine();
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOGoods dao = DAOGoods.getInstance();
+
+        Connection connection = pool.GetConnection();
+        Goods old_version = dao.GetGoodsList(connection, new Goods(id, null, -1, null), 0, 1).get(0);
+
+        if (name.isEmpty()) name = old_version.getName();
+        if (average == -1) average = old_version.getAverage_price();
+        if (description.isEmpty()) description = old_version.getDescription();
+
+        if (dao.IsExistsGoods(connection, id)) {
+            if (dao.EditGoods(connection, new Goods(id, name, average, description)))
+                writer.print("ok");
+            else
+                writer.print("bad");
+        } else
+            writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+    private void GetOneGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        long id = Long.parseLong(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOGoods dao = DAOGoods.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.IsExistsGoods(connection, id)) {
+            Goods goods = dao.GetGoodsList(connection, new Goods(id, null, -1, null), 0, 1).get(0);
+            writer.print(goods.getJSON().toString());
         } else
             writer.print("not exist");
         pool.DropConnection(connection);
