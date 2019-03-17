@@ -1,11 +1,16 @@
 class Common {
-    static roles = {
+    static roles = Object.freeze({
         Admin         : 'Admin',
         ViewManager   : 'ViewManager',
         ImportManager : 'ImportManager',
         ExportManager : 'ExportManager',
-    };
-    static list_size = 5;
+    });
+    static Entity = Object.freeze({
+        Provider : 'provider',
+        Customer : 'customer',
+        Goods    : 'goods'
+    });
+    static list_size = Object.freeze(5);
 
     // Temporary
     static role;
@@ -48,11 +53,11 @@ class Router {
 
             case '#imports'           : { InterfaceHashHandler.Imports();          } break;
             case '#import_action'     : { InterfaceHashHandler.ImportsAction();    } break;
-            case '#import_find'       : { InterfaceHashHandler.ImportsFind();      } break;
+            case '#import_list'       : { InterfaceHashHandler.ImportsList();      } break;
 
             case '#exports'           : { InterfaceHashHandler.Exports();          } break;
             case '#export_action'     : { InterfaceHashHandler.ExportsAction();    } break;
-            case '#export_find'       : { InterfaceHashHandler.ExportsFind();      } break;
+            case '#export_list'       : { InterfaceHashHandler.ExportsList();      } break;
 
             case '#reports'           : { InterfaceHashHandler.Reports();          } break;
             case '#report_last'       : { InterfaceHashHandler.ReportLast();       } break;
@@ -74,6 +79,7 @@ class TemplateHandler {
         return renderFn(data);
     }
 }
+
 
 class EntityFilters {
     static undefined_int    = -1;
@@ -105,6 +111,15 @@ class EntityFilters {
             description   : this.undefined_string
         }
     }
+}
+class ListPage {
+    current_entity;
+
+    ListPage(entity) {
+        this.current_entity = entity;
+
+    }
+
 }
 
 class InterfaceHashHandler {
@@ -163,7 +178,6 @@ class InterfaceHashHandler {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
 
         Common.filter = EntityFilters.getEmptyProvider();
-
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
         InterfaceActionHandler.ProviderTable_Load(function(data) {
             InterfaceActionHandler.ProviderTable_Fill(data);
@@ -188,7 +202,6 @@ class InterfaceHashHandler {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
 
         Common.filter = EntityFilters.getEmptyCustomer();
-
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
         InterfaceActionHandler.CustomerTable_Load(function(data) {
             InterfaceActionHandler.CustomerTable_Fill(data);
@@ -210,7 +223,6 @@ class InterfaceHashHandler {
     }
     static GoodsList() {
         Common.filter = EntityFilters.getEmptyGoods();
-
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
         InterfaceActionHandler.GoodsTable_Load(function(data) {
             InterfaceActionHandler.GoodsTable_Fill(data);
@@ -255,7 +267,7 @@ class InterfaceHashHandler {
         const dynamic_panel = document.getElementById('dynamic_panel');
         dynamic_panel.innerHTML = TemplateHandler.Render('import_action_template', data);
     }
-    static ImportsFind() {
+    static ImportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
         const data = {
         };
@@ -275,7 +287,7 @@ class InterfaceHashHandler {
         const dynamic_panel = document.getElementById('dynamic_panel');
         dynamic_panel.innerHTML = TemplateHandler.Render('export_action_template', data);
     }
-    static ExportsFind() {
+    static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
         const data = {
         };
@@ -391,9 +403,21 @@ class InterfaceActionHandler {
             http.send(query_body);
         }
     }
-    static ProviderTable_ExtendList() {
+    static ProviderTable_Clear() {
+        Common.table_data = [];
+        let table_body = document.getElementById('provider_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+    }
+    static ProviderTable_ExtendList(limited) {
+        Common.limited = limited;
         Common.list_begin_ind += Common.list_size;
         InterfaceActionHandler.ProviderTable_Load(function(data) {
+            if (!limited) {
+                InterfaceActionHandler.ProviderTable_Clear();
+                Common.list_begin_ind = data.length;
+            }
             InterfaceActionHandler.ProviderTable_Fill(data);
         });
     }
@@ -405,25 +429,14 @@ class InterfaceActionHandler {
         Common.list_size += Common.list_begin_ind;
         Common.list_begin_ind = 0;
 
-        Common.table_data = [];
-        let table_body = document.getElementById('provider_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
+        this.ProviderTable_Clear();
 
         this.ProviderTable_Load(function(data) {
             InterfaceActionHandler.ProviderTable_Fill(data);
-        });
 
-        $('#dtProviderTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
+            Common.list_begin_ind = prev_ind;
+            Common.list_size = prev_size;
         });
-        $('.dataTables_length').addClass('bs-select');
-
-        Common.list_begin_ind = prev_ind;
-        Common.list_size = prev_size;
     }
     static Provider_LoadOne(id, callback) {
         let http = new XMLHttpRequest();
@@ -591,9 +604,21 @@ class InterfaceActionHandler {
             http.send(query_body);
         }
     }
-    static CustomerTable_ExtendList() {
+    static CustomerTable_Clear() {
+        Common.table_data = [];
+        let table_body = document.getElementById('customer_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+    }
+    static CustomerTable_ExtendList(limited) {
+        Common.limited = limited;
         Common.list_begin_ind += Common.list_size;
         InterfaceActionHandler.CustomerTable_Load(function(data) {
+            if (!limited) {
+                InterfaceActionHandler.CustomerTable_Clear();
+                Common.list_begin_ind = data.length;
+            }
             InterfaceActionHandler.CustomerTable_Fill(data);
         });
     }
@@ -605,25 +630,14 @@ class InterfaceActionHandler {
         Common.list_size += Common.list_begin_ind;
         Common.list_begin_ind = 0;
 
-        Common.table_data = [];
-        let table_body = document.getElementById('customer_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
+        this.CustomerTable_Clear();
 
         this.CustomerTable_Load(function(data) {
             InterfaceActionHandler.CustomerTable_Fill(data);
-        });
 
-        $('#dtCustomerTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
+            Common.list_begin_ind = prev_ind;
+            Common.list_size = prev_size;
         });
-        $('.dataTables_length').addClass('bs-select');
-
-        Common.list_begin_ind = prev_ind;
-        Common.list_size = prev_size;
     }
     static Customer_LoadOne(id, callback) {
         let http = new XMLHttpRequest();
@@ -791,9 +805,21 @@ class InterfaceActionHandler {
             http.send(query_body);
         }
     }
-    static GoodsTable_ExtendList() {
+    static GoodsTable_Clear() {
+        Common.table_data = [];
+        let table_body = document.getElementById('goods_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+    }
+    static GoodsTable_ExtendList(limited) {
+        Common.limited = limited;
         Common.list_begin_ind += Common.list_size;
         InterfaceActionHandler.GoodsTable_Load(function(data) {
+            if (!limited) {
+                InterfaceActionHandler.GoodsTable_Clear();
+                Common.list_begin_ind = data.length;
+            }
             InterfaceActionHandler.GoodsTable_Fill(data);
         });
     }
@@ -804,25 +830,14 @@ class InterfaceActionHandler {
         Common.list_size += Common.list_begin_ind;
         Common.list_begin_ind = 0;
 
-        Common.table_data = [];
-        let table_body = document.getElementById('goods_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
+        this.GoodsTable_Clear();
 
         this.GoodsTable_Load(function(data) {
             InterfaceActionHandler.GoodsTable_Fill(data);
-        });
 
-        $('#dtGoodsTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
+            Common.list_begin_ind = prev_ind;
+            Common.list_size = prev_size;
         });
-        $('.dataTables_length').addClass('bs-select');
-
-        Common.list_begin_ind = prev_ind;
-        Common.list_size = prev_size;
     }
     static Goods_LoadOne(id, callback) {
         let http = new XMLHttpRequest();

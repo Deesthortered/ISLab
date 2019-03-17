@@ -3,6 +3,8 @@ package utility_package;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Optional;
@@ -73,7 +75,18 @@ public class Common {
             return null;
         return res.substring(9, res.length()-1);
     }
+
     public static String JavaDateToSQLDate(Date date) {
         return "\'" + date.getYear() + "-" + date.getMonth() + "-" + date.getDay() + "\'";
+    }
+    public static Date SQLDateToJavaDate(String date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date res = null;
+        try {
+            res = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 }

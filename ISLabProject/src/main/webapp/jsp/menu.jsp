@@ -73,13 +73,13 @@
         <li><a href="#imports">Imports</a>
             <ul>
                 <li><a href="#import_action">Import goods</a></li>
-                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+                <li><a href="#import_list">Import Documents list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#exports">Exports</a>
             <ul>
                 <li><a href="#export_action">Export goods</a></li>
-                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#reports">Reports</a>
@@ -117,12 +117,12 @@
         </li>
         <li><a href="#imports">Imports</a>
             <ul>
-                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+                <li><a href="#import_list">Import Documents list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#exports">Exports</a>
             <ul>
-                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#reports">Reports</a>
@@ -156,7 +156,7 @@
         <li><a href="#imports">Imports</a>
             <ul>
                 <li><a href="#import_action">Import goods</a></li>
-                <li><a href="#import_find">Find Import Document (Filter/ID)</a></li>
+                <li><a href="#import_list">Import Document list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#reports">Reports</a>
@@ -189,7 +189,7 @@
         <li><a href="#exports">Exports</a>
             <ul>
                 <li><a href="#export_action">Export goods</a></li>
-                <li><a href="#export_find">Find Exports Document (Filter/ID)</a></li>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
             </ul>
         </li>
         <li><a href="#reports">Reports</a>
@@ -270,7 +270,8 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList(true)">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList(false)">Load all</button>
         <button onclick="InterfaceActionHandler.ProviderTable_Refresh()">Refresh</button>
     </script>
     <script id="provider_datatable_row" type="text/template">
@@ -375,7 +376,8 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList(true)">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList(false)">Load all</button>
         <button onclick="InterfaceActionHandler.CustomerTable_Refresh()">Refresh</button>
     </script>
     <script id="customer_datatable_row" type="text/template">
@@ -480,7 +482,8 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList()">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList(true)">Load more (+5)</button>
+        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList(false)">Load all</button>
         <button onclick="InterfaceActionHandler.GoodsTable_Refresh()">Refresh</button>
     </script>
     <script id="goods_datatable_row" type="text/template">
@@ -565,7 +568,7 @@
         </ul>
     </script>
     <script id="import_action_template" type="text/template"> </script>
-    <script id="import_find_template" type="text/template"> </script>
+    <script id="import_list_template" type="text/template"> </script>
 
     <script id="exports_template" type="text/template">
         <h1>Export menu</h1>
@@ -586,7 +589,7 @@
         </ul>
     </script>
     <script id="export_action_template" type="text/template"> </script>
-    <script id="export_find_template" type="text/template"> </script>
+    <script id="export_list_template" type="text/template"> </script>
 
     <script id="reports_template" type="text/template">
         <h1>Report menu</h1>
