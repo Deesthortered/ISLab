@@ -36,19 +36,16 @@ public class Common {
     public static String q_add_provider      = "add_provider";
     public static String q_delete_provider   = "delete_provider";
     public static String q_edit_provider     = "edit_provider";
-    public static String q_get_one_provider  = "get_one_provider";
 
     public static String q_get_customer_list = "get_customer_list";
     public static String q_add_customer      = "add_customer";
     public static String q_delete_customer   = "delete_customer";
     public static String q_edit_customer     = "edit_customer";
-    public static String q_get_one_customer  = "get_one_customer";
 
     public static String q_get_goods_list = "get_goods_list";
     public static String q_add_goods      = "add_goods";
     public static String q_delete_goods   = "delete_goods";
     public static String q_edit_goods     = "edit_goods";
-    public static String q_get_one_goods  = "get_one_goods";
 
     public static String q_rebuild_base  = "rebuild_base";
 

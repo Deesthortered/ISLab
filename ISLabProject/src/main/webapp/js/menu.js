@@ -80,46 +80,272 @@ class TemplateHandler {
     }
 }
 
-
+class QueryMaker {
+    static GetEntityList(entity) {
+        return "get_" + entity + "_list\n";
+    }
+    static DeleteEntity(entity) {
+        return "delete_" + entity + "\n";
+    }
+    static AddEntity(entity) {
+        return "add_" + entity + "\n";
+    }
+    static EditEntity(entity) {
+        return "edit_" + entity + "\n";
+    }
+}
 class EntityFilters {
-    static undefined_int    = -1;
-    static undefined_long   = -1;
-    static undefined_string = '____undefined____';
-    static undefined_date   = '292267155-11-0';
+    static undefined_value = Object.freeze('____undefined____');
 
-    static getEmptyProvider() {
-        return {
-            id          : this.undefined_long,
-            name        : this.undefined_string,
-            country     : this.undefined_string,
-            description : this.undefined_string
+    static getEmptyFilter(entity) {
+        switch (entity) {
+            case Common.Entity.Provider :
+                return {
+                    id: this.undefined_value,
+                    name: this.undefined_value,
+                    country: this.undefined_value,
+                    description: this.undefined_value
+                };
+            case Common.Entity.Customer :
+                return {
+                    id: this.undefined_value,
+                    name: this.undefined_value,
+                    country: this.undefined_value,
+                    description: this.undefined_value
+                };
+            case Common.Entity.Goods :
+                return {
+                    id: this.undefined_value,
+                    name: this.undefined_value,
+                    average_price: this.undefined_value,
+                    description: this.undefined_value
+                };
+
+            default : {
+                alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
+                return undefined;
+            }
         }
     }
-    static getEmptyCustomer() {
-        return {
-            id          : this.undefined_long,
-            name        : this.undefined_string,
-            country     : this.undefined_string,
-            description : this.undefined_string
-        }
-    }
-    static getEmptyGoods() {
-        return {
-            id            : this.undefined_long,
-            name          : this.undefined_string,
-            average_price : this.undefined_long,
-            description   : this.undefined_string
+    static getQueryFilterRepresentation(entity, data) {
+        switch (entity) {
+            case Common.Entity.Provider :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
+                    String(data.country === undefined ? this.undefined_value : data.country) + "\n" +
+                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+            case Common.Entity.Customer :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
+                    String(data.country === undefined ? this.undefined_value : data.country) + "\n" +
+                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+            case Common.Entity.Goods :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
+                    String(data.average_price === undefined ? this.undefined_value : data.average_price) + "\n" +
+                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+
+            default : {
+                alert("Unknown entity \'" + entity + "\' at getQueryFilterRepresentation");
+                return undefined;
+            }
         }
     }
 }
 class ListPage {
-    current_entity;
+    static current_entity;
 
-    ListPage(entity) {
-        this.current_entity = entity;
-
+    static TableLoad(callback) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, false);
+        http.onreadystatechange = function() {
+            let new_data = JSON.parse(http.responseText);
+            Common.table_data = Common.table_data.concat(new_data);
+            callback(Common.table_data);
+        };
+        let query_body =
+            QueryMaker.GetEntityList(this.current_entity) +
+            EntityFilters.getQueryFilterRepresentation(this.current_entity, Common.filter) +
+            String(Common.limited) + "\n" +
+            String(Common.list_begin_ind) + "\n" +
+            String(Common.list_size) + "\n";
+        http.send(query_body);
     }
+    static TableFill(data) {
+        const table_place = document.getElementById(this.current_entity + '_table_place');
+        table_place.innerHTML = TemplateHandler.Render(this.current_entity + '_list_table', {});
+        let table_body = table_place.getElementsByTagName('tbody')[0];
 
+        for (let i = 0; i < data.length; i++)
+            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render(this.current_entity + '_datatable_row', data[i]));
+
+        $('#dt_'+ this.current_entity + 'Table').DataTable({
+            "retrieve": true,
+            "scrollY": "50vh",
+            "scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+    }
+    static TableClear() {
+        Common.table_data = [];
+        let table_body = document.getElementById(this.current_entity + '_table_place').getElementsByTagName('tbody')[0];
+        while (table_body.firstChild) {
+            table_body.removeChild(table_body.firstChild);
+        }
+    }
+    static TableRefresh() {
+        let prev_ind = Common.list_begin_ind;
+        let prev_size = Common.list_size;
+
+        Common.list_size += Common.list_begin_ind;
+        Common.list_begin_ind = 0;
+
+        this.TableClear();
+
+        this.TableLoad(function(data) {
+            ListPage.TableFill(data);
+
+            Common.list_begin_ind = prev_ind;
+            Common.list_size = prev_size;
+        });
+    }
+    static TableEditRowMenu(id) {
+        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
+        if (!sure) return;
+
+        Common.ClearTemporary();
+        Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        Common.filter.id = id;
+
+        this.TableLoad(function (data) {
+            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render(ListPage.current_entity + '_edit_template', data[0]);
+        });
+    }
+    static TableDeleteRow(id) {
+        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
+        if (sure) {
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function () {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    if (http.responseText === "ok") {
+                        alert("The " + ListPage.current_entity + " are deleted successfully");
+                        ListPage.TableRefresh();
+                    }
+                    else
+                        alert("The " + ListPage.current_entity + " was not deleted, some trouble happened on the server side.");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("The " + ListPage.current_entity + " was not deleted, some trouble happened with the request.");
+                }
+            };
+            let query_body =
+                QueryMaker.DeleteEntity(ListPage.current_entity) +
+                id + "\n";
+            http.send(query_body);
+        }
+    }
+    static TableExtendList(limited) {
+        Common.limited = limited;
+        Common.list_begin_ind += Common.list_size;
+        ListPage.TableLoad(function(data) {
+            if (!limited) {
+                ListPage.TableClear();
+                Common.list_begin_ind = data.length;
+            }
+            ListPage.TableFill(data);
+        });
+    }
+    static TableSetFilter() {
+        Common.ClearTemporary();
+
+        Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        let properties = Object.keys(Common.filter);
+        let panel = $('#' + this.current_entity + '_filter');
+        for (let i = 0; i < properties.length; i++) {
+            let input = panel.find('input[name=\'input_' + properties[i] + '\']').val();
+            Common.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
+        }
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render(this.current_entity + '_list_template', {});
+        this.TableLoad(function(data) {
+            ListPage.TableFill(data);
+        });
+    }
+    static TableAddSend() {
+        let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
+        let panel = $('.add_' + this.current_entity + '_panel');
+
+        let ok = true;
+        let properties = Object.keys(new_entry);
+        for (let i = 0; i < properties.length; i++) {
+            let input = panel.find('input[name=\'filter_' + properties[i] + '\']');
+            if (!(properties[i] === 'description') && input.val() === '') {
+                alert("Fill all required fields!");
+                ok = false;
+            }
+            new_entry[properties[i]] = (input.val() === '' ? EntityFilters.undefined_value : input.val());
+            input.val('');
+        }
+        if (!ok) return;
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The " + ListPage.current_entity + " is added successfully");
+                }
+                else
+                    alert("The " + ListPage.current_entity + " was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + ListPage.current_entity + " was not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            QueryMaker.AddEntity(this.current_entity) +
+            EntityFilters.getQueryFilterRepresentation(this.current_entity, new_entry);
+        http.send(query_body);
+    }
+    static TableEditSend() {
+        let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
+        let panel = $('.edit_' + this.current_entity + '_panel');
+
+        let ok = false;
+        let properties = Object.keys(new_entry);
+        for (let i = 0; i < properties.length; i++) {
+            let input = panel.find('input[name=\'input_' + properties[i] + '\']');
+            if (properties[i] === 'description' || !(input.val() === '')) {
+                ok = true;
+            }
+            new_entry[properties[i]] = (input.val() === '' ? EntityFilters.undefined_value : input.val());
+            input.val('');
+        }
+        if (!ok) {
+            alert("Fill at least one field!");
+            return;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The " + ListPage.current_entity + " is edited successfully");
+                }
+                else
+                    alert("The " + ListPage.current_entity + " was not edited, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + ListPage.current_entity + " was not edited, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            QueryMaker.EditEntity(this.current_entity) +
+            EntityFilters.getQueryFilterRepresentation(this.current_entity, new_entry);
+        http.send(query_body);
+    }
 }
 
 class InterfaceHashHandler {
@@ -163,79 +389,94 @@ class InterfaceHashHandler {
         document.location.hash = 'forbidden';
         return true;
     }
+    static Logout() {
+        document.location.hash = '';
+        let Http = new XMLHttpRequest();
+        let url = window.location.href.split('#')[0];
+        let param = "logout=true";
+        Http.open("GET", url+"?"+param, true);
+        Http.send(param);
+        alert("You are logged out.");
+        document.location.reload(true);
+    }
 
     static StartPage() {
-        let data = InterfaceActionHandler.StartPage_Load();
+        let data = {
+            user_name: 'user_name',
+            user_role: 'role',
+            user_permissions: 'user_permissions',
+            last_visit: 'last_visit'
+        };
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('startpage_template', data);
     }
 
     static Provider() {
         if (this.CheckPermission( [Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager] )) return;
-        let data = InterfaceActionHandler.Provider_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_template', data);
+        ListPage.current_entity = Common.Entity.Provider;
+
+        ListPage.TableLoad( function (data) {
+            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_template', data);
+        });
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
+        ListPage.current_entity = Common.Entity.Provider;
 
-        Common.filter = EntityFilters.getEmptyProvider();
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
-        InterfaceActionHandler.ProviderTable_Load(function(data) {
-            InterfaceActionHandler.ProviderTable_Fill(data);
+        ListPage.TableLoad(function(data) {
+            ListPage.TableFill(data);
         });
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
+        ListPage.current_entity = Common.Entity.Provider;
+
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_add_template', {});
-    }
-    static ProviderEdit(id) {
-        InterfaceActionHandler.Provider_LoadOne(id, function (data) {
-            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_edit_template', data);
-        });
     }
 
     static Customer() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        const data = InterfaceActionHandler.Customer_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_template', data);
+        ListPage.current_entity = Common.Entity.Customer;
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_template', {});
     }
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
+        ListPage.current_entity = Common.Entity.Customer;
 
-        Common.filter = EntityFilters.getEmptyCustomer();
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
-        InterfaceActionHandler.CustomerTable_Load(function(data) {
-            InterfaceActionHandler.CustomerTable_Fill(data);
+        ListPage.TableLoad(function(data) {
+            ListPage.TableFill(data);
         });
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
+        ListPage.current_entity = Common.Entity.Customer;
+
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_add_template', {});
-    }
-    static CustomerEdit(id) {
-        InterfaceActionHandler.Customer_LoadOne(id, function (data) {
-            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_edit_template', data);
-        });
     }
 
     static Goods() {
-        const data = InterfaceActionHandler.Goods_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', data);
+        ListPage.current_entity = Common.Entity.Goods;
+
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
-        Common.filter = EntityFilters.getEmptyGoods();
+        ListPage.current_entity = Common.Entity.Goods;
+
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
-        InterfaceActionHandler.GoodsTable_Load(function(data) {
-            InterfaceActionHandler.GoodsTable_Fill(data);
+        ListPage.TableLoad(function(data) {
+            ListPage.TableFill(data);
         });
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
+        ListPage.current_entity = Common.Entity.Goods;
+
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_add_template', {});
-    }
-    static GoodsEdit(id) {
-        InterfaceActionHandler.Goods_LoadOne(id, function (data) {
-            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_edit_template', data);
-        });
     }
 
     static Storage() {
@@ -325,648 +566,6 @@ class InterfaceHashHandler {
     }
     static ForbiddenPage() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('forbidden_template', {});
-    }
-}
-class InterfaceActionHandler {
-
-    static StartPage_Load() {
-        return {
-            user_name: 'user_name',
-            user_role: 'role',
-            user_permissions: 'user_permissions',
-            last_visit: 'last_visit'
-        };
-    }
-
-    static Provider_Load() {
-        return {};
-    }
-    static ProviderTable_Load(callback) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            let new_data = JSON.parse(http.responseText);
-            Common.table_data = Common.table_data.concat(new_data);
-            callback(Common.table_data);
-        };
-        let query_body =
-            "get_provider_list\n" +
-            String(Common.filter.id) + "\n" +
-            String(Common.filter.name) + "\n" +
-            String(Common.filter.country) + "\n" +
-            String(Common.filter.description) + "\n" +
-            String(Common.limited) + "\n" +
-            String(Common.list_begin_ind) + "\n" +
-            String(Common.list_size) + "\n";
-        http.send(query_body);
-    }
-    static ProviderTable_Fill(data) {
-        const table_place = document.getElementById('provider_table_place');
-        table_place.innerHTML = TemplateHandler.Render('provider_list_table', {});
-        let table_body = table_place.getElementsByTagName('tbody')[0];
-
-        for (let i = 0; i < data.length; i++)
-            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('provider_datatable_row', data[i]));
-
-        $('#dtProviderTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
-    }
-    static ProviderTable_EditRow(id) {
-        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
-        if (sure)
-            InterfaceHashHandler.ProviderEdit(id);
-    }
-    static ProviderTable_DeleteRow(id) {
-        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
-        if (sure) {
-            let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
-            http.onreadystatechange = function () {
-                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                    if (http.responseText === "ok") {
-                        alert("Provider are deleted successfully");
-                        InterfaceActionHandler.ProviderTable_Refresh();
-                    }
-                    else
-                        alert("Provider was not deleted, some trouble happened on the server side.");
-                } else if (http.readyState === XMLHttpRequest.DONE) {
-                    alert("Provider was not deleted, some trouble happened with the request.");
-                }
-            };
-            let query_body =
-                "delete_provider" + "\n" +
-                id + "\n";
-            http.send(query_body);
-        }
-    }
-    static ProviderTable_Clear() {
-        Common.table_data = [];
-        let table_body = document.getElementById('provider_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
-    }
-    static ProviderTable_ExtendList(limited) {
-        Common.limited = limited;
-        Common.list_begin_ind += Common.list_size;
-        InterfaceActionHandler.ProviderTable_Load(function(data) {
-            if (!limited) {
-                InterfaceActionHandler.ProviderTable_Clear();
-                Common.list_begin_ind = data.length;
-            }
-            InterfaceActionHandler.ProviderTable_Fill(data);
-        });
-    }
-    static ProviderTable_Refresh() {
-
-        let prev_ind = Common.list_begin_ind;
-        let prev_size = Common.list_size;
-
-        Common.list_size += Common.list_begin_ind;
-        Common.list_begin_ind = 0;
-
-        this.ProviderTable_Clear();
-
-        this.ProviderTable_Load(function(data) {
-            InterfaceActionHandler.ProviderTable_Fill(data);
-
-            Common.list_begin_ind = prev_ind;
-            Common.list_size = prev_size;
-        });
-    }
-    static Provider_LoadOne(id, callback) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            callback(JSON.parse(http.responseText));
-        };
-        let query_body =
-            "get_one_provider\n" +
-            String(id) + "\n";
-        http.send(query_body);
-    }
-    static ProviderAdd_Send() {
-        let panel = $('.add_provider_panel');
-        let name = panel.find('input[name=\'input_name\']');
-        let country = panel.find('input[name=\'input_country\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' || String(country.val()) === '') {
-            alert("Fill all required fields!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Provider is added successfully");
-                    name.val('');
-                    country.val('');
-                    description.val('');
-                }
-                else
-                    alert("Provider was not added, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Provider was not added, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "add_provider" + "\n" +
-            String(name.val()) + "\n" +
-            String(country.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static ProviderEdit_Send() {
-        let panel = $('.edit_provider_panel');
-        let id = panel.find('input[name=\'input_id\']');
-        let name = panel.find('input[name=\'input_name\']');
-        let country = panel.find('input[name=\'input_country\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' && String(country.val()) === '' && String(description.val()) === '') {
-            alert("Fill at least one field!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Provider is edited successfully");
-                    InterfaceHashHandler.ProviderList();
-                }
-                else
-                    alert("Provider was not edited, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Provider was not edited, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "edit_provider" + "\n" +
-            String(id.val()) + "\n" +
-            String(name.val()) + "\n" +
-            String(country.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static ProviderTable_SetFilter() {
-        Common.ClearTemporary();
-
-        let panel = $('#provider_filter');
-        let id = panel.find('input[name=\'filter_id\']');
-        let name = panel.find('input[name=\'filter_name\']');
-        let country = panel.find('input[name=\'filter_country\']');
-        let description = panel.find('input[name=\'filter_description\']');
-
-        Common.filter = {
-            id : String(id.val()) === '' ? -1 : Number(id.val()),
-            name : String(name.val()),
-            country : String(country.val()),
-            description : String(description.val())
-        };
-
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
-        InterfaceActionHandler.ProviderTable_Load(function(data) {
-            InterfaceActionHandler.ProviderTable_Fill(data);
-        });
-    }
-
-    static Customer_Load() {
-        return {};
-    }
-    static CustomerTable_Load(callback) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            let new_data = JSON.parse(http.responseText);
-            Common.table_data = Common.table_data.concat(new_data);
-            callback(Common.table_data);
-        };
-        let query_body =
-            "get_customer_list\n" +
-            String(Common.filter.id) + "\n" +
-            String(Common.filter.name) + "\n" +
-            String(Common.filter.country) + "\n" +
-            String(Common.filter.description) + "\n" +
-            String(Common.limited) + "\n" +
-            String(Common.list_begin_ind) + "\n" +
-            String(Common.list_size) + "\n";
-        http.send(query_body);
-    }
-    static CustomerTable_Fill(data) {
-        const table_place = document.getElementById('customer_table_place');
-        table_place.innerHTML = TemplateHandler.Render('customer_list_table', {});
-        let table_body = table_place.getElementsByTagName('tbody')[0];
-
-        for (let i = 0; i < data.length; i++)
-            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('customer_datatable_row', data[i]));
-
-        $('#dtCustomerTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
-    }
-    static CustomerTable_EditRow(id) {
-        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
-        if (sure)
-            InterfaceHashHandler.CustomerEdit(id);
-    }
-    static CustomerTable_DeleteRow(id) {
-        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
-        if (sure) {
-            let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
-            http.onreadystatechange = function () {
-                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                    if (http.responseText === "ok") {
-                        alert("Customer are deleted successfully");
-                        InterfaceActionHandler.CustomerTable_Refresh();
-                    }
-                    else
-                        alert("Customer was not deleted, some trouble happened on the server side.");
-                } else if (http.readyState === XMLHttpRequest.DONE) {
-                    alert("Customer was not deleted, some trouble happened with the request.");
-                }
-            };
-            let query_body =
-                "delete_customer" + "\n" +
-                id + "\n";
-            http.send(query_body);
-        }
-    }
-    static CustomerTable_Clear() {
-        Common.table_data = [];
-        let table_body = document.getElementById('customer_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
-    }
-    static CustomerTable_ExtendList(limited) {
-        Common.limited = limited;
-        Common.list_begin_ind += Common.list_size;
-        InterfaceActionHandler.CustomerTable_Load(function(data) {
-            if (!limited) {
-                InterfaceActionHandler.CustomerTable_Clear();
-                Common.list_begin_ind = data.length;
-            }
-            InterfaceActionHandler.CustomerTable_Fill(data);
-        });
-    }
-    static CustomerTable_Refresh() {
-
-        let prev_ind = Common.list_begin_ind;
-        let prev_size = Common.list_size;
-
-        Common.list_size += Common.list_begin_ind;
-        Common.list_begin_ind = 0;
-
-        this.CustomerTable_Clear();
-
-        this.CustomerTable_Load(function(data) {
-            InterfaceActionHandler.CustomerTable_Fill(data);
-
-            Common.list_begin_ind = prev_ind;
-            Common.list_size = prev_size;
-        });
-    }
-    static Customer_LoadOne(id, callback) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            callback(JSON.parse(http.responseText));
-        };
-        let query_body =
-            "get_one_customer\n" +
-            String(id) + "\n";
-        http.send(query_body);
-    }
-    static CustomerAdd_Send() {
-        let panel = $('.add_customer_panel');
-        let name = panel.find('input[name=\'input_name\']');
-        let country = panel.find('input[name=\'input_country\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' || String(country.val()) === '') {
-            alert("Fill all required fields!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Customer is added successfully");
-                    name.val('');
-                    country.val('');
-                    description.val('');
-                }
-                else
-                    alert("Customer was not added, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Customer was not added, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "add_customer" + "\n" +
-            String(name.val()) + "\n" +
-            String(country.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static CustomerEdit_Send() {
-        let panel = $('.edit_customer_panel');
-        let id = panel.find('input[name=\'input_id\']');
-        let name = panel.find('input[name=\'input_name\']');
-        let country = panel.find('input[name=\'input_country\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' && String(country.val()) === '' && String(description.val()) === '') {
-            alert("Fill at least one field!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Customer is edited successfully");
-                    InterfaceHashHandler.CustomerList();
-                }
-                else
-                    alert("Customer was not edited, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Customer was not edited, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "edit_customer" + "\n" +
-            String(id.val()) + "\n" +
-            String(name.val()) + "\n" +
-            String(country.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static CustomerTable_SetFilter() {
-        Common.ClearTemporary();
-
-        let panel = $('#customer_filter');
-        let id = panel.find('input[name=\'filter_id\']');
-        let name = panel.find('input[name=\'filter_name\']');
-        let country = panel.find('input[name=\'filter_country\']');
-        let description = panel.find('input[name=\'filter_description\']');
-
-        Common.filter = {
-            id : String(id.val()) === '' ? -1 : Number(id.val()),
-            name : String(name.val()),
-            country : String(country.val()),
-            description : String(description.val())
-        };
-
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
-        InterfaceActionHandler.CustomerTable_Load(function(data) {
-            InterfaceActionHandler.CustomerTable_Fill(data);
-        });
-    }
-
-    static Goods_Load() {
-        return {};
-    }
-    static GoodsTable_Load(callback){
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            let new_data = JSON.parse(http.responseText);
-            Common.table_data = Common.table_data.concat(new_data);
-            callback(Common.table_data);
-        };
-        let query_body =
-            "get_goods_list\n" +
-            String(Common.filter.id) + "\n" +
-            String(Common.filter.name) + "\n" +
-            String(Common.filter.average_price) + "\n" +
-            String(Common.filter.description) + "\n" +
-            String(Common.limited) + "\n" +
-            String(Common.list_begin_ind) + "\n" +
-            String(Common.list_size) + "\n";
-        http.send(query_body);
-    }
-    static GoodsTable_Fill(data) {
-        const table_place = document.getElementById('goods_table_place');
-        table_place.innerHTML = TemplateHandler.Render('goods_list_table', {});
-        let table_body = table_place.getElementsByTagName('tbody')[0];
-
-        for (let i = 0; i < data.length; i++)
-            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render('goods_datatable_row', data[i]));
-
-        $('#dtGoodsTable').DataTable({
-            "retrieve": true,
-            "scrollY": "50vh",
-            "scrollCollapse": true,
-        });
-        $('.dataTables_length').addClass('bs-select');
-    }
-    static GoodsTable_EditRow(id) {
-        let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
-        if (sure)
-            InterfaceHashHandler.GoodsEdit(id);
-    }
-    static GoodsTable_DeleteRow(id) {
-        let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
-        if (sure) {
-            let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
-            http.onreadystatechange = function () {
-                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                    if (http.responseText === "ok") {
-                        alert("Goods are deleted successfully");
-                        InterfaceActionHandler.GoodsTable_Refresh();
-                    }
-                    else
-                        alert("Goods were not deleted, some trouble happened on the server side.");
-                } else if (http.readyState === XMLHttpRequest.DONE) {
-                    alert("Goods were not deleted, some trouble happened with the request.");
-                }
-            };
-            let query_body =
-                "delete_goods" + "\n" +
-                id + "\n";
-            http.send(query_body);
-        }
-    }
-    static GoodsTable_Clear() {
-        Common.table_data = [];
-        let table_body = document.getElementById('goods_table_place').getElementsByTagName('tbody')[0];
-        while (table_body.firstChild) {
-            table_body.removeChild(table_body.firstChild);
-        }
-    }
-    static GoodsTable_ExtendList(limited) {
-        Common.limited = limited;
-        Common.list_begin_ind += Common.list_size;
-        InterfaceActionHandler.GoodsTable_Load(function(data) {
-            if (!limited) {
-                InterfaceActionHandler.GoodsTable_Clear();
-                Common.list_begin_ind = data.length;
-            }
-            InterfaceActionHandler.GoodsTable_Fill(data);
-        });
-    }
-    static GoodsTable_Refresh() {
-        let prev_ind = Common.list_begin_ind;
-        let prev_size = Common.list_size;
-
-        Common.list_size += Common.list_begin_ind;
-        Common.list_begin_ind = 0;
-
-        this.GoodsTable_Clear();
-
-        this.GoodsTable_Load(function(data) {
-            InterfaceActionHandler.GoodsTable_Fill(data);
-
-            Common.list_begin_ind = prev_ind;
-            Common.list_size = prev_size;
-        });
-    }
-    static Goods_LoadOne(id, callback) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
-        http.onreadystatechange = function() {
-            callback(JSON.parse(http.responseText));
-        };
-        let query_body =
-            "get_one_goods\n" +
-            String(id) + "\n";
-        http.send(query_body);
-    }
-    static GoodsAdd_Send() {
-        let panel = $('.add_goods_panel');
-        let name = panel.find('input[name=\'input_name\']');
-        let average = panel.find('input[name=\'input_average_price\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' || String(average.val()) === '') {
-            alert("Fill all required fields!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Goods are added successfully");
-                    name.val('');
-                    average.val('');
-                    description.val('');
-                }
-                else
-                    alert("Goods were not added, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Customer were not added, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "add_goods" + "\n" +
-            String(name.val()) + "\n" +
-            String(average.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static GoodsEdit_Send() {
-        let panel = $('.edit_goods_panel');
-        let id = panel.find('input[name=\'input_id\']');
-        let name = panel.find('input[name=\'input_name\']');
-        let average = panel.find('input[name=\'input_average_price\']');
-        let description = panel.find('input[name=\'input_description\']');
-
-        if (String(name.val()) === '' && String(average.val()) === '' && String(description.val()) === '') {
-            alert("Fill at least one field!");
-            return;
-        }
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("Goods are edited successfully");
-                    InterfaceHashHandler.GoodsList();
-                }
-                else
-                    alert("Goods were not edited, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("Goods were not edited, some trouble happened with the request.");
-            }
-        };
-        let query_body =
-            "edit_goods" + "\n" +
-            String(id.val()) + "\n" +
-            String(name.val()) + "\n" +
-            String(average.val()) + "\n" +
-            String(description.val()) + "\n";
-        http.send(query_body);
-    }
-    static GoodsTable_SetFilter() {
-        Common.ClearTemporary();
-
-        let panel = $('#goods_filter');
-        let id = panel.find('input[name=\'filter_id\']');
-        let name = panel.find('input[name=\'filter_name\']');
-        let average = panel.find('input[name=\'filter_average_price\']');
-        let description = panel.find('input[name=\'filter_description\']');
-
-        Common.filter = {
-            id : String(id.val()) === '' ? -1 : Number(id.val()),
-            name : String(name.val()),
-            average_price : String(average.val()) === '' ? -1 : Number(average.val()),
-            description : String(description.val())
-        };
-
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
-        InterfaceActionHandler.GoodsTable_Load(function(data) {
-            InterfaceActionHandler.GoodsTable_Fill(data);
-        });
-    }
-
-    static Storage_Load() {
-        return {};
-    }
-
-
-    static Import_Load() {
-        return {};
-    }
-    static Export_Load() {
-        return {};
-    }
-    static Report_Load() {
-        return {};
-    }
-    static System_Load() {
-        return {};
-    }
-
-    static Logout() {
-        document.location.hash = '';
-        let Http = new XMLHttpRequest();
-        let url = window.location.href.split('#')[0];
-        let param = "logout=true";
-        Http.open("GET", url+"?"+param, true);
-        Http.send(param);
-        alert("You are logged out.");
-        document.location.reload(true);
     }
 }
 

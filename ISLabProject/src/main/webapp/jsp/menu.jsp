@@ -40,7 +40,7 @@
     <!-- There are scripts -->
     <script id="username_template" type="text/template" >
         <p class="username_corner"><b>User:</b> <u>{{ username }}</u></p>
-        <button class="logout" onclick="InterfaceActionHandler.Logout()">Logout</button>
+        <button class="logout" onclick="InterfaceHashHandler.Logout()">Logout</button>
     </script>
 
     <!-- Menu for each role -->
@@ -241,14 +241,14 @@
                 <li>Country: <input type="text" name="filter_country"></li>
                 <li>Description: <input type="text" name="filter_description"></li>
             </ul>
-            <button onclick="InterfaceActionHandler.ProviderTable_SetFilter()">Send request</button>
+            <button onclick="ListPage.TableSetFilter()">Send request</button>
         </div>
         <br>
         <div id="provider_table_place"></div>
         <br>
     </script>
     <script id="provider_list_table" type="text/template">
-        <table id="dtProviderTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+        <table id="dt_providerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
             <tr>
                 <th class="th-sm">ID </th>
@@ -270,9 +270,9 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList(true)">Load more (+5)</button>
-        <button onclick="InterfaceActionHandler.ProviderTable_ExtendList(false)">Load all</button>
-        <button onclick="InterfaceActionHandler.ProviderTable_Refresh()">Refresh</button>
+        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
+        <button onclick="ListPage.TableExtendList(false)">Load all</button>
+        <button onclick="ListPage.TableRefresh()">Refresh</button>
     </script>
     <script id="provider_datatable_row" type="text/template">
         <tr>
@@ -281,8 +281,8 @@
             <td>{{ country }}</td>
             <td>{{ description }}</td>
             <td>
-                <button class="table_action" onclick="InterfaceActionHandler.ProviderTable_EditRow( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="InterfaceActionHandler.ProviderTable_DeleteRow( {{ id }} );">Delete</button>
+                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
             </td>
         </tr>
     </script>
@@ -297,7 +297,7 @@
                 <input type="text" name="input_country">
             <p>Description:</p>
                 <input type="text" name="input_description">
-            <p><button onclick="InterfaceActionHandler.ProviderAdd_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
         </div>
     </script>
     <script id="provider_edit_template" type="text/template">
@@ -312,7 +312,7 @@
             <input type="text" name="input_country" value="{{ country }}">
             <p> Description:</p>
             <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="InterfaceActionHandler.ProviderEdit_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
         </div>
     </script>
     <!--  -->
@@ -347,14 +347,14 @@
                 <li>Country: <input type="text" name="filter_country"></li>
                 <li>Description: <input type="text" name="filter_description"></li>
             </ul>
-            <button onclick="InterfaceActionHandler.CustomerTable_SetFilter()">Send request</button>
+            <button onclick="ListPage.TableSetFilter()">Send request</button>
         </div>
         <br>
         <div id="customer_table_place"></div>
         <br>
     </script>
     <script id="customer_list_table" type="text/template">
-        <table id="dtCustomerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+        <table id="dt_customerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
             <tr>
                 <th class="th-sm">ID </th>
@@ -376,9 +376,9 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList(true)">Load more (+5)</button>
-        <button onclick="InterfaceActionHandler.CustomerTable_ExtendList(false)">Load all</button>
-        <button onclick="InterfaceActionHandler.CustomerTable_Refresh()">Refresh</button>
+        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
+        <button onclick="ListPage.TableExtendList(false)">Load all</button>
+        <button onclick="ListPage.TableRefresh()">Refresh</button>
     </script>
     <script id="customer_datatable_row" type="text/template">
         <tr>
@@ -387,8 +387,8 @@
             <td>{{ country }}</td>
             <td>{{ description }}</td>
             <td>
-                <button class="table_action" onclick="InterfaceActionHandler.CustomerTable_EditRow( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="InterfaceActionHandler.CustomerTable_DeleteRow( {{ id }} );">Delete</button>
+                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
             </td>
         </tr>
     </script>
@@ -403,7 +403,7 @@
             <input type="text" name="input_country">
             <p>Description:</p>
             <input type="text" name="input_description">
-            <p><button onclick="InterfaceActionHandler.CustomerAdd_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
         </div>
     </script>
     <script id="customer_edit_template" type="text/template">
@@ -418,7 +418,7 @@
             <input type="text" name="input_country" value="{{ country }}">
             <p> Description:</p>
             <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="InterfaceActionHandler.CustomerEdit_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
         </div>
     </script>
     <!--  -->
@@ -453,14 +453,14 @@
                 <li>Average Price: <input type="text" name="filter_average_price"></li>
                 <li>Description: <input type="text" name="filter_description"></li>
             </ul>
-            <button onclick="InterfaceActionHandler.GoodsTable_SetFilter()">Send request</button>
+            <button onclick="ListPage.TableSetFilter()">Send request</button>
         </div>
         <br>
         <div id="goods_table_place"></div>
         <br>
     </script>
     <script id="goods_list_table" type="text/template">
-        <table id="dtGoodsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+        <table id="dt_goodsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
             <tr>
                 <th class="th-sm">ID </th>
@@ -482,9 +482,9 @@
             </tr>
             </tfoot>
         </table>
-        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList(true)">Load more (+5)</button>
-        <button onclick="InterfaceActionHandler.GoodsTable_ExtendList(false)">Load all</button>
-        <button onclick="InterfaceActionHandler.GoodsTable_Refresh()">Refresh</button>
+        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
+        <button onclick="ListPage.TableExtendList(false)">Load all</button>
+        <button onclick="ListPage.TableRefresh()">Refresh</button>
     </script>
     <script id="goods_datatable_row" type="text/template">
         <tr>
@@ -493,8 +493,8 @@
             <td>{{ average_price }}</td>
             <td>{{ description }}</td>
             <td>
-                <button class="table_action" onclick="InterfaceActionHandler.GoodsTable_EditRow( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="InterfaceActionHandler.GoodsTable_DeleteRow( {{ id }} );">Delete</button>
+                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
             </td>
         </tr>
     </script>
@@ -509,7 +509,7 @@
             <input type="text" name="input_average_price">
             <p>Description:</p>
             <input type="text" name="input_description">
-            <p><button onclick="InterfaceActionHandler.GoodsAdd_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
         </div>
     </script>
     <script id="goods_edit_template" type="text/template">
@@ -524,7 +524,7 @@
             <input type="text" name="input_average_price" value="{{ average_price }}">
             <p> Description:</p>
             <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="InterfaceActionHandler.GoodsEdit_Send()">Send data</button></p>
+            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
         </div>
     </script>
     <!--  -->

@@ -38,8 +38,6 @@ public class UserHandlerServlet extends HttpServlet {
             DeleteProvider(request, response);
         } else if (title.equals(Common.q_edit_provider)) {
             EditProvider(request, response);
-        } else if (title.equals(Common.q_get_one_provider)) {
-            GetOneProvider(request, response);
         }
 
         else if (title.equals(Common.q_get_customer_list)) {
@@ -50,8 +48,6 @@ public class UserHandlerServlet extends HttpServlet {
             DeleteCustomer(request, response);
         } else if (title.equals(Common.q_edit_customer)) {
             EditCustomer(request, response);
-        } else if (title.equals(Common.q_get_one_customer)) {
-            GetOneCustomer(request, response);
         }
 
         else if (title.equals(Common.q_get_goods_list)) {
@@ -62,8 +58,6 @@ public class UserHandlerServlet extends HttpServlet {
             DeleteGoods(request, response);
         } else if (title.equals(Common.q_edit_goods)) {
             EditGoods(request, response);
-        } else if (title.equals(Common.q_get_one_goods)) {
-            GetOneGoods(request, response);
         }
 
         else if (title.equals(Common.q_rebuild_base)) {
@@ -99,7 +93,9 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
+        String tmp = reader.readLine();
+        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
         String name = reader.readLine();
         String country = reader.readLine();
         String description = reader.readLine();
@@ -127,6 +123,8 @@ public class UserHandlerServlet extends HttpServlet {
     private void AddNewProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
+
+        reader.readLine(); // To miss unnecessary id field
 
         String name = reader.readLine();
         String country = reader.readLine();
@@ -194,29 +192,14 @@ public class UserHandlerServlet extends HttpServlet {
             writer.print("not exist");
         pool.DropConnection(connection);
     }
-    private void GetOneProvider(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        PrintWriter writer = response.getWriter();
-
-        long id = Long.parseLong(reader.readLine());
-
-        ConnectionPool pool = ConnectionPool.getInstance();
-        DAOProviders dao = DAOProviders.getInstance();
-
-        Connection connection = pool.GetConnection();
-        if (dao.IsExistsProvider(connection, id)) {
-            Provider provider = dao.GetProvidersList(connection, new Provider(id, null, null, null), true, 0, 1).get(0);
-            writer.print(provider.getJSON().toString());
-        } else
-            writer.print("not exist");
-        pool.DropConnection(connection);
-    }
 
     private void GetCustomerList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
+        String tmp = reader.readLine();
+        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
         String name = reader.readLine();
         String country = reader.readLine();
         String description = reader.readLine();
@@ -244,6 +227,8 @@ public class UserHandlerServlet extends HttpServlet {
     private void AddNewCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
+
+        reader.readLine(); // To miss unnecessary id field
 
         String name = reader.readLine();
         String country = reader.readLine();
@@ -311,31 +296,19 @@ public class UserHandlerServlet extends HttpServlet {
             writer.print("not exist");
         pool.DropConnection(connection);
     }
-    private void GetOneCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        PrintWriter writer = response.getWriter();
-
-        long id = Long.parseLong(reader.readLine());
-
-        ConnectionPool pool = ConnectionPool.getInstance();
-        DAOCustomer dao = DAOCustomer.getInstance();
-
-        Connection connection = pool.GetConnection();
-        if (dao.IsExistsCustomer(connection, id)) {
-            Customer customer = dao.GetCustomersList(connection, new Customer(id, null, null, null), true, 0, 1).get(0);
-            writer.print(customer.getJSON().toString());
-        } else
-            writer.print("not exist");
-        pool.DropConnection(connection);
-    }
 
     private void GetGoodsList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
+        String tmp = reader.readLine();
+        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
         String name = reader.readLine();
-        long average = Long.parseLong(reader.readLine());
+
+        tmp = reader.readLine();
+        long average = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
         String description = reader.readLine();
 
         Goods filter = new Goods(id, name, average, description);
@@ -361,6 +334,8 @@ public class UserHandlerServlet extends HttpServlet {
     private void AddNewGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
+
+        reader.readLine(); // To miss unnecessary id field
 
         String name = reader.readLine();
         long average = Long.parseLong(reader.readLine());
@@ -423,23 +398,6 @@ public class UserHandlerServlet extends HttpServlet {
                 writer.print("ok");
             else
                 writer.print("bad");
-        } else
-            writer.print("not exist");
-        pool.DropConnection(connection);
-    }
-    private void GetOneGoods(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        PrintWriter writer = response.getWriter();
-
-        long id = Long.parseLong(reader.readLine());
-
-        ConnectionPool pool = ConnectionPool.getInstance();
-        DAOGoods dao = DAOGoods.getInstance();
-
-        Connection connection = pool.GetConnection();
-        if (dao.IsExistsGoods(connection, id)) {
-            Goods goods = dao.GetGoodsList(connection, new Goods(id, null, -1, null), true, 0, 1).get(0);
-            writer.print(goods.getJSON().toString());
         } else
             writer.print("not exist");
         pool.DropConnection(connection);
