@@ -100,12 +100,6 @@ class EntityFilters {
     static getEmptyFilter(entity) {
         switch (entity) {
             case Common.Entity.Provider :
-                return {
-                    id: this.undefined_value,
-                    name: this.undefined_value,
-                    country: this.undefined_value,
-                    description: this.undefined_value
-                };
             case Common.Entity.Customer :
                 return {
                     id: this.undefined_value,
@@ -130,11 +124,6 @@ class EntityFilters {
     static getQueryFilterRepresentation(entity, data) {
         switch (entity) {
             case Common.Entity.Provider :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
-                    String(data.country === undefined ? this.undefined_value : data.country) + "\n" +
-                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
             case Common.Entity.Customer :
                 return "" +
                     String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
@@ -281,7 +270,7 @@ class ListPage {
         let ok = true;
         let properties = Object.keys(new_entry);
         for (let i = 0; i < properties.length; i++) {
-            let input = panel.find('input[name=\'filter_' + properties[i] + '\']');
+            let input = panel.find('input[name=\'input_' + properties[i] + '\']');
             if (!(properties[i] === 'description') && input.val() === '') {
                 alert("Fill all required fields!");
                 ok = false;
