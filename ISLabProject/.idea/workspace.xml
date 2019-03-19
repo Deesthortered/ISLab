@@ -7,7 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/menu.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -63,11 +63,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="270" column="51" selection-start-line="270" selection-start-column="51" selection-end-line="270" selection-end-column="51" />
+            <state relative-caret-position="197">
+              <caret line="267" column="50" selection-start-line="267" selection-start-column="50" selection-end-line="267" selection-end-column="50" />
               <folding>
                 <element signature="e#825#1368#0#HTML" />
                 <element signature="e#1405#1633#0#HTML" />
@@ -77,34 +77,21 @@
                 <element signature="e#6540#7863#0#HTML" />
                 <element signature="e#7869#8269#0#HTML" />
                 <element signature="e#8311#8746#0#HTML" />
+                <element signature="n#script#7;n#body#0;n#html#0;n#!!top" />
                 <element signature="e#8751#9375#0#HTML" />
-                <element signature="e#9380#9721#0#HTML" />
+                <element signature="n#script#9;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#10;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#11;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
                 <element signature="e#9727#10275#0#HTML" />
+                <element signature="n#script#14;n#body#0;n#html#0;n#!!top" />
+                <element signature="e#10692#10765#0#HTML" />
                 <element signature="e#10280#10643#0#HTML" />
-                <element signature="e#10649#10712#0#HTML" />
-                <element signature="e#10818#10982#0#HTML" />
-                <element signature="e#10947#11071#0#HTML" />
-                <element signature="e#11069#11138#0#HTML" />
-                <element signature="e#11172#11269#0#HTML" />
                 <element signature="e#11347#11521#0#HTML" />
-                <element signature="e#10701#11496#0#HTML" />
-                <element signature="e#11502#12231#0#HTML" />
-                <element signature="e#12236#13261#0#HTML" />
-                <element signature="e#13266#13751#0#HTML" />
-                <element signature="e#13757#14326#0#HTML" />
-                <element signature="e#14331#15068#0#HTML" />
-                <element signature="e#15126#15921#0#HTML" />
-                <element signature="e#15927#16656#0#HTML" />
-                <element signature="e#16661#17686#0#HTML" />
-                <element signature="e#17691#18176#0#HTML" />
-                <element signature="e#18182#18739#0#HTML" />
-                <element signature="e#18744#19481#0#HTML" />
-                <element signature="e#19536#20288#0#HTML" />
-                <element signature="e#20294#21019#0#HTML" />
-                <element signature="e#21024#22055#0#HTML" />
-                <element signature="e#22060#22548#0#HTML" />
-                <element signature="e#22554#23111#0#HTML" />
-                <element signature="e#23116#23859#0#HTML" />
+                <element signature="e#11407#11551#0#HTML" />
+                <element signature="e#11508#12303#0#HTML" />
+                <element signature="e#12361#13156#0#HTML" />
+                <element signature="e#13211#13963#0#HTML" />
                 <element signature="e#23879#24689#0#HTML" />
                 <element signature="e#24842#25695#0#HTML" />
                 <element signature="e#25843#26682#0#HTML" />
@@ -116,13 +103,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-124">
-              <caret line="390" selection-start-line="390" selection-end-line="390" />
+            <state relative-caret-position="17">
+              <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
               <folding>
                 <element signature="n#Common#0" />
+                <element signature="n#!!block;n#capitalizeFirstLetter#0;n#Common#0" />
                 <element signature="n#!!block;n#ClearTemporary#0;n#Common#0" />
                 <element signature="n#Router#0" />
                 <element signature="n#!!block;n#initialize#0;n#Router#0" />
@@ -136,11 +124,12 @@
                 <element signature="n#EntityFilters#0" />
                 <element signature="n#!!block;n#getEmptyFilter#0;n#EntityFilters#0" />
                 <element signature="n#!!block;n#getQueryFilterRepresentation#0;n#EntityFilters#0" />
-                <element signature="n#ListPage#0" />
+                <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableLoad#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableFill#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableClear#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableRefresh#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableAddEditMenu#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableEditRowMenu#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableDeleteRow#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableExtendList#0;n#ListPage#0" />
@@ -180,35 +169,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
-              <folding>
-                <element signature="method#doPost#0;class#UserHandlerServlet#0" />
-                <element signature="method#doGet#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
-                <element signature="method#AddNewProvider#0;class#UserHandlerServlet#0" />
-                <element signature="method#DeleteProvider#0;class#UserHandlerServlet#0" />
-                <element signature="method#EditProvider#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetCustomerList#0;class#UserHandlerServlet#0" />
-                <element signature="method#AddNewCustomer#0;class#UserHandlerServlet#0" />
-                <element signature="method#DeleteCustomer#0;class#UserHandlerServlet#0" />
-                <element signature="method#EditCustomer#0;class#UserHandlerServlet#0" />
-                <element signature="method#GetGoodsList#0;class#UserHandlerServlet#0" />
-                <element signature="method#AddNewGoods#0;class#UserHandlerServlet#0" />
-                <element signature="method#DeleteGoods#0;class#UserHandlerServlet#0" />
-                <element signature="method#EditGoods#0;class#UserHandlerServlet#0" />
-                <element signature="method#RebuildAvailableGoodsBase#0;class#UserHandlerServlet#0" />
-                <element signature="method#SendError#0;class#UserHandlerServlet#0" />
-                <element signature="method#Logout#0;class#UserHandlerServlet#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -237,6 +197,10 @@
       <find>table_pla</find>
       <find>f</find>
       <find>TableLoad</find>
+      <find>append</find>
+      <find>filter</find>
+      <find>provider_template</find>
+      <find>TableClear</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -294,8 +258,8 @@
         <option value="$PROJECT_DIR$/src/main/java/database_package/DAOExportDocument.java" />
         <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
         <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
       </list>
     </option>
   </component>
@@ -306,7 +270,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1940" />
@@ -378,7 +342,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552916480149" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553023786042" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="MySQL&#10;PostgreSQL" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -589,7 +553,7 @@
       <workItem from="1552826387092" duration="11344000" />
       <workItem from="1552907391324" duration="7747000" />
       <workItem from="1552916696585" duration="1695000" />
-      <workItem from="1552998509001" duration="885000" />
+      <workItem from="1552998509001" duration="19317000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -607,7 +571,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="300234000" />
+    <option name="totallyTimeSpent" value="318666000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -633,7 +597,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.34419262" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" weight="0.44759208" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.44759208" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Build" order="6" weight="0.3286119" />
@@ -1248,9 +1212,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+        <state relative-caret-position="131">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
           <folding>
+            <element signature="imports" expanded="true" />
             <element signature="method#doPost#0;class#UserHandlerServlet#0" />
             <element signature="method#doGet#0;class#UserHandlerServlet#0" />
             <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
@@ -1273,12 +1238,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="267" column="50" selection-start-line="267" selection-start-column="50" selection-end-line="267" selection-end-column="50" />
+          <folding>
+            <element signature="e#825#1368#0#HTML" />
+            <element signature="e#1405#1633#0#HTML" />
+            <element signature="e#1671#3598#0#HTML" />
+            <element signature="e#3603#5144#0#HTML" />
+            <element signature="e#5149#6535#0#HTML" />
+            <element signature="e#6540#7863#0#HTML" />
+            <element signature="e#7869#8269#0#HTML" />
+            <element signature="e#8311#8746#0#HTML" />
+            <element signature="n#script#7;n#body#0;n#html#0;n#!!top" />
+            <element signature="e#8751#9375#0#HTML" />
+            <element signature="n#script#9;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#10;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#11;n#body#0;n#html#0;n#!!top" />
+            <element signature="n#script#12;n#body#0;n#html#0;n#!!top" />
+            <element signature="e#9727#10275#0#HTML" />
+            <element signature="n#script#14;n#body#0;n#html#0;n#!!top" />
+            <element signature="e#10692#10765#0#HTML" />
+            <element signature="e#10280#10643#0#HTML" />
+            <element signature="e#11347#11521#0#HTML" />
+            <element signature="e#11407#11551#0#HTML" />
+            <element signature="e#11508#12303#0#HTML" />
+            <element signature="e#12361#13156#0#HTML" />
+            <element signature="e#13211#13963#0#HTML" />
+            <element signature="e#23879#24689#0#HTML" />
+            <element signature="e#24842#25695#0#HTML" />
+            <element signature="e#25843#26682#0#HTML" />
+            <element signature="e#26830#27658#0#HTML" />
+            <element signature="e#27874#28689#0#HTML" />
+            <element signature="e#28694#28861#0#HTML" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-124">
-          <caret line="390" selection-start-line="390" selection-end-line="390" />
+        <state relative-caret-position="17">
+          <caret line="175" column="31" selection-start-line="175" selection-start-column="31" selection-end-line="175" selection-end-column="31" />
           <folding>
             <element signature="n#Common#0" />
+            <element signature="n#!!block;n#capitalizeFirstLetter#0;n#Common#0" />
             <element signature="n#!!block;n#ClearTemporary#0;n#Common#0" />
             <element signature="n#Router#0" />
             <element signature="n#!!block;n#initialize#0;n#Router#0" />
@@ -1292,11 +1296,12 @@
             <element signature="n#EntityFilters#0" />
             <element signature="n#!!block;n#getEmptyFilter#0;n#EntityFilters#0" />
             <element signature="n#!!block;n#getQueryFilterRepresentation#0;n#EntityFilters#0" />
-            <element signature="n#ListPage#0" />
+            <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableLoad#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableFill#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableClear#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableRefresh#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableAddEditMenu#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableEditRowMenu#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableDeleteRow#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableExtendList#0;n#ListPage#0" />
@@ -1331,57 +1336,6 @@
             <element signature="n#!!block;n#ReportMake#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#System#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/jsp/menu.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="270" column="51" selection-start-line="270" selection-start-column="51" selection-end-line="270" selection-end-column="51" />
-          <folding>
-            <element signature="e#825#1368#0#HTML" />
-            <element signature="e#1405#1633#0#HTML" />
-            <element signature="e#1671#3598#0#HTML" />
-            <element signature="e#3603#5144#0#HTML" />
-            <element signature="e#5149#6535#0#HTML" />
-            <element signature="e#6540#7863#0#HTML" />
-            <element signature="e#7869#8269#0#HTML" />
-            <element signature="e#8311#8746#0#HTML" />
-            <element signature="e#8751#9375#0#HTML" />
-            <element signature="e#9380#9721#0#HTML" />
-            <element signature="e#9727#10275#0#HTML" />
-            <element signature="e#10280#10643#0#HTML" />
-            <element signature="e#10649#10712#0#HTML" />
-            <element signature="e#10818#10982#0#HTML" />
-            <element signature="e#10947#11071#0#HTML" />
-            <element signature="e#11069#11138#0#HTML" />
-            <element signature="e#11172#11269#0#HTML" />
-            <element signature="e#11347#11521#0#HTML" />
-            <element signature="e#10701#11496#0#HTML" />
-            <element signature="e#11502#12231#0#HTML" />
-            <element signature="e#12236#13261#0#HTML" />
-            <element signature="e#13266#13751#0#HTML" />
-            <element signature="e#13757#14326#0#HTML" />
-            <element signature="e#14331#15068#0#HTML" />
-            <element signature="e#15126#15921#0#HTML" />
-            <element signature="e#15927#16656#0#HTML" />
-            <element signature="e#16661#17686#0#HTML" />
-            <element signature="e#17691#18176#0#HTML" />
-            <element signature="e#18182#18739#0#HTML" />
-            <element signature="e#18744#19481#0#HTML" />
-            <element signature="e#19536#20288#0#HTML" />
-            <element signature="e#20294#21019#0#HTML" />
-            <element signature="e#21024#22055#0#HTML" />
-            <element signature="e#22060#22548#0#HTML" />
-            <element signature="e#22554#23111#0#HTML" />
-            <element signature="e#23116#23859#0#HTML" />
-            <element signature="e#23879#24689#0#HTML" />
-            <element signature="e#24842#25695#0#HTML" />
-            <element signature="e#25843#26682#0#HTML" />
-            <element signature="e#26830#27658#0#HTML" />
-            <element signature="e#27874#28689#0#HTML" />
-            <element signature="e#28694#28861#0#HTML" />
           </folding>
         </state>
       </provider>

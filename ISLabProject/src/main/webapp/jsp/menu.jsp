@@ -226,6 +226,9 @@
         <div id="table_place"></div>
         <br>
     </script>
+    <script id="filter_input" type="text/template">
+        <li>{{ property_uppercase }}: <input type="text" name="filter_{{ property_lowercase }}"></li>
+    </script>
     <script id="list_table" type="text/template">
         <table id="dt_Table" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
             <thead>
@@ -234,6 +237,7 @@
             </tr>
             </thead>
             <tbody>
+
             </tbody>
             <tfoot>
             <tr>
@@ -245,65 +249,49 @@
         <button onclick="ListPage.TableExtendList(false)">Load all</button>
         <button onclick="ListPage.TableRefresh()">Refresh</button>
     </script>
-    <script id="datatable_row" type="text/template">
-        <tr>
-
-            <td>
-                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
-            </td>
-        </tr>
+    <script id="list_header_title" type="text/template">
+        <th class="th-sm">{{ property_uppercase }} </th>
+    </script>
+    <script id="list_footer_title" type="text/template">
+        <th>{{ property_uppercase }} </th>
+    </script>
+    <script id="datatable_row_field" type="text/template">
+        <td>{{ value }}</td>
+    </script>
+    <script id="datatable_row_buttons" type="text/template">
+        <td>
+            <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+            <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
+        </td>
     </script>
 
     <script id="add_template" type="text/template">
-        <h1>Add provider</h1>
-        <p> There you can add new provider to base.</p>
-        <div class = "add_provider_panel">
-            <p><b>*</b> Name:</p>
-            <input type="text" name="input_name">
-            <p><b>*</b> Country:</p>
-            <input type="text" name="input_country">
-            <p>Description:</p>
-            <input type="text" name="input_description">
-            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
-        </div>
+        <h1>Add {{ entity_lowercase }}</h1>
+        <p> There you can add new {{ entity_lowercase }} to base.</p>
+        <div class = "add_panel"></div>
     </script>
+    <script id="add_template_field" type="text/template">
+        <p>{{ property_uppercase }}:</p>
+        <input type="text" name="input_{{ property_lowercase }}">
+    </script>
+    <script id="add_template_button" type="text/template">
+        <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
+    </script>
+
     <script id="edit_template" type="text/template">
         <h1>Edit {{ entity_lowercase }}</h1>
         <p> There you can edit {{ entity_lowercase }} in the base.</p>
         <p> Edit field which you want to change.</p>
-        <div class = "edit_panel">
-
-            <input type="hidden" name="input_id" value="{{ id }}" />
-            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
-        </div>
-    </script>
-
-
-    <script  id="filter_input" type="text/template">
-        <li>{{ property_uppercase }}: <input type="text" name="filter_{{ property_lowercase }}"></li>
-    </script>
-
-    <script  id="list_header_title" type="text/template">
-        <th class="th-sm">{{ property_uppercase }} </th>
-    </script>
-    <script  id="list_footer_title" type="text/template">
-        <th>{{ property_uppercase }} </th>
-    </script>
-
-    <script id="datatable_row_field" type="text/template">
-        <td>{{ value }}</td>
-    </script>
-
-    <script id="add_template_field" type="text/template">
-        <p>{{ property_uppercase }}:</p>
-        <input type="text" name="input_{{ property_lowercase }}">
+        <div class = "edit_panel"></div>
     </script>
     <script id="edit_template_field" type="text/template">
         <p>{{ property_uppercase }}:</p>
         <input type="text" name="input_{{ property_lowercase }}" value="{{ property_value }}">
     </script>
-
+    <script id="edit_template_button" type="text/template">
+        <input type="hidden" name="input_id" value="{{ id }}" />
+        <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
+    </script>
     <!--  -->
 
     <!-- Provider section scripts -->
@@ -323,92 +311,6 @@
             <li><a href="#provider_list"><u>List of Providers</u></a> - show first 10 providers, you can expand list by each 10 next providers.</li>
             <li><a href="#provider_add"><u>Add new Provider</u></a> - you can add new provider if you need to import some goods, but provider is not exist in the database.</li>
         </ul>
-    </script>
-
-    <script id="provider_list_template" type="text/template">
-        <h1>Provider list</h1>
-        <p>There you can review list of providers and edit it.</p>
-        <div id="provider_filter">
-            <h3>Filter.</h3>
-            <ul>
-                <li>ID: <input type="text" name="filter_id"></li>
-                <li>Name: <input type="text" name="filter_name"></li>
-                <li>Country: <input type="text" name="filter_country"></li>
-                <li>Description: <input type="text" name="filter_description"></li>
-            </ul>
-            <button onclick="ListPage.TableSetFilter()">Send request</button>
-        </div>
-        <br>
-        <div id="provider_table_place"></div>
-        <br>
-    </script>
-    <script id="provider_list_table" type="text/template">
-        <table id="dt_providerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
-            <thead>
-            <tr>
-                <th class="th-sm">ID </th>
-                <th class="th-sm">Name </th>
-                <th class="th-sm">Country </th>
-                <th class="th-sm">Description </th>
-                <th class="th-sm">Actions </th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>ID </th>
-                <th>Name </th>
-                <th>Country </th>
-                <th>Description </th>
-                <th>Actions </th>
-            </tr>
-            </tfoot>
-        </table>
-        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
-        <button onclick="ListPage.TableExtendList(false)">Load all</button>
-        <button onclick="ListPage.TableRefresh()">Refresh</button>
-    </script>
-    <script id="provider_datatable_row" type="text/template">
-        <tr>
-            <td>{{ id }}</td>
-            <td>{{ name }}</td>
-            <td>{{ country }}</td>
-            <td>{{ description }}</td>
-            <td>
-                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
-            </td>
-        </tr>
-    </script>
-
-    <script id="provider_add_template" type="text/template">
-        <h1>Add provider</h1>
-        <p> There you can add new provider to base.</p>
-        <div class = "add_provider_panel">
-            <p><b>*</b> Name:</p>
-                <input type="text" name="input_name">
-            <p><b>*</b> Country:</p>
-                <input type="text" name="input_country">
-            <p>Description:</p>
-                <input type="text" name="input_description">
-            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
-        </div>
-    </script>
-    <script id="provider_edit_template" type="text/template">
-        <h1>Edit provider</h1>
-        <p> There you can edit provider in the base.</p>
-        <p> Edit field which you want to change.</p>
-        <div class = "edit_provider_panel">
-            <input type="hidden" name="input_id" value="{{ id }}" />
-            <p> Name:</p>
-            <input type="text" name="input_name" value="{{ name }}">
-            <p> Country:</p>
-            <input type="text" name="input_country" value="{{ country }}">
-            <p> Description:</p>
-            <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
-        </div>
     </script>
     <!--  -->
 
@@ -430,92 +332,6 @@
             <li><a href="#customer_add"><u>Add new Customer</u></a> - you can add new customer if you need to export some goods, but customer is not exist in the database.</li>
         </ul>
     </script>
-
-    <script id="customer_list_template" type="text/template">
-        <h1>Customer list</h1>
-        <p>There you can review list of providers and edit it.</p>
-        <div id="customer_filter">
-            <h3>Filter.</h3>
-            <ul>
-                <li>ID: <input type="text" name="filter_id"></li>
-                <li>Name: <input type="text" name="filter_name"></li>
-                <li>Country: <input type="text" name="filter_country"></li>
-                <li>Description: <input type="text" name="filter_description"></li>
-            </ul>
-            <button onclick="ListPage.TableSetFilter()">Send request</button>
-        </div>
-        <br>
-        <div id="customer_table_place"></div>
-        <br>
-    </script>
-    <script id="customer_list_table" type="text/template">
-        <table id="dt_customerTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
-            <thead>
-            <tr>
-                <th class="th-sm">ID </th>
-                <th class="th-sm">Name </th>
-                <th class="th-sm">Country </th>
-                <th class="th-sm">Description </th>
-                <th class="th-sm">Actions </th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>ID </th>
-                <th>Name </th>
-                <th>Country </th>
-                <th>Description </th>
-                <th>Actions </th>
-            </tr>
-            </tfoot>
-        </table>
-        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
-        <button onclick="ListPage.TableExtendList(false)">Load all</button>
-        <button onclick="ListPage.TableRefresh()">Refresh</button>
-    </script>
-    <script id="customer_datatable_row" type="text/template">
-        <tr>
-            <td>{{ id }}</td>
-            <td>{{ name }}</td>
-            <td>{{ country }}</td>
-            <td>{{ description }}</td>
-            <td>
-                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
-            </td>
-        </tr>
-    </script>
-
-    <script id="customer_add_template" type="text/template">
-        <h1>Add customer</h1>
-        <p> There you can add new customer to base.</p>
-        <div class = "add_customer_panel">
-            <p><b>*</b> Name:</p>
-            <input type="text" name="input_name">
-            <p><b>*</b> Country:</p>
-            <input type="text" name="input_country">
-            <p>Description:</p>
-            <input type="text" name="input_description">
-            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
-        </div>
-    </script>
-    <script id="customer_edit_template" type="text/template">
-        <h1>Edit customer</h1>
-        <p> There you can edit customer in the base.</p>
-        <p> Edit field which you want to change.</p>
-        <div class = "edit_customer_panel">
-            <input type="hidden" name="input_id" value="{{ id }}" />
-            <p> Name:</p>
-            <input type="text" name="input_name" value="{{ name }}">
-            <p> Country:</p>
-            <input type="text" name="input_country" value="{{ country }}">
-            <p> Description:</p>
-            <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
-        </div>
-    </script>
     <!--  -->
 
     <!-- Goods section scripts -->
@@ -535,92 +351,6 @@
             <li><a href="#goods_list"><u>List of Goods</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
             <li><a href="#goods_add"><u>Add new Goods</u></a> - you can add new one if you need to export some goods, but it is not exist in the database.</li>
         </ul>
-    </script>
-
-    <script id="goods_list_template" type="text/template">
-        <h1>Goods list</h1>
-        <p>There you can review list of goods and edit it.</p>
-        <div id="goods_filter">
-            <h3>Filter.</h3>
-            <ul>
-                <li>ID: <input type="text" name="filter_id"></li>
-                <li>Name: <input type="text" name="filter_name"></li>
-                <li>Average Price: <input type="text" name="filter_average_price"></li>
-                <li>Description: <input type="text" name="filter_description"></li>
-            </ul>
-            <button onclick="ListPage.TableSetFilter()">Send request</button>
-        </div>
-        <br>
-        <div id="goods_table_place"></div>
-        <br>
-    </script>
-    <script id="goods_list_table" type="text/template">
-        <table id="dt_goodsTable" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
-            <thead>
-            <tr>
-                <th class="th-sm">ID </th>
-                <th class="th-sm">Name </th>
-                <th class="th-sm">Average Price </th>
-                <th class="th-sm">Description </th>
-                <th class="th-sm">Actions </th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            <tfoot>
-            <tr>
-                <th>ID </th>
-                <th>Name </th>
-                <th>Average Price </th>
-                <th>Description </th>
-                <th>Actions </th>
-            </tr>
-            </tfoot>
-        </table>
-        <button onclick="ListPage.TableExtendList(true)">Load more (+5)</button>
-        <button onclick="ListPage.TableExtendList(false)">Load all</button>
-        <button onclick="ListPage.TableRefresh()">Refresh</button>
-    </script>
-    <script id="goods_datatable_row" type="text/template">
-        <tr>
-            <td>{{ id }}</td>
-            <td>{{ name }}</td>
-            <td>{{ average_price }}</td>
-            <td>{{ description }}</td>
-            <td>
-                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
-                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
-            </td>
-        </tr>
-    </script>
-
-    <script id="goods_add_template" type="text/template">
-        <h1>Add goods</h1>
-        <p> There you can add new goods to base.</p>
-        <div class = "add_goods_panel">
-            <p><b>*</b> Name:</p>
-            <input type="text" name="input_name">
-            <p><b>*</b> Average Price:</p>
-            <input type="text" name="input_average_price">
-            <p>Description:</p>
-            <input type="text" name="input_description">
-            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
-        </div>
-    </script>
-    <script id="goods_edit_template" type="text/template">
-        <h1>Edit goods</h1>
-        <p> There you can edit goods in the base.</p>
-        <p> Edit field which you want to change.</p>
-        <div class = "edit_goods_panel">
-            <input type="hidden" name="input_id" value="{{ id }}" />
-            <p> Name:</p>
-            <input type="text" name="input_name" value="{{ name }}">
-            <p> Average Price:</p>
-            <input type="text" name="input_average_price" value="{{ average_price }}">
-            <p> Description:</p>
-            <input type="text" name="input_description"  value="{{ description }}">
-            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
-        </div>
     </script>
     <!--  -->
 

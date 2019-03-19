@@ -1,4 +1,5 @@
 class Common {
+    static dynamic_panel_name = Object.freeze('dynamic_panel');
     static roles = Object.freeze({
         Admin         : 'Admin',
         ViewManager   : 'ViewManager',
@@ -11,6 +12,10 @@ class Common {
         Goods    : 'goods'
     });
     static list_size = Object.freeze(5);
+
+    static capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     // Temporary
     static role;
@@ -147,13 +152,38 @@ class EntityFilters {
 class ListPage {
     static current_entity;
 
+    static BuildList() {
+        let data = {
+            entity_uppercase: Common.capitalizeFirstLetter(this.current_entity),
+            entity_lowercase: this.current_entity,
+        };
+        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('list_template', data);
+
+        let ul = document.getElementById(Common.dynamic_panel_name).getElementsByTagName('ul')[0];
+        let properties = Object.keys(EntityFilters.getEmptyFilter(this.current_entity));
+        for (let i = 0; i < properties.length; i++) {
+            let sub_data = {
+                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                property_lowercase : properties[i],
+            };
+            ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
+        }
+
+        ListPage.TableLoad(function(data) {
+            ListPage.TableFill(data);
+        });
+    }
     static TableLoad(callback) {
         let http = new XMLHttpRequest();
         http.open('POST', window.location.href, false);
         http.onreadystatechange = function() {
-            let new_data = JSON.parse(http.responseText);
-            Common.table_data = Common.table_data.concat(new_data);
-            callback(Common.table_data);
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                let new_data = JSON.parse(http.responseText);
+                Common.table_data = Common.table_data.concat(new_data);
+                callback(Common.table_data);
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The Load request finished not successful, some trouble happened with the request.");
+            }
         };
         let query_body =
             QueryMaker.GetEntityList(this.current_entity) +
@@ -164,14 +194,40 @@ class ListPage {
         http.send(query_body);
     }
     static TableFill(data) {
-        const table_place = document.getElementById(this.current_entity + '_table_place');
-        table_place.innerHTML = TemplateHandler.Render(this.current_entity + '_list_table', {});
+        let table_place =  document.getElementById('table_place');
+        table_place.innerHTML = TemplateHandler.Render('list_table', {});
+
+        let list_header = table_place.getElementsByTagName('tr')[0];
+        let list_footer = table_place.getElementsByTagName('tr')[1];
+        let properties = Object.keys(EntityFilters.getEmptyFilter(this.current_entity));
+        for (let i = 0; i < properties.length; i++) {
+            let sub_data = {
+                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+            };
+            list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
+            list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
+        }
+        let sub_data = {
+            property_uppercase : 'Action',
+        };
+        list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
+        list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
+
         let table_body = table_place.getElementsByTagName('tbody')[0];
 
-        for (let i = 0; i < data.length; i++)
-            table_body.insertAdjacentHTML('beforeend', TemplateHandler.Render(this.current_entity + '_datatable_row', data[i]));
+        for (let i = 0; i < data.length; i++) {
+            let record = document.createElement('tr');
+            for (let j = 0; j < properties.length; j++) {
+                let row_data = {
+                    value : (data[i][properties[j]] === EntityFilters.undefined_value ? '' : data[i][properties[j]] ),
+                };
+                record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_field', row_data));
+            }
+            record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_buttons',{ id : data[i].id} ));
+            table_body.insertAdjacentElement('beforeend', record);
+        }
 
-        $('#dt_'+ this.current_entity + 'Table').DataTable({
+        $('#dt_Table').DataTable({
             "retrieve": true,
             "scrollY": "50vh",
             "scrollCollapse": true,
@@ -180,7 +236,7 @@ class ListPage {
     }
     static TableClear() {
         Common.table_data = [];
-        let table_body = document.getElementById(this.current_entity + '_table_place').getElementsByTagName('tbody')[0];
+        let table_body = document.getElementById('table_place').getElementsByTagName('tbody')[0];
         while (table_body.firstChild) {
             table_body.removeChild(table_body.firstChild);
         }
@@ -201,6 +257,23 @@ class ListPage {
             Common.list_size = prev_size;
         });
     }
+    static TableAddRowMenu() {
+        let data = {
+            entity_lowercase : this.current_entity,
+        };
+        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('add_template', data);
+        let panel = document.getElementsByClassName('add_panel')[0];
+        let properties = Object.keys(Common.filter);
+        for (let i = 0; i < properties.length; i++) {
+            if (properties[i] === 'id') continue;
+            let sub_data = {
+                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                property_lowercase : properties[i],
+            };
+            panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_field', sub_data));
+        }
+        panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_button', {}));
+    }
     static TableEditRowMenu(id) {
         let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
         if (!sure) return;
@@ -209,8 +282,23 @@ class ListPage {
         Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
         Common.filter.id = id;
 
-        this.TableLoad(function (data) {
-            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render(ListPage.current_entity + '_edit_template', data[0]);
+        this.TableLoad(function (loaded_data) {
+            let data = {
+                entity_lowercase : ListPage.current_entity,
+            };
+            document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
+            let panel = document.getElementsByClassName('edit_panel')[0];
+            let properties = Object.keys(Common.filter);
+            for (let i = 0; i < properties.length; i++) {
+                if (properties[i] === 'id') continue;
+                let sub_data = {
+                    property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                    property_lowercase : properties[i],
+                    property_value : (loaded_data[0][properties[i]] === EntityFilters.undefined_value ? '' : loaded_data[0][properties[i]] ),
+                };
+                panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('edit_template_field', sub_data));
+            }
+            panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('edit_template_button', {id : loaded_data[0].id}));
         });
     }
     static TableDeleteRow(id) {
@@ -252,20 +340,17 @@ class ListPage {
 
         Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
         let properties = Object.keys(Common.filter);
-        let panel = $('#' + this.current_entity + '_filter');
+        let panel = $('#filter');
         for (let i = 0; i < properties.length; i++) {
-            let input = panel.find('input[name=\'input_' + properties[i] + '\']').val();
+            let input = panel.find('input[name=\'filter_' + properties[i] + '\']').val();
             Common.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
         }
 
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render(this.current_entity + '_list_template', {});
-        this.TableLoad(function(data) {
-            ListPage.TableFill(data);
-        });
+        this.BuildList();
     }
     static TableAddSend() {
         let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
-        let panel = $('.add_' + this.current_entity + '_panel');
+        let panel = $('.add_panel');
 
         let ok = true;
         let properties = Object.keys(new_entry);
@@ -300,7 +385,7 @@ class ListPage {
     }
     static TableEditSend() {
         let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
-        let panel = $('.edit_' + this.current_entity + '_panel');
+        let panel = $('.edit_panel');
 
         let ok = false;
         let properties = Object.keys(new_entry);
@@ -343,31 +428,34 @@ class InterfaceHashHandler {
         document.location.hash = '';
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
+        http.open('POST', window.location.href, true);
         http.onreadystatechange = function () {
-            Common.role = http.responseText;
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                Common.role = http.responseText;
+                const username_field = document.getElementById('username_field');
+                username_field.innerHTML = TemplateHandler.Render('username_template', { username: Common.role});
+
+                let menu_startpage = document.getElementById('menu_ul');
+                switch (Common.role) {
+                    case Common.roles.Admin: {
+                        menu_startpage.innerHTML = TemplateHandler.Render('admin_menu_template')
+                    } break;
+                    case Common.roles.ViewManager: {
+                        menu_startpage.innerHTML = TemplateHandler.Render('view_menu_template')
+                    } break;
+                    case Common.roles.ImportManager: {
+                        menu_startpage.innerHTML = TemplateHandler.Render('import_menu_template')
+                    } break;
+                    case Common.roles.ExportManager: {
+                        menu_startpage.innerHTML = TemplateHandler.Render('export_menu_template')
+                    } break;
+                    default: alert("Unknown role: " + Common.role);
+                }
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The role is not defined, some trouble happened with the request.");
+            }
         };
         http.send('get_role');
-
-        const username_field = document.getElementById('username_field');
-        username_field.innerHTML = TemplateHandler.Render('username_template', { username: Common.role});
-
-        let menu_startpage = document.getElementById('menu_ul');
-        switch (Common.role) {
-            case Common.roles.Admin: {
-                menu_startpage.innerHTML = TemplateHandler.Render('admin_menu_template')
-            } break;
-            case Common.roles.ViewManager: {
-                menu_startpage.innerHTML = TemplateHandler.Render('view_menu_template')
-            } break;
-            case Common.roles.ImportManager: {
-                menu_startpage.innerHTML = TemplateHandler.Render('import_menu_template')
-            } break;
-            case Common.roles.ExportManager: {
-                menu_startpage.innerHTML = TemplateHandler.Render('export_menu_template')
-            } break;
-            default: alert("Unknown role: " + Common.role);
-        }
     }
     static CheckPermission(privileged_users) {
         for (let i = 0; i < privileged_users.length; i++) {
@@ -403,31 +491,29 @@ class InterfaceHashHandler {
         if (this.CheckPermission( [Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager] )) return;
         ListPage.current_entity = Common.Entity.Provider;
 
-        ListPage.TableLoad( function (data) {
-            document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_template', data);
-        });
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('provider_template', {});
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
         ListPage.current_entity = Common.Entity.Provider;
 
         Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_list_template', {});
-        ListPage.TableLoad(function(data) {
-            ListPage.TableFill(data);
-        });
+        ListPage.BuildList();
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
         ListPage.current_entity = Common.Entity.Provider;
 
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_add_template', {});
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.TableAddRowMenu();
     }
 
     static Customer() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
         ListPage.current_entity = Common.Entity.Customer;
 
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_template', {});
     }
     static CustomerList() {
@@ -435,42 +521,38 @@ class InterfaceHashHandler {
         ListPage.current_entity = Common.Entity.Customer;
 
         Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_list_template', {});
-        ListPage.TableLoad(function(data) {
-            ListPage.TableFill(data);
-        });
+        ListPage.BuildList();
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
         ListPage.current_entity = Common.Entity.Customer;
 
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_add_template', {});
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.TableAddRowMenu();
     }
 
     static Goods() {
         ListPage.current_entity = Common.Entity.Goods;
 
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
         ListPage.current_entity = Common.Entity.Goods;
 
         Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_list_template', {});
-        ListPage.TableLoad(function(data) {
-            ListPage.TableFill(data);
-        });
+        ListPage.BuildList();
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
         ListPage.current_entity = Common.Entity.Goods;
 
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_add_template', {});
+        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.TableAddRowMenu();
     }
 
     static Storage() {
-        const data = InterfaceActionHandler.Storage_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', {});
     }
     static StorageAvailable() {
         const data = {
@@ -487,8 +569,7 @@ class InterfaceHashHandler {
 
     static Imports() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        const data = InterfaceActionHandler.Import_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('imports_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('imports_template', {});
     }
     static ImportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
@@ -507,8 +588,7 @@ class InterfaceHashHandler {
 
     static Exports() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        const data = InterfaceActionHandler.Export_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('exports_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('exports_template', {});
     }
     static ExportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
@@ -526,8 +606,7 @@ class InterfaceHashHandler {
     }
 
     static Reports() {
-        const data = InterfaceActionHandler.Report_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('reports_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('reports_template', {});
     }
     static ReportLast() {
         const data = {
