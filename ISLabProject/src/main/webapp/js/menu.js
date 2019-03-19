@@ -30,52 +30,6 @@ class Common {
         this.limited = true;
     }
 }
-class Router {
-    static initialize(){
-        addEventListener('hashchange', Router.handleHash);
-        Router.handleHash();
-    }
-    static handleHash() {
-        Common.ClearTemporary();
-        switch (location.hash) {
-            case ''                   : { InterfaceHashHandler.StartPage();        } break;
-
-            case '#provider'          : { InterfaceHashHandler.Provider();         } break;
-            case '#provider_list'     : { InterfaceHashHandler.ProviderList();     } break;
-            case '#provider_add'      : { InterfaceHashHandler.ProviderAdd();      } break;
-
-            case '#customer'          : { InterfaceHashHandler.Customer();         } break;
-            case '#customer_list'     : { InterfaceHashHandler.CustomerList();     } break;
-            case '#customer_add'      : { InterfaceHashHandler.CustomerAdd();      } break;
-
-            case '#goods'             : { InterfaceHashHandler.Goods();            } break;
-            case '#goods_list'        : { InterfaceHashHandler.GoodsList();        } break;
-            case '#goods_add'         : { InterfaceHashHandler.GoodsAdd();         } break;
-
-            case '#storage'           : { InterfaceHashHandler.Storage();          } break;
-            case '#storage_available' : { InterfaceHashHandler.StorageAvailable(); } break;
-            case '#storage_info'      : { InterfaceHashHandler.StorageInfo();      } break;
-
-            case '#imports'           : { InterfaceHashHandler.Imports();          } break;
-            case '#import_action'     : { InterfaceHashHandler.ImportsAction();    } break;
-            case '#import_list'       : { InterfaceHashHandler.ImportsList();      } break;
-
-            case '#exports'           : { InterfaceHashHandler.Exports();          } break;
-            case '#export_action'     : { InterfaceHashHandler.ExportsAction();    } break;
-            case '#export_list'       : { InterfaceHashHandler.ExportsList();      } break;
-
-            case '#reports'           : { InterfaceHashHandler.Reports();          } break;
-            case '#report_last'       : { InterfaceHashHandler.ReportLast();       } break;
-            case '#report_list'       : { InterfaceHashHandler.ReportList();       } break;
-            case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
-
-            case '#system'            : { InterfaceHashHandler.System();           } break;
-            case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
-
-            default: alert("Unknown hash-tag!");
-        }
-    }
-}
 class TemplateHandler {
     static Render(templateName, data = {}) {
         const templateElement = document.getElementById(templateName);
@@ -84,7 +38,6 @@ class TemplateHandler {
         return renderFn(data);
     }
 }
-
 class QueryMaker {
     static GetEntityList(entity) {
         return "get_" + entity + "_list\n";
@@ -422,6 +375,52 @@ class ListPage {
     }
 }
 
+class Router {
+    static initialize(){
+        addEventListener('hashchange', Router.handleHash);
+        Router.handleHash();
+    }
+    static handleHash() {
+        Common.ClearTemporary();
+        switch (location.hash) {
+            case ''                   : { InterfaceHashHandler.StartPage();        } break;
+
+            case '#provider'          : { InterfaceHashHandler.Provider();         } break;
+            case '#provider_list'     : { InterfaceHashHandler.ProviderList();     } break;
+            case '#provider_add'      : { InterfaceHashHandler.ProviderAdd();      } break;
+
+            case '#customer'          : { InterfaceHashHandler.Customer();         } break;
+            case '#customer_list'     : { InterfaceHashHandler.CustomerList();     } break;
+            case '#customer_add'      : { InterfaceHashHandler.CustomerAdd();      } break;
+
+            case '#goods'             : { InterfaceHashHandler.Goods();            } break;
+            case '#goods_list'        : { InterfaceHashHandler.GoodsList();        } break;
+            case '#goods_add'         : { InterfaceHashHandler.GoodsAdd();         } break;
+
+            case '#storage'           : { InterfaceHashHandler.Storage();          } break;
+            case '#storage_available' : { InterfaceHashHandler.StorageAvailable(); } break;
+            case '#storage_info'      : { InterfaceHashHandler.StorageInfo();      } break;
+
+            case '#imports'           : { InterfaceHashHandler.Imports();          } break;
+            case '#import_action'     : { InterfaceHashHandler.ImportsAction();    } break;
+            case '#import_list'       : { InterfaceHashHandler.ImportsList();      } break;
+
+            case '#exports'           : { InterfaceHashHandler.Exports();          } break;
+            case '#export_action'     : { InterfaceHashHandler.ExportsAction();    } break;
+            case '#export_list'       : { InterfaceHashHandler.ExportsList();      } break;
+
+            case '#reports'           : { InterfaceHashHandler.Reports();          } break;
+            case '#report_last'       : { InterfaceHashHandler.ReportLast();       } break;
+            case '#report_list'       : { InterfaceHashHandler.ReportList();       } break;
+            case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
+
+            case '#system'            : { InterfaceHashHandler.System();           } break;
+            case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
+
+            default: alert("Unknown hash-tag!");
+        }
+    }
+}
 class InterfaceHashHandler {
 
     static DefineUser() {

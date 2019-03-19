@@ -74,7 +74,7 @@ public class AuthorizationServlet extends HttpServlet {
             response.sendRedirect(Common.url_menu);
         } else {
             request.setAttribute(Common.art_invalid_credentials, Common.str_true);
-            request.getRequestDispatcher(Common.jsp_login).forward(request, response);
+            request.getRequestDispatcher(Common.html_login).forward(request, response);
         }
 
     }
@@ -86,7 +86,7 @@ public class AuthorizationServlet extends HttpServlet {
 
         if (logged == null || logged.equals(Common.str_false)) {
             session.setAttribute(Common.atr_logged, Common.str_false);
-            RequestDispatcher view = request.getRequestDispatcher(Common.jsp_login);
+            RequestDispatcher view = request.getRequestDispatcher(Common.html_login);
             view.forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();

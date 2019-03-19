@@ -77,7 +77,7 @@ public class UserHandlerServlet extends HttpServlet {
         if (logged.equals(Common.str_true)) {
             String role = (String) session.getAttribute(Common.atr_role);
             request.setAttribute(Common.atr_role, role);
-            request.getRequestDispatcher(Common.jsp_menu).forward(request, response);
+            request.getRequestDispatcher(Common.html_menu).forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();
             writer.println("ERROR");

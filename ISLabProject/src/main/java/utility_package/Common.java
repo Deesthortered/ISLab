@@ -15,8 +15,8 @@ public class Common {
     public static String str_true  = "true";
     public static String str_false = "false";
 
-    public static String jsp_login = "/jsp/login_page.jsp";
-    public static String jsp_menu  = "/jsp/menu.jsp";
+    public static String html_login = "/html/login_page.html";
+    public static String html_menu = "/html/menu.html";
 
     public static String url_basic;
     public static String url_login;

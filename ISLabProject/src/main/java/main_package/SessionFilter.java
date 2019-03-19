@@ -44,11 +44,10 @@ public class SessionFilter implements Filter {
                 }
             }
 
-            if (url_current.equals(Common.url_login))
-                chain.doFilter(req, resp);
-            else  {
+            if (url_current.equals(Common.url_menu) || url_current.equals(Common.url_basic))
                 response.sendRedirect(Common.url_login);
-            }
+            else
+                chain.doFilter(req, resp);
 
         } else if (logged.equals(Common.str_true)) {
 
