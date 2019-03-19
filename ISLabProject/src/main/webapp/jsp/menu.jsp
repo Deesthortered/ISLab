@@ -211,6 +211,101 @@
         </ul>
     </script>
 
+    <!-- Table template scripts -->
+    <script id="list_template" type="text/template">
+        <h1> {{ entity_uppercase }} list</h1>
+        <p>There you can review list of {{ entity_lowercase }} and edit it.</p>
+        <div id="filter">
+            <h3>Filter.</h3>
+            <ul>
+
+            </ul>
+            <button onclick="ListPage.TableSetFilter()">Send request</button>
+        </div>
+        <br>
+        <div id="table_place"></div>
+        <br>
+    </script>
+    <script id="list_table" type="text/template">
+        <table id="dt_Table" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+            <thead>
+            <tr>
+
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            <tfoot>
+            <tr>
+
+            </tr>
+            </tfoot>
+        </table>
+        <button onclick="ListPage.TableExtendList(true)">Load more (+{{ extend_size }})</button>
+        <button onclick="ListPage.TableExtendList(false)">Load all</button>
+        <button onclick="ListPage.TableRefresh()">Refresh</button>
+    </script>
+    <script id="datatable_row" type="text/template">
+        <tr>
+
+            <td>
+                <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+                <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
+            </td>
+        </tr>
+    </script>
+
+    <script id="add_template" type="text/template">
+        <h1>Add provider</h1>
+        <p> There you can add new provider to base.</p>
+        <div class = "add_provider_panel">
+            <p><b>*</b> Name:</p>
+            <input type="text" name="input_name">
+            <p><b>*</b> Country:</p>
+            <input type="text" name="input_country">
+            <p>Description:</p>
+            <input type="text" name="input_description">
+            <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
+        </div>
+    </script>
+    <script id="edit_template" type="text/template">
+        <h1>Edit {{ entity_lowercase }}</h1>
+        <p> There you can edit {{ entity_lowercase }} in the base.</p>
+        <p> Edit field which you want to change.</p>
+        <div class = "edit_panel">
+
+            <input type="hidden" name="input_id" value="{{ id }}" />
+            <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
+        </div>
+    </script>
+
+
+    <script  id="filter_input" type="text/template">
+        <li>{{ property_uppercase }}: <input type="text" name="filter_{{ property_lowercase }}"></li>
+    </script>
+
+    <script  id="list_header_title" type="text/template">
+        <th class="th-sm">{{ property_uppercase }} </th>
+    </script>
+    <script  id="list_footer_title" type="text/template">
+        <th>{{ property_uppercase }} </th>
+    </script>
+
+    <script id="datatable_row_field" type="text/template">
+        <td>{{ value }}</td>
+    </script>
+
+    <script id="add_template_field" type="text/template">
+        <p>{{ property_uppercase }}:</p>
+        <input type="text" name="input_{{ property_lowercase }}">
+    </script>
+    <script id="edit_template_field" type="text/template">
+        <p>{{ property_uppercase }}:</p>
+        <input type="text" name="input_{{ property_lowercase }}" value="{{ property_value }}">
+    </script>
+
+    <!--  -->
+
     <!-- Provider section scripts -->
     <script id="provider_template" type="text/template">
         <h1>Provider menu</h1>
