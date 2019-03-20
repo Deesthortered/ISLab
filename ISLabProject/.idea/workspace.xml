@@ -66,8 +66,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="351" column="8" selection-start-line="351" selection-start-column="8" selection-end-line="351" selection-end-column="8" />
+            <state relative-caret-position="63">
+              <caret line="212" lean-forward="true" selection-start-line="212" selection-end-line="213" />
               <folding>
                 <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
                 <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
@@ -103,11 +103,40 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="101">
+              <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+                <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+                <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
+                <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
+                <element signature="method#AddNewProvider#0;class#UserHandlerServlet#0" />
+                <element signature="method#DeleteProvider#0;class#UserHandlerServlet#0" />
+                <element signature="method#EditProvider#0;class#UserHandlerServlet#0" />
+                <element signature="method#GetCustomerList#0;class#UserHandlerServlet#0" />
+                <element signature="method#AddNewCustomer#0;class#UserHandlerServlet#0" />
+                <element signature="method#DeleteCustomer#0;class#UserHandlerServlet#0" />
+                <element signature="method#EditCustomer#0;class#UserHandlerServlet#0" />
+                <element signature="method#GetGoodsList#0;class#UserHandlerServlet#0" />
+                <element signature="method#AddNewGoods#0;class#UserHandlerServlet#0" />
+                <element signature="method#DeleteGoods#0;class#UserHandlerServlet#0" />
+                <element signature="method#EditGoods#0;class#UserHandlerServlet#0" />
+                <element signature="method#SendError#0;class#UserHandlerServlet#0" />
+                <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
-              <caret line="643" lean-forward="true" selection-start-line="643" selection-end-line="643" />
+              <caret line="656" lean-forward="true" selection-start-line="656" selection-end-line="656" />
               <folding>
                 <element signature="n#Common#0" />
                 <element signature="e#112#273#0" />
@@ -121,7 +150,6 @@
                 <element signature="n#!!block;n#AddEntity#0;n#QueryMaker#0" />
                 <element signature="n#!!block;n#EditEntity#0;n#QueryMaker#0" />
                 <element signature="n#EntityFilters#0" />
-                <element signature="n#!!block;n#getEmptyFilter#0;n#EntityFilters#0" />
                 <element signature="n#!!block;n#getQueryFilterRepresentation#0;n#EntityFilters#0" />
                 <element signature="n#ListPage#0" />
                 <element signature="n#!!block;n#setEntity#0;n#ListPage#0" />
@@ -279,7 +307,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-10" />
     <option name="y" value="-10" />
     <option name="width" value="1940" />
@@ -317,7 +345,15 @@
               <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="database_package" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
@@ -325,7 +361,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="webapp" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -344,7 +379,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553067842902" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553070812160" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="MySQL&#10;PostgreSQL" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -556,7 +591,7 @@
       <workItem from="1552907391324" duration="7747000" />
       <workItem from="1552916696585" duration="1695000" />
       <workItem from="1552998509001" duration="21608000" />
-      <workItem from="1553065363241" duration="2460000" />
+      <workItem from="1553065363241" duration="4567000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -574,7 +609,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="323417000" />
+    <option name="totallyTimeSpent" value="325524000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1057,20 +1092,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/DAOAvailableGoods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#DAOAvailableGoods#0;class#DAOAvailableGoods#0" />
-            <element signature="method#getInstance#0;class#DAOAvailableGoods#0" />
-            <element signature="method#GetAvailableGoodsList#0;class#DAOAvailableGoods#0" />
-            <element signature="method#AddAvailableGoodsList#0;class#DAOAvailableGoods#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ImportDocument.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -1150,34 +1171,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
-            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
-            <element signature="method#AddNewProvider#0;class#UserHandlerServlet#0" />
-            <element signature="method#DeleteProvider#0;class#UserHandlerServlet#0" />
-            <element signature="method#EditProvider#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetCustomerList#0;class#UserHandlerServlet#0" />
-            <element signature="method#AddNewCustomer#0;class#UserHandlerServlet#0" />
-            <element signature="method#DeleteCustomer#0;class#UserHandlerServlet#0" />
-            <element signature="method#EditCustomer#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetGoodsList#0;class#UserHandlerServlet#0" />
-            <element signature="method#AddNewGoods#0;class#UserHandlerServlet#0" />
-            <element signature="method#DeleteGoods#0;class#UserHandlerServlet#0" />
-            <element signature="method#EditGoods#0;class#UserHandlerServlet#0" />
-            <element signature="method#RebuildAvailableGoodsBase#0;class#UserHandlerServlet#0" />
-            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
-            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="692">
@@ -1239,8 +1232,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="351" column="8" selection-start-line="351" selection-start-column="8" selection-end-line="351" selection-end-column="8" />
+        <state relative-caret-position="63">
+          <caret line="212" lean-forward="true" selection-start-line="212" selection-end-line="213" />
           <folding>
             <element signature="n#div#0;n#body#0;n#html#0;n#!!top" />
             <element signature="n#script#0;n#body#0;n#html#0;n#!!top" />
@@ -1275,10 +1268,51 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/DAOAvailableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="77" lean-forward="true" selection-start-line="77" selection-end-line="77" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOAvailableGoods#0;class#DAOAvailableGoods#0" />
+            <element signature="method#getInstance#0;class#DAOAvailableGoods#0" />
+            <element signature="method#GetAvailableGoodsList#0;class#DAOAvailableGoods#0" />
+            <element signature="method#AddAvailableGoodsList#0;class#DAOAvailableGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="23" column="13" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetProviderList#0;class#UserHandlerServlet#0" />
+            <element signature="method#AddNewProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#DeleteProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#EditProvider#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetCustomerList#0;class#UserHandlerServlet#0" />
+            <element signature="method#AddNewCustomer#0;class#UserHandlerServlet#0" />
+            <element signature="method#DeleteCustomer#0;class#UserHandlerServlet#0" />
+            <element signature="method#EditCustomer#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetGoodsList#0;class#UserHandlerServlet#0" />
+            <element signature="method#AddNewGoods#0;class#UserHandlerServlet#0" />
+            <element signature="method#DeleteGoods#0;class#UserHandlerServlet#0" />
+            <element signature="method#EditGoods#0;class#UserHandlerServlet#0" />
+            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
+            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
-          <caret line="643" lean-forward="true" selection-start-line="643" selection-end-line="643" />
+          <caret line="656" lean-forward="true" selection-start-line="656" selection-end-line="656" />
           <folding>
             <element signature="n#Common#0" />
             <element signature="e#112#273#0" />
@@ -1292,7 +1326,6 @@
             <element signature="n#!!block;n#AddEntity#0;n#QueryMaker#0" />
             <element signature="n#!!block;n#EditEntity#0;n#QueryMaker#0" />
             <element signature="n#EntityFilters#0" />
-            <element signature="n#!!block;n#getEmptyFilter#0;n#EntityFilters#0" />
             <element signature="n#!!block;n#getQueryFilterRepresentation#0;n#EntityFilters#0" />
             <element signature="n#ListPage#0" />
             <element signature="n#!!block;n#setEntity#0;n#ListPage#0" />

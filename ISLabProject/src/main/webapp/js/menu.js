@@ -102,18 +102,20 @@ class ListPage {
     static list_size = Object.freeze(5);
 
     static current_entity;
+    static editable;
     static list_begin_ind;
     static table_data;
     static limited;
     static filter;
 
-    static setEntity(entity) {
+    static setEntity(entity, editable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
         }
         this.current_entity = entity;
         this.filter = EntityFilters.getEmptyFilter(entity);
+        this.editable = editable;
         this.ClearTemporary();
     }
     static ClearTemporary() {
@@ -177,11 +179,13 @@ class ListPage {
             list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
             list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
         }
-        let sub_data = {
-            property_uppercase : 'Action',
-        };
-        list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
-        list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
+        if (this.editable) {
+            let sub_data = {
+                property_uppercase : 'Action',
+            };
+            list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
+            list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
+        }
 
         let table_body = table_place.getElementsByTagName('tbody')[0];
 
@@ -193,7 +197,8 @@ class ListPage {
                 };
                 record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_field', row_data));
             }
-            record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_buttons',{ id : data[i].id} ));
+            if (this.editable)
+                record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_buttons',{ id : data[i].id} ));
             table_body.insertAdjacentElement('beforeend', record);
         }
 
@@ -245,6 +250,10 @@ class ListPage {
         panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_button', {}));
     }
     static TableEditRowMenu(id) {
+        if (!this.editable) {
+            alert("The field is not editable");
+            return;
+        }
         let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
         if (!sure) return;
 
@@ -272,6 +281,10 @@ class ListPage {
         });
     }
     static TableDeleteRow(id) {
+        if (!this.editable) {
+            alert("The field is not editable");
+            return;
+        }
         let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
         if (sure) {
             let http = new XMLHttpRequest();
@@ -509,13 +522,13 @@ class InterfaceHashHandler {
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Provider);
+        ListPage.setEntity(Common.EntityMap.Provider, true);
         ListPage.BuildList();
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Provider);
+        ListPage.setEntity(Common.EntityMap.Provider, true);
         ListPage.TableAddRowMenu();
     }
 
@@ -527,13 +540,13 @@ class InterfaceHashHandler {
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Customer);
+        ListPage.setEntity(Common.EntityMap.Customer, true);
         ListPage.BuildList();
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Customer);
+        ListPage.setEntity(Common.EntityMap.Customer, true);
         ListPage.TableAddRowMenu();
     }
 
@@ -541,13 +554,13 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
-        ListPage.setEntity(Common.EntityMap.Goods);
+        ListPage.setEntity(Common.EntityMap.Goods, true);
         ListPage.BuildList();
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Goods);
+        ListPage.setEntity(Common.EntityMap.Goods, true);
         ListPage.TableAddRowMenu();
     }
 
