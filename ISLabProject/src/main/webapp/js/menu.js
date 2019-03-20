@@ -6,28 +6,24 @@ class Common {
         ImportManager : 'ImportManager',
         ExportManager : 'ExportManager',
     });
-    static Entity = Object.freeze({
+    static EntityArray = Object.freeze(['provider', 'customer', 'goods']);
+    static EntityMap = Object.freeze({
         Provider : 'provider',
         Customer : 'customer',
-        Goods    : 'goods'
+        Goods    : 'goods',
     });
-    static list_size = Object.freeze(5);
+    // Temporary
+    static role;
 
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
-
-    // Temporary
-    static role;
-    static list_begin_ind;
-    static table_data;
-    static limited;
-    static filter;
-
-    static ClearTemporary() {
-        this.list_begin_ind = 0;
-        this.table_data = [];
-        this.limited = true;
+    static findInMap(map, val) {
+        for (let [k, v] of map) {
+            if (v === val)
+                return true;
+        }
+        return false;
     }
 }
 class TemplateHandler {
@@ -57,15 +53,15 @@ class EntityFilters {
 
     static getEmptyFilter(entity) {
         switch (entity) {
-            case Common.Entity.Provider :
-            case Common.Entity.Customer :
+            case Common.EntityMap.Provider :
+            case Common.EntityMap.Customer :
                 return {
                     id: this.undefined_value,
                     name: this.undefined_value,
                     country: this.undefined_value,
                     description: this.undefined_value
                 };
-            case Common.Entity.Goods :
+            case Common.EntityMap.Goods :
                 return {
                     id: this.undefined_value,
                     name: this.undefined_value,
@@ -81,14 +77,14 @@ class EntityFilters {
     }
     static getQueryFilterRepresentation(entity, data) {
         switch (entity) {
-            case Common.Entity.Provider :
-            case Common.Entity.Customer :
+            case Common.EntityMap.Provider :
+            case Common.EntityMap.Customer :
                 return "" +
                     String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
                     String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
                     String(data.country === undefined ? this.undefined_value : data.country) + "\n" +
                     String(data.description === undefined ? this.undefined_value : data.description) + "\n";
-            case Common.Entity.Goods :
+            case Common.EntityMap.Goods :
                 return "" +
                     String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
                     String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
@@ -103,7 +99,28 @@ class EntityFilters {
     }
 }
 class ListPage {
+    static list_size = Object.freeze(5);
+
     static current_entity;
+    static list_begin_ind;
+    static table_data;
+    static limited;
+    static filter;
+
+    static setEntity(entity) {
+        if (!Common.EntityArray.includes(entity)) {
+            alert("Entity  \'" + entity + "\' is not defined.");
+            return;
+        }
+        this.current_entity = entity;
+        this.filter = EntityFilters.getEmptyFilter(entity);
+        this.ClearTemporary();
+    }
+    static ClearTemporary() {
+        this.list_begin_ind = 0;
+        this.table_data = [];
+        this.limited = true;
+    }
 
     static BuildList() {
         let data = {
@@ -132,18 +149,18 @@ class ListPage {
         http.onreadystatechange = function() {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 let new_data = JSON.parse(http.responseText);
-                Common.table_data = Common.table_data.concat(new_data);
-                callback(Common.table_data);
+                ListPage.table_data = ListPage.table_data.concat(new_data);
+                callback(ListPage.table_data);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The Load request finished not successful, some trouble happened with the request.");
             }
         };
         let query_body =
             QueryMaker.GetEntityList(this.current_entity) +
-            EntityFilters.getQueryFilterRepresentation(this.current_entity, Common.filter) +
-            String(Common.limited) + "\n" +
-            String(Common.list_begin_ind) + "\n" +
-            String(Common.list_size) + "\n";
+            EntityFilters.getQueryFilterRepresentation(this.current_entity, this.filter) +
+            String(this.limited) + "\n" +
+            String(this.list_begin_ind) + "\n" +
+            String(this.list_size) + "\n";
         http.send(query_body);
     }
     static TableFill(data) {
@@ -188,26 +205,26 @@ class ListPage {
         $('.dataTables_length').addClass('bs-select');
     }
     static TableClear() {
-        Common.table_data = [];
+        this.table_data = [];
         let table_body = document.getElementById('table_place').getElementsByTagName('tbody')[0];
         while (table_body.firstChild) {
             table_body.removeChild(table_body.firstChild);
         }
     }
     static TableRefresh() {
-        let prev_ind = Common.list_begin_ind;
-        let prev_size = Common.list_size;
+        let prev_ind = this.list_begin_ind;
+        let prev_size = this.list_size;
 
-        Common.list_size += Common.list_begin_ind;
-        Common.list_begin_ind = 0;
+        this.list_size += this.list_begin_ind;
+        this.list_begin_ind = 0;
 
         this.TableClear();
 
         this.TableLoad(function(data) {
             ListPage.TableFill(data);
 
-            Common.list_begin_ind = prev_ind;
-            Common.list_size = prev_size;
+            ListPage.list_begin_ind = prev_ind;
+            ListPage.list_size = prev_size;
         });
     }
     static TableAddRowMenu() {
@@ -216,7 +233,7 @@ class ListPage {
         };
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('add_template', data);
         let panel = document.getElementsByClassName('add_panel')[0];
-        let properties = Object.keys(Common.filter);
+        let properties = Object.keys(this.filter);
         for (let i = 0; i < properties.length; i++) {
             if (properties[i] === 'id') continue;
             let sub_data = {
@@ -231,9 +248,9 @@ class ListPage {
         let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
         if (!sure) return;
 
-        Common.ClearTemporary();
-        Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
-        Common.filter.id = id;
+        this.ClearTemporary();
+        this.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        this.filter.id = id;
 
         this.TableLoad(function (loaded_data) {
             let data = {
@@ -241,7 +258,7 @@ class ListPage {
             };
             document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
             let panel = document.getElementsByClassName('edit_panel')[0];
-            let properties = Object.keys(Common.filter);
+            let properties = Object.keys(ListPage.filter);
             for (let i = 0; i < properties.length; i++) {
                 if (properties[i] === 'id') continue;
                 let sub_data = {
@@ -278,25 +295,25 @@ class ListPage {
         }
     }
     static TableExtendList(limited) {
-        Common.limited = limited;
-        Common.list_begin_ind += Common.list_size;
+        this.limited = limited;
+        this.list_begin_ind += this.list_size;
         ListPage.TableLoad(function(data) {
             if (!limited) {
                 ListPage.TableClear();
-                Common.list_begin_ind = data.length;
+                ListPage.list_begin_ind = data.length;
             }
             ListPage.TableFill(data);
         });
     }
     static TableSetFilter() {
-        Common.ClearTemporary();
+        this.ClearTemporary();
 
-        Common.filter = EntityFilters.getEmptyFilter(this.current_entity);
-        let properties = Object.keys(Common.filter);
+        this.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        let properties = Object.keys(this.filter);
         let panel = $('#filter');
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'filter_' + properties[i] + '\']').val();
-            Common.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
+            ListPage.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
         }
 
         this.BuildList();
@@ -381,7 +398,7 @@ class Router {
         Router.handleHash();
     }
     static handleHash() {
-        Common.ClearTemporary();
+        ListPage.ClearTemporary();
         switch (location.hash) {
             case ''                   : { InterfaceHashHandler.StartPage();        } break;
 
@@ -457,10 +474,8 @@ class InterfaceHashHandler {
         http.send('get_role');
     }
     static CheckPermission(privileged_users) {
-        for (let i = 0; i < privileged_users.length; i++) {
-            if (privileged_users[i] === Common.role)
-                return false;
-        }
+        if (privileged_users.includes(Common.role))
+            return false;
         alert('forbidden');
         document.location.hash = 'forbidden';
         return true;
@@ -488,65 +503,51 @@ class InterfaceHashHandler {
 
     static Provider() {
         if (this.CheckPermission( [Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager] )) return;
-        ListPage.current_entity = Common.Entity.Provider;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('provider_template', {});
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        ListPage.current_entity = Common.Entity.Provider;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Provider);
         ListPage.BuildList();
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        ListPage.current_entity = Common.Entity.Provider;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Provider);
         ListPage.TableAddRowMenu();
     }
 
     static Customer() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        ListPage.current_entity = Common.Entity.Customer;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_template', {});
     }
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        ListPage.current_entity = Common.Entity.Customer;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Customer);
         ListPage.BuildList();
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-        ListPage.current_entity = Common.Entity.Customer;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Customer);
         ListPage.TableAddRowMenu();
     }
 
     static Goods() {
-        ListPage.current_entity = Common.Entity.Goods;
-
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
-        ListPage.current_entity = Common.Entity.Goods;
-
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Goods);
         ListPage.BuildList();
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        ListPage.current_entity = Common.Entity.Goods;
 
-        Common.filter = EntityFilters.getEmptyFilter(ListPage.current_entity);
+        ListPage.setEntity(Common.EntityMap.Goods);
         ListPage.TableAddRowMenu();
     }
 
