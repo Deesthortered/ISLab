@@ -1,35 +1,37 @@
 package database_package;
 
 import data_model.Entity;
-import data_model.Provider;
+import data_model.Storage;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOProviders implements DAOInterface {
+public class DAOStorage implements DAOInterface {
 
     private static DAOInterface instance;
 
-    private DAOProviders() {
+    private DAOStorage() {
 
     }
     public static synchronized DAOInterface getInstance() {
         if (instance == null) {
-            instance = new DAOProviders();
+            instance = new DAOStorage();
         }
         return instance;
     }
 
     @Override
     public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
-        Provider casted_filter = (Provider) filter;
+        Storage casted_filter = (Storage) filter;
         ArrayList<Entity> result = new ArrayList<>();
         try {
-            String sql_query = "SELECT * FROM islabdb.provider " +
-                    "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                    "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                    "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                    "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+            String sql_query = "SELECT * FROM islabdb.storage " +
+                      "WHERE (Storage_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
+                            "(Storage_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
+                            "(Storage_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                     ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
@@ -37,8 +39,6 @@ public class DAOProviders implements DAOInterface {
             statement.setLong(2, casted_filter.getId());
             statement.setString(3, casted_filter.getName());
             statement.setString(4, casted_filter.getName());
-            statement.setString(5, casted_filter.getCountry());
-            statement.setString(6, casted_filter.getCountry());
             statement.setString(7, casted_filter.getDescription());
             statement.setString(8, casted_filter.getDescription());
             if (limited) {
@@ -52,7 +52,7 @@ public class DAOProviders implements DAOInterface {
                 String name = resultSet.getString("Provider_Name");
                 String country = resultSet.getString("Provider_Country");
                 String description = resultSet.getString("Provider_Description");
-                result.add(new Provider(id, name, country, description));
+                result.add(new Storage(id, name, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,12 +62,11 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
         for (Entity item : list) {
-            Provider casted_item = (Provider) item;
+            Storage casted_item = (Storage) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.storage (Storage_Name, Storage_Description) VALUES (?, ?);");
                 statement.setString(1, casted_item.getName());
-                statement.setString(2, casted_item.getCountry());
-                statement.setString(3, casted_item.getDescription());
+                statement.setString(2, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -79,7 +78,7 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.provider where Provider_ID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.storage where Storage_ID = ?");
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (!set.next())
@@ -96,7 +95,7 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean DeleteEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.provider WHERE Provider_ID = ?;");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.storage WHERE Storage_ID = ?;");
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -107,18 +106,16 @@ public class DAOProviders implements DAOInterface {
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {
-        Provider provider = (Provider) entity;
+        Storage storage = (Storage) entity;
         try {
-            String sql_code =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
-                    "Provider_Country = ?, " +
-                    "Provider_Description = ? " +
-                    "WHERE Provider_ID = ?;";
+            String sql_code =   "UPDATE islabdb.storage SET Storage_Name = ?, " +
+                    "Storage_Description = ? " +
+                    "WHERE Storage_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
-            statement.setString(1, provider.getName());
-            statement.setString(2, provider.getCountry());
-            statement.setString(3, provider.getDescription());
-            statement.setLong(4, provider.getId());
+            statement.setString(1, storage.getName());
+            statement.setString(2, storage.getDescription());
+            statement.setLong(3, storage.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
