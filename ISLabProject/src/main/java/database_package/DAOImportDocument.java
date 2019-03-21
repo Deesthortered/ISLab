@@ -2,7 +2,6 @@ package database_package;
 
 import data_model.Entity;
 import data_model.ImportDocument;
-import utility_package.Common;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -62,6 +61,21 @@ public class DAOImportDocument {
         }
         return result;
     }
+    public boolean AddDocumentList(Connection connection, ArrayList<ImportDocument> list) {
+        for (ImportDocument item : list) {
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importdocument (Document_ProviderID, Document_ImportDate, Document_Description) VALUES (?, ?, ?);");
+                statement.setLong(1, item.getProvider_id());
+                statement.setString(2, JavaDateToSQLDate(item.getImport_date()));
+                statement.setString(3, item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
     public boolean IsExistsDocument(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importdocument where Document_ID = ?");
@@ -78,12 +92,30 @@ public class DAOImportDocument {
         }
         return true;
     }
-    public boolean AddDocument(Connection connection, ImportDocument importDocument) {
+    public boolean DeleteDocument(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importdocument (Document_ProviderID, Document_ImportDate, Document_Description) VALUES (?, ?, ?);");
-            statement.setLong(1, importDocument.getProvider_id());
-            statement.setString(2, JavaDateToSQLDate(importDocument.getImport_date()));
-            statement.setString(3, importDocument.getDescription());
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importdocument WHERE Document_ID = ?;");
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean EditGoods(Connection connection, ImportDocument document) {
+        try {
+            String sql_code =   "UPDATE islabdb.importdocument SET " +
+                    "Document_ProviderID = ?, " +
+                    "Document_ImportDate = ?, " +
+                    "Document_Description = ? " +
+                    "WHERE Document_ID = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            statement.setLong(1, document.getProvider_id());
+            statement.setString(2, JavaDateToSQLDate(document.getImport_date()));
+            statement.setString(3, document.getDescription());
+            statement.setLong(4, document.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

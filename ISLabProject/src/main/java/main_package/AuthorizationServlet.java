@@ -3,7 +3,7 @@ package main_package;
 import database_package.ConnectionPool;
 import utility_package.Common;
 import utility_package.UserRole;
-import database_package.DAOSystemUser;
+import database_package.SystemUserAccess;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +21,7 @@ public class AuthorizationServlet extends HttpServlet {
         boolean stay_in_system_flag = request.getParameter("save_session") != null;
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOSystemUser dao = DAOSystemUser.getInstance();
+        SystemUserAccess dao = SystemUserAccess.getInstance();
 
         Connection auth_conn = pool.GetConnection();
         boolean is_ok = dao.ConfirmationAuthoritarian(auth_conn, login, password);

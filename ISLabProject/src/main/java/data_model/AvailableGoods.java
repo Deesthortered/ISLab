@@ -67,5 +67,18 @@ public class AvailableGoods implements Entity {
         }
         return object;
     }
-
+    public JSONObject getParametrizedJSON(Goods goods, Provider provider, Storage storage) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id",          id);
+            object.put("goods_id",    (goods == null ? goods_id : goods.getName()));
+            object.put("provider_id", (provider == null ? provider_id : provider.getName()));
+            object.put("storage_id",  (storage == null ? storage_id : storage.getName()));
+            object.put("current",     current);
+            object.put("snapshot_date", Common.JavaDateToSQLDate(snapshot_date));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
 }

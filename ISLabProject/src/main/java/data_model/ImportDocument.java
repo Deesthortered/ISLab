@@ -53,4 +53,16 @@ public class ImportDocument implements Entity {
         }
         return object;
     }
+    public JSONObject getParametrizedJSON(String provider) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id",          id);
+            object.put("provider_id", (provider == null ? provider_id : provider) );
+            object.put("import_date", Common.JavaDateToSQLDate(import_date));
+            object.put("description", description);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
 }

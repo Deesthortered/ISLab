@@ -58,6 +58,21 @@ public class DAOProviders {
         }
         return result;
     }
+    public boolean AddProviderList(Connection connection, ArrayList<Provider> list) {
+        for (Provider item : list) {
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
+                statement.setString(1, item.getName());
+                statement.setString(2, item.getCountry());
+                statement.setString(3, item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
     public boolean IsExistsProvider(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.provider where Provider_ID = ?");
@@ -68,19 +83,6 @@ public class DAOProviders {
             int count = set.getInt(1);
             if (count != 1)
                 return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    public boolean AddProvider(Connection connection, Provider provider) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
-            statement.setString(1, provider.getName());
-            statement.setString(2, provider.getCountry());
-            statement.setString(3, provider.getDescription());
-            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

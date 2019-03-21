@@ -2,16 +2,16 @@ package database_package;
 
 import java.sql.*;
 
-public class DAOSystemUser {
+public class SystemUserAccess {
 
-    private static DAOSystemUser instance;
+    private static SystemUserAccess instance;
 
-    private DAOSystemUser() {
+    private SystemUserAccess() {
 
     }
-    public static synchronized DAOSystemUser getInstance() {
+    public static synchronized SystemUserAccess getInstance() {
         if (instance == null) {
-            instance = new DAOSystemUser();
+            instance = new SystemUserAccess();
         }
         return instance;
     }

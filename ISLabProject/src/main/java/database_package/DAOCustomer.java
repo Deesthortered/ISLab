@@ -58,6 +58,21 @@ public class DAOCustomer {
         }
         return result;
     }
+    public boolean AddCustomerList(Connection connection, ArrayList<Customer> list) {
+        for (Customer item : list) {
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);");
+                statement.setString(1, item.getName());
+                statement.setString(2, item.getCountry());
+                statement.setString(3, item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
     public boolean IsExistsCustomer(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.customer where Customer_ID = ?");
@@ -68,19 +83,6 @@ public class DAOCustomer {
             int count = set.getInt(1);
             if (count != 1)
                 return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    public boolean AddCustomer(Connection connection, Customer customer) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);");
-            statement.setString(1, customer.getName());
-            statement.setString(2, customer.getCountry());
-            statement.setString(3, customer.getDescription());
-            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

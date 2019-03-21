@@ -141,7 +141,9 @@ public class UserHandlerServlet extends HttpServlet {
         DAOProviders dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.AddProvider(connection, provider))
+        ArrayList<Provider> list = new ArrayList<>();
+        list.add(provider);
+        if (dao.AddProviderList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -245,7 +247,9 @@ public class UserHandlerServlet extends HttpServlet {
         DAOCustomer dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.AddCustomer(connection, customer))
+        ArrayList<Customer> list = new ArrayList<>();
+        list.add(customer);
+        if (dao.AddCustomerList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -346,13 +350,15 @@ public class UserHandlerServlet extends HttpServlet {
         long average = Long.parseLong(reader.readLine());
         String description = reader.readLine();
 
-        Goods customer = new Goods(-1, name, average, description);
+        Goods goods = new Goods(-1, name, average, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOGoods dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.AddGoods(connection, customer))
+        ArrayList<Goods> list = new ArrayList<>();
+        list.add(goods);
+        if (dao.AddGoodsList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -437,10 +443,13 @@ public class UserHandlerServlet extends HttpServlet {
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
+        connection = pool.GetConnection();
+        DAOProviders sub_dao = DAOProviders.getInstance();
         for (ImportDocument importDocument : list) {
-            json_list.put(importDocument.getJSON());
+            Provider provider = new Provider(importDocument.getProvider_id(), Entity.undefined_string, Entity.undefined_string, Entity.undefined_string);
+            json_list.put(importDocument.getParametrizedJSON(sub_dao.GetProvidersList(connection, provider, true, 0 ,1).get(0).getName()));
         }
-
+        pool.DropConnection(connection);
         writer.write(json_list.toString());
     }
     private void AddNewImportDocument(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -463,12 +472,15 @@ public class UserHandlerServlet extends HttpServlet {
         DAOImportDocument dao = DAOImportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.AddDocument(connection, document))
+        ArrayList<ImportDocument> list = new ArrayList<>();
+        list.add(document);
+        if (dao.AddDocumentList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
         pool.DropConnection(connection);
     }
+
 
     private void GetExportDocumentList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
@@ -499,10 +511,13 @@ public class UserHandlerServlet extends HttpServlet {
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
+        connection = pool.GetConnection();
+        DAOCustomer sub_dao = DAOCustomer.getInstance();
         for (ExportDocument exportDocument : list) {
-            json_list.put(exportDocument.getJSON());
+            Customer customer = new Customer(exportDocument.getCustomer_id(), Entity.undefined_string, Entity.undefined_string, Entity.undefined_string);
+            json_list.put(exportDocument.getParametrizedJSON(sub_dao.GetCustomersList(connection, customer, true, 0 ,1).get(0).getName()));
         }
-
+        pool.DropConnection(connection);
         writer.write(json_list.toString());
     }
     private void AddNewExportDocument(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -525,16 +540,21 @@ public class UserHandlerServlet extends HttpServlet {
         DAOExportDocument dao = DAOExportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.AddDocument(connection, document))
+        ArrayList<ExportDocument> list = new ArrayList<>();
+        list.add(document);
+        if (dao.AddDocumentList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
         pool.DropConnection(connection);
     }
 
+
+
     private void RebuildAvailableGoodsBase(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
+
 
 
     }

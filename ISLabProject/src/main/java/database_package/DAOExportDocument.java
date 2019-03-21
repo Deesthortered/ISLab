@@ -2,7 +2,6 @@ package database_package;
 
 import data_model.Entity;
 import data_model.ExportDocument;
-import utility_package.Common;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -78,12 +77,45 @@ public class DAOExportDocument {
         }
         return true;
     }
-    public boolean AddDocument(Connection connection, ExportDocument exportDocument) {
+    public boolean AddDocumentList(Connection connection, ArrayList<ExportDocument> list) {
+        for (ExportDocument item : list) {
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
+                statement.setLong(1, item.getCustomer_id());
+                statement.setString(2, JavaDateToSQLDate(item.getExport_date()));
+                statement.setString(3, item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean DeleteDocument(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
-            statement.setLong(1, exportDocument.getCustomer_id());
-            statement.setString(2, JavaDateToSQLDate(exportDocument.getExport_date()));
-            statement.setString(3, exportDocument.getDescription());
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportdocument WHERE Document_ID = ?;");
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    public boolean EditGoods(Connection connection, ExportDocument document) {
+        try {
+            String sql_code =   "UPDATE islabdb.exportdocument SET " +
+                    "Document_CustomerID = ?, " +
+                    "Document_ExportDate = ?, " +
+                    "Document_Description = ? " +
+                    "WHERE Document_ID = ?;";
+
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            statement.setLong(1, document.getCustomer_id());
+            statement.setString(2, JavaDateToSQLDate(document.getExport_date()));
+            statement.setString(3, document.getDescription());
+            statement.setLong(4, document.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

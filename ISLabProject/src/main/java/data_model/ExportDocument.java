@@ -55,4 +55,16 @@ public class ExportDocument implements Entity {
         }
         return object;
     }
+    public JSONObject getParametrizedJSON(String customer) {
+        JSONObject object = new JSONObject();
+        try {
+            object.put("id",          id);
+            object.put("customer_id", (customer == null ? customer_id : customer));
+            object.put("export_date", Common.JavaDateToSQLDate(export_date));
+            object.put("description", description);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return object;
+    }
 }

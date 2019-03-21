@@ -58,6 +58,21 @@ public class DAOGoods {
         }
         return result;
     }
+    public boolean AddGoodsList(Connection connection, ArrayList<Goods> list) {
+        for (Goods item : list) {
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
+                statement.setString(1, item.getName());
+                statement.setLong(2, item.getAverage_price());
+                statement.setString(3, item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
     public boolean IsExistsGoods(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.goods where Goods_ID = ?");
@@ -68,19 +83,6 @@ public class DAOGoods {
             int count = set.getInt(1);
             if (count != 1)
                 return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    public boolean AddGoods(Connection connection, Goods goods) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
-            statement.setString(1, goods.getName());
-            statement.setLong(2, goods.getAverage_price());
-            statement.setString(3, goods.getDescription());
-            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
