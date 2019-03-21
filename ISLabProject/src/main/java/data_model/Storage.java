@@ -47,4 +47,14 @@ public class Storage implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id          = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.name        = (json.getString("name").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("name"));
+            this.description = (json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

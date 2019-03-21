@@ -55,6 +55,18 @@ public class ExportDocument implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id          = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.customer_id = (json.getString("customer_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("customer_id")));
+            this.export_date = (json.getString("export_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("export_date")));
+            this.description = (json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public JSONObject getParametrizedJSON(String customer) {
         JSONObject object = new JSONObject();
         try {

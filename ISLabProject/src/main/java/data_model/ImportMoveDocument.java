@@ -41,4 +41,14 @@ public class ImportMoveDocument implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id             = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.importGoods_id = (json.getString("importGoods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("importGoods_id")));
+            this.storage_id     = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

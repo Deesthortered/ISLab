@@ -67,6 +67,20 @@ public class AvailableGoods implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id            = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.goods_id      = (json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
+            this.provider_id   = (json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
+            this.storage_id    = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+            this.current       = (!json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));
+            this.snapshot_date = (json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("snapshot_date")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public JSONObject getParametrizedJSON(Goods goods, Provider provider, Storage storage) {
         JSONObject object = new JSONObject();
         try {

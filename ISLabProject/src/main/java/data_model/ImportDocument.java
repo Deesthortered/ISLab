@@ -53,6 +53,18 @@ public class ImportDocument implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id          = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.provider_id = (json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
+            this.import_date = (json.getString("import_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("import_date")));
+            this.description = (json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public JSONObject getParametrizedJSON(String provider) {
         JSONObject object = new JSONObject();
         try {

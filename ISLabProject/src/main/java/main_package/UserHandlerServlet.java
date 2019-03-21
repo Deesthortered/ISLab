@@ -482,7 +482,6 @@ public class UserHandlerServlet extends HttpServlet {
         pool.DropConnection(connection);
     }
 
-
     private void GetExportDocumentList(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();

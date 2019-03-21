@@ -41,4 +41,14 @@ public class ExportMoveDocument implements Entity {
         }
         return object;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+        try {
+            this.id             = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.exportGoods_id = (json.getString("exportGoods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("exportGoods_id")));
+            this.storage_id     = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }
