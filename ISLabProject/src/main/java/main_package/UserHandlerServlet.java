@@ -3,6 +3,8 @@ package main_package;
 import data_model.*;
 import database_package.*;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import utility_package.Common;
 
 import javax.servlet.ServletException;
@@ -13,7 +15,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Date;
 
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
@@ -98,14 +99,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        String tmp = reader.readLine();
-        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
-
-        Entity filter = new Provider(id, name, country, description);
+        Entity filter = new Provider();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            filter.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -129,13 +129,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        reader.readLine(); // To miss unnecessary id field
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
-
-        Provider provider = new Provider(-1, name, country, description);
+        Entity provider = new Provider();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            provider.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOProviders.getInstance();
@@ -174,24 +174,26 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
+        Provider entity = new Provider();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            entity.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        Provider old_version = (Provider) dao.GetEntityList(connection, new Provider(id, null, null, null), true, 0, 1).get(0);
+        Provider old_version = (Provider) dao.GetEntityList(connection, new Provider(entity.getId(), null, null, null), true, 0, 1).get(0);
 
-        if (name.isEmpty()) name = old_version.getName();
-        if (country.isEmpty()) country = old_version.getCountry();
-        if (description.isEmpty()) description = old_version.getDescription();
+        if (entity.getName().isEmpty()) entity.setName(old_version.getName());
+        if (entity.getCountry().isEmpty()) entity.setCountry(old_version.getCountry());
+        if (entity.getDescription().isEmpty()) entity.setDescription(old_version.getDescription());
 
-        if (dao.IsExistsEntity(connection, id)) {
-            if (dao.EditEntity(connection, new Provider(id, name, country, description)))
+        if (dao.IsExistsEntity(connection, entity.getId())) {
+            if (dao.EditEntity(connection, entity))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -204,14 +206,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        String tmp = reader.readLine();
-        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
-
-        Customer filter = new Customer(id, name, country, description);
+        Entity filter = new Customer();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            filter.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -235,13 +236,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        reader.readLine(); // To miss unnecessary id field
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
-
-        Customer customer = new Customer(-1, name, country, description);
+        Entity customer = new Customer();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            customer.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOCustomer.getInstance();
@@ -280,24 +281,26 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
-
-        String name = reader.readLine();
-        String country = reader.readLine();
-        String description = reader.readLine();
+        Customer entity = new Customer();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            entity.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        Customer old_version = (Customer) dao.GetEntityList(connection, new Customer(id, null, null, null), true, 0, 1).get(0);
+        Customer old_version = (Customer) dao.GetEntityList(connection, new Customer(entity.getId(), null, null, null), true, 0, 1).get(0);
 
-        if (name.isEmpty()) name = old_version.getName();
-        if (country.isEmpty()) country = old_version.getCountry();
-        if (description.isEmpty()) description = old_version.getDescription();
+        if (entity.getName().isEmpty()) entity.setName(old_version.getName());
+        if (entity.getCountry().isEmpty()) entity.setCountry(old_version.getCountry());
+        if (entity.getDescription().isEmpty()) entity.setDescription(old_version.getDescription());
 
-        if (dao.IsExistsEntity(connection, id)) {
-            if (dao.EditEntity(connection, new Customer(id, name, country, description)))
+        if (dao.IsExistsEntity(connection, entity.getId())) {
+            if (dao.EditEntity(connection, entity))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -310,17 +313,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        String tmp = reader.readLine();
-        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        String name = reader.readLine();
-
-        tmp = reader.readLine();
-        long average = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        String description = reader.readLine();
-
-        Goods filter = new Goods(id, name, average, description);
+        Entity filter = new Goods();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            filter.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -344,13 +343,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        reader.readLine(); // To miss unnecessary id field
-
-        String name = reader.readLine();
-        long average = Long.parseLong(reader.readLine());
-        String description = reader.readLine();
-
-        Goods goods = new Goods(-1, name, average, description);
+        Entity goods = new Goods();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            goods.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOGoods.getInstance();
@@ -388,24 +387,26 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        long id = Long.parseLong(reader.readLine());
-
-        String name = reader.readLine();
-        long average = Long.parseLong(reader.readLine());
-        String description = reader.readLine();
+        Goods entity = new Goods();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            entity.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        Goods old_version = (Goods) dao.GetEntityList(connection, new Goods(id, null, -1, null), true, 0, 1).get(0);
+        Goods old_version = (Goods) dao.GetEntityList(connection, new Goods(entity.getId(), null, -1, null), true, 0, 1).get(0);
 
-        if (name.isEmpty()) name = old_version.getName();
-        if (average == -1) average = old_version.getAverage_price();
-        if (description.isEmpty()) description = old_version.getDescription();
+        if (entity.getName().isEmpty()) entity.setName(old_version.getName());
+        if (entity.getAverage_price() == Entity.undefined_long) entity.setAverage_price(old_version.getAverage_price());
+        if (entity.getDescription().isEmpty()) entity.setDescription(old_version.getDescription());
 
-        if (dao.IsExistsEntity(connection, id)) {
-            if (dao.EditEntity(connection, new Goods(id, name, average, description)))
+        if (dao.IsExistsEntity(connection, entity.getId())) {
+            if (dao.EditEntity(connection, entity))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -418,18 +419,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        String tmp = reader.readLine();
-        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        long provider_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        Date import_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
-
-        String description = reader.readLine();
-
-        ImportDocument filter = new ImportDocument(id, provider_id, import_date, description);
+        Entity filter = new ImportDocument();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            filter.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -459,15 +455,13 @@ public class UserHandlerServlet extends HttpServlet {
 
         reader.readLine(); // To miss unnecessary id field
 
-        String tmp = reader.readLine();
-        long provider_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        Date import_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
-
-        String description = reader.readLine();
-
-        ImportDocument document = new ImportDocument(-1, provider_id, import_date, description);
+        Entity document = new ImportDocument();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            document.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOImportDocument.getInstance();
@@ -486,18 +480,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        String tmp = reader.readLine();
-        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        long customer_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        Date export_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
-
-        String description = reader.readLine();
-
-        ExportDocument filter = new ExportDocument(id, customer_id, export_date, description);
+        Entity filter = new ExportDocument();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            filter.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -525,17 +514,13 @@ public class UserHandlerServlet extends HttpServlet {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
-        reader.readLine(); // To miss unnecessary id field
-
-        String tmp = reader.readLine();
-        long customer_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
-
-        tmp = reader.readLine();
-        Date export_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
-
-        String description = reader.readLine();
-
-        ExportDocument document = new ExportDocument(-1, customer_id, export_date, description);
+        Entity document = new ExportDocument();
+        try {
+            JSONObject json = new JSONObject(reader.readLine());
+            document.setByJSON(json);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         ConnectionPool pool = ConnectionPool.getInstance();
         DAOInterface dao = DAOExportDocument.getInstance();

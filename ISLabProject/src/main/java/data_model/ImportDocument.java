@@ -40,6 +40,19 @@ public class ImportDocument implements Entity {
         return description;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setProvider_id(long provider_id) {
+        this.provider_id = provider_id;
+    }
+    public void setImport_date(Date import_date) {
+        this.import_date = import_date;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

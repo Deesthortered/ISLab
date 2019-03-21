@@ -33,23 +33,42 @@ public class AvailableGoods implements Entity {
         else this.snapshot_date = snapshot_date;
     }
 
-    public long getId() {
+    public long    getId() {
         return id;
     }
-    public long getGoods_id() {
+    public long    getGoods_id() {
         return goods_id;
     }
-    public long getProvider_id() {
+    public long    getProvider_id() {
         return provider_id;
     }
-    public long getStorage_id() {
+    public long    getStorage_id() {
         return storage_id;
     }
     public boolean isCurrent() {
         return current;
     }
-    public Date getSnapshot_date() {
+    public Date    getSnapshot_date() {
         return snapshot_date;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setGoods_id(long goods_id) {
+        this.goods_id = goods_id;
+    }
+    public void setProvider_id(long provider_id) {
+        this.provider_id = provider_id;
+    }
+    public void setStorage_id(long storage_id) {
+        this.storage_id = storage_id;
+    }
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+    public void setSnapshot_date(Date snapshot_date) {
+        this.snapshot_date = snapshot_date;
     }
 
     @Override

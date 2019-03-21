@@ -42,6 +42,19 @@ public class ExportDocument implements Entity {
         return description;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setCustomer_id(long customer_id) {
+        this.customer_id = customer_id;
+    }
+    public void setExport_date(Date export_date) {
+        this.export_date = export_date;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

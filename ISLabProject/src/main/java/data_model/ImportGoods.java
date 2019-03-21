@@ -41,6 +41,22 @@ public class ImportGoods implements Entity {
         return goods_price;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setDocument_id(long document_id) {
+        this.document_id = document_id;
+    }
+    public void setGoods_id(long goods_id) {
+        this.goods_id = goods_id;
+    }
+    public void setGoods_count(long goods_count) {
+        this.goods_count = goods_count;
+    }
+    public void setGoods_price(long goods_price) {
+        this.goods_price = goods_price;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

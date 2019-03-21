@@ -63,6 +63,28 @@ public class ExportSummary implements Entity {
         return min_price;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
+    }
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
+    }
+    public void setExports_count(int exports_count) {
+        this.exports_count = exports_count;
+    }
+    public void setExports_amount(long exports_amount) {
+        this.exports_amount = exports_amount;
+    }
+    public void setMax_price(long max_price) {
+        this.max_price = max_price;
+    }
+    public void setMin_price(long min_price) {
+        this.min_price = min_price;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

@@ -29,6 +29,16 @@ public class ExportMoveDocument implements Entity {
         return storage_id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setExportGoods_id(long exportGoods_id) {
+        this.exportGoods_id = exportGoods_id;
+    }
+    public void setStorage_id(long storage_id) {
+        this.storage_id = storage_id;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

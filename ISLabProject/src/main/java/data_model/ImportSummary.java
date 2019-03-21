@@ -56,6 +56,28 @@ public class ImportSummary implements Entity {
         return min_price;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setStart_date(Date start_date) {
+        this.start_date = start_date;
+    }
+    public void setEnd_date(Date end_date) {
+        this.end_date = end_date;
+    }
+    public void setImports_count(int imports_count) {
+        this.imports_count = imports_count;
+    }
+    public void setImports_amount(long imports_amount) {
+        this.imports_amount = imports_amount;
+    }
+    public void setMax_price(long max_price) {
+        this.max_price = max_price;
+    }
+    public void setMin_price(long min_price) {
+        this.min_price = min_price;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

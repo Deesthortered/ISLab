@@ -20,4 +20,8 @@ public class SystemUsers implements Entity {
     public JSONObject getJSON() {
         return null;
     }
+    @Override
+    public void setByJSON(JSONObject json) {
+
+    }
 }

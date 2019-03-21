@@ -44,6 +44,19 @@ public class Provider implements Entity {
         return description;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setCountry(String country) {
+        this.country = country;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

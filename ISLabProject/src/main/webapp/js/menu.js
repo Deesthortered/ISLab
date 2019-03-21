@@ -6,14 +6,35 @@ class Common {
         ImportManager : 'ImportManager',
         ExportManager : 'ExportManager',
     });
-    static EntityArray = Object.freeze(['provider', 'customer', 'goods', 'import document', 'export document', 'available goods']);
+    static EntityArray = Object.freeze([
+        'provider',
+        'customer',
+        'goods',
+        'storage',
+        'import document',
+        'export document',
+        'import goods',
+        'export goods',
+        'import move document',
+        'export move document',
+        'import summary',
+        'export summary',
+        'available goods',
+    ]);
     static EntityMap = Object.freeze({
-        Provider       : 'provider',
-        Customer       : 'customer',
-        Goods          : 'goods',
-        ImportDocument : 'import document',
-        ExportDocument : 'export document',
-        AvailableGoods : 'available goods',
+        Provider           : 'provider',
+        Customer           : 'customer',
+        Goods              : 'goods',
+        Storage            : 'storage',
+        ImportDocument     : 'import document',
+        ExportDocument     : 'export document',
+        ImportGoods        : 'import goods',
+        ExportGoods        : 'export goods',
+        ImportMoveDocument : 'import move document',
+        ExportMoveDocument : 'export move document',
+        ImportSummary      : 'import summary',
+        ExportSummary      : 'export summary',
+        AvailableGoods     : 'available goods',
     });
     // Temporary
     static role;
@@ -52,86 +73,91 @@ class EntityFilters {
             case Common.EntityMap.Provider :
             case Common.EntityMap.Customer :
                 return {
-                    id: this.undefined_value,
-                    name: this.undefined_value,
-                    country: this.undefined_value,
-                    description: this.undefined_value,
+                    id          : this.undefined_value,
+                    name        : this.undefined_value,
+                    country     : this.undefined_value,
+                    description : this.undefined_value,
                 };
             case Common.EntityMap.Goods :
                 return {
-                    id: this.undefined_value,
-                    name: this.undefined_value,
-                    average_price: this.undefined_value,
-                    description: this.undefined_value,
+                    id            : this.undefined_value,
+                    name          : this.undefined_value,
+                    average_price : this.undefined_value,
+                    description   : this.undefined_value,
+                };
+            case Common.EntityMap.Storage :
+                return {
+                    id          : this.undefined_value,
+                    name        : this.undefined_value,
+                    description : this.undefined_value,
                 };
             case Common.EntityMap.ImportDocument :
                 return {
-                    id: this.undefined_value,
-                    provider_id: this.undefined_value,
-                    import_date: this.undefined_value,
-                    description: this.undefined_value,
+                    id          : this.undefined_value,
+                    provider_id : this.undefined_value,
+                    import_date : this.undefined_value,
+                    description : this.undefined_value,
                 };
             case Common.EntityMap.ExportDocument :
                 return {
-                    id: this.undefined_value,
-                    customer_id: this.undefined_value,
-                    export_date: this.undefined_value,
-                    description: this.undefined_value,
+                    id          : this.undefined_value,
+                    customer_id : this.undefined_value,
+                    export_date : this.undefined_value,
+                    description : this.undefined_value,
+                };
+            case Common.EntityMap.ImportGoods :
+            case Common.EntityMap.ExportGoods :
+                return {
+                    id          : this.undefined_value,
+                    document_id : this.undefined_value,
+                    goods_id    : this.undefined_value,
+                    goods_count : this.undefined_value,
+                    goods_price : this.undefined_value,
+                };
+            case Common.EntityMap.ImportMoveDocument :
+                return {
+                    id             : this.undefined_value,
+                    importGoods_id : this.undefined_value,
+                    storage_id     : this.undefined_value,
+                };
+            case Common.EntityMap.ExportMoveDocument :
+                return {
+                    id             : this.undefined_value,
+                    exportGoods_id : this.undefined_value,
+                    storage_id     : this.undefined_value,
+                };
+            case Common.EntityMap.ImportSummary :
+                return {
+                    id             : this.undefined_value,
+                    start_date     : this.undefined_value,
+                    end_date       : this.undefined_value,
+                    imports_count  : this.undefined_value,
+                    imports_amount : this.undefined_value,
+                    max_price      : this.undefined_value,
+                    min_price      : this.undefined_value,
+                };
+            case Common.EntityMap.ExportSummary :
+                return {
+                    id             : this.undefined_value,
+                    start_date     : this.undefined_value,
+                    end_date       : this.undefined_value,
+                    exports_count  : this.undefined_value,
+                    exports_amount : this.undefined_value,
+                    max_price      : this.undefined_value,
+                    min_price      : this.undefined_value,
                 };
             case Common.EntityMap.AvailableGoods :
                 return {
-                    id: this.undefined_value,
-                    goods_id: this.undefined_value,
-                    provider_id: this.undefined_value,
-                    storage_id: this.undefined_value,
-                    current: this.undefined_value,
-                    snapshot_date: this.undefined_value,
+                    id            : this.undefined_value,
+                    goods_id      : this.undefined_value,
+                    provider_id   : this.undefined_value,
+                    storage_id    : this.undefined_value,
+                    current       : this.undefined_value,
+                    snapshot_date : this.undefined_value,
                 };
 
             default : {
                 alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
-                return undefined;
-            }
-        }
-    }
-    static getQueryFilterRepresentation(entity, data) {
-        switch (entity) {
-            case Common.EntityMap.Provider :
-            case Common.EntityMap.Customer :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
-                    String(data.country === undefined ? this.undefined_value : data.country) + "\n" +
-                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
-            case Common.EntityMap.Goods :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
-                    String(data.average_price === undefined ? this.undefined_value : data.average_price) + "\n" +
-                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
-            case Common.EntityMap.ImportDocument :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.provider_id === undefined ? this.undefined_value : data.provider_id) + "\n" +
-                    String(data.import_date === undefined ? this.undefined_value : data.import_date) + "\n" +
-                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
-            case Common.EntityMap.ExportDocument :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.customer_id === undefined ? this.undefined_value : data.customer_id) + "\n" +
-                    String(data.export_date === undefined ? this.undefined_value : data.export_date) + "\n" +
-                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
-            case Common.EntityMap.AvailableGoods :
-                return "" +
-                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
-                    String(data.goods_id === undefined ? this.undefined_value : data.goods_id) + "\n" +
-                    String(data.provider_id === undefined ? this.undefined_value : data.provider_id) + "\n" +
-                    String(data.storage_id === undefined ? this.undefined_value : data.storage_id) + "\n" +
-                    String(data.current === undefined ? this.undefined_value : data.current) + "\n" +
-                    String(data.snapshot_date === undefined ? this.undefined_value : data.snapshot_date) + "\n";
-
-            default : {
-                alert("Unknown entity \'" + entity + "\' at getQueryFilterRepresentation");
                 return undefined;
             }
         }
@@ -198,7 +224,7 @@ class ListPage {
         };
         let query_body =
             QueryMaker.GetEntityList(this.current_entity) +
-            EntityFilters.getQueryFilterRepresentation(this.current_entity, this.filter) +
+            JSON.stringify(this.filter) + '\n' +
             String(this.limited) + "\n" +
             String(this.list_begin_ind) + "\n" +
             String(this.list_size) + "\n";
@@ -402,7 +428,7 @@ class ListPage {
         };
         let query_body =
             QueryMaker.AddEntity(this.current_entity) +
-            EntityFilters.getQueryFilterRepresentation(this.current_entity, new_entry);
+            JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
     static TableEditSend() {
@@ -439,7 +465,7 @@ class ListPage {
         };
         let query_body =
             QueryMaker.EditEntity(this.current_entity) +
-            EntityFilters.getQueryFilterRepresentation(this.current_entity, new_entry);
+            JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
 }

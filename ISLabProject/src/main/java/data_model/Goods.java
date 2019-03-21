@@ -42,6 +42,19 @@ public class Goods implements Entity {
         return description;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setAverage_price(long average_price) {
+        this.average_price = average_price;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();

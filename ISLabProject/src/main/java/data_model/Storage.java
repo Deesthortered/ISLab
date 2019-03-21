@@ -35,6 +35,16 @@ public class Storage implements Entity {
         return description;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public JSONObject getJSON() {
         JSONObject object = new JSONObject();
