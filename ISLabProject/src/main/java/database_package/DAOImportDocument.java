@@ -9,40 +9,42 @@ import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
 
-public class DAOImportDocument {
+public class DAOImportDocument implements DAOInterface {
 
-    private static DAOImportDocument instance;
+    private static DAOInterface instance;
 
     private DAOImportDocument() {
 
     }
-    public static synchronized DAOImportDocument getInstance() {
+    public static synchronized DAOInterface getInstance() {
         if (instance == null) {
             instance = new DAOImportDocument();
         }
         return instance;
     }
 
-    public ArrayList<ImportDocument> GetImportDocumentList(Connection connection, ImportDocument filter, boolean limited, int start_index, int count_of_records) {
-        ArrayList<ImportDocument> result = new ArrayList<>();
+    @Override
+    public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
+        ImportDocument casted_filter = (ImportDocument) filter;
+        ArrayList<Entity> result = new ArrayList<>();
 
         try {
             String sql_query = "SELECT * FROM islabdb.importdocument " +
-                      "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
-                            "(Document_ProviderID = ?  OR ? = "   + Entity.undefined_long + ") AND " +
-                            "(Document_ImportDate = ?  OR ? = \'"   + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
-                            "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
-                      ( limited ? " limit ? offset ?" : "");
+                    "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Document_ProviderID = ?  OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Document_ImportDate = ?  OR ? = \'"   + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                    ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
-            statement.setLong(1, filter.getId());
-            statement.setLong(2, filter.getId());
-            statement.setLong(3, filter.getProvider_id());
-            statement.setLong(4, filter.getProvider_id());
-            statement.setString(5, JavaDateToSQLDate(filter.getImport_date()));
-            statement.setString(6, JavaDateToSQLDate(filter.getImport_date()));
-            statement.setString(7, filter.getDescription());
-            statement.setString(8, filter.getDescription());
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getProvider_id());
+            statement.setLong(4, casted_filter.getProvider_id());
+            statement.setString(5, JavaDateToSQLDate(casted_filter.getImport_date()));
+            statement.setString(6, JavaDateToSQLDate(casted_filter.getImport_date()));
+            statement.setString(7, casted_filter.getDescription());
+            statement.setString(8, casted_filter.getDescription());
             if (limited) {
                 statement.setLong(9, count_of_records);
                 statement.setLong(10, start_index);
@@ -61,13 +63,15 @@ public class DAOImportDocument {
         }
         return result;
     }
-    public boolean AddDocumentList(Connection connection, ArrayList<ImportDocument> list) {
-        for (ImportDocument item : list) {
+    @Override
+    public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
+        for (Entity item : list) {
+            ImportDocument casted_item = (ImportDocument) item;
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importdocument (Document_ProviderID, Document_ImportDate, Document_Description) VALUES (?, ?, ?);");
-                statement.setLong(1, item.getProvider_id());
-                statement.setString(2, JavaDateToSQLDate(item.getImport_date()));
-                statement.setString(3, item.getDescription());
+                statement.setLong(1, casted_item.getProvider_id());
+                statement.setString(2, JavaDateToSQLDate(casted_item.getImport_date()));
+                statement.setString(3, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -76,7 +80,8 @@ public class DAOImportDocument {
         }
         return true;
     }
-    public boolean IsExistsDocument(Connection connection, long id) {
+    @Override
+    public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importdocument where Document_ID = ?");
             statement.setLong(1, id);
@@ -92,7 +97,8 @@ public class DAOImportDocument {
         }
         return true;
     }
-    public boolean DeleteDocument(Connection connection, long id) {
+    @Override
+    public boolean DeleteEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importdocument WHERE Document_ID = ?;");
             statement.setLong(1, id);
@@ -103,7 +109,9 @@ public class DAOImportDocument {
         }
         return true;
     }
-    public boolean EditGoods(Connection connection, ImportDocument document) {
+    @Override
+    public boolean EditEntity(Connection connection, Entity entity) {
+        ImportDocument document = (ImportDocument) entity;
         try {
             String sql_code =   "UPDATE islabdb.importdocument SET " +
                     "Document_ProviderID = ?, " +

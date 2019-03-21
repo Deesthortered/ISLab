@@ -6,40 +6,41 @@ import data_model.Provider;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DAOProviders {
+public class DAOProviders implements DAOInterface {
 
-    private static DAOProviders instance;
+    private static DAOInterface instance;
 
     private DAOProviders() {
 
     }
-    public static synchronized DAOProviders getInstance() {
+    public static synchronized DAOInterface getInstance() {
         if (instance == null) {
             instance = new DAOProviders();
         }
         return instance;
     }
 
-    public ArrayList<Provider> GetProvidersList(Connection connection, Provider filter, boolean limited, long start_index, long count_of_records) {
-        ArrayList<Provider> result = new ArrayList<>();
-
+    @Override
+    public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
+        Provider casted_filter = (Provider) filter;
+        ArrayList<Entity> result = new ArrayList<>();
         try {
             String sql_query = "SELECT * FROM islabdb.provider " +
-                      "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                            "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                            "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                            "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
-                      ( limited ? " limit ? offset ?" : "");
+                    "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
+                    "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
+                    "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
+                    "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                    ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
-            statement.setLong(1, filter.getId());
-            statement.setLong(2, filter.getId());
-            statement.setString(3, filter.getName());
-            statement.setString(4, filter.getName());
-            statement.setString(5, filter.getCountry());
-            statement.setString(6, filter.getCountry());
-            statement.setString(7, filter.getDescription());
-            statement.setString(8, filter.getDescription());
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setString(3, casted_filter.getName());
+            statement.setString(4, casted_filter.getName());
+            statement.setString(5, casted_filter.getCountry());
+            statement.setString(6, casted_filter.getCountry());
+            statement.setString(7, casted_filter.getDescription());
+            statement.setString(8, casted_filter.getDescription());
             if (limited) {
                 statement.setLong(9, count_of_records);
                 statement.setLong(10, start_index);
@@ -58,13 +59,15 @@ public class DAOProviders {
         }
         return result;
     }
-    public boolean AddProviderList(Connection connection, ArrayList<Provider> list) {
-        for (Provider item : list) {
+    @Override
+    public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
+        for (Entity item : list) {
+            Provider casted_item = (Provider) item;
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
-                statement.setString(1, item.getName());
-                statement.setString(2, item.getCountry());
-                statement.setString(3, item.getDescription());
+                statement.setString(1, casted_item.getName());
+                statement.setString(2, casted_item.getCountry());
+                statement.setString(3, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -73,7 +76,8 @@ public class DAOProviders {
         }
         return true;
     }
-    public boolean IsExistsProvider(Connection connection, long id) {
+    @Override
+    public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.provider where Provider_ID = ?");
             statement.setLong(1, id);
@@ -89,7 +93,8 @@ public class DAOProviders {
         }
         return true;
     }
-    public boolean DeleteProvider(Connection connection, long id) {
+    @Override
+    public boolean DeleteEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.provider WHERE Provider_ID = ?;");
             statement.setLong(1, id);
@@ -100,12 +105,14 @@ public class DAOProviders {
         }
         return true;
     }
-    public boolean EditProvider(Connection connection, Provider provider) {
+    @Override
+    public boolean EditEntity(Connection connection, Entity entity) {
+        Provider provider = (Provider) entity;
         try {
             String sql_code =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
-                                                            "Provider_Country = ?, " +
-                                                            "Provider_Description = ? " +
-                                "WHERE Provider_ID = ?;";
+                    "Provider_Country = ?, " +
+                    "Provider_Description = ? " +
+                    "WHERE Provider_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
             statement.setString(1, provider.getName());

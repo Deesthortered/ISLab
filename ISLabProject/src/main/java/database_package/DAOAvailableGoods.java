@@ -10,46 +10,47 @@ import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
 
-public class DAOAvailableGoods {
+public class DAOAvailableGoods implements DAOInterface {
 
-    private static DAOAvailableGoods instance;
+    private static DAOInterface instance;
 
     private DAOAvailableGoods() {
 
     }
-    public static synchronized DAOAvailableGoods getInstance() {
+    public static synchronized DAOInterface getInstance() {
         if (instance == null) {
             instance = new DAOAvailableGoods();
         }
         return instance;
     }
 
-    public ArrayList<AvailableGoods> GetAvailableGoodsList(Connection connection, AvailableGoods filter, boolean limited, int start_index, int count_of_records) {
-        ArrayList<AvailableGoods> result = new ArrayList<>();
-
+    @Override
+    public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
+        AvailableGoods casted_filter = (AvailableGoods) filter;
+        ArrayList<Entity> result = new ArrayList<>();
         try {
             String sql_query = "SELECT * FROM islabdb.availablegoods " +
-                      "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_Current = ?       OR ? = false) AND " +
-                            "(Available_SnapshotDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\')" +
-                      ( limited ? " limit ? offset ?" : "");
+                    "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_Current = ?       OR ? = false) AND " +
+                    "(Available_SnapshotDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\')" +
+                    ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
-            statement.setLong(1, filter.getId());
-            statement.setLong(2, filter.getId());
-            statement.setLong(3, filter.getGoods_id());
-            statement.setLong(4, filter.getGoods_id());
-            statement.setLong(5, filter.getProvider_id());
-            statement.setLong(6, filter.getProvider_id());
-            statement.setLong(7, filter.getStorage_id());
-            statement.setLong(8, filter.getStorage_id());
-            statement.setBoolean(9,  filter.isCurrent());
-            statement.setBoolean(10, filter.isCurrent());
-            statement.setString(11, Common.JavaDateToSQLDate(filter.getSnapshot_date()));
-            statement.setString(12, Common.JavaDateToSQLDate(filter.getSnapshot_date()));
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getGoods_id());
+            statement.setLong(4, casted_filter.getGoods_id());
+            statement.setLong(5, casted_filter.getProvider_id());
+            statement.setLong(6, casted_filter.getProvider_id());
+            statement.setLong(7, casted_filter.getStorage_id());
+            statement.setLong(8, casted_filter.getStorage_id());
+            statement.setBoolean(9,  casted_filter.isCurrent());
+            statement.setBoolean(10, casted_filter.isCurrent());
+            statement.setString(11, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(12, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
 
             if (limited) {
                 statement.setLong(13, count_of_records);
@@ -71,19 +72,21 @@ public class DAOAvailableGoods {
         }
         return result;
     }
-    public boolean AddAvailableGoodsList(Connection connection, ArrayList<AvailableGoods> list) {
-        for (AvailableGoods item : list) {
+    @Override
+    public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
+        for (Entity item : list) {
+            AvailableGoods casted_item = (AvailableGoods) item;
             try {
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO islabdb.availablegoods " +
-                        "(Available_ID, Available_GoodsID, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
-                        "VALUES (?, ?, ?, ?, ?, ?);");
-                statement.setLong(1, item.getId());
-                statement.setLong(2, item.getGoods_id());
-                statement.setLong(3, item.getProvider_id());
-                statement.setLong(4, item.getStorage_id());
-                statement.setBoolean(5, item.isCurrent());
-                statement.setString(6, Common.JavaDateToSQLDate(item.getSnapshot_date()));
+                                "(Available_ID, Available_GoodsID, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
+                                "VALUES (?, ?, ?, ?, ?, ?);");
+                statement.setLong(1, casted_item.getId());
+                statement.setLong(2, casted_item.getGoods_id());
+                statement.setLong(3, casted_item.getProvider_id());
+                statement.setLong(4, casted_item.getStorage_id());
+                statement.setBoolean(5, casted_item.isCurrent());
+                statement.setString(6, Common.JavaDateToSQLDate(casted_item.getSnapshot_date()));
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -92,5 +95,58 @@ public class DAOAvailableGoods {
         }
         return true;
     }
+    @Override
+    public boolean IsExistsEntity(Connection connection, long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?");
+            statement.setLong(1, id);
+            ResultSet set = statement.executeQuery();
+            if (!set.next())
+                return false;
+            int count = set.getInt(1);
+            if (count != 1)
+                return false;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean DeleteEntity(Connection connection, long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.availablegoods WHERE Available_ID = ?;");
+            statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean EditEntity(Connection connection, Entity entity) {
+        AvailableGoods document = (AvailableGoods) entity;
+        try {
+            String sql_code =   "UPDATE islabdb.availablegoods SET " +
+                    "Available_GoodsID = ?, " +
+                    "Available_ProviderID = ?, " +
+                    "Available_StorageID = ?, " +
+                    "Available_Current = ?, " +
+                    "Available_SnapshotDate = ? " +
+                    "WHERE Available_ID = ?;";
 
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            statement.setLong(1, document.getGoods_id());
+            statement.setLong(2, document.getProvider_id());
+            statement.setLong(3, document.getStorage_id());
+            statement.setBoolean(4, document.isCurrent());
+            statement.setString(5, JavaDateToSQLDate(document.getSnapshot_date()));
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

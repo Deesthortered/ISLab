@@ -105,21 +105,21 @@ public class UserHandlerServlet extends HttpServlet {
         String country = reader.readLine();
         String description = reader.readLine();
 
-        Provider filter = new Provider(id, name, country, description);
+        Entity filter = new Provider(id, name, country, description);
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
         int count_of_records = Integer.parseInt(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOProviders dao = DAOProviders.getInstance();
+        DAOInterface dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Provider> list = dao.GetProvidersList(connection, filter, limited, begin_index, count_of_records);
+        ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
-        for (Provider provider : list) {
+        for (Entity provider : list) {
             json_list.put(provider.getJSON());
         }
 
@@ -138,12 +138,12 @@ public class UserHandlerServlet extends HttpServlet {
         Provider provider = new Provider(-1, name, country, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOProviders dao = DAOProviders.getInstance();
+        DAOInterface dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Provider> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         list.add(provider);
-        if (dao.AddProviderList(connection, list))
+        if (dao.AddEntityList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -157,11 +157,11 @@ public class UserHandlerServlet extends HttpServlet {
         long id = Long.parseLong(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOProviders dao = DAOProviders.getInstance();
+        DAOInterface dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.IsExistsProvider(connection, id)) {
-            if (dao.DeleteProvider(connection, id))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.DeleteEntity(connection, id))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -181,17 +181,17 @@ public class UserHandlerServlet extends HttpServlet {
         String description = reader.readLine();
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOProviders dao = DAOProviders.getInstance();
+        DAOInterface dao = DAOProviders.getInstance();
 
         Connection connection = pool.GetConnection();
-        Provider old_version = dao.GetProvidersList(connection, new Provider(id, null, null, null), true, 0, 1).get(0);
+        Provider old_version = (Provider) dao.GetEntityList(connection, new Provider(id, null, null, null), true, 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
         if (country.isEmpty()) country = old_version.getCountry();
         if (description.isEmpty()) description = old_version.getDescription();
 
-        if (dao.IsExistsProvider(connection, id)) {
-            if (dao.EditProvider(connection, new Provider(id, name, country, description)))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.EditEntity(connection, new Provider(id, name, country, description)))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -218,14 +218,14 @@ public class UserHandlerServlet extends HttpServlet {
         int count_of_records = Integer.parseInt(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOCustomer dao = DAOCustomer.getInstance();
+        DAOInterface dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Customer> list = dao.GetCustomersList(connection, filter, limited, begin_index, count_of_records);
+        ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
-        for (Customer customer : list) {
+        for (Entity customer : list) {
             json_list.put(customer.getJSON());
         }
 
@@ -244,12 +244,12 @@ public class UserHandlerServlet extends HttpServlet {
         Customer customer = new Customer(-1, name, country, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOCustomer dao = DAOCustomer.getInstance();
+        DAOInterface dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Customer> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         list.add(customer);
-        if (dao.AddCustomerList(connection, list))
+        if (dao.AddEntityList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -263,11 +263,11 @@ public class UserHandlerServlet extends HttpServlet {
         long id = Long.parseLong(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOCustomer dao = DAOCustomer.getInstance();
+        DAOInterface dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.IsExistsCustomer(connection, id)) {
-            if (dao.DeleteCustomer(connection, id))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.DeleteEntity(connection, id))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -287,17 +287,17 @@ public class UserHandlerServlet extends HttpServlet {
         String description = reader.readLine();
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOCustomer dao = DAOCustomer.getInstance();
+        DAOInterface dao = DAOCustomer.getInstance();
 
         Connection connection = pool.GetConnection();
-        Customer old_version = dao.GetCustomersList(connection, new Customer(id, null, null, null), true, 0, 1).get(0);
+        Customer old_version = (Customer) dao.GetEntityList(connection, new Customer(id, null, null, null), true, 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
         if (country.isEmpty()) country = old_version.getCountry();
         if (description.isEmpty()) description = old_version.getDescription();
 
-        if (dao.IsExistsCustomer(connection, id)) {
-            if (dao.EditCustomer(connection, new Customer(id, name, country, description)))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.EditEntity(connection, new Customer(id, name, country, description)))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -327,14 +327,14 @@ public class UserHandlerServlet extends HttpServlet {
         int count_of_records = Integer.parseInt(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOGoods dao = DAOGoods.getInstance();
+        DAOInterface dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Goods> list = dao.GetGoodsList(connection, filter, limited, begin_index, count_of_records);
+        ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
-        for (Goods goods : list) {
+        for (Entity goods : list) {
             json_list.put(goods.getJSON());
         }
 
@@ -353,12 +353,12 @@ public class UserHandlerServlet extends HttpServlet {
         Goods goods = new Goods(-1, name, average, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOGoods dao = DAOGoods.getInstance();
+        DAOInterface dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<Goods> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         list.add(goods);
-        if (dao.AddGoodsList(connection, list))
+        if (dao.AddEntityList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -371,11 +371,11 @@ public class UserHandlerServlet extends HttpServlet {
         long id = Long.parseLong(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOGoods dao = DAOGoods.getInstance();
+        DAOInterface dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        if (dao.IsExistsGoods(connection, id)) {
-            if (dao.DeleteGoods(connection, id))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.DeleteEntity(connection, id))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -395,17 +395,17 @@ public class UserHandlerServlet extends HttpServlet {
         String description = reader.readLine();
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOGoods dao = DAOGoods.getInstance();
+        DAOInterface dao = DAOGoods.getInstance();
 
         Connection connection = pool.GetConnection();
-        Goods old_version = dao.GetGoodsList(connection, new Goods(id, null, -1, null), true, 0, 1).get(0);
+        Goods old_version = (Goods) dao.GetEntityList(connection, new Goods(id, null, -1, null), true, 0, 1).get(0);
 
         if (name.isEmpty()) name = old_version.getName();
         if (average == -1) average = old_version.getAverage_price();
         if (description.isEmpty()) description = old_version.getDescription();
 
-        if (dao.IsExistsGoods(connection, id)) {
-            if (dao.EditGoods(connection, new Goods(id, name, average, description)))
+        if (dao.IsExistsEntity(connection, id)) {
+            if (dao.EditEntity(connection, new Goods(id, name, average, description)))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -436,18 +436,19 @@ public class UserHandlerServlet extends HttpServlet {
         int count_of_records = Integer.parseInt(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOImportDocument dao = DAOImportDocument.getInstance();
+        DAOInterface dao = DAOImportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<ImportDocument> list = dao.GetImportDocumentList(connection, filter, limited, begin_index, count_of_records);
+        ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
         connection = pool.GetConnection();
-        DAOProviders sub_dao = DAOProviders.getInstance();
-        for (ImportDocument importDocument : list) {
+        DAOInterface sub_dao = DAOProviders.getInstance();
+        for (Entity entity : list) {
+            ImportDocument importDocument = (ImportDocument) entity;
             Provider provider = new Provider(importDocument.getProvider_id(), Entity.undefined_string, Entity.undefined_string, Entity.undefined_string);
-            json_list.put(importDocument.getParametrizedJSON(sub_dao.GetProvidersList(connection, provider, true, 0 ,1).get(0).getName()));
+            json_list.put(importDocument.getParametrizedJSON(((Provider) sub_dao.GetEntityList(connection, provider, true, 0 ,1).get(0)).getName()));
         }
         pool.DropConnection(connection);
         writer.write(json_list.toString());
@@ -469,12 +470,12 @@ public class UserHandlerServlet extends HttpServlet {
         ImportDocument document = new ImportDocument(-1, provider_id, import_date, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOImportDocument dao = DAOImportDocument.getInstance();
+        DAOInterface dao = DAOImportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<ImportDocument> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         list.add(document);
-        if (dao.AddDocumentList(connection, list))
+        if (dao.AddEntityList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
@@ -504,18 +505,19 @@ public class UserHandlerServlet extends HttpServlet {
         int count_of_records = Integer.parseInt(reader.readLine());
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOExportDocument dao = DAOExportDocument.getInstance();
+        DAOInterface dao = DAOExportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<ExportDocument> list = dao.GetExportDocumentList(connection, filter, limited, begin_index, count_of_records);
+        ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
         pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
         connection = pool.GetConnection();
-        DAOCustomer sub_dao = DAOCustomer.getInstance();
-        for (ExportDocument exportDocument : list) {
+        DAOInterface sub_dao = DAOCustomer.getInstance();
+        for (Entity entity : list) {
+            ExportDocument exportDocument = (ExportDocument) entity;
             Customer customer = new Customer(exportDocument.getCustomer_id(), Entity.undefined_string, Entity.undefined_string, Entity.undefined_string);
-            json_list.put(exportDocument.getParametrizedJSON(sub_dao.GetCustomersList(connection, customer, true, 0 ,1).get(0).getName()));
+            json_list.put(exportDocument.getParametrizedJSON(((Customer) sub_dao.GetEntityList(connection, customer, true, 0 ,1).get(0)).getName()));
         }
         pool.DropConnection(connection);
         writer.write(json_list.toString());
@@ -537,19 +539,17 @@ public class UserHandlerServlet extends HttpServlet {
         ExportDocument document = new ExportDocument(-1, customer_id, export_date, description);
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        DAOExportDocument dao = DAOExportDocument.getInstance();
+        DAOInterface dao = DAOExportDocument.getInstance();
 
         Connection connection = pool.GetConnection();
-        ArrayList<ExportDocument> list = new ArrayList<>();
+        ArrayList<Entity> list = new ArrayList<>();
         list.add(document);
-        if (dao.AddDocumentList(connection, list))
+        if (dao.AddEntityList(connection, list))
             writer.print("ok");
         else
             writer.print("bad");
         pool.DropConnection(connection);
     }
-
-
 
     private void RebuildAvailableGoodsBase(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();

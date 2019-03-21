@@ -9,40 +9,41 @@ import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
 
-public class DAOExportDocument {
+public class DAOExportDocument implements DAOInterface {
 
-    private static DAOExportDocument instance;
+    private static DAOInterface instance;
 
     private DAOExportDocument() {
 
     }
-    public static synchronized DAOExportDocument getInstance() {
+    public static synchronized DAOInterface getInstance() {
         if (instance == null) {
             instance = new DAOExportDocument();
         }
         return instance;
     }
 
-    public ArrayList<ExportDocument> GetExportDocumentList(Connection connection, ExportDocument filter, boolean limited, int start_index, int count_of_records) {
-        ArrayList<ExportDocument> result = new ArrayList<>();
-
+    @Override
+    public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
+        ExportDocument casted_filter = (ExportDocument) filter;
+        ArrayList<Entity> result = new ArrayList<>();
         try {
             String sql_query = "SELECT * FROM islabdb.exportdocument " +
-                      "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
-                            "(Document_CustomerID = ?  OR ? = " + Entity.undefined_long   + ") AND " +
-                            "(Document_ExportDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
-                            "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
-                      ( limited ? " limit ? offset ?" : "");
+                    "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Document_CustomerID = ?  OR ? = " + Entity.undefined_long   + ") AND " +
+                    "(Document_ExportDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                    ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
-            statement.setLong(1, filter.getId());
-            statement.setLong(2, filter.getId());
-            statement.setLong(3, filter.getCustomer_id());
-            statement.setLong(4, filter.getCustomer_id());
-            statement.setString(5, JavaDateToSQLDate(filter.getExport_date()));
-            statement.setString(6, JavaDateToSQLDate(filter.getExport_date()));
-            statement.setString(7, filter.getDescription());
-            statement.setString(8, filter.getDescription());
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getCustomer_id());
+            statement.setLong(4, casted_filter.getCustomer_id());
+            statement.setString(5, JavaDateToSQLDate(casted_filter.getExport_date()));
+            statement.setString(6, JavaDateToSQLDate(casted_filter.getExport_date()));
+            statement.setString(7, casted_filter.getDescription());
+            statement.setString(8, casted_filter.getDescription());
             if (limited) {
                 statement.setLong(9, count_of_records);
                 statement.setLong(10, start_index);
@@ -61,7 +62,25 @@ public class DAOExportDocument {
         }
         return result;
     }
-    public boolean IsExistsDocument(Connection connection, long id) {
+    @Override
+    public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
+        for (Entity item : list) {
+            ExportDocument casted_item = (ExportDocument) item;
+            try {
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
+                statement.setLong(1, casted_item.getCustomer_id());
+                statement.setString(2, JavaDateToSQLDate(casted_item.getExport_date()));
+                statement.setString(3, casted_item.getDescription());
+                statement.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+    @Override
+    public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportdocument where Document_ID = ?");
             statement.setLong(1, id);
@@ -77,22 +96,8 @@ public class DAOExportDocument {
         }
         return true;
     }
-    public boolean AddDocumentList(Connection connection, ArrayList<ExportDocument> list) {
-        for (ExportDocument item : list) {
-            try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
-                statement.setLong(1, item.getCustomer_id());
-                statement.setString(2, JavaDateToSQLDate(item.getExport_date()));
-                statement.setString(3, item.getDescription());
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        return true;
-    }
-    public boolean DeleteDocument(Connection connection, long id) {
+    @Override
+    public boolean DeleteEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportdocument WHERE Document_ID = ?;");
             statement.setLong(1, id);
@@ -103,7 +108,9 @@ public class DAOExportDocument {
         }
         return true;
     }
-    public boolean EditGoods(Connection connection, ExportDocument document) {
+    @Override
+    public boolean EditEntity(Connection connection, Entity entity) {
+        ExportDocument document = (ExportDocument) entity;
         try {
             String sql_code =   "UPDATE islabdb.exportdocument SET " +
                     "Document_CustomerID = ?, " +
