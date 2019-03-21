@@ -1,13 +1,7 @@
 package main_package;
 
-import data_model.Customer;
-import data_model.Entity;
-import data_model.Goods;
-import data_model.Provider;
-import database_package.ConnectionPool;
-import database_package.DAOCustomer;
-import database_package.DAOGoods;
-import database_package.DAOProviders;
+import data_model.*;
+import database_package.*;
 import org.json.JSONArray;
 import utility_package.Common;
 
@@ -19,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
@@ -58,6 +53,16 @@ public class UserHandlerServlet extends HttpServlet {
             DeleteGoods(request, response);
         } else if (title.equals(Common.q_edit_goods)) {
             EditGoods(request, response);
+        }
+
+        else if (title.equals(Common.q_get_import_document_list)) {
+            GetImportDocumentList(request, response);
+        } else if (title.equals(Common.q_get_export_document_list)) {
+            GetExportDocumentList(request, response);
+        } else if (title.equals(Common.q_add_import_document)) {
+            AddNewImportDocument(request, response);
+        } else if (title.equals(Common.q_add_export_document)) {
+            AddNewExportDocument(request, response);
         }
 
         else if (title.equals(Common.q_rebuild_base)) {
@@ -400,6 +405,130 @@ public class UserHandlerServlet extends HttpServlet {
                 writer.print("bad");
         } else
             writer.print("not exist");
+        pool.DropConnection(connection);
+    }
+
+    private void GetImportDocumentList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        String tmp = reader.readLine();
+        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        long provider_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        Date import_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
+
+        String description = reader.readLine();
+
+        ImportDocument filter = new ImportDocument(id, provider_id, import_date, description);
+
+        boolean limited = Boolean.parseBoolean(reader.readLine());
+        int begin_index = Integer.parseInt(reader.readLine());
+        int count_of_records = Integer.parseInt(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOImportDocument dao = DAOImportDocument.getInstance();
+
+        Connection connection = pool.GetConnection();
+        ArrayList<ImportDocument> list = dao.GetImportDocumentList(connection, filter, limited, begin_index, count_of_records);
+        pool.DropConnection(connection);
+
+        JSONArray json_list = new JSONArray();
+        for (ImportDocument importDocument : list) {
+            json_list.put(importDocument.getJSON());
+        }
+
+        writer.write(json_list.toString());
+    }
+    private void AddNewImportDocument(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        reader.readLine(); // To miss unnecessary id field
+
+        String tmp = reader.readLine();
+        long provider_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        Date import_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
+
+        String description = reader.readLine();
+
+        ImportDocument document = new ImportDocument(-1, provider_id, import_date, description);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOImportDocument dao = DAOImportDocument.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.AddDocument(connection, document))
+            writer.print("ok");
+        else
+            writer.print("bad");
+        pool.DropConnection(connection);
+    }
+
+    private void GetExportDocumentList(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        String tmp = reader.readLine();
+        long id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        long customer_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        Date export_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
+
+        String description = reader.readLine();
+
+        ExportDocument filter = new ExportDocument(id, customer_id, export_date, description);
+
+        boolean limited = Boolean.parseBoolean(reader.readLine());
+        int begin_index = Integer.parseInt(reader.readLine());
+        int count_of_records = Integer.parseInt(reader.readLine());
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOExportDocument dao = DAOExportDocument.getInstance();
+
+        Connection connection = pool.GetConnection();
+        ArrayList<ExportDocument> list = dao.GetExportDocumentList(connection, filter, limited, begin_index, count_of_records);
+        pool.DropConnection(connection);
+
+        JSONArray json_list = new JSONArray();
+        for (ExportDocument exportDocument : list) {
+            json_list.put(exportDocument.getJSON());
+        }
+
+        writer.write(json_list.toString());
+    }
+    private void AddNewExportDocument(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        BufferedReader reader = request.getReader();
+        PrintWriter writer = response.getWriter();
+
+        reader.readLine(); // To miss unnecessary id field
+
+        String tmp = reader.readLine();
+        long customer_id = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(tmp) );
+
+        tmp = reader.readLine();
+        Date export_date = ( tmp.equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(tmp) );
+
+        String description = reader.readLine();
+
+        ExportDocument document = new ExportDocument(-1, customer_id, export_date, description);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        DAOExportDocument dao = DAOExportDocument.getInstance();
+
+        Connection connection = pool.GetConnection();
+        if (dao.AddDocument(connection, document))
+            writer.print("ok");
+        else
+            writer.print("bad");
         pool.DropConnection(connection);
     }
 

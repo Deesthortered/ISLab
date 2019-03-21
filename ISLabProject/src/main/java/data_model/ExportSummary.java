@@ -2,6 +2,8 @@ package data_model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import utility_package.Common;
+
 import java.util.Date;
 
 public class ExportSummary implements Entity {
@@ -66,8 +68,8 @@ public class ExportSummary implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("start_date",     start_date.toString());
-            object.put("end_date",       end_date.toString());
+            object.put("start_date",     Common.JavaDateToSQLDate(start_date));
+            object.put("end_date",       Common.JavaDateToSQLDate(end_date));
             object.put("exports_count",  exports_count);
             object.put("exports_amount", exports_amount);
             object.put("max_price",      max_price);

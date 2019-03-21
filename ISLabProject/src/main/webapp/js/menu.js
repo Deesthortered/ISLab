@@ -6,24 +6,20 @@ class Common {
         ImportManager : 'ImportManager',
         ExportManager : 'ExportManager',
     });
-    static EntityArray = Object.freeze(['provider', 'customer', 'goods']);
+    static EntityArray = Object.freeze(['provider', 'customer', 'goods', 'import document', 'export document', 'available goods']);
     static EntityMap = Object.freeze({
-        Provider : 'provider',
-        Customer : 'customer',
-        Goods    : 'goods',
+        Provider       : 'provider',
+        Customer       : 'customer',
+        Goods          : 'goods',
+        ImportDocument : 'import document',
+        ExportDocument : 'export document',
+        AvailableGoods : 'available goods',
     });
     // Temporary
     static role;
 
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-    static findInMap(map, val) {
-        for (let [k, v] of map) {
-            if (v === val)
-                return true;
-        }
-        return false;
     }
 }
 class TemplateHandler {
@@ -59,14 +55,37 @@ class EntityFilters {
                     id: this.undefined_value,
                     name: this.undefined_value,
                     country: this.undefined_value,
-                    description: this.undefined_value
+                    description: this.undefined_value,
                 };
             case Common.EntityMap.Goods :
                 return {
                     id: this.undefined_value,
                     name: this.undefined_value,
                     average_price: this.undefined_value,
-                    description: this.undefined_value
+                    description: this.undefined_value,
+                };
+            case Common.EntityMap.ImportDocument :
+                return {
+                    id: this.undefined_value,
+                    provider_id: this.undefined_value,
+                    import_date: this.undefined_value,
+                    description: this.undefined_value,
+                };
+            case Common.EntityMap.ExportDocument :
+                return {
+                    id: this.undefined_value,
+                    customer_id: this.undefined_value,
+                    export_date: this.undefined_value,
+                    description: this.undefined_value,
+                };
+            case Common.EntityMap.AvailableGoods :
+                return {
+                    id: this.undefined_value,
+                    goods_id: this.undefined_value,
+                    provider_id: this.undefined_value,
+                    storage_id: this.undefined_value,
+                    current: this.undefined_value,
+                    snapshot_date: this.undefined_value,
                 };
 
             default : {
@@ -90,6 +109,26 @@ class EntityFilters {
                     String(data.name === undefined ? this.undefined_value : data.name) + "\n" +
                     String(data.average_price === undefined ? this.undefined_value : data.average_price) + "\n" +
                     String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+            case Common.EntityMap.ImportDocument :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.provider_id === undefined ? this.undefined_value : data.provider_id) + "\n" +
+                    String(data.import_date === undefined ? this.undefined_value : data.import_date) + "\n" +
+                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+            case Common.EntityMap.ExportDocument :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.customer_id === undefined ? this.undefined_value : data.customer_id) + "\n" +
+                    String(data.export_date === undefined ? this.undefined_value : data.export_date) + "\n" +
+                    String(data.description === undefined ? this.undefined_value : data.description) + "\n";
+            case Common.EntityMap.AvailableGoods :
+                return "" +
+                    String(data.id === undefined ? this.undefined_value : data.id) + "\n" +
+                    String(data.goods_id === undefined ? this.undefined_value : data.goods_id) + "\n" +
+                    String(data.provider_id === undefined ? this.undefined_value : data.provider_id) + "\n" +
+                    String(data.storage_id === undefined ? this.undefined_value : data.storage_id) + "\n" +
+                    String(data.current === undefined ? this.undefined_value : data.current) + "\n" +
+                    String(data.snapshot_date === undefined ? this.undefined_value : data.snapshot_date) + "\n";
 
             default : {
                 alert("Unknown entity \'" + entity + "\' at getQueryFilterRepresentation");
@@ -147,7 +186,7 @@ class ListPage {
     }
     static TableLoad(callback) {
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, false);
+        http.open('POST', window.location.href, true);
         http.onreadystatechange = function() {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 let new_data = JSON.parse(http.responseText);
@@ -593,10 +632,8 @@ class InterfaceHashHandler {
     }
     static ImportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('import_find_template', data);
+        ListPage.setEntity(Common.EntityMap.ImportDocument, true);
+        ListPage.BuildList();
     }
 
     static Exports() {
@@ -612,10 +649,8 @@ class InterfaceHashHandler {
     }
     static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('export_find_template', data);
+        ListPage.setEntity(Common.EntityMap.ExportDocument, true);
+        ListPage.BuildList();
     }
 
     static Reports() {

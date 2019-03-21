@@ -2,6 +2,8 @@ package data_model;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import utility_package.Common;
+
 import java.util.Date;
 
 public class ExportDocument implements Entity {
@@ -46,7 +48,7 @@ public class ExportDocument implements Entity {
         try {
             object.put("id",          id);
             object.put("customer_id", customer_id);
-            object.put("export_date", export_date.toString());
+            object.put("export_date", Common.JavaDateToSQLDate(export_date));
             object.put("description", description);
         } catch (JSONException e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -47,6 +48,12 @@ public class Common {
     public static String q_delete_goods   = "delete_goods";
     public static String q_edit_goods     = "edit_goods";
 
+    public static String q_get_import_document_list = "get_import document_list";
+    public static String q_add_import_document      = "add_import document";
+
+    public static String q_get_export_document_list = "get_export document_list";
+    public static String q_add_export_document      = "add_export document";
+
     public static String q_rebuild_base  = "rebuild_base";
 
     public static boolean isInitialized() {
@@ -74,7 +81,13 @@ public class Common {
     }
 
     public static String JavaDateToSQLDate(Date date) {
-        return "\'" + date.getYear() + "-" + date.getMonth() + "-" + date.getDay() + "\'";
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+
+        return "" + year + "-" + month + "-" + day + "";
     }
     public static Date SQLDateToJavaDate(String date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
