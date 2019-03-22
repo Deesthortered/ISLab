@@ -13,48 +13,31 @@ import java.util.Optional;
 public class Common {
     private static boolean initialized = false;
 
-    public static String str_true  = "true";
-    public static String str_false = "false";
+    public static final String str_true  = "true";
+    public static final String str_false = "false";
 
-    public static String html_login = "/html/login_page.html";
-    public static String html_menu = "/html/menu.html";
+    public static final String html_login = "/html/login_page.html";
+    public static final String html_menu = "/html/menu.html";
 
     public static String url_basic;
     public static String url_login;
     public static String url_menu;
 
-    public static int session_max_age = 60*60;
-    public static int cookies_max_age = 60*60*24;
+    public static final int session_max_age = 60*60;
+    public static final int cookies_max_age = 60*60*24;
 
-    public static String atr_logged = "logged";
-    public static String atr_role   = "role";
-    public static String art_invalid_credentials = "invalid_credentials";
+    public static final String atr_logged = "logged";
+    public static final String atr_role   = "role";
+    public static final String art_invalid_credentials = "invalid_credentials";
 
-    public static String par_logout          = "logout";
-    public static String q_get_role          = "get_role";
+    public static final String par_logout          = "logout";
+    public static final String q_get_role          = "get_role";
 
-    public static String q_get_provider_list = "get_provider_list";
-    public static String q_add_provider      = "add_provider";
-    public static String q_delete_provider   = "delete_provider";
-    public static String q_edit_provider     = "edit_provider";
-
-    public static String q_get_customer_list = "get_customer_list";
-    public static String q_add_customer      = "add_customer";
-    public static String q_delete_customer   = "delete_customer";
-    public static String q_edit_customer     = "edit_customer";
-
-    public static String q_get_goods_list = "get_goods_list";
-    public static String q_add_goods      = "add_goods";
-    public static String q_delete_goods   = "delete_goods";
-    public static String q_edit_goods     = "edit_goods";
-
-    public static String q_get_import_document_list = "get_import document_list";
-    public static String q_add_import_document      = "add_import document";
-
-    public static String q_get_export_document_list = "get_export document_list";
-    public static String q_add_export_document      = "add_export document";
-
-    public static String q_rebuild_base  = "rebuild_base";
+    public static final String q_entity_query    = "entity_query";
+    public static final String q_get_entity_list = "get_entity_list";
+    public static final String q_add_entity      = "add_entity";
+    public static final String q_delete_entity   = "delete_entity";
+    public static final String q_edit_entity     = "edit_entity";
 
     public static boolean isInitialized() {
         return initialized;

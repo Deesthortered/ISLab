@@ -1,4 +1,4 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.Entity;
 import data_model.ExportGoods;
@@ -9,14 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOExportGoods implements DAOInterface {
+public class DAOExportGoods implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
     private DAOExportGoods() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
             instance = new DAOExportGoods();
         }
@@ -135,5 +135,10 @@ public class DAOExportGoods implements DAOInterface {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new ExportGoods();
     }
 }

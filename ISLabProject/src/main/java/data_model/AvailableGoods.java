@@ -33,6 +33,7 @@ public class AvailableGoods implements Entity {
         else this.snapshot_date = snapshot_date;
     }
 
+    @Override
     public long    getId() {
         return id;
     }
@@ -52,6 +53,7 @@ public class AvailableGoods implements Entity {
         return snapshot_date;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

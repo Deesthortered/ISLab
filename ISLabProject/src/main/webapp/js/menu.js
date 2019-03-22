@@ -53,16 +53,24 @@ class TemplateHandler {
 }
 class QueryMaker {
     static GetEntityList(entity) {
-        return "get_" + entity + "_list\n";
-    }
-    static DeleteEntity(entity) {
-        return "delete_" + entity + "\n";
+        return "entity_query\n" +
+               "" + entity + "\n" +
+               "get_entity_list\n";
     }
     static AddEntity(entity) {
-        return "add_" + entity + "\n";
+        return "entity_query\n" +
+               "" + entity + "\n" +
+               "add_entity\n";
+    }
+    static DeleteEntity(entity) {
+        return "entity_query\n" +
+               "" + entity + "\n" +
+               "delete_entity\n";
     }
     static EditEntity(entity) {
-        return "edit_" + entity + "\n";
+        return "entity_query\n" +
+               "" + entity + "\n" +
+               "edit_entity\n";
     }
 }
 class EntityFilters {
@@ -711,7 +719,7 @@ class InterfaceHashHandler {
     }
 }
 
-(async () => {
+(() => {
     InterfaceHashHandler.DefineUser();
     Router.initialize();
 })();

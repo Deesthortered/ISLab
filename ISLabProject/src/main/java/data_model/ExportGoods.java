@@ -25,6 +25,7 @@ public class ExportGoods implements Entity {
         this.goods_price = goods_price;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -41,6 +42,7 @@ public class ExportGoods implements Entity {
         return goods_price;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

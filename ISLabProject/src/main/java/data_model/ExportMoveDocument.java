@@ -19,6 +19,7 @@ public class ExportMoveDocument implements Entity {
         this.storage_id     = storage_id;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -29,6 +30,7 @@ public class ExportMoveDocument implements Entity {
         return storage_id;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

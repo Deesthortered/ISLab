@@ -1,4 +1,4 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.AvailableGoods;
 import data_model.Entity;
@@ -10,14 +10,14 @@ import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
 
-public class DAOAvailableGoods implements DAOInterface {
+public class DAOAvailableGoods implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
     private DAOAvailableGoods() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
             instance = new DAOAvailableGoods();
         }
@@ -148,5 +148,10 @@ public class DAOAvailableGoods implements DAOInterface {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new AvailableGoods();
     }
 }

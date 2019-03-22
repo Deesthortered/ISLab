@@ -1,35 +1,35 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.Entity;
-import data_model.Provider;
+import data_model.Goods;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DAOProviders implements DAOInterface {
+public class DAOGoods implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
-    private DAOProviders() {
+    private DAOGoods() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
-            instance = new DAOProviders();
+            instance = new DAOGoods();
         }
         return instance;
     }
 
     @Override
     public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
-        Provider casted_filter = (Provider) filter;
+        Goods casted_filter = (Goods) filter;
         ArrayList<Entity> result = new ArrayList<>();
         try {
-            String sql_query = "SELECT * FROM islabdb.provider " +
-                    "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                    "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                    "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                    "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+            String sql_query = "SELECT * FROM islabdb.goods " +
+                    "WHERE (Goods_ID = ?           OR ? = "   + Entity.undefined_long   +   ") AND " +
+                    "(Goods_Name = ?         OR ? = \'" + Entity.undefined_string + "\') AND " +
+                    "(Goods_AveragePrice = ? OR ? = "   + Entity.undefined_long   +   ") AND " +
+                    "(Goods_Description = ?  OR ? = \'" + Entity.undefined_string + "\')" +
                     ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
@@ -37,8 +37,8 @@ public class DAOProviders implements DAOInterface {
             statement.setLong(2, casted_filter.getId());
             statement.setString(3, casted_filter.getName());
             statement.setString(4, casted_filter.getName());
-            statement.setString(5, casted_filter.getCountry());
-            statement.setString(6, casted_filter.getCountry());
+            statement.setLong(5, casted_filter.getAverage_price());
+            statement.setLong(6, casted_filter.getAverage_price());
             statement.setString(7, casted_filter.getDescription());
             statement.setString(8, casted_filter.getDescription());
             if (limited) {
@@ -48,11 +48,11 @@ public class DAOProviders implements DAOInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("Provider_ID");
-                String name = resultSet.getString("Provider_Name");
-                String country = resultSet.getString("Provider_Country");
-                String description = resultSet.getString("Provider_Description");
-                result.add(new Provider(id, name, country, description));
+                long id = resultSet.getLong("Goods_ID");
+                String name = resultSet.getString("Goods_Name");
+                long average_price = resultSet.getLong("Goods_AveragePrice");
+                String description = resultSet.getString("Goods_Description");
+                result.add(new Goods(id, name, average_price, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,11 +62,11 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
         for (Entity item : list) {
-            Provider casted_item = (Provider) item;
+            Goods casted_item = (Goods) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
                 statement.setString(1, casted_item.getName());
-                statement.setString(2, casted_item.getCountry());
+                statement.setLong(2, casted_item.getAverage_price());
                 statement.setString(3, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.provider where Provider_ID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.goods where Goods_ID = ?");
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (!set.next())
@@ -96,7 +96,7 @@ public class DAOProviders implements DAOInterface {
     @Override
     public boolean DeleteEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.provider WHERE Provider_ID = ?;");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.goods WHERE Goods_ID = ?;");
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -107,23 +107,29 @@ public class DAOProviders implements DAOInterface {
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {
-        Provider provider = (Provider) entity;
+        Goods goods = (Goods) entity;
         try {
-            String sql_code =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
-                    "Provider_Country = ?, " +
-                    "Provider_Description = ? " +
-                    "WHERE Provider_ID = ?;";
+            String sql_code =   "UPDATE islabdb.goods SET " +
+                    "Goods_Name = ?, " +
+                    "Goods_AveragePrice = ?, " +
+                    "Goods_Description = ? " +
+                    "WHERE Goods_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
-            statement.setString(1, provider.getName());
-            statement.setString(2, provider.getCountry());
-            statement.setString(3, provider.getDescription());
-            statement.setLong(4, provider.getId());
+            statement.setString(1, goods.getName());
+            statement.setLong(2, goods.getAverage_price());
+            statement.setString(3, goods.getDescription());
+            statement.setLong(4, goods.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new Goods();
     }
 }

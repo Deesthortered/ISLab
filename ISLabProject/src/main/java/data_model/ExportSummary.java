@@ -41,6 +41,7 @@ public class ExportSummary implements Entity {
         this.min_price      = min_price;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -63,6 +64,7 @@ public class ExportSummary implements Entity {
         return min_price;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

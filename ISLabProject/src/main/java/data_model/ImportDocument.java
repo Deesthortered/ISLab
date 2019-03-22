@@ -27,6 +27,7 @@ public class ImportDocument implements Entity {
         else this.description = description;
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -40,6 +41,7 @@ public class ImportDocument implements Entity {
         return description;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

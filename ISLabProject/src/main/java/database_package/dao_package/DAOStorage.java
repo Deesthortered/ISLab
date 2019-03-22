@@ -1,4 +1,4 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.Entity;
 import data_model.Storage;
@@ -9,14 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOStorage implements DAOInterface {
+public class DAOStorage implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
     private DAOStorage() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
             instance = new DAOStorage();
         }
@@ -122,5 +122,10 @@ public class DAOStorage implements DAOInterface {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new Storage();
     }
 }

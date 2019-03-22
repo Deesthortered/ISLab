@@ -1,7 +1,7 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.Entity;
-import data_model.ExportMoveDocument;
+import data_model.ImportMoveDocument;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,36 +9,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DAOExportMoveDocument implements DAOInterface {
+public class DAOImportMoveDocument implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
-    private DAOExportMoveDocument() {
+    private DAOImportMoveDocument() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
-            instance = new DAOExportMoveDocument();
+            instance = new DAOImportMoveDocument();
         }
         return instance;
     }
 
     @Override
     public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
-        ExportMoveDocument casted_filter = (ExportMoveDocument) filter;
+        ImportMoveDocument casted_filter = (ImportMoveDocument) filter;
         ArrayList<Entity> result = new ArrayList<>();
         try {
-            String sql_query = "SELECT * FROM islabdb.exportmovedocument " +
+            String sql_query = "SELECT * FROM islabdb.importmovedocument " +
                       "WHERE (Document_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Document_ExportGoodsID = ? OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Document_ImportGoodsID = ? OR ? = " + Entity.undefined_long + ") AND " +
                             "(Document_StorageID = ?     OR ? = " + Entity.undefined_long + ")" +
                     ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
-            statement.setLong(1, casted_filter.getExportGoods_id());
-            statement.setLong(2, casted_filter.getExportGoods_id());
+            statement.setLong(1, casted_filter.getImportGoods_id());
+            statement.setLong(2, casted_filter.getImportGoods_id());
             statement.setLong(1, casted_filter.getStorage_id());
             statement.setLong(2, casted_filter.getStorage_id());
             if (limited) {
@@ -51,7 +51,7 @@ public class DAOExportMoveDocument implements DAOInterface {
                 long id = resultSet.getLong("Document_ID");
                 long goods_id = resultSet.getLong("Document_ImportGoodsID");
                 long storage_id = resultSet.getLong("Document_StorageID");
-                result.add(new ExportMoveDocument(id, goods_id, storage_id));
+                result.add(new ImportMoveDocument(id, goods_id, storage_id));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,10 +61,10 @@ public class DAOExportMoveDocument implements DAOInterface {
     @Override
     public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
         for (Entity item : list) {
-            ExportMoveDocument casted_item = (ExportMoveDocument) item;
+            ImportMoveDocument casted_item = (ImportMoveDocument) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportmovedocument (Document_ExportGoodsID, Document_StorageID) VALUES (?, ?);");
-                statement.setLong(1, casted_item.getExportGoods_id());
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importmovedocument (Document_ImportGoodsID, Document_StorageID) VALUES (?, ?);");
+                statement.setLong(1, casted_item.getImportGoods_id());
                 statement.setLong(2, casted_item.getStorage_id());
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -77,7 +77,7 @@ public class DAOExportMoveDocument implements DAOInterface {
     @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportmovedocument where Document_ID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importmovedocument where Document_ID = ?");
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (!set.next())
@@ -94,7 +94,7 @@ public class DAOExportMoveDocument implements DAOInterface {
     @Override
     public boolean DeleteEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportmovedocument WHERE Document_ID = ?;");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importmovedocument WHERE Document_ID = ?;");
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -105,14 +105,14 @@ public class DAOExportMoveDocument implements DAOInterface {
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {
-        ExportMoveDocument provider = (ExportMoveDocument) entity;
+        ImportMoveDocument provider = (ImportMoveDocument) entity;
         try {
-            String sql_code =   "UPDATE islabdb.exportmovedocument SET Document_ExportGoodsID = ?, " +
+            String sql_code =   "UPDATE islabdb.importmovedocument SET Document_ImportGoodsID = ?, " +
                     "Document_StorageID = ? " +
                     "WHERE Document_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
-            statement.setLong(1, provider.getExportGoods_id());
+            statement.setLong(1, provider.getImportGoods_id());
             statement.setLong(2, provider.getStorage_id());
             statement.setLong(3, provider.getId());
             statement.executeUpdate();
@@ -121,5 +121,10 @@ public class DAOExportMoveDocument implements DAOInterface {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new ImportMoveDocument();
     }
 }

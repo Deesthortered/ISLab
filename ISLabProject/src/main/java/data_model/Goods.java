@@ -29,6 +29,7 @@ public class Goods implements Entity {
         else this.description = description;
     }
 
+    @Override
     public long   getId() {
         return id;
     }
@@ -42,6 +43,7 @@ public class Goods implements Entity {
         return description;
     }
 
+    @Override
     public void setId(long id) {
         this.id = id;
     }

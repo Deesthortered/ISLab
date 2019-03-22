@@ -1,35 +1,35 @@
-package database_package;
+package database_package.dao_package;
 
+import data_model.Customer;
 import data_model.Entity;
-import data_model.Goods;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DAOGoods implements DAOInterface {
+public class DAOCustomer implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
-    private DAOGoods() {
+    private DAOCustomer() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
-            instance = new DAOGoods();
+            instance = new DAOCustomer();
         }
         return instance;
     }
 
     @Override
     public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
-        Goods casted_filter = (Goods) filter;
+        Customer casted_filter = (Customer) filter;
         ArrayList<Entity> result = new ArrayList<>();
         try {
-            String sql_query = "SELECT * FROM islabdb.goods " +
-                    "WHERE (Goods_ID = ?           OR ? = "   + Entity.undefined_long   +   ") AND " +
-                    "(Goods_Name = ?         OR ? = \'" + Entity.undefined_string + "\') AND " +
-                    "(Goods_AveragePrice = ? OR ? = "   + Entity.undefined_long   +   ") AND " +
-                    "(Goods_Description = ?  OR ? = \'" + Entity.undefined_string + "\')" +
+            String sql_query = "SELECT * FROM islabdb.customer " +
+                    "WHERE (Customer_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
+                    "(Customer_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
+                    "(Customer_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
+                    "(Customer_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                     ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
@@ -37,8 +37,8 @@ public class DAOGoods implements DAOInterface {
             statement.setLong(2, casted_filter.getId());
             statement.setString(3, casted_filter.getName());
             statement.setString(4, casted_filter.getName());
-            statement.setLong(5, casted_filter.getAverage_price());
-            statement.setLong(6, casted_filter.getAverage_price());
+            statement.setString(5, casted_filter.getCountry());
+            statement.setString(6, casted_filter.getCountry());
             statement.setString(7, casted_filter.getDescription());
             statement.setString(8, casted_filter.getDescription());
             if (limited) {
@@ -48,11 +48,11 @@ public class DAOGoods implements DAOInterface {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("Goods_ID");
-                String name = resultSet.getString("Goods_Name");
-                long average_price = resultSet.getLong("Goods_AveragePrice");
-                String description = resultSet.getString("Goods_Description");
-                result.add(new Goods(id, name, average_price, description));
+                long id = resultSet.getLong("Customer_ID");
+                String name = resultSet.getString("Customer_Name");
+                String country = resultSet.getString("Customer_Country");
+                String description = resultSet.getString("Customer_Description");
+                result.add(new Customer(id, name, country, description));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,11 +62,11 @@ public class DAOGoods implements DAOInterface {
     @Override
     public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
         for (Entity item : list) {
-            Goods casted_item = (Goods) item;
+            Customer casted_item = (Customer) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);");
                 statement.setString(1, casted_item.getName());
-                statement.setLong(2, casted_item.getAverage_price());
+                statement.setString(2, casted_item.getCountry());
                 statement.setString(3, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -79,7 +79,7 @@ public class DAOGoods implements DAOInterface {
     @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.goods where Goods_ID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.customer where Customer_ID = ?");
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (!set.next())
@@ -96,7 +96,7 @@ public class DAOGoods implements DAOInterface {
     @Override
     public boolean DeleteEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.goods WHERE Goods_ID = ?;");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.customer WHERE Customer_ID = ?;");
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -107,24 +107,28 @@ public class DAOGoods implements DAOInterface {
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {
-        Goods goods = (Goods) entity;
+        Customer customer = (Customer) entity;
         try {
-            String sql_code =   "UPDATE islabdb.goods SET " +
-                    "Goods_Name = ?, " +
-                    "Goods_AveragePrice = ?, " +
-                    "Goods_Description = ? " +
-                    "WHERE Goods_ID = ?;";
+            String sql_code =   "UPDATE islabdb.customer SET Customer_Name = ?, " +
+                    "Customer_Country = ?, " +
+                    "Customer_Description = ? " +
+                    "WHERE Customer_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
-            statement.setString(1, goods.getName());
-            statement.setLong(2, goods.getAverage_price());
-            statement.setString(3, goods.getDescription());
-            statement.setLong(4, goods.getId());
+            statement.setString(1, customer.getName());
+            statement.setString(2, customer.getCountry());
+            statement.setString(3, customer.getDescription());
+            statement.setLong(4, customer.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new Customer();
     }
 }

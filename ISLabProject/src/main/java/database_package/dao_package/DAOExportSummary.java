@@ -1,7 +1,7 @@
-package database_package;
+package database_package.dao_package;
 
 import data_model.Entity;
-import data_model.ImportSummary;
+import data_model.ExportSummary;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,32 +12,32 @@ import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
 
-public class DAOImportSummary implements DAOInterface {
+public class DAOExportSummary implements DAOAbstract {
 
-    private static DAOInterface instance;
+    private static DAOAbstract instance;
 
-    private DAOImportSummary() {
+    private DAOExportSummary() {
 
     }
-    public static synchronized DAOInterface getInstance() {
+    public static synchronized DAOAbstract getInstance() {
         if (instance == null) {
-            instance = new DAOImportSummary();
+            instance = new DAOExportSummary();
         }
         return instance;
     }
 
     @Override
     public ArrayList<Entity> GetEntityList(Connection connection, Entity filter, boolean limited, int start_index, int count_of_records) {
-        ImportSummary casted_filter = (ImportSummary) filter;
+        ExportSummary casted_filter = (ExportSummary) filter;
         ArrayList<Entity> result = new ArrayList<>();
 
         try {
-            String sql_query = "SELECT * FROM islabdb.importsummary " +
+            String sql_query = "SELECT * FROM islabdb.exportsummary " +
                       "WHERE (Summary_ID = ?            OR ? = "   + Entity.undefined_long + ") AND " +
                             "(Summary_StartDate = ?     OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                             "(Summary_EndDate = ?       OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
-                            "(Summary_ImportsCount = ?  OR ? = "   + Entity.undefined_int  + ") AND " +
-                            "(Summary_ImportsAmount = ? OR ? = "   + Entity.undefined_long + ") AND " +
+                            "(Summary_ExportsCount = ?  OR ? = "   + Entity.undefined_int  + ") AND " +
+                            "(Summary_ExportsAmount = ? OR ? = "   + Entity.undefined_long + ") AND " +
                             "(Summary_MaxPrice = ?      OR ? = "   + Entity.undefined_long + ") AND " +
                             "(Summary_MinPrice = ?      OR ? = "   + Entity.undefined_long + ")" +
                     ( limited ? " limit ? offset ?" : "");
@@ -49,10 +49,10 @@ public class DAOImportSummary implements DAOInterface {
             statement.setString(4, JavaDateToSQLDate(casted_filter.getStart_date()));
             statement.setString(5, JavaDateToSQLDate(casted_filter.getEnd_date()));
             statement.setString(6, JavaDateToSQLDate(casted_filter.getEnd_date()));
-            statement.setInt(7, casted_filter.getImports_count());
-            statement.setInt(8, casted_filter.getImports_count());
-            statement.setLong(9, casted_filter.getImports_amount());
-            statement.setLong(10, casted_filter.getImports_amount());
+            statement.setInt(7, casted_filter.getExports_count());
+            statement.setInt(8, casted_filter.getExports_count());
+            statement.setLong(9, casted_filter.getExports_amount());
+            statement.setLong(10, casted_filter.getExports_amount());
             statement.setLong(11, casted_filter.getMax_price());
             statement.setLong(12, casted_filter.getMax_price());
             statement.setLong(13, casted_filter.getMin_price());
@@ -67,11 +67,11 @@ public class DAOImportSummary implements DAOInterface {
                 long id = resultSet.getLong("Summary_ID");
                 Date start_date = resultSet.getDate("Summary_StartDate");
                 Date end_date = resultSet.getDate("Summary_EndDate");
-                int count = resultSet.getInt("Summary_ImportsCount");
-                long amount = resultSet.getLong("Summary_IMportsAmount");
+                int count = resultSet.getInt("Summary_ExportsCount");
+                long amount = resultSet.getLong("Summary_ExportsAmount");
                 long max_price = resultSet.getLong("Summary_MaxPrice");
                 long min_price = resultSet.getLong("Summary_MinPrice");
-                result.add(new ImportSummary(id, start_date, end_date, count, amount, max_price, min_price));
+                result.add(new ExportSummary(id, start_date, end_date, count, amount, max_price, min_price));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,13 +81,13 @@ public class DAOImportSummary implements DAOInterface {
     @Override
     public boolean AddEntityList(Connection connection, ArrayList<Entity> list) {
         for (Entity item : list) {
-            ImportSummary casted_item = (ImportSummary) item;
+            ExportSummary casted_item = (ExportSummary) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importsummary (Summary_StartDate, Summary_EndDate, Summary_ImportsCount, Summary_ImportsAmount, Summary_MaxPrice, Summary_MinPrice) VALUES (?, ?, ?, ?, ?, ?);");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportsummary (Summary_StartDate, Summary_EndDate, Summary_ExportsCount, Summary_ExportsAmount, Summary_MaxPrice, Summary_MinPrice) VALUES (?, ?, ?, ?, ?, ?);");
                 statement.setString(1, JavaDateToSQLDate(casted_item.getStart_date()));
                 statement.setString(2, JavaDateToSQLDate(casted_item.getEnd_date()));
-                statement.setInt(3, casted_item.getImports_count());
-                statement.setLong(4, casted_item.getImports_amount());
+                statement.setInt(3, casted_item.getExports_count());
+                statement.setLong(4, casted_item.getExports_amount());
                 statement.setLong(5, casted_item.getMax_price());
                 statement.setLong(6, casted_item.getMin_price());
                 statement.executeUpdate();
@@ -101,7 +101,7 @@ public class DAOImportSummary implements DAOInterface {
     @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importsummary where Summary_ID = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportsummary where Summary_ID = ?");
             statement.setLong(1, id);
             ResultSet set = statement.executeQuery();
             if (!set.next())
@@ -118,7 +118,7 @@ public class DAOImportSummary implements DAOInterface {
     @Override
     public boolean DeleteEntity(Connection connection, long id) {
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importsummary WHERE Summary_ID = ?;");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportsummary WHERE Summary_ID = ?;");
             statement.setLong(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -129,13 +129,13 @@ public class DAOImportSummary implements DAOInterface {
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {
-        ImportSummary summary = (ImportSummary) entity;
+        ExportSummary summary = (ExportSummary) entity;
         try {
-            String sql_code =   "UPDATE islabdb.importsummary SET " +
+            String sql_code =   "UPDATE islabdb.exportsummary SET " +
                     "Summary_StartDate = ?, " +
                     "Summary_EndDate = ?, " +
-                    "Summary_ImportsCount = ?, " +
-                    "Summary_ImportsAmount = ?, " +
+                    "Summary_ExportsCount = ?, " +
+                    "Summary_ExportsAmount = ?, " +
                     "Summary_MaxPrice = ?, " +
                     "Summary_MinPrice = ? " +
                     "WHERE Summary_ID = ?;";
@@ -143,8 +143,8 @@ public class DAOImportSummary implements DAOInterface {
             PreparedStatement statement = connection.prepareStatement(sql_code);
             statement.setString(1, JavaDateToSQLDate(summary.getStart_date()));
             statement.setString(2, JavaDateToSQLDate(summary.getEnd_date()));
-            statement.setInt(3, summary.getImports_count());
-            statement.setLong(4, summary.getImports_amount());
+            statement.setInt(3, summary.getExports_count());
+            statement.setLong(4, summary.getExports_amount());
             statement.setLong(5, summary.getMax_price());
             statement.setLong(6, summary.getMin_price());
             statement.setLong(6, summary.getId());
@@ -154,5 +154,10 @@ public class DAOImportSummary implements DAOInterface {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Entity createEntity() {
+        return new ExportSummary();
     }
 }
