@@ -403,9 +403,17 @@
             </tr>
             </tfoot>
         </table>
+    </script>
+    <script id="list_table_extend_buttons" type="text/template">
         <button onclick="ListPage.TableExtendList(true)">Load more (+{{ extend_size }})</button>
         <button onclick="ListPage.TableExtendList(false)">Load all</button>
         <button onclick="ListPage.TableRefresh()">Refresh</button>
+    </script>
+    <script id="list_table_show_pocket" type="text/template">
+        <button onclick="ListPage.ShowPocket()">Show Pocket</button>
+    </script>
+    <script id="list_table_hide_pocket" type="text/template">
+        <button onclick="ListPage.HidePocket()">Hide Pocket</button>
     </script>
     <script id="list_header_title" type="text/template">
         <th class="th-sm">{{ property_uppercase }} </th>
@@ -416,11 +424,15 @@
     <script id="datatable_row_field" type="text/template">
         <td>{{ value }}</td>
     </script>
-    <script id="datatable_row_buttons" type="text/template">
-        <td>
-            <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
-            <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
-        </td>
+
+    <script id="datatable_row_button_edit" type="text/template">
+        <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+    </script>
+    <script id="datatable_row_button_delete" type="text/template">
+        <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
+    </script>
+    <script id="datatable_row_button_pocket" type="text/template">
+        <button class="table_action" onclick="ListPage.TableAddToPocket( {{ id }} );">Pocket(Add/Remove)</button>
     </script>
 
     <script id="add_template" type="text/template">

@@ -176,26 +176,42 @@ class ListPage {
     static list_size = Object.freeze(5);
 
     static current_entity;
-    static editable;
     static list_begin_ind;
     static table_data;
     static limited;
     static filter;
 
-    static setEntity(entity, editable) {
+    static in_pocket;
+    static pocket = [];
+
+    static actionable;
+    static editable;
+    static deletable;
+    static pocketable;
+
+    static setEntity(entity, editable, deletable, pocketable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
         }
         this.current_entity = entity;
         this.filter = EntityFilters.getEmptyFilter(entity);
+
+        this.in_pocket = false;
+        this.pocket = [];
+
+        this.actionable = editable || deletable || pocketable;
         this.editable = editable;
+        this.deletable = deletable;
+        this.pocketable = pocketable;
+
         this.ClearTemporary();
     }
     static ClearTemporary() {
         this.list_begin_ind = 0;
         this.table_data = [];
         this.limited = true;
+        this.pocket = [];
     }
 
     static BuildList() {
@@ -216,7 +232,7 @@ class ListPage {
         }
 
         ListPage.TableLoad(function(data) {
-            ListPage.TableFill(data);
+            ListPage.TableFill(data, true);
         });
     }
     static TableLoad(callback) {
@@ -239,9 +255,15 @@ class ListPage {
             String(this.list_size) + "\n";
         http.send(query_body);
     }
-    static TableFill(data) {
+    static TableFill(data, external) {
         let table_place =  document.getElementById('table_place');
-        table_place.innerHTML = TemplateHandler.Render('list_table', { extend_size : this.list_size });
+        table_place.innerHTML = TemplateHandler.Render('list_table', {});
+        if (external) {
+            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_extend_buttons', { extend_size : this.list_size }));
+            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_show_pocket', {}));
+        } else {
+            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', {}));
+        }
 
         let list_header = table_place.getElementsByTagName('tr')[0];
         let list_footer = table_place.getElementsByTagName('tr')[1];
@@ -253,7 +275,7 @@ class ListPage {
             list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
             list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
         }
-        if (this.editable) {
+        if (this.actionable) {
             let sub_data = {
                 property_uppercase : 'Action',
             };
@@ -271,8 +293,18 @@ class ListPage {
                 };
                 record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_field', row_data));
             }
-            if (this.editable)
-                record.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_buttons',{ id : data[i].id} ));
+            if (this.actionable) {
+                let action_buttons = document.createElement('td');
+
+                if (this.editable)
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_edit',{ id : data[i].id} ));
+                if (this.deletable)
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_delete',{ id : data[i].id} ));
+                if (this.pocketable)
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_pocket',{ id : data[i].id} ));
+
+                record.insertAdjacentElement('beforeend', action_buttons);
+            }
             table_body.insertAdjacentElement('beforeend', record);
         }
 
@@ -300,7 +332,7 @@ class ListPage {
         this.TableClear();
 
         this.TableLoad(function(data) {
-            ListPage.TableFill(data);
+            ListPage.TableFill(data, true);
 
             ListPage.list_begin_ind = prev_ind;
             ListPage.list_size = prev_size;
@@ -389,7 +421,7 @@ class ListPage {
                 ListPage.TableClear();
                 ListPage.list_begin_ind = data.length;
             }
-            ListPage.TableFill(data);
+            ListPage.TableFill(data, true);
         });
     }
     static TableSetFilter() {
@@ -476,6 +508,23 @@ class ListPage {
             QueryMaker.EditEntity(this.current_entity) +
             JSON.stringify(new_entry) + '\n';
         http.send(query_body);
+    }
+
+    static TableAddToPocket(id) {
+        let item = this.table_data.find(x => x.id === id);
+        if (this.pocket.includes(item))
+            this.pocket.splice(this.pocket.indexOf(item), 1);
+        else this.pocket[this.pocket.length] = item;
+        if (this.in_pocket)
+            this.ShowPocket();
+    }
+    static ShowPocket() {
+        this.in_pocket = true;
+        this.TableFill(this.pocket, false);
+    }
+    static HidePocket() {
+        this.in_pocket = false;
+        ListPage.TableFill(this.table_data, true);
     }
 }
 
@@ -597,7 +646,7 @@ class InterfaceHashHandler {
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Provider, true);
+        ListPage.setEntity(Common.EntityMap.Provider, true, true, false);
         ListPage.BuildList();
     }
     static ProviderAdd() {
@@ -615,7 +664,7 @@ class InterfaceHashHandler {
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
 
-        ListPage.setEntity(Common.EntityMap.Customer, true);
+        ListPage.setEntity(Common.EntityMap.Customer, true, true, false);
         ListPage.BuildList();
     }
     static CustomerAdd() {
@@ -629,7 +678,7 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
-        ListPage.setEntity(Common.EntityMap.Goods, true);
+        ListPage.setEntity(Common.EntityMap.Goods, true, true, true);
         ListPage.BuildList();
     }
     static GoodsAdd() {
@@ -666,7 +715,7 @@ class InterfaceHashHandler {
     }
     static ImportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        ListPage.setEntity(Common.EntityMap.ImportDocument, true);
+        ListPage.setEntity(Common.EntityMap.ImportDocument, true, true, false);
         ListPage.BuildList();
     }
 
@@ -683,7 +732,7 @@ class InterfaceHashHandler {
     }
     static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        ListPage.setEntity(Common.EntityMap.ExportDocument, true);
+        ListPage.setEntity(Common.EntityMap.ExportDocument, true, true, false);
         ListPage.BuildList();
     }
 
