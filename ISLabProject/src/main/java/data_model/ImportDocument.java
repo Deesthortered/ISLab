@@ -63,7 +63,7 @@ public class ImportDocument implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("provider_id", represantive_data.get(0));
+            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(0));
             object.put("import_date", Common.JavaDateToSQLDate(import_date));
             object.put("description", description);
         } catch (JSONException e) {

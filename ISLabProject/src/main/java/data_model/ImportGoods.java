@@ -69,8 +69,8 @@ public class ImportGoods implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("document_id", represantive_data.get(0));
-            object.put("goods_id",    represantive_data.get(1));
+            object.put("document_id", "(" + document_id + ") " + represantive_data.get(0));
+            object.put("goods_id",   "(" + goods_id + ") " +  represantive_data.get(1));
             object.put("goods_count", goods_count);
             object.put("goods_price", goods_price);
         } catch (JSONException e) {

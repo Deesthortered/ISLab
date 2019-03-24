@@ -50,8 +50,8 @@ public class ImportMoveDocument implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("importGoods_id", represantive_data.get(0));
-            object.put("storage_id",     represantive_data.get(1));
+            object.put("importGoods_id", "(" + importGoods_id + ") " + represantive_data.get(0));
+            object.put("storage_id",     "(" + storage_id + ") " + represantive_data.get(1));
         } catch (JSONException e) {
             e.printStackTrace();
         }

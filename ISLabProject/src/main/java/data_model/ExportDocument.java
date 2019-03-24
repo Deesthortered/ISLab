@@ -65,7 +65,7 @@ public class ExportDocument implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("customer_id", represantive_data.get(0));
+            object.put("customer_id", "(" + customer_id + ") " + represantive_data.get(0));
             object.put("export_date", Common.JavaDateToSQLDate(export_date));
             object.put("description", description);
         } catch (JSONException e) {

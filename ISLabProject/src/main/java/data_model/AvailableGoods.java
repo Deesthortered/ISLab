@@ -14,6 +14,7 @@ import java.util.Date;
 public class AvailableGoods implements Entity {
     private long id;
     private long goods_id;
+    private long goods_count;
     private long provider_id;
     private long storage_id;
     private boolean current;
@@ -22,14 +23,16 @@ public class AvailableGoods implements Entity {
     public AvailableGoods() {
         this.id          = Entity.undefined_long;
         this.goods_id    = Entity.undefined_long;
+        this.goods_count = Entity.undefined_long;
         this.provider_id = Entity.undefined_long;
         this.storage_id  = Entity.undefined_long;
         this.current     = false;
         this.snapshot_date = Entity.undefined_date;
     }
-    public AvailableGoods(long id, long goods_id, long provider_id, long storage_id, boolean current, Date snapshot_date) {
+    public AvailableGoods(long id, long goods_id, long goods_count, long provider_id, long storage_id, boolean current, Date snapshot_date) {
         this.id          = id;
         this.goods_id    = goods_id;
+        this.goods_count = goods_count;
         this.provider_id = provider_id;
         this.storage_id  = storage_id;
         this.current     = current;
@@ -44,6 +47,9 @@ public class AvailableGoods implements Entity {
     }
     public long    getGoods_id() {
         return goods_id;
+    }
+    public long    getGoods_count() {
+        return goods_count;
     }
     public long    getProvider_id() {
         return provider_id;
@@ -65,6 +71,9 @@ public class AvailableGoods implements Entity {
     public void setGoods_id(long goods_id) {
         this.goods_id = goods_id;
     }
+    public void setGoods_count(long goods_count) {
+        this.goods_count = goods_count;
+    }
     public void setProvider_id(long provider_id) {
         this.provider_id = provider_id;
     }
@@ -83,9 +92,10 @@ public class AvailableGoods implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("goods_id",    represantive_data.get(0));
-            object.put("provider_id", represantive_data.get(1));
-            object.put("storage_id",  represantive_data.get(2));
+            object.put("goods_id",    "(" + goods_id + ") " + represantive_data.get(0));
+            object.put("goods_count", "(" + goods_count + ") " + represantive_data.get(1));
+            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(2));
+            object.put("storage_id",  "(" + storage_id + ") " + represantive_data.get(3));
             object.put("current",     current);
             object.put("snapshot_date", Common.JavaDateToSQLDate(snapshot_date));
         } catch (JSONException e) {
@@ -98,6 +108,7 @@ public class AvailableGoods implements Entity {
         try {
             this.id            = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
             this.goods_id      = (json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
+            this.goods_count   = (json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
             this.provider_id   = (json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
             this.storage_id    = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
             this.current       = (!json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));

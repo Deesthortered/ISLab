@@ -158,6 +158,7 @@ class EntityFilters {
                 return {
                     id            : this.undefined_value,
                     goods_id      : this.undefined_value,
+                    goods_count   : this.undefined_value,
                     provider_id   : this.undefined_value,
                     storage_id    : this.undefined_value,
                     current       : this.undefined_value,
@@ -240,7 +241,7 @@ class ListPage {
     }
     static TableFill(data) {
         let table_place =  document.getElementById('table_place');
-        table_place.innerHTML = TemplateHandler.Render('list_table', {});
+        table_place.innerHTML = TemplateHandler.Render('list_table', { extend_size : this.list_size });
 
         let list_header = table_place.getElementsByTagName('tr')[0];
         let list_footer = table_place.getElementsByTagName('tr')[1];
@@ -518,6 +519,7 @@ class Router {
             case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
 
             case '#system'            : { InterfaceHashHandler.System();           } break;
+            case '#rebuild_available' : { InterfaceHashHandler.RebuildAvailable(); } break;
             case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
 
             default: alert("Unknown hash-tag!");
@@ -709,9 +711,25 @@ class InterfaceHashHandler {
 
     static System() {
         if (this.CheckPermission( [Common.roles.Admin])) return;
-        const data = InterfaceActionHandler.System_Load();
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('system_template', data);
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('system_template', {});
     }
+    static RebuildAvailable() {
+        if (confirm("Are you sure? It can take a lot of time")) {
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function() {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    alert("Done");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("The Rebuild request finished not successful, some trouble happened with the request.");
+                }
+            };
+            let query_body = "db_rebuild\n";
+            http.send(query_body);
+        }
+        window.location.hash = 'system';
+    }
+
     static ForbiddenPage() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('forbidden_template', {});
     }

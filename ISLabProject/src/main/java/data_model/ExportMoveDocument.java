@@ -50,8 +50,8 @@ public class ExportMoveDocument implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("exportGoods_id", represantive_data.get(0));
-            object.put("storage_id",     represantive_data.get(1));
+            object.put("exportGoods_id", "(" + exportGoods_id + ") " + represantive_data.get(0));
+            object.put("storage_id",     "(" + storage_id + ") " + represantive_data.get(1));
         } catch (JSONException e) {
             e.printStackTrace();
         }
