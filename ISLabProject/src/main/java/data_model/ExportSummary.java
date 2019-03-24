@@ -1,9 +1,11 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utility_package.Common;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExportSummary implements Entity {
@@ -88,7 +90,7 @@ public class ExportSummary implements Entity {
     }
 
     @Override
-    public JSONObject getJSON() {
+    public JSONObject getJSON(ArrayList<String> represantive_data) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
@@ -116,5 +118,18 @@ public class ExportSummary implements Entity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getRepresantiveData() {
+        return null;
+    }
+    @Override
+    public ArrayList<DAOAbstract> getForeingDAO() {
+        return null;
+    }
+    @Override
+    public ArrayList<Long> getForeingKeys() {
+        return null;
     }
 }

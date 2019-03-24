@@ -1,7 +1,11 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
+import database_package.dao_package.DAOImportGoods;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ImportMoveDocument implements Entity {
     private long id;
@@ -42,12 +46,12 @@ public class ImportMoveDocument implements Entity {
     }
 
     @Override
-    public JSONObject getJSON() {
+    public JSONObject getJSON(ArrayList<String> represantive_data) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("importGoods_id", importGoods_id);
-            object.put("storage_id",     storage_id);
+            object.put("importGoods_id", represantive_data.get(0));
+            object.put("storage_id",     represantive_data.get(1));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -62,5 +66,23 @@ public class ImportMoveDocument implements Entity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getRepresantiveData() {
+        return null;
+    }
+    @Override
+    public ArrayList<DAOAbstract> getForeingDAO() {
+        ArrayList<DAOAbstract> result = new ArrayList<>();
+        result.add(DAOImportGoods.getInstance());
+        return result;
+    }
+    @Override
+    public ArrayList<Long> getForeingKeys() {
+        ArrayList<Long> result = new ArrayList<>();
+        result.add(importGoods_id);
+        result.add(storage_id);
+        return result;
     }
 }

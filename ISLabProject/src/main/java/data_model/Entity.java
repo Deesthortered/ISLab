@@ -1,6 +1,9 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 import java.util.Date;
 
 public interface Entity {
@@ -12,6 +15,10 @@ public interface Entity {
     long getId();
     void setId(long id);
 
-    JSONObject getJSON();
+    JSONObject getJSON(ArrayList<String> represantive_data);
     void setByJSON(JSONObject json);
+
+    String getRepresantiveData();
+    ArrayList<DAOAbstract> getForeingDAO();
+    ArrayList<Long> getForeingKeys();
 }

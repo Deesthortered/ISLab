@@ -15,14 +15,10 @@ import java.util.ArrayList;
 
 public abstract class EntityQueryHandler {
 
-    public void GetEntityList(BufferedReader reader, PrintWriter writer) throws IOException {
+    public void GetEntityList(BufferedReader reader, PrintWriter writer) throws IOException, JSONException {
         DAOAbstract dao = getDAO();
         Entity filter = dao.createEntity();
-        try {
-            filter.setByJSON(new JSONObject(reader.readLine()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        filter.setByJSON(new JSONObject(reader.readLine()));
 
         boolean limited = Boolean.parseBoolean(reader.readLine());
         int begin_index = Integer.parseInt(reader.readLine());
@@ -31,23 +27,28 @@ public abstract class EntityQueryHandler {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         ArrayList<Entity> list = dao.GetEntityList(connection, filter, limited, begin_index, count_of_records);
-        pool.DropConnection(connection);
 
         JSONArray json_list = new JSONArray();
-        for (Entity provider : list) {
-            json_list.put(provider.getJSON());
+        for (Entity entity : list) {
+            ArrayList<String> represantiveData = new ArrayList<>();
+            ArrayList<Long> foreingKeys = entity.getForeingKeys();
+            ArrayList<DAOAbstract> dao_array = entity.getForeingDAO();
+            if (dao_array != null)
+            for (int i = 0; i < dao_array.size(); i++) {
+                Entity sub_filter = dao_array.get(i).createEntity();
+                sub_filter.setId(foreingKeys.get(i));
+                Entity sub_entity = dao_array.get(i).GetEntityList(connection, sub_filter, limited, 0, 1).get(0);
+                represantiveData.add(sub_entity.getRepresantiveData());
+            }
+            json_list.put(entity.getJSON(represantiveData));
         }
-
+        pool.DropConnection(connection);
         writer.write(json_list.toString());
     }
-    public void AddEntity(BufferedReader reader, PrintWriter writer) throws IOException {
+    public void AddEntity(BufferedReader reader, PrintWriter writer) throws IOException, JSONException {
         DAOAbstract dao = getDAO();
         Entity entity = dao.createEntity();
-        try {
-            entity.setByJSON(new JSONObject(reader.readLine()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        entity.setByJSON(new JSONObject(reader.readLine()));
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
@@ -76,15 +77,10 @@ public abstract class EntityQueryHandler {
 
         pool.DropConnection(connection);
     }
-    public void EditEntity(BufferedReader reader, PrintWriter writer) throws IOException {
+    public void EditEntity(BufferedReader reader, PrintWriter writer) throws IOException, JSONException {
         DAOAbstract dao = getDAO();
         Entity entity = dao.createEntity();
-
-        try {
-            entity.setByJSON(new JSONObject(reader.readLine()));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        entity.setByJSON(new JSONObject(reader.readLine()));
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();

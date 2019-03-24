@@ -1,7 +1,10 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Customer implements Entity {
     private long   id;
@@ -60,7 +63,7 @@ public class Customer implements Entity {
     }
 
     @Override
-    public JSONObject getJSON() {
+    public JSONObject getJSON(ArrayList<String> represantive_data) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
@@ -82,5 +85,17 @@ public class Customer implements Entity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getRepresantiveData() {
+        return this.name;
+    }
+    @Override
+    public ArrayList<DAOAbstract> getForeingDAO() {
+        return null;
+    }
+    public ArrayList<Long> getForeingKeys() {
+        return null;
     }
 }

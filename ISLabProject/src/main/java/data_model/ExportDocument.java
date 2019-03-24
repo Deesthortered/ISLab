@@ -1,9 +1,12 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
+import database_package.dao_package.DAOCustomer;
 import org.json.JSONException;
 import org.json.JSONObject;
 import utility_package.Common;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ExportDocument implements Entity {
@@ -58,11 +61,11 @@ public class ExportDocument implements Entity {
     }
 
     @Override
-    public JSONObject getJSON() {
+    public JSONObject getJSON(ArrayList<String> represantive_data) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("customer_id", customer_id);
+            object.put("customer_id", represantive_data.get(0));
             object.put("export_date", Common.JavaDateToSQLDate(export_date));
             object.put("description", description);
         } catch (JSONException e) {
@@ -82,16 +85,20 @@ public class ExportDocument implements Entity {
         }
     }
 
-    public JSONObject getParametrizedJSON(String customer) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id",          id);
-            object.put("customer_id", (customer == null ? customer_id : customer));
-            object.put("export_date", Common.JavaDateToSQLDate(export_date));
-            object.put("description", description);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return object;
+    @Override
+    public String getRepresantiveData() {
+        return null;
+    }
+    @Override
+    public ArrayList<DAOAbstract> getForeingDAO() {
+        ArrayList<DAOAbstract> result = new ArrayList<>();
+        result.add(DAOCustomer.getInstance());
+        return result;
+    }
+    @Override
+    public ArrayList<Long> getForeingKeys() {
+        ArrayList<Long> result = new ArrayList<>();
+        result.add(customer_id);
+        return result;
     }
 }

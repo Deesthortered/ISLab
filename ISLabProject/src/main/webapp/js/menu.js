@@ -641,10 +641,8 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', {});
     }
     static StorageAvailable() {
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('storage_available_template', data);
+        ListPage.setEntity(Common.EntityMap.AvailableGoods, false);
+        ListPage.BuildList();
     }
     static StorageInfo() {
         const data = {

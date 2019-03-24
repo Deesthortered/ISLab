@@ -1,6 +1,7 @@
 package main_package;
 
 import database_package.entity_query_handler.*;
+import org.json.JSONException;
 import utility_package.Common;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,7 +22,11 @@ public class UserHandlerServlet extends HttpServlet {
         if (title.equals(Common.q_get_role)) {
             GetRole(request, response);
         } else if (title.equals(Common.q_entity_query)) {
-            HandleEntityQuery(reader, writer);
+            try {
+                HandleEntityQuery(reader, writer);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
 
         else {
@@ -67,7 +73,7 @@ public class UserHandlerServlet extends HttpServlet {
         return false;
     }
 
-    private void HandleEntityQuery(BufferedReader reader, PrintWriter writer) throws IOException {
+    private void HandleEntityQuery(BufferedReader reader, PrintWriter writer) throws IOException, JSONException {
         String entity_name = reader.readLine();
         String action = reader.readLine();
 

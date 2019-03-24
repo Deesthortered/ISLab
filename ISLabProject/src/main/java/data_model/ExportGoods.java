@@ -1,7 +1,12 @@
 package data_model;
 
+import database_package.dao_package.DAOAbstract;
+import database_package.dao_package.DAOExportDocument;
+import database_package.dao_package.DAOGoods;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ExportGoods implements Entity {
     private long id;
@@ -60,12 +65,12 @@ public class ExportGoods implements Entity {
     }
 
     @Override
-    public JSONObject getJSON() {
+    public JSONObject getJSON(ArrayList<String> represantive_data) {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("document_id", document_id);
-            object.put("goods_id",    goods_id);
+            object.put("document_id", represantive_data.get(0));
+            object.put("goods_id",    represantive_data.get(1));
             object.put("goods_count", goods_count);
             object.put("goods_price", goods_price);
         } catch (JSONException e) {
@@ -84,5 +89,24 @@ public class ExportGoods implements Entity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getRepresantiveData() {
+        return null;
+    }
+    @Override
+    public ArrayList<DAOAbstract> getForeingDAO() {
+        ArrayList<DAOAbstract> result = new ArrayList<>();
+        result.add(DAOExportDocument.getInstance());
+        result.add(DAOGoods.getInstance());
+        return result;
+    }
+    @Override
+    public ArrayList<Long> getForeingKeys() {
+        ArrayList<Long> result = new ArrayList<>();
+        result.add(document_id);
+        result.add(goods_id);
+        return result;
     }
 }
