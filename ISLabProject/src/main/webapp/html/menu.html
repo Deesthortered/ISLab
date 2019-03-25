@@ -378,7 +378,7 @@
             <ul>
 
             </ul>
-            <button onclick="ListPage.TableSetFilter()">Send request</button>
+            <button onclick="Common.{{ listpage }}.TableSetFilter()">Send request</button>
         </div>
         <br>
         <div id="table_place"></div>
@@ -405,15 +405,15 @@
         </table>
     </script>
     <script id="list_table_extend_buttons" type="text/template">
-        <button onclick="ListPage.TableExtendList(true)">Load more (+{{ extend_size }})</button>
-        <button onclick="ListPage.TableExtendList(false)">Load all</button>
-        <button onclick="ListPage.TableRefresh()">Refresh</button>
+        <button onclick="Common.{{ listpage }}.TableExtendList(true)">Load more (+{{ extend_size }})</button>
+        <button onclick="Common.{{ listpage }}.TableExtendList(false)">Load all</button>
+        <button onclick="Common.{{ listpage }}.TableRefresh()">Refresh</button>
     </script>
     <script id="list_table_show_pocket" type="text/template">
-        <button onclick="ListPage.ShowPocket()">Show Pocket</button>
+        <button onclick="Common.{{ listpage }}.ShowPocket()">Show Pocket</button>
     </script>
     <script id="list_table_hide_pocket" type="text/template">
-        <button onclick="ListPage.HidePocket()">Hide Pocket</button>
+        <button onclick="Common.{{ listpage }}.HidePocket()">Hide Pocket</button>
     </script>
     <script id="list_header_title" type="text/template">
         <th class="th-sm">{{ property_uppercase }} </th>
@@ -426,13 +426,13 @@
     </script>
 
     <script id="datatable_row_button_edit" type="text/template">
-        <button class="table_action" onclick="ListPage.TableEditRowMenu( {{ id }} );">Edit</button>
+        <button class="table_action" onclick="Common.{{ listpage }}.TableEditRowMenu( {{ id }} );">Edit</button>
     </script>
     <script id="datatable_row_button_delete" type="text/template">
-        <button class="table_action" onclick="ListPage.TableDeleteRow( {{ id }} );">Delete</button>
+        <button class="table_action" onclick="Common.{{ listpage }}.TableDeleteRow( {{ id }} );">Delete</button>
     </script>
     <script id="datatable_row_button_pocket" type="text/template">
-        <button class="table_action" onclick="ListPage.TableAddToPocket( {{ id }} );">Pocket(Add/Remove)</button>
+        <button class="table_action" onclick="Common.{{ listpage }}.TableAddToPocket( {{ id }} );">Pocket(Add/Remove)</button>
     </script>
 
     <script id="add_template" type="text/template">
@@ -445,7 +445,7 @@
         <input type="text" name="input_{{ property_lowercase }}">
     </script>
     <script id="add_template_button" type="text/template">
-        <p><button onclick="ListPage.TableAddSend()">Send data</button></p>
+        <p><button onclick="Common.{{ listpage }}.TableAddSend()">Send data</button></p>
     </script>
 
     <script id="edit_template" type="text/template">
@@ -460,7 +460,7 @@
     </script>
     <script id="edit_template_button" type="text/template">
         <input type="hidden" name="input_id" value="{{ id }}" />
-        <p><button onclick="ListPage.TableEditSend()">Send data</button></p>
+        <p><button onclick="Common.{{ listpage }}.TableEditSend()">Send data</button></p>
     </script>
     <!--  -->
 

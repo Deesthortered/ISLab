@@ -60,9 +60,9 @@ public class ImportMoveDocument implements Entity {
     @Override
     public void setByJSON(JSONObject json) {
         try {
-            this.id             = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.importGoods_id = (json.getString("importGoods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("importGoods_id")));
-            this.storage_id     = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+            this.id             = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.importGoods_id = (!json.has("importGoods_id") || json.getString("importGoods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("importGoods_id")));
+            this.storage_id     = (!json.has("storage_id") || json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

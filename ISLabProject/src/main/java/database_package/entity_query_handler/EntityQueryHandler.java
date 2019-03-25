@@ -48,7 +48,10 @@ public abstract class EntityQueryHandler {
     public void AddEntity(BufferedReader reader, PrintWriter writer) throws IOException, JSONException {
         DAOAbstract dao = getDAO();
         Entity entity = dao.createEntity();
-        entity.setByJSON(new JSONObject(reader.readLine()));
+
+        String json_str = reader.readLine();
+        JSONObject json = new JSONObject(json_str);
+        entity.setByJSON(json);
 
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();

@@ -81,11 +81,11 @@ public class ExportGoods implements Entity {
     @Override
     public void setByJSON(JSONObject json) {
         try {
-            this.id          = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.document_id = (json.getString("document_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("document_id")));
-            this.goods_id    = (json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
-            this.goods_count = (json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
-            this.goods_price = (json.getString("goods_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_price")));
+            this.id          = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.document_id = (!json.has("document_id") || json.getString("document_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("document_id")));
+            this.goods_id    = (!json.has("goods_id") || json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
+            this.goods_count = (!json.has("goods_count") || json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
+            this.goods_price = (!json.has("goods_price") || json.getString("goods_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_price")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

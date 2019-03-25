@@ -39,8 +39,23 @@ class Common {
     // Temporary
     static role;
 
+    static ProviderList;
+    static CustomerList;
+    static GoodsList;
+    static ImportsList;
+    static ExportsList;
+    static AvailableList;
+
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+    static initialize() {
+        Common.ProviderList  = new ListPage('ProviderList', Common.EntityMap.Provider,       true, true, false);
+        Common.CustomerList  = new ListPage('CustomerList', Common.EntityMap.Customer,       true, true, false);
+        Common.GoodsList     = new ListPage('GoodsList', Common.EntityMap.Goods,          true, true, true);
+        Common.ImportsList   = new ListPage('ImportsList', Common.EntityMap.ImportDocument, false, false, false);
+        Common.ExportsList   = new ListPage('ExportsList', Common.EntityMap.ExportDocument, false, false, false);
+        Common.AvailableList = new ListPage('AvailableList', Common.EntityMap.AvailableGoods, false, false, true);
     }
 }
 class TemplateHandler {
@@ -173,28 +188,34 @@ class EntityFilters {
     }
 }
 class ListPage {
+    static base_list_size = Object.freeze(5);
     static list_size = Object.freeze(5);
+    listpage_name;
 
-    static current_entity;
-    static list_begin_ind;
-    static table_data;
-    static limited;
-    static filter;
+    current_entity;
+    list_begin_ind;
+    table_data;
+    limited;
+    filter;
 
-    static in_pocket;
-    static pocket = [];
+    in_pocket;
+    pocket = [];
 
-    static actionable;
-    static editable;
-    static deletable;
-    static pocketable;
+    actionable;
+    editable;
+    deletable;
+    pocketable;
 
-    static setEntity(entity, editable, deletable, pocketable) {
+    constructor(listpage_name, entity, editable, deletable, pocketable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
         }
+        this.listpage_name = listpage_name;
         this.current_entity = entity;
+        this.list_begin_ind = 0;
+        this.table_data = [];
+        this.limited = true;
         this.filter = EntityFilters.getEmptyFilter(entity);
 
         this.in_pocket = false;
@@ -204,20 +225,13 @@ class ListPage {
         this.editable = editable;
         this.deletable = deletable;
         this.pocketable = pocketable;
-
-        this.ClearTemporary();
-    }
-    static ClearTemporary() {
-        this.list_begin_ind = 0;
-        this.table_data = [];
-        this.limited = true;
-        this.pocket = [];
     }
 
-    static BuildList() {
+    BuildList() {
         let data = {
             entity_uppercase: Common.capitalizeFirstLetter(this.current_entity),
             entity_lowercase: this.current_entity,
+            listpage : this.listpage_name,
         };
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('list_template', data);
 
@@ -230,39 +244,46 @@ class ListPage {
             };
             ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
         }
-
-        ListPage.TableLoad(function(data) {
-            ListPage.TableFill(data, true);
+        this.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        this.TableLoad(function(data, obj) {
+            obj.table_data = obj.table_data.concat(data);
+            obj.TableFill(obj.table_data, true);
+            obj.TableRefresh();
         });
     }
-    static TableLoad(callback) {
+
+    TableLoad(callback) {
         let http = new XMLHttpRequest();
         http.open('POST', window.location.href, true);
-        http.onreadystatechange = function() {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                let new_data = JSON.parse(http.responseText);
-                ListPage.table_data = ListPage.table_data.concat(new_data);
-                callback(ListPage.table_data);
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The Load request finished not successful, some trouble happened with the request.");
-            }
-        };
+        http.onreadystatechange = this.TableLoadCallback(callback, http, this);
         let query_body =
             QueryMaker.GetEntityList(this.current_entity) +
             JSON.stringify(this.filter) + '\n' +
             String(this.limited) + "\n" +
             String(this.list_begin_ind) + "\n" +
-            String(this.list_size) + "\n";
+            String(ListPage.list_size) + "\n";
         http.send(query_body);
     }
-    static TableFill(data, external) {
+    TableLoadCallback(callback, http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                let new_data = JSON.parse(http.responseText);
+                callback(new_data, obj);
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The Load request finished not successful, some trouble happened with the request.");
+            }
+        }
+    }
+
+    TableFill(data, external) {
         let table_place =  document.getElementById('table_place');
         table_place.innerHTML = TemplateHandler.Render('list_table', {});
         if (external) {
-            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_extend_buttons', { extend_size : this.list_size }));
-            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_show_pocket', {}));
+            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_extend_buttons', { extend_size : ListPage.list_size, listpage : this.listpage_name }));
+            if (this.pocketable)
+                table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_show_pocket', { listpage : this.listpage_name }));
         } else {
-            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', {}));
+            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', { listpage : this.listpage_name }));
         }
 
         let list_header = table_place.getElementsByTagName('tr')[0];
@@ -297,11 +318,11 @@ class ListPage {
                 let action_buttons = document.createElement('td');
 
                 if (this.editable)
-                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_edit',{ id : data[i].id} ));
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_edit',{ id : data[i].id, listpage : this.listpage_name} ));
                 if (this.deletable)
-                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_delete',{ id : data[i].id} ));
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_delete',{ id : data[i].id, listpage : this.listpage_name} ));
                 if (this.pocketable)
-                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_pocket',{ id : data[i].id} ));
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_pocket',{ id : data[i].id, listpage : this.listpage_name} ));
 
                 record.insertAdjacentElement('beforeend', action_buttons);
             }
@@ -315,30 +336,29 @@ class ListPage {
         });
         $('.dataTables_length').addClass('bs-select');
     }
-    static TableClear() {
+    TableClear() {
         this.table_data = [];
         let table_body = document.getElementById('table_place').getElementsByTagName('tbody')[0];
         while (table_body.firstChild) {
             table_body.removeChild(table_body.firstChild);
         }
     }
-    static TableRefresh() {
+    TableRefresh() {
         let prev_ind = this.list_begin_ind;
-        let prev_size = this.list_size;
 
-        this.list_size += this.list_begin_ind;
+        ListPage.list_size += this.list_begin_ind;
         this.list_begin_ind = 0;
 
         this.TableClear();
 
-        this.TableLoad(function(data) {
-            ListPage.TableFill(data, true);
-
-            ListPage.list_begin_ind = prev_ind;
-            ListPage.list_size = prev_size;
+        this.TableLoad(function(data, obj) {
+            obj.list_begin_ind = prev_ind;
+            ListPage.list_size = ListPage.base_list_size;
+            obj.table_data = obj.table_data.concat(data);
+            obj.TableFill(obj.table_data, true);
         });
     }
-    static TableAddRowMenu() {
+    TableAddRowMenu() {
         let data = {
             entity_lowercase : this.current_entity,
         };
@@ -353,9 +373,10 @@ class ListPage {
             };
             panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_field', sub_data));
         }
-        panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_button', {}));
+        panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_button', { listpage : this.listpage_name }));
     }
-    static TableEditRowMenu(id) {
+
+    TableEditRowMenu(id) {
         if (!this.editable) {
             alert("The field is not editable");
             return;
@@ -363,17 +384,19 @@ class ListPage {
         let sure = confirm("Are you sure want to edit the record with ID = " + id +"?");
         if (!sure) return;
 
-        this.ClearTemporary();
         this.filter = EntityFilters.getEmptyFilter(this.current_entity);
         this.filter.id = id;
 
-        this.TableLoad(function (loaded_data) {
+        this.TableLoad(this.TableEditRowMenuCallback(this.current_entity, this.listpage_name));
+    }
+    TableEditRowMenuCallback(cur_entity, listpage_name) {
+        return function (loaded_data, obj) {
             let data = {
-                entity_lowercase : ListPage.current_entity,
+                entity_lowercase : cur_entity,
             };
             document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
             let panel = document.getElementsByClassName('edit_panel')[0];
-            let properties = Object.keys(ListPage.filter);
+            let properties = Object.keys(obj.filter);
             for (let i = 0; i < properties.length; i++) {
                 if (properties[i] === 'id') continue;
                 let sub_data = {
@@ -383,10 +406,11 @@ class ListPage {
                 };
                 panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('edit_template_field', sub_data));
             }
-            panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('edit_template_button', {id : loaded_data[0].id}));
-        });
+            panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('edit_template_button', { id : loaded_data[0].id, listpage : listpage_name }));
+        }
     }
-    static TableDeleteRow(id) {
+
+    TableDeleteRow(id) {
         if (!this.editable) {
             alert("The field is not editable");
             return;
@@ -395,49 +419,58 @@ class ListPage {
         if (sure) {
             let http = new XMLHttpRequest();
             http.open('POST', window.location.href, true);
-            http.onreadystatechange = function () {
-                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                    if (http.responseText === "ok") {
-                        alert("The " + ListPage.current_entity + " are deleted successfully");
-                        ListPage.TableRefresh();
-                    }
-                    else
-                        alert("The " + ListPage.current_entity + " was not deleted, some trouble happened on the server side.");
-                } else if (http.readyState === XMLHttpRequest.DONE) {
-                    alert("The " + ListPage.current_entity + " was not deleted, some trouble happened with the request.");
-                }
-            };
+            http.onreadystatechange = this.TableDeleteRowCallback(http, this);
             let query_body =
-                QueryMaker.DeleteEntity(ListPage.current_entity) +
+                QueryMaker.DeleteEntity(this.current_entity) +
                 id + "\n";
             http.send(query_body);
         }
     }
-    static TableExtendList(limited) {
-        this.limited = limited;
-        this.list_begin_ind += this.list_size;
-        ListPage.TableLoad(function(data) {
-            if (!limited) {
-                ListPage.TableClear();
-                ListPage.list_begin_ind = data.length;
+    TableDeleteRowCallback(http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok") {
+                    alert("The " + obj.current_entity + " are deleted successfully");
+                    obj.TableRefresh();
+                }
+                else
+                    alert("The " + obj.current_entity + " was not deleted, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + obj.current_entity + " was not deleted, some trouble happened with the request.");
             }
-            ListPage.TableFill(data, true);
+        }
+    }
+
+    TableExtendList(limited) {
+        this.limited = limited;
+        this.list_begin_ind += ListPage.list_size;
+        this.TableLoad(function(data, obj) {
+            if (!limited) {
+                obj.TableClear();
+                obj.list_begin_ind = data.length;
+            }
+            obj.table_data = obj.table_data.concat(data);
+            obj.TableFill(obj.table_data, true);
+            obj.TableRefresh();
         });
     }
-    static TableSetFilter() {
-        this.ClearTemporary();
-
+    TableSetFilter() {
         this.filter = EntityFilters.getEmptyFilter(this.current_entity);
         let properties = Object.keys(this.filter);
         let panel = $('#filter');
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'filter_' + properties[i] + '\']').val();
-            ListPage.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
+            this.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
         }
-
-        this.BuildList();
+        this.list_begin_ind = 0;
+        this.TableLoad(function(data, obj) {
+            obj.table_data = obj.table_data.concat(data);
+            obj.TableFill(obj.table_data, true);
+            obj.TableRefresh();
+        });
     }
-    static TableAddSend() {
+
+    TableAddSend() {
         let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
         let panel = $('.add_panel');
 
@@ -456,23 +489,27 @@ class ListPage {
 
         let http = new XMLHttpRequest();
         http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("The " + ListPage.current_entity + " is added successfully");
-                }
-                else
-                    alert("The " + ListPage.current_entity + " was not added, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The " + ListPage.current_entity + " was not added, some trouble happened with the request.");
-            }
-        };
+        http.onreadystatechange = this.TableAddCallback(http, this);
         let query_body =
             QueryMaker.AddEntity(this.current_entity) +
             JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
-    static TableEditSend() {
+    TableAddCallback(http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The " + obj.current_entity + " is added successfully");
+                }
+                else
+                    alert("The " + obj.current_entity + " was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + obj.current_entity + " was not added, some trouble happened with the request.");
+            }
+        }
+    }
+
+    TableEditSend() {
         let new_entry = EntityFilters.getEmptyFilter(this.current_entity);
         let panel = $('.edit_panel');
 
@@ -493,24 +530,27 @@ class ListPage {
 
         let http = new XMLHttpRequest();
         http.open('POST', window.location.href, true);
-        http.onreadystatechange = function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                if (http.responseText === "ok"){
-                    alert("The " + ListPage.current_entity + " is edited successfully");
-                }
-                else
-                    alert("The " + ListPage.current_entity + " was not edited, some trouble happened on the server side.");
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The " + ListPage.current_entity + " was not edited, some trouble happened with the request.");
-            }
-        };
+        http.onreadystatechange = this.TableEditCallback(http, this);
         let query_body =
             QueryMaker.EditEntity(this.current_entity) +
             JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
+    TableEditCallback(http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The " + obj.current_entity + " is edited successfully");
+                }
+                else
+                    alert("The " + obj.current_entity + " was not edited, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + obj.current_entity + " was not edited, some trouble happened with the request.");
+            }
+        }
+    }
 
-    static TableAddToPocket(id) {
+    TableAddToPocket(id) {
         let item = this.table_data.find(x => x.id === id);
         if (this.pocket.includes(item))
             this.pocket.splice(this.pocket.indexOf(item), 1);
@@ -518,13 +558,14 @@ class ListPage {
         if (this.in_pocket)
             this.ShowPocket();
     }
-    static ShowPocket() {
+    ShowPocket() {
         this.in_pocket = true;
         this.TableFill(this.pocket, false);
     }
-    static HidePocket() {
+    HidePocket() {
         this.in_pocket = false;
-        ListPage.TableFill(this.table_data, true);
+        this.TableFill(this.table_data, true);
+        this.TableRefresh();
     }
 }
 
@@ -534,7 +575,6 @@ class Router {
         Router.handleHash();
     }
     static handleHash() {
-        ListPage.ClearTemporary();
         switch (location.hash) {
             case ''                   : { InterfaceHashHandler.StartPage();        } break;
 
@@ -640,60 +680,46 @@ class InterfaceHashHandler {
 
     static Provider() {
         if (this.CheckPermission( [Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager] )) return;
-
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('provider_template', {});
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-
-        ListPage.setEntity(Common.EntityMap.Provider, true, true, false);
-        ListPage.BuildList();
+        Common.ProviderList.BuildList();
     }
     static ProviderAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-
-        ListPage.setEntity(Common.EntityMap.Provider, true);
-        ListPage.TableAddRowMenu();
+        Common.ProviderList.TableAddRowMenu();
     }
 
     static Customer() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('customer_template', {});
     }
     static CustomerList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-
-        ListPage.setEntity(Common.EntityMap.Customer, true, true, false);
-        ListPage.BuildList();
+        Common.CustomerList.BuildList();
     }
     static CustomerAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-
-        ListPage.setEntity(Common.EntityMap.Customer, true);
-        ListPage.TableAddRowMenu();
+        Common.CustomerList.TableAddRowMenu();
     }
 
     static Goods() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
-        ListPage.setEntity(Common.EntityMap.Goods, true, true, true);
-        ListPage.BuildList();
+        Common.GoodsList.BuildList();
     }
     static GoodsAdd() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-
-        ListPage.setEntity(Common.EntityMap.Goods, true);
-        ListPage.TableAddRowMenu();
+        Common.GoodsList.TableAddRowMenu();
     }
 
     static Storage() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', {});
     }
     static StorageAvailable() {
-        ListPage.setEntity(Common.EntityMap.AvailableGoods, false);
-        ListPage.BuildList();
+        Common.AvailableList.BuildList();
     }
     static StorageInfo() {
         const data = {
@@ -715,8 +741,7 @@ class InterfaceHashHandler {
     }
     static ImportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
-        ListPage.setEntity(Common.EntityMap.ImportDocument, true, true, false);
-        ListPage.BuildList();
+        Common.ImportsList.BuildList();
     }
 
     static Exports() {
@@ -732,8 +757,7 @@ class InterfaceHashHandler {
     }
     static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
-        ListPage.setEntity(Common.EntityMap.ExportDocument, true, true, false);
-        ListPage.BuildList();
+        Common.ExportsList.BuildList();
     }
 
     static Reports() {
@@ -785,6 +809,7 @@ class InterfaceHashHandler {
 }
 
 (() => {
+    Common.initialize();
     InterfaceHashHandler.DefineUser();
     Router.initialize();
 })();

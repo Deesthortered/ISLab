@@ -106,13 +106,13 @@ public class AvailableGoods implements Entity {
     @Override
     public void setByJSON(JSONObject json) {
         try {
-            this.id            = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.goods_id      = (json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
-            this.goods_count   = (json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
-            this.provider_id   = (json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
-            this.storage_id    = (json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
-            this.current       = (!json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));
-            this.snapshot_date = (json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("snapshot_date")));
+            this.id            = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.goods_id      = (!json.has("goods_id") || json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
+            this.goods_count   = (!json.has("goods_count") || json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
+            this.provider_id   = (!json.has("provider_id") || json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
+            this.storage_id    = (!json.has("storage_id") || json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+            this.current       = (!json.has("current") || !json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));
+            this.snapshot_date = (!json.has("snapshot_date") || json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("snapshot_date")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -76,10 +76,10 @@ public class Goods implements Entity {
     @Override
     public void setByJSON(JSONObject json) {
         try {
-            this.id            = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.name          = (json.getString("name").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("name"));
-            this.average_price = (json.getString("average_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("average_price")));
-            this.description   = (json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
+            this.id            = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.name          = (!json.has("name") || json.getString("name").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("name"));
+            this.average_price = (!json.has("average_price") || json.getString("average_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("average_price")));
+            this.description   = (!json.has("description") || json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
         } catch (JSONException e) {
             e.printStackTrace();
         }

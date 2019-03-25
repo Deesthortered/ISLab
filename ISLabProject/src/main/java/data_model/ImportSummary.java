@@ -101,13 +101,13 @@ public class ImportSummary implements Entity {
     @Override
     public void setByJSON(JSONObject json) {
         try {
-            this.id             = (json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.start_date     = (json.getString("start_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("start_date")));
-            this.end_date       = (json.getString("end_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("end_date")));
-            this.imports_count  = (json.getString("imports_count").equals(Entity.undefined_string) ? Entity.undefined_int : Integer.parseInt(json.getString("imports_count")));
-            this.imports_amount = (json.getString("exports_amount").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("imports_amount")));
-            this.max_price      = (json.getString("max_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("max_price")));
-            this.min_price      = (json.getString("min_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("min_price")));
+            this.id             = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
+            this.start_date     = (!json.has("start_date") || json.getString("start_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("start_date")));
+            this.end_date       = (!json.has("end_date") || json.getString("end_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("end_date")));
+            this.imports_count  = (!json.has("imports_count") || json.getString("imports_count").equals(Entity.undefined_string) ? Entity.undefined_int : Integer.parseInt(json.getString("imports_count")));
+            this.imports_amount = (!json.has("exports_amount") || json.getString("exports_amount").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("imports_amount")));
+            this.max_price      = (!json.has("max_price") || json.getString("max_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("max_price")));
+            this.min_price      = (!json.has("min_price") || json.getString("min_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("min_price")));
         } catch (JSONException e) {
             e.printStackTrace();
         }
