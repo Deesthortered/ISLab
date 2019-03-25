@@ -551,10 +551,11 @@ class ListPage {
     }
 
     TableAddToPocket(id) {
-        let item = this.table_data.find(x => x.id === id);
-        if (this.pocket.includes(item))
-            this.pocket.splice(this.pocket.indexOf(item), 1);
-        else this.pocket[this.pocket.length] = item;
+        let item = this.table_data.find(x => x['id'] === id);
+        let item_in_pocket = this.pocket.find(x => x['id'] === id);
+        if (item_in_pocket === undefined)
+            this.pocket[this.pocket.length] = item;
+        else this.pocket.splice(this.pocket.indexOf(item), 1);
         if (this.in_pocket)
             this.ShowPocket();
     }
@@ -734,10 +735,14 @@ class InterfaceHashHandler {
     }
     static ImportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        const data = {
-        };
         const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('import_action_template', data);
+        dynamic_panel.innerHTML = TemplateHandler.Render('import_action_template', {});
+        let import_content = document.getElementById('import_content');
+        if (Common.GoodsList.pocket.length === 0) {
+            import_content.innerHTML = TemplateHandler.Render('import_action_not_ready', {});
+        } else {
+            import_content.innerHTML = TemplateHandler.Render('import_action_content_template', {});
+        }
     }
     static ImportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
