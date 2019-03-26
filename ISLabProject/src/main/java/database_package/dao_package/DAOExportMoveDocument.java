@@ -37,19 +37,19 @@ public class DAOExportMoveDocument implements DAOAbstract {
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
-            statement.setLong(1, casted_filter.getExportGoods_id());
-            statement.setLong(2, casted_filter.getExportGoods_id());
-            statement.setLong(1, casted_filter.getStorage_id());
-            statement.setLong(2, casted_filter.getStorage_id());
+            statement.setLong(3, casted_filter.getExportGoods_id());
+            statement.setLong(4, casted_filter.getExportGoods_id());
+            statement.setLong(5, casted_filter.getStorage_id());
+            statement.setLong(6, casted_filter.getStorage_id());
             if (limited) {
-                statement.setLong(9, count_of_records);
-                statement.setLong(10, start_index);
+                statement.setLong(7, count_of_records);
+                statement.setLong(8, start_index);
             }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 long id = resultSet.getLong("Document_ID");
-                long goods_id = resultSet.getLong("Document_ImportGoodsID");
+                long goods_id = resultSet.getLong("Document_ExportGoodsID");
                 long storage_id = resultSet.getLong("Document_StorageID");
                 result.add(new ExportMoveDocument(id, goods_id, storage_id));
             }
@@ -102,6 +102,10 @@ public class DAOExportMoveDocument implements DAOAbstract {
             return false;
         }
         return true;
+    }
+    @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

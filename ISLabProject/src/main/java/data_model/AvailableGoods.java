@@ -93,9 +93,9 @@ public class AvailableGoods implements Entity {
         try {
             object.put("id",          id);
             object.put("goods_id",    "(" + goods_id + ") " + represantive_data.get(0));
-            object.put("goods_count", "(" + goods_count + ") " + represantive_data.get(1));
-            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(2));
-            object.put("storage_id",  "(" + storage_id + ") " + represantive_data.get(3));
+            object.put("goods_count", goods_count);
+            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(1));
+            object.put("storage_id",  "(" + storage_id + ") " + represantive_data.get(2));
             object.put("current",     current);
             object.put("snapshot_date", Common.JavaDateToSQLDate(snapshot_date));
         } catch (JSONException e) {

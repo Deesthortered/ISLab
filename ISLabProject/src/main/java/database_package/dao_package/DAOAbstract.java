@@ -11,6 +11,7 @@ public interface DAOAbstract {
     boolean AddEntityList(Connection connection, ArrayList<Entity> list);
     boolean IsExistsEntity(Connection connection, long id);
     boolean DeleteEntity(Connection connection, long id);
+    boolean DeleteEntityList(Connection connection, Entity filter);
     boolean EditEntity(Connection connection, Entity entity);
 
     Entity createEntity();

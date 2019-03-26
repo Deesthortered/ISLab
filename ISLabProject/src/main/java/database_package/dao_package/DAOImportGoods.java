@@ -39,17 +39,17 @@ public class DAOImportGoods implements DAOAbstract {
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
-            statement.setLong(1, casted_filter.getDocument_id());
-            statement.setLong(2, casted_filter.getDocument_id());
-            statement.setLong(1, casted_filter.getGoods_id());
-            statement.setLong(2, casted_filter.getGoods_id());
-            statement.setLong(1, casted_filter.getGoods_count());
-            statement.setLong(2, casted_filter.getGoods_count());
-            statement.setLong(1, casted_filter.getGoods_price());
-            statement.setLong(2, casted_filter.getGoods_price());
+            statement.setLong(3, casted_filter.getDocument_id());
+            statement.setLong(4, casted_filter.getDocument_id());
+            statement.setLong(5, casted_filter.getGoods_id());
+            statement.setLong(6, casted_filter.getGoods_id());
+            statement.setLong(7, casted_filter.getGoods_count());
+            statement.setLong(8, casted_filter.getGoods_count());
+            statement.setLong(9, casted_filter.getGoods_price());
+            statement.setLong(10, casted_filter.getGoods_price());
             if (limited) {
-                statement.setLong(9, count_of_records);
-                statement.setLong(10, start_index);
+                statement.setLong(11, count_of_records);
+                statement.setLong(12, start_index);
             }
             ResultSet resultSet = statement.executeQuery();
 
@@ -112,6 +112,10 @@ public class DAOImportGoods implements DAOAbstract {
             return false;
         }
         return true;
+    }
+    @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

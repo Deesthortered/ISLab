@@ -39,19 +39,18 @@ public class DAOStorage implements DAOAbstract {
             statement.setLong(2, casted_filter.getId());
             statement.setString(3, casted_filter.getName());
             statement.setString(4, casted_filter.getName());
-            statement.setString(7, casted_filter.getDescription());
-            statement.setString(8, casted_filter.getDescription());
+            statement.setString(5, casted_filter.getDescription());
+            statement.setString(6, casted_filter.getDescription());
             if (limited) {
-                statement.setLong(9, count_of_records);
-                statement.setLong(10, start_index);
+                statement.setLong(7, count_of_records);
+                statement.setLong(8, start_index);
             }
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                long id = resultSet.getLong("Provider_ID");
-                String name = resultSet.getString("Provider_Name");
-                String country = resultSet.getString("Provider_Country");
-                String description = resultSet.getString("Provider_Description");
+                long id = resultSet.getLong("Storage_ID");
+                String name = resultSet.getString("Storage_Name");
+                String description = resultSet.getString("Storage_Description");
                 result.add(new Storage(id, name, description));
             }
         } catch (SQLException e) {
@@ -103,6 +102,10 @@ public class DAOStorage implements DAOAbstract {
             return false;
         }
         return true;
+    }
+    @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

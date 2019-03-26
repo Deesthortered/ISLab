@@ -1,14 +1,12 @@
 package main_package;
 
-import data_model.AvailableGoods;
-import data_model.Entity;
-import data_model.ExportGoods;
-import data_model.ImportGoods;
+import data_model.*;
 import database_package.ConnectionPool;
 import database_package.dao_package.*;
 import database_package.entity_query_handler.*;
 import org.json.JSONException;
 import utility_package.Common;
+import utility_package.Pair;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +18,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(name = "UserHandlerServlet")
 public class UserHandlerServlet extends HttpServlet {
@@ -42,7 +39,7 @@ public class UserHandlerServlet extends HttpServlet {
                 }
                 break;
             case Common.q_rebuild_database:
-                //RebuildDatabase(request, response);
+                RebuildDatabase(request, response);
                 break;
             default:
                 SendError(request, response);
@@ -167,40 +164,136 @@ public class UserHandlerServlet extends HttpServlet {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
+        ArrayList<Entity> imported_available = new ArrayList<>();
+        ArrayList<Entity> exported_available = new ArrayList<>();
+
         DAOAbstract dao_importDocument = DAOImportDocument.getInstance();
-        DAOAbstract dao_exportDocument = DAOExportDocument.getInstance();
-        DAOAbstract dao_importGoods = DAOImportGoods.getInstance();
-        DAOAbstract dao_exportGoods = DAOExportGoods.getInstance();
-        DAOAbstract dao_availableGoods = DAOAvailableGoods.getInstance();
+        Entity importDocument_filter = dao_importDocument.createEntity();
+        ArrayList<Entity> all_imported_document = dao_importDocument.GetEntityList(connection, importDocument_filter, false, 0,0);
 
-        Entity filter_import = dao_importGoods.createEntity();
-        Entity filter_export = dao_exportGoods.createEntity();
+        for (Entity entity : all_imported_document) {
+            ImportDocument importDocument = (ImportDocument) entity;
+            DAOAbstract dao_importGoods = DAOImportGoods.getInstance();
+            Entity filter_import = dao_importGoods.createEntity();
+            ((ImportGoods) filter_import).setDocument_id(importDocument.getId());
+            ArrayList<Entity> all_imported_goods = dao_importGoods.GetEntityList(connection, filter_import, false, 0,0);
 
-        ArrayList<Entity> all_imported_goods = dao_importGoods.GetEntityList(connection, filter_import, false, 0,0);
-        ArrayList<Entity> all_exported_goods = dao_exportGoods.GetEntityList(connection, filter_export, false, 0,0);
+            ArrayList<Long> storage_id = new ArrayList<>();
+            for (Entity sub_entity : all_imported_goods) {
+                ImportGoods importGoods = (ImportGoods) sub_entity;
+                DAOAbstract dao_importMoveDocument = DAOImportMoveDocument.getInstance();
+                ImportMoveDocument importMoveDocument_filter = (ImportMoveDocument) dao_importMoveDocument.createEntity();
+                importMoveDocument_filter.setImportGoods_id(importGoods.getId());
+                ArrayList<Entity> all_import_movedocument = dao_importMoveDocument.GetEntityList(connection, importMoveDocument_filter, false, 0,0);
+                storage_id.add( ((ImportMoveDocument)all_import_movedocument.get(all_import_movedocument.size() - 1)).getStorage_id() );
+            }
 
-        HashMap<Long, Long> goods_vs_count = new HashMap<>();
-        for (Entity entity : all_imported_goods) {
-            ImportGoods casted_entity = (ImportGoods) entity;
-
-            long key = casted_entity.getGoods_id();
-            long value = (goods_vs_count.containsKey(key) ? goods_vs_count.get(key) : 0);
-            goods_vs_count.put(key, value + casted_entity.getGoods_count());
+            for (int i = 0; i < all_imported_goods.size(); i++)
+                imported_available.add(new AvailableGoods(
+                        Entity.undefined_long,
+                        ((ImportGoods) all_imported_goods.get(i)).getGoods_id(),
+                        ((ImportGoods) all_imported_goods.get(i)).getGoods_count(),
+                        importDocument.getProvider_id(),
+                        storage_id.get(i),
+                        false,
+                        new Date()));
         }
-        for (Entity entity : all_exported_goods) {
-            ExportGoods casted_entity = (ExportGoods) entity;
 
-            long key = casted_entity.getGoods_id();
-            long value = (goods_vs_count.containsKey(key) ? goods_vs_count.get(key) : 0);
-            goods_vs_count.put(key, value - casted_entity.getGoods_count());
+        DAOAbstract dao_exportDocument = DAOExportDocument.getInstance();
+        Entity exportDocument_filter = dao_exportDocument.createEntity();
+        ArrayList<Entity> all_exported_document = dao_exportDocument.GetEntityList(connection, exportDocument_filter, false, 0,0);
+
+        for (Entity entity : all_exported_document) {
+            ExportDocument exportDocument = (ExportDocument) entity;
+            DAOAbstract dao_exportGoods = DAOExportGoods.getInstance();
+            ExportGoods filter_export = (ExportGoods) dao_exportGoods.createEntity();
+            filter_export.setDocument_id(exportDocument.getId());
+            ArrayList<Entity> all_exported_goods = dao_exportGoods.GetEntityList(connection, filter_export, false, 0, 0);
+
+            ArrayList<Long> storage_id = new ArrayList<>();
+            for (Entity sub_entity : all_exported_goods) {
+                ExportGoods exportGoods = (ExportGoods) sub_entity;
+                DAOAbstract dao_exportMoveDocument = DAOExportMoveDocument.getInstance();
+                ExportMoveDocument exportMoveDocument_filter = (ExportMoveDocument) dao_exportMoveDocument.createEntity();
+                exportMoveDocument_filter.setExportGoods_id(exportGoods.getId());
+                ArrayList<Entity> all_export_movedocument = dao_exportMoveDocument.GetEntityList(connection, exportMoveDocument_filter, false, 0,0);
+                storage_id.add( ((ExportMoveDocument)all_export_movedocument.get(all_export_movedocument.size() - 1)).getStorage_id() );
+            }
+
+            for (int i = 0; i < all_exported_goods.size(); i++)
+                exported_available.add(new AvailableGoods(
+                        Entity.undefined_long,
+                        ((ExportGoods) all_exported_goods.get(i)).getGoods_id(),
+                        ((ExportGoods) all_exported_goods.get(i)).getGoods_count(),
+                        Entity.undefined_long,
+                        storage_id.get(i),
+                        false,
+                        new Date()));
+        }
+
+        HashMap<Long, HashMap<Long, Pair<Long,Long>>> storage_goodsId_count_provider = new HashMap<>();
+        for (Entity entity : imported_available) {
+            AvailableGoods casted_entity = (AvailableGoods) entity;
+
+            if (storage_goodsId_count_provider.containsKey(casted_entity.getStorage_id())) {
+                if (storage_goodsId_count_provider.get(casted_entity.getStorage_id()).containsKey(casted_entity.getGoods_id())) {
+                    Pair<Long,Long> before = storage_goodsId_count_provider.get(casted_entity.getStorage_id()).get(casted_entity.getGoods_id());
+                    Pair<Long,Long> after = new Pair<>(before.getKey() + casted_entity.getGoods_count(), before.getValue());
+                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                } else {
+                    Pair<Long,Long> after = new Pair<>(casted_entity.getGoods_count(), casted_entity.getProvider_id());
+                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                }
+            } else {
+                HashMap<Long, Pair<Long,Long>> sub = new HashMap<>();
+                sub.put(casted_entity.getGoods_id(), new Pair<>(casted_entity.getGoods_count(), casted_entity.getProvider_id()));
+                storage_goodsId_count_provider.put(casted_entity.getStorage_id(), sub);
+            }
+        }
+
+        for (Entity entity : exported_available) {
+            AvailableGoods casted_entity = (AvailableGoods) entity;
+
+            if (storage_goodsId_count_provider.containsKey(casted_entity.getStorage_id())) {
+                if (storage_goodsId_count_provider.get(casted_entity.getStorage_id()).containsKey(casted_entity.getGoods_id())) {
+                    Pair<Long,Long> before = storage_goodsId_count_provider.get(casted_entity.getStorage_id()).get(casted_entity.getGoods_id());
+                    Pair<Long,Long> after = new Pair<>(before.getKey() - casted_entity.getGoods_count(), before.getValue());
+                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                } else {
+                    Pair<Long,Long> after = new Pair<>(-casted_entity.getGoods_count(), casted_entity.getProvider_id());
+                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                }
+            } else {
+                HashMap<Long, Pair<Long,Long>> sub = new HashMap<>();
+                sub.put(casted_entity.getGoods_id(), new Pair<>(-casted_entity.getGoods_count(), casted_entity.getProvider_id()));
+                storage_goodsId_count_provider.put(casted_entity.getStorage_id(), sub);
+            }
         }
 
         ArrayList<Entity> result = new ArrayList<>();
-        for (Map.Entry entry : goods_vs_count.entrySet()) {
-            result.add(new AvailableGoods(Entity.undefined_long, (Long) entry.getKey(), (Long) entry.getValue(), 0,0, true, new Date()));
+        for (Long storage_key : storage_goodsId_count_provider.keySet()) {
+            HashMap<Long, Pair<Long,Long>> sub_map = storage_goodsId_count_provider.get(storage_key);
+            for (Long goods_key : sub_map.keySet()) {
+                long goods_val = sub_map.get(goods_key).getKey();
+                long provider_val = sub_map.get(goods_key).getValue();
+                if (goods_val < 0) throw new IOException("Pizdets nahooy blyat!");
+                else if (goods_val > 0) {
+                    result.add(new AvailableGoods(
+                            Entity.undefined_long,
+                            goods_key,
+                            goods_val,
+                            provider_val,
+                            storage_key,
+                            true,
+                            new Date()
+                    ));
+                }
+            }
         }
 
-        dao_availableGoods.AddEntityList(connection, result);
+        DAOAbstract dao_available = DAOAvailableGoods.getInstance();
+        dao_available.DeleteEntityList(connection, new AvailableGoods());
+        dao_available.AddEntityList(connection, result);
         pool.DropConnection(connection);
     }
 }

@@ -555,7 +555,14 @@ class ListPage {
         let item_in_pocket = this.pocket.find(x => x['id'] === id);
         if (item_in_pocket === undefined)
             this.pocket[this.pocket.length] = item;
-        else this.pocket.splice(this.pocket.indexOf(item), 1);
+        else {
+            for (let i = 0; i < this.pocket.length; i++){
+                if (this.pocket[i]['id'] === id) {
+                    this.pocket.splice(i, 1);
+                    break;
+                }
+            }
+        }
         if (this.in_pocket)
             this.ShowPocket();
     }
@@ -755,10 +762,14 @@ class InterfaceHashHandler {
     }
     static ExportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-        const data = {
-        };
         const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('export_action_template', data);
+        dynamic_panel.innerHTML = TemplateHandler.Render('export_action_template', {});
+        let export_content = document.getElementById('export_content');
+        if (Common.AvailableList.pocket.length === 0) {
+            export_content.innerHTML = TemplateHandler.Render('export_action_not_ready', {});
+        } else {
+            export_content.innerHTML = TemplateHandler.Render('export_action_content_template', {});
+        }
     }
     static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
@@ -815,6 +826,6 @@ class InterfaceHashHandler {
 
 (() => {
     Common.initialize();
-    InterfaceHashHandler.DefineUser();
     Router.initialize();
+    InterfaceHashHandler.DefineUser();
 })();

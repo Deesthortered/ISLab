@@ -83,15 +83,14 @@ public class DAOAvailableGoods implements DAOAbstract {
             try {
                 PreparedStatement statement = connection.prepareStatement(
                         "INSERT INTO islabdb.availablegoods " +
-                                "(Available_ID, Available_GoodsID, Available_GoodsCount, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
-                                "VALUES (?, ?, ?, ?, ?, ?, ?);");
-                statement.setLong(1, casted_item.getId());
-                statement.setLong(2, casted_item.getGoods_id());
-                statement.setLong(3, casted_item.getGoods_count());
-                statement.setLong(4, casted_item.getProvider_id());
-                statement.setLong(5, casted_item.getStorage_id());
-                statement.setBoolean(6, casted_item.isCurrent());
-                statement.setString(7, Common.JavaDateToSQLDate(casted_item.getSnapshot_date()));
+                                "(Available_GoodsID, Available_GoodsCount, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
+                                "VALUES (?, ?, ?, ?, ?, ?);");
+                statement.setLong(1, casted_item.getGoods_id());
+                statement.setLong(2, casted_item.getGoods_count());
+                statement.setLong(3, casted_item.getProvider_id());
+                statement.setLong(4, casted_item.getStorage_id());
+                statement.setBoolean(5, casted_item.isCurrent());
+                statement.setString(6, Common.JavaDateToSQLDate(casted_item.getSnapshot_date()));
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -122,6 +121,40 @@ public class DAOAvailableGoods implements DAOAbstract {
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.availablegoods WHERE Available_ID = ?;");
             statement.setLong(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        try {
+            AvailableGoods casted_filter = (AvailableGoods) filter;
+            String sql_query = "DELETE FROM islabdb.availablegoods " +
+                      "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Available_GoodsCount = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
+                            "(Available_Current = ?       OR ? = false) AND " +
+                            "(Available_SnapshotDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\')";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getGoods_id());
+            statement.setLong(4, casted_filter.getGoods_id());
+            statement.setLong(5, casted_filter.getGoods_count());
+            statement.setLong(6, casted_filter.getGoods_count());
+            statement.setLong(7, casted_filter.getProvider_id());
+            statement.setLong(8, casted_filter.getProvider_id());
+            statement.setLong(9, casted_filter.getStorage_id());
+            statement.setLong(10, casted_filter.getStorage_id());
+            statement.setBoolean(11,  casted_filter.isCurrent());
+            statement.setBoolean(12, casted_filter.isCurrent());
+            statement.setString(13, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(14, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

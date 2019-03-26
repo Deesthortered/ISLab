@@ -128,6 +128,10 @@ public class DAOImportSummary implements DAOAbstract {
         return true;
     }
     @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        return false;
+    }
+    @Override
     public boolean EditEntity(Connection connection, Entity entity) {
         ImportSummary summary = (ImportSummary) entity;
         try {

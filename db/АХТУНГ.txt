@@ -4,3 +4,6 @@ AvailableGoods пришлось изменить, потому что Иванов....
 Available_Current (boolean) - это состояние текущих дел или нет.
 Available_SnapshotDate - если Available_Current = true, то это поле = null, 
 			 иначе это поле показывает какой дате соответсвующее состояние дел.
+
+Update
+Еще я забыл дать автоинкремент айдишнику
