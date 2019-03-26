@@ -44,18 +44,30 @@ class Common {
     static GoodsList;
     static ImportsList;
     static ExportsList;
+    static ImportGoodsList;
+    static ExportGoodsList;
+    static ImportMoveDocumentList;
+    static ExportMoveDocumentList;
     static AvailableList;
+    static ImportSummaryList;
+    static ExportSummaryList;
 
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     static initialize() {
-        Common.ProviderList  = new ListPage('ProviderList', Common.EntityMap.Provider,       true, true, false);
-        Common.CustomerList  = new ListPage('CustomerList', Common.EntityMap.Customer,       true, true, false);
-        Common.GoodsList     = new ListPage('GoodsList', Common.EntityMap.Goods,          true, true, true);
-        Common.ImportsList   = new ListPage('ImportsList', Common.EntityMap.ImportDocument, false, false, false);
-        Common.ExportsList   = new ListPage('ExportsList', Common.EntityMap.ExportDocument, false, false, false);
-        Common.AvailableList = new ListPage('AvailableList', Common.EntityMap.AvailableGoods, false, false, true);
+        Common.ProviderList           = new ListPage('ProviderList',           Common.EntityMap.Provider,           true, true, false, false);
+        Common.CustomerList           = new ListPage('CustomerList',           Common.EntityMap.Customer,           true, true, false, false);
+        Common.GoodsList              = new ListPage('GoodsList',              Common.EntityMap.Goods,              true, true, true, false);
+        Common.ImportsList            = new ListPage('ImportsList',            Common.EntityMap.ImportDocument,     false, false, false, true);
+        Common.ExportsList            = new ListPage('ExportsList',            Common.EntityMap.ExportDocument,     false, false, false, true);
+        Common.ImportGoodsList        = new ListPage('ImportGoodsList',        Common.EntityMap.ImportGoods,        false, false, false, true);
+        Common.ExportGoodsList        = new ListPage('ExportGoodsList',        Common.EntityMap.ExportGoods,        false, false, false, true);
+        Common.ImportMoveDocumentList = new ListPage('ImportMoveDocumentList', Common.EntityMap.ImportMoveDocument, false, false, false, false);
+        Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', Common.EntityMap.ExportMoveDocument, false, false, false, false);
+        Common.AvailableList          = new ListPage('AvailableList',          Common.EntityMap.AvailableGoods,     false, false, true, false);
+        Common.ImportSummaryList      = new ListPage('ImportSummaryList',      Common.EntityMap.ImportSummary,      false, false, false, false);
+        Common.ExportSummaryList      = new ListPage('ExportSummaryList',      Common.EntityMap.ExportSummary,      false, false, false, false);
     }
 }
 class TemplateHandler {
@@ -186,6 +198,89 @@ class EntityFilters {
             }
         }
     }
+    static getChildConnectedFilter(entity, id) {
+        switch (entity) {
+            case Common.EntityMap.ImportDocument :
+                return {
+                    id          : this.undefined_value,
+                    provider_id : id,
+                    import_date : this.undefined_value,
+                    description : this.undefined_value,
+                };
+            case Common.EntityMap.ExportDocument :
+                return {
+                    id          : this.undefined_value,
+                    customer_id : id,
+                    export_date : this.undefined_value,
+                    description : this.undefined_value,
+                };
+            case Common.EntityMap.ImportGoods :
+            case Common.EntityMap.ExportGoods :
+                return {
+                    id          : this.undefined_value,
+                    document_id : id,
+                    goods_id    : this.undefined_value,
+                    goods_count : this.undefined_value,
+                    goods_price : this.undefined_value,
+                };
+            case Common.EntityMap.ImportMoveDocument :
+                return {
+                    id             : this.undefined_value,
+                    importGoods_id : id,
+                    storage_id     : this.undefined_value,
+                };
+            case Common.EntityMap.ExportMoveDocument :
+                return {
+                    id             : this.undefined_value,
+                    exportGoods_id : id,
+                    storage_id     : this.undefined_value,
+                };
+            default: return this.undefined_value;
+        }
+    }
+    static getChildEntity(entity) {
+        switch (entity) {
+            case Common.EntityMap.ImportDocument :
+                return Common.EntityMap.ImportGoods;
+            case Common.EntityMap.ExportDocument :
+                return Common.EntityMap.ExportGoods;
+            case Common.EntityMap.ImportGoods :
+                return Common.EntityMap.ImportMoveDocument;
+            case Common.EntityMap.ExportGoods :
+                return Common.EntityMap.ExportMoveDocument;
+            default: return this.undefined_value;
+        }
+    }
+    static getListEntity(entity) {
+        switch (entity) {
+            case Common.EntityMap.Provider :
+                return Common.ProviderList;
+            case Common.EntityMap.Customer :
+                return Common.CustomerList;
+            case Common.EntityMap.Goods :
+                return Common.GoodsList;
+            case Common.EntityMap.Storage :
+                return;
+            case Common.EntityMap.ImportDocument :
+                return Common.ImportsList;
+            case Common.EntityMap.ExportDocument :
+                return Common.ExportsList;
+            case Common.EntityMap.ImportGoods :
+                return Common.ImportGoodsList;
+            case Common.EntityMap.ExportGoods :
+                return Common.ExportGoodsList;
+            case Common.EntityMap.ImportMoveDocument :
+                return Common.ImportMoveDocumentList;
+            case Common.EntityMap.ExportMoveDocument :
+                return Common.ExportMoveDocumentList;
+            case Common.EntityMap.ImportSummary :
+                return Common.ImportSummaryList;
+            case Common.EntityMap.ExportSummary :
+                return Common.ExportSummaryList;
+            case Common.EntityMap.AvailableGoods :
+                return Common.AvailableList;
+        }
+    }
 }
 class ListPage {
     static base_list_size = Object.freeze(5);
@@ -205,8 +300,9 @@ class ListPage {
     editable;
     deletable;
     pocketable;
+    getinfoable;
 
-    constructor(listpage_name, entity, editable, deletable, pocketable) {
+    constructor(listpage_name, entity, editable, deletable, pocketable, getinfoable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
@@ -221,13 +317,19 @@ class ListPage {
         this.in_pocket = false;
         this.pocket = [];
 
-        this.actionable = editable || deletable || pocketable;
+        this.actionable = editable || deletable || pocketable || getinfoable;
         this.editable = editable;
         this.deletable = deletable;
         this.pocketable = pocketable;
+        this.getinfoable = getinfoable;
     }
 
     BuildList() {
+        this.TableBuildFacad();
+        this.filter = EntityFilters.getEmptyFilter(this.current_entity);
+        this.TableLoadAndBuildByFilter();
+    }
+    TableBuildFacad() {
         let data = {
             entity_uppercase: Common.capitalizeFirstLetter(this.current_entity),
             entity_lowercase: this.current_entity,
@@ -244,7 +346,8 @@ class ListPage {
             };
             ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
         }
-        this.filter = EntityFilters.getEmptyFilter(this.current_entity);
+    }
+    TableLoadAndBuildByFilter() {
         this.TableLoad(function(data, obj) {
             obj.table_data = obj.table_data.concat(data);
             obj.TableFill(obj.table_data, true);
@@ -323,6 +426,8 @@ class ListPage {
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_delete',{ id : data[i].id, listpage : this.listpage_name} ));
                 if (this.pocketable)
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_pocket',{ id : data[i].id, listpage : this.listpage_name} ));
+                if (this.getinfoable)
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_get_info',{ id : data[i].id, listpage : this.listpage_name} ));
 
                 record.insertAdjacentElement('beforeend', action_buttons);
             }
@@ -463,11 +568,7 @@ class ListPage {
             this.filter[properties[i]] = (input === '' ? EntityFilters.undefined_value : input);
         }
         this.list_begin_ind = 0;
-        this.TableLoad(function(data, obj) {
-            obj.table_data = obj.table_data.concat(data);
-            obj.TableFill(obj.table_data, true);
-            obj.TableRefresh();
-        });
+        this.TableLoadAndBuildByFilter();
     }
 
     TableAddSend() {
@@ -574,6 +675,15 @@ class ListPage {
         this.in_pocket = false;
         this.TableFill(this.table_data, true);
         this.TableRefresh();
+    }
+
+    TableGetElementInfo(id) {
+        let child_entity = EntityFilters.getChildEntity(this.current_entity);
+        if (child_entity === EntityFilters.undefined_value) return;
+        let child_list = EntityFilters.getListEntity(child_entity);
+        child_list.TableBuildFacad();
+        child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
+        child_list.TableLoadAndBuildByFilter();
     }
 }
 

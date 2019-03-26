@@ -2,6 +2,7 @@ package data_model;
 
 import database_package.dao_package.DAOAbstract;
 import database_package.dao_package.DAOImportGoods;
+import database_package.dao_package.DAOStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,6 +77,7 @@ public class ImportMoveDocument implements Entity {
     public ArrayList<DAOAbstract> getForeingDAO() {
         ArrayList<DAOAbstract> result = new ArrayList<>();
         result.add(DAOImportGoods.getInstance());
+        result.add(DAOStorage.getInstance());
         return result;
     }
     @Override
