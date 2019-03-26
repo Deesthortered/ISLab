@@ -188,7 +188,7 @@ class EntityFilters {
                     goods_count   : this.undefined_value,
                     provider_id   : this.undefined_value,
                     storage_id    : this.undefined_value,
-                    current       : this.undefined_value,
+                    current       : true,
                     snapshot_date : this.undefined_value,
                 };
 
@@ -281,6 +281,65 @@ class EntityFilters {
                 return Common.AvailableList;
         }
     }
+
+    static getEntityLogicProperties(entity) {
+        switch (entity) {
+            case Common.EntityMap.Provider :
+            case Common.EntityMap.Customer :
+                return ['id', 'name', 'country', 'description'];
+            case Common.EntityMap.Goods :
+                return ['id', 'name', 'average_price', 'description'];
+            case Common.EntityMap.Storage :
+                return ['id', 'name', 'description'];
+            case Common.EntityMap.ImportDocument :
+                return ['id', 'provider_id', 'import_date', 'description'];
+            case Common.EntityMap.ExportDocument :
+                return ['id', 'customer_id', 'import_date', 'description'];
+            case Common.EntityMap.ImportGoods :
+            case Common.EntityMap.ExportGoods :
+                return ['id', 'document_id', 'goods_id', 'goods_count', 'goods_price'];
+            case Common.EntityMap.ImportMoveDocument :
+                return ['id', 'importGoods_id', 'storage_id'];
+            case Common.EntityMap.ExportMoveDocument :
+                return ['id', 'exportGoods_id', 'storage_id'];
+            case Common.EntityMap.ImportSummary :
+                return ['id', 'start_date', 'end_date', 'imports_count', 'imports_amount', 'max_price', 'min_price'];
+            case Common.EntityMap.ExportSummary :
+                return ['id', 'start_date', 'end_date', 'exports_count', 'exports_amount', 'max_price', 'min_price'];
+            case Common.EntityMap.AvailableGoods :
+                return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id'];
+            default: return Object.keys(EntityFilters.getEmptyFilter(entity));
+        }
+    }
+    static getEntityViewProperties(entity) {
+        switch (entity) {
+            case Common.EntityMap.Provider :
+            case Common.EntityMap.Customer :
+                return ['ID', 'Name', 'Country', 'Description'];
+            case Common.EntityMap.Goods :
+                return ['ID', 'Name', 'Average price', 'Description'];
+            case Common.EntityMap.Storage :
+                return ['ID', 'Name', 'Description'];
+            case Common.EntityMap.ImportDocument :
+                return ['ID', 'Provider ID', 'Import Date', 'Description'];
+            case Common.EntityMap.ExportDocument :
+                return ['ID', 'Customer ID', 'Import Date', 'Description'];
+            case Common.EntityMap.ImportGoods :
+            case Common.EntityMap.ExportGoods :
+                return ['ID', 'Document ID', 'Goods ID', 'Goods count', 'Goods price'];
+            case Common.EntityMap.ImportMoveDocument :
+                return ['ID', 'Import Goods ID', 'Storage ID'];
+            case Common.EntityMap.ExportMoveDocument :
+                return ['ID', 'Export Goods ID', 'Storage ID'];
+            case Common.EntityMap.ImportSummary :
+                return ['ID', 'Start Date', 'End Date', 'Imports count', 'Imports amount', 'Max price', 'Min price'];
+            case Common.EntityMap.ExportSummary :
+                return ['ID', 'Start Date', 'End Date', 'Exports count', 'Exports amount', 'Max price', 'Min price'];
+            case Common.EntityMap.AvailableGoods :
+                return ['ID', 'Goods ID', 'Goods Count', 'Provider ID', 'Storage ID'];
+            default: return Object.keys(EntityFilters.getEmptyFilter(entity));
+        }
+    }
 }
 class ListPage {
     static base_list_size = Object.freeze(5);
@@ -338,10 +397,11 @@ class ListPage {
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('list_template', data);
 
         let ul = document.getElementById(Common.dynamic_panel_name).getElementsByTagName('ul')[0];
-        let properties = Object.keys(EntityFilters.getEmptyFilter(this.current_entity));
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
+        let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
         for (let i = 0; i < properties.length; i++) {
             let sub_data = {
-                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                property_uppercase : properties_view[i],
                 property_lowercase : properties[i],
             };
             ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
@@ -391,10 +451,11 @@ class ListPage {
 
         let list_header = table_place.getElementsByTagName('tr')[0];
         let list_footer = table_place.getElementsByTagName('tr')[1];
-        let properties = Object.keys(EntityFilters.getEmptyFilter(this.current_entity));
-        for (let i = 0; i < properties.length; i++) {
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
+        let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
+        for (let i = 0; i < properties_view.length; i++) {
             let sub_data = {
-                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                property_uppercase : Common.capitalizeFirstLetter(properties_view[i]),
             };
             list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
             list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
@@ -469,11 +530,12 @@ class ListPage {
         };
         document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('add_template', data);
         let panel = document.getElementsByClassName('add_panel')[0];
-        let properties = Object.keys(this.filter);
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
+        let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
         for (let i = 0; i < properties.length; i++) {
             if (properties[i] === 'id') continue;
             let sub_data = {
-                property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                property_uppercase : properties_view[i],
                 property_lowercase : properties[i],
             };
             panel.insertAdjacentHTML('beforeend', TemplateHandler.Render('add_template_field', sub_data));
@@ -501,11 +563,12 @@ class ListPage {
             };
             document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
             let panel = document.getElementsByClassName('edit_panel')[0];
-            let properties = Object.keys(obj.filter);
+            let properties = EntityFilters.getEntityLogicProperties();
+            let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
             for (let i = 0; i < properties.length; i++) {
                 if (properties[i] === 'id') continue;
                 let sub_data = {
-                    property_uppercase : Common.capitalizeFirstLetter(properties[i]),
+                    property_uppercase : properties_view[i],
                     property_lowercase : properties[i],
                     property_value : (loaded_data[0][properties[i]] === EntityFilters.undefined_value ? '' : loaded_data[0][properties[i]] ),
                 };
@@ -561,7 +624,7 @@ class ListPage {
     }
     TableSetFilter() {
         this.filter = EntityFilters.getEmptyFilter(this.current_entity);
-        let properties = Object.keys(this.filter);
+        let properties = EntityFilters.getEntityLogicProperties();
         let panel = $('#filter');
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'filter_' + properties[i] + '\']').val();
@@ -576,7 +639,7 @@ class ListPage {
         let panel = $('.add_panel');
 
         let ok = true;
-        let properties = Object.keys(new_entry);
+        let properties = EntityFilters.getEntityLogicProperties();
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'input_' + properties[i] + '\']');
             if (!(properties[i] === 'description') && input.val() === '') {
@@ -615,7 +678,7 @@ class ListPage {
         let panel = $('.edit_panel');
 
         let ok = false;
-        let properties = Object.keys(new_entry);
+        let properties = EntityFilters.getEntityLogicProperties();
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'input_' + properties[i] + '\']');
             if (properties[i] === 'description' || !(input.val() === '')) {
