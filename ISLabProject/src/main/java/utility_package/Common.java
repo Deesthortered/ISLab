@@ -39,6 +39,8 @@ public class Common {
     public static final String q_delete_entity   = "delete_entity";
     public static final String q_edit_entity     = "edit_entity";
 
+    public static final String q_import = "import";
+    public static final String q_export = "export";
     public static final String q_rebuild_database = "db_rebuild";
 
     public static boolean isInitialized() {

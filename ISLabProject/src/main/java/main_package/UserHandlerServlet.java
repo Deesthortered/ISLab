@@ -41,6 +41,12 @@ public class UserHandlerServlet extends HttpServlet {
             case Common.q_rebuild_database:
                 RebuildDatabase(request, response);
                 break;
+            case Common.q_import:
+                MakeImport(reader, writer);
+                break;
+            case Common.q_export:
+                MakeExport(reader, writer);
+                break;
             default:
                 SendError(request, response);
         }
@@ -149,13 +155,43 @@ public class UserHandlerServlet extends HttpServlet {
 
     }
 
+    private void MakeImport(BufferedReader reader, PrintWriter writer) throws IOException {
+        long provider_id = Long.parseLong(reader.readLine());
+        int count = Integer.parseInt(reader.readLine());
 
+        ArrayList<Long> goods_ids = new ArrayList<>();
+        ArrayList<Integer> goods_counts = new ArrayList<>();
+        ArrayList<Long> storage_ids = new ArrayList<>();
 
-    private void MakeImport() {
+        for (int i = 0; i < count; i++) {
+            goods_ids.add(Long.parseLong(reader.readLine()));
+            goods_counts.add(Integer.parseInt(reader.readLine()));
+            storage_ids.add(Long.parseLong(reader.readLine()));
+        }
 
+        ImportDocument new_document = new ImportDocument(Entity.undefined_long, provider_id, new Date(), "");
+
+        if (true)
+            writer.print("ok");
+        else
+            writer.print("bad");
     }
-    private void MakeExport() {
+    private void MakeExport(BufferedReader reader, PrintWriter writer) throws IOException {
+        long customer_id = Long.parseLong(reader.readLine());
+        int count = Integer.parseInt(reader.readLine());
 
+        ArrayList<Long> goods_ids = new ArrayList<>();
+        ArrayList<Integer> goods_counts = new ArrayList<>();
+
+        for (int i = 0; i < count; i++) {
+            goods_ids.add(Long.parseLong(reader.readLine()));
+            goods_counts.add(Integer.parseInt(reader.readLine()));
+        }
+
+        if (true)
+            writer.print("ok");
+        else
+            writer.print("bad");
     }
     private void RebuildDatabase(HttpServletRequest request, HttpServletResponse response) throws IOException {
         BufferedReader reader = request.getReader();

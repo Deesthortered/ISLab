@@ -382,6 +382,8 @@ class ListPage {
     choosable;
 
     frozen = false;
+    is_import = false;
+    is_export = false;
 
     constructor(listpage_name, dynamic_table, entity, editable, deletable, pocketable, getinfoable, choosable) {
         if (!Common.EntityArray.includes(entity)) {
@@ -504,6 +506,20 @@ class ListPage {
             list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
             list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
         }
+        if (this.frozen) {
+            let sub_data = {
+                property_uppercase : 'Count of items',
+            };
+            list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
+            list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
+        }
+        if (this.is_import) {
+            let sub_data1 = {
+                property_uppercase : 'Storage ID',
+            };
+            list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data1));
+            list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data1));
+        }
 
         let table_body = table_place.getElementsByTagName('tbody')[0];
 
@@ -530,6 +546,21 @@ class ListPage {
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_choose',{ id : data[i].id, listpage : this.listpage_name} ));
 
                 record.insertAdjacentElement('beforeend', action_buttons);
+            }
+            if (this.frozen) {
+                if (this.is_import) {
+                    let action_buttons = document.createElement('td');
+                    let action_buttons2 = document.createElement('td');
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_count_input_import',{ id : data[i].id} ));
+                    action_buttons2.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_storage_id',{ id : data[i].id} ));
+                    record.insertAdjacentElement('beforeend', action_buttons);
+                    record.insertAdjacentElement('beforeend', action_buttons2);
+                }
+                if (this.is_export) {
+                    let action_buttons = document.createElement('td');
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_count_input_export',{ id : data[i].id, max_value : data[i]['goods_count']} ));
+                    record.insertAdjacentElement('beforeend', action_buttons);
+                }
             }
             table_body.insertAdjacentElement('beforeend', record);
         }
@@ -947,6 +978,7 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
+        Common.GoodsList.is_import = false;
         Common.GoodsList.dynamic_panel_name = 'dynamic_panel';
         Common.GoodsList.show_title = true;
         Common.GoodsList.BuildList();
@@ -960,6 +992,7 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', {});
     }
     static StorageAvailable() {
+        Common.AvailableList.is_export = false;
         Common.AvailableList.dynamic_panel_name = 'dynamic_panel';
         Common.AvailableList.show_title = true;
         Common.AvailableList.BuildList();
@@ -978,6 +1011,7 @@ class InterfaceHashHandler {
         if (Common.GoodsList.pocket.length === 0 || Common.ProviderList.choosed_item === null) {
             document.getElementById('import_content').innerHTML = TemplateHandler.Render('import_action_not_ready', {});
         } else {
+            Common.GoodsList.is_import = true;
             Common.GoodsList.dynamic_panel_name = 'import_content';
             Common.GoodsList.show_title = false;
             Common.GoodsList.FreezeTable();
@@ -1003,6 +1037,7 @@ class InterfaceHashHandler {
         if (Common.AvailableList.pocket.length === 0 || Common.CustomerList.choosed_item === null) {
             document.getElementById('export_content').innerHTML = TemplateHandler.Render('export_action_not_ready', {});
         } else {
+            Common.AvailableList.is_export = true;
             Common.AvailableList.dynamic_panel_name = 'export_content';
             Common.AvailableList.show_title = false;
             Common.AvailableList.FreezeTable();
@@ -1063,6 +1098,80 @@ class InterfaceHashHandler {
 
     static ForbiddenPage() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('forbidden_template', {});
+    }
+
+    static MakeImport() {
+        let provider_id = Common.ProviderList.choosed_item['id'];
+        let goods_ids = [];
+        let goods_counts = [];
+        let storage_ids = [];
+        for (let i = 0; i < Common.GoodsList.pocket.length; i++) {
+            goods_ids[goods_ids.length] = Common.GoodsList.pocket[i]['id'];
+            goods_counts[goods_counts.length] = document.getElementById('count_id_'+goods_ids[i] ).value;
+            storage_ids[storage_ids.length] = document.getElementById('storage_id_'+goods_ids[i] ).value;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The import is added successfully");
+                    Common.GoodsList.pocket = [];
+                    Common.ProviderList.choosed_item = null;
+                    document.location.hash = '#';
+                }
+                else
+                    alert("The import was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The import was not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "import\n" +
+            provider_id + "\n" +
+            goods_ids.length + "\n";
+        for (let i = 0; i < goods_ids.length; i++) {
+            query_body += goods_ids[i] + "\n";
+            query_body += goods_counts[i] + "\n";
+            query_body += storage_ids[i] + "\n";
+        }
+        http.send(query_body);
+    }
+    static MakeExport() {
+        let customer_id = Common.CustomerList.choosed_item['id'];
+        let goods_ids = [];
+        let goods_counts = [];
+        for (let i = 0; i < Common.AvailableList.pocket.length; i++) {
+            goods_ids[goods_ids.length] = Common.AvailableList.pocket[i]['id'];
+            goods_counts[goods_counts.length] = document.getElementById('count_id_'+goods_ids[i] ).value;
+        }
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                if (http.responseText === "ok"){
+                    alert("The export is added successfully");
+                    Common.AvailableList.pocket = [];
+                    Common.CustomerList.choosed_item = null;
+                    document.location.hash = '#';
+                }
+                else
+                    alert("The export was not added, some trouble happened on the server side.");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The export was not added, some trouble happened with the request.");
+            }
+        };
+        let query_body =
+            "export\n" +
+            customer_id + "\n" +
+            goods_ids.length + "\n";
+        for (let i = 0; i < goods_ids.length; i++) {
+            query_body += goods_ids[i] + "\n";
+            query_body += goods_counts[i] + "\n";
+        }
+        http.send(query_body);
     }
 }
 
