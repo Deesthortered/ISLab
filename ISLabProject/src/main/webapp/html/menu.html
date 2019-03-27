@@ -283,7 +283,6 @@
         </ul>
     </script>
     <script id="storage_available_template" type="text/template"> </script>
-    <script id="storage_info_template" type="text/template"> </script>
 
     <script id="imports_template" type="text/template">
         <h1>Import menu</h1>
@@ -308,10 +307,16 @@
         <h1>Import action</h1>
         <p> In the menu you can make new import.</p>
         <br>
+        <div id="provider_title"></div>
+        <br>
         <div id="import_content"></div>
     </script>
     <script id="import_action_not_ready" type="text/template">
         <h3>First of all, go to <b> Goods -> <a href="#goods_list">List of Goods</a></b> add put in the pocket all you need goods, and return here.</h3>
+        <h3>The second is - go to <b> Provider -> <a href="#provider_list">List of Providers</a></b> and choose the provider, who will import goods. </h3>
+    </script>
+    <script id="import_provider_template" type="text/template">
+        <p> Provider is <b>{{ provider }}</b></P>
     </script>
     <script id="import_action_content_template" type="text/template">
         <h1>Good!</h1>
@@ -342,10 +347,16 @@
         <h1>Export action</h1>
         <p> In the menu you can make new export.</p>
         <br>
+        <div id="customer_title"></div>
+        <br>
         <div id="export_content"></div>
     </script>
     <script id="export_action_not_ready" type="text/template">
         <h3>First of all, go to <b> Storage -> <a href="#storage_available">Show available goods</a></b> add put in the pocket all you need goods, and return here.</h3>
+        <h3>The second is - go to <b> Customer -> <a href="#customer_list">List of Customers</a></b> and choose the customer, who will export goods. </h3>
+    </script>
+    <script id="export_costumer_template" type="text/template">
+        <p> Customer is <b>{{ customer }}</b></P>
     </script>
     <script id="export_action_content_template" type="text/template">
         <h1>Good!</h1>
@@ -394,24 +405,31 @@
         <p>You don't have permissions for access to this section.</p>
     </script>
 
-
     <!-- Table template scripts -->
     <script id="list_template" type="text/template">
-        <h1> {{ entity_uppercase }} list</h1>
-        <p>There you can review list of {{ entity_lowercase }} and edit it.</p>
-        <div id="filter">
-            <h3>Filter.</h3>
-            <ul>
-
-            </ul>
-            <button onclick="Common.{{ listpage }}.TableSetFilter()">Send request</button>
-        </div>
+        <div id="list_title"></div>
+        <div id="filter"></div>
         <br>
+        <div id="choosed"></div>
         <div id="table_place"></div>
         <br>
     </script>
+    <script id="list_title_template" type="text/template">
+        <h1> {{ entity_uppercase }} list</h1>
+        <p>There you can review list of {{ entity_lowercase }} and edit it.</p>
+    </script>
+    <script id="filter_template" type="text/template">
+        <h3>Filter.</h3>
+        <ul>
+
+        </ul>
+        <button onclick="Common.{{ listpage }}.TableSetFilter()">Send request</button>
+    </script>
     <script id="filter_input" type="text/template">
         <li>{{ property_uppercase }}: <input type="text" name="filter_{{ property_lowercase }}"></li>
+    </script>
+    <script id="choosed_template" type="text/template">
+        <p>Choosed item is {{ id }}</p>
     </script>
     <script id="list_table" type="text/template">
         <table id="dt_Table" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
@@ -462,6 +480,9 @@
     </script>
     <script id="datatable_row_button_get_info" type="text/template">
         <button class="table_action" onclick="Common.{{ listpage }}.TableGetElementInfo( {{ id }} );">Get info</button>
+    </script>
+    <script id="datatable_row_button_choose" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableChooseItem( {{ id }} );">Choose</button>
     </script>
 
     <script id="add_template" type="text/template">

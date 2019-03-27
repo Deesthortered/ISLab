@@ -1,5 +1,4 @@
 class Common {
-    static dynamic_panel_name = Object.freeze('dynamic_panel');
     static roles = Object.freeze({
         Admin         : 'Admin',
         ViewManager   : 'ViewManager',
@@ -49,6 +48,7 @@ class Common {
     static ImportMoveDocumentList;
     static ExportMoveDocumentList;
     static AvailableList;
+    static StorageList;
     static ImportSummaryList;
     static ExportSummaryList;
 
@@ -56,18 +56,21 @@ class Common {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     static initialize() {
-        Common.ProviderList           = new ListPage('ProviderList',           Common.EntityMap.Provider,           true, true, false, false);
-        Common.CustomerList           = new ListPage('CustomerList',           Common.EntityMap.Customer,           true, true, false, false);
-        Common.GoodsList              = new ListPage('GoodsList',              Common.EntityMap.Goods,              true, true, true, false);
-        Common.ImportsList            = new ListPage('ImportsList',            Common.EntityMap.ImportDocument,     false, false, false, true);
-        Common.ExportsList            = new ListPage('ExportsList',            Common.EntityMap.ExportDocument,     false, false, false, true);
-        Common.ImportGoodsList        = new ListPage('ImportGoodsList',        Common.EntityMap.ImportGoods,        false, false, false, true);
-        Common.ExportGoodsList        = new ListPage('ExportGoodsList',        Common.EntityMap.ExportGoods,        false, false, false, true);
-        Common.ImportMoveDocumentList = new ListPage('ImportMoveDocumentList', Common.EntityMap.ImportMoveDocument, false, false, false, false);
-        Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', Common.EntityMap.ExportMoveDocument, false, false, false, false);
-        Common.AvailableList          = new ListPage('AvailableList',          Common.EntityMap.AvailableGoods,     false, false, true, false);
-        Common.ImportSummaryList      = new ListPage('ImportSummaryList',      Common.EntityMap.ImportSummary,      false, false, false, false);
-        Common.ExportSummaryList      = new ListPage('ExportSummaryList',      Common.EntityMap.ExportSummary,      false, false, false, false);
+        Common.ProviderList           = new ListPage('ProviderList', 'dynamic_panel',          Common.EntityMap.Provider,           true, true, false, false, true);
+        Common.CustomerList           = new ListPage('CustomerList', 'dynamic_panel',          Common.EntityMap.Customer,           true, true, false, false, true);
+        Common.GoodsList              = new ListPage('GoodsList', 'dynamic_panel',             Common.EntityMap.Goods,              true, true, true, false, false);
+        Common.ImportsList            = new ListPage('ImportsList', 'dynamic_panel',           Common.EntityMap.ImportDocument,     false, false, false, true, false);
+        Common.ExportsList            = new ListPage('ExportsList', 'dynamic_panel',           Common.EntityMap.ExportDocument,     false, false, false, true, false);
+        Common.ImportGoodsList        = new ListPage('ImportGoodsList', 'dynamic_panel',       Common.EntityMap.ImportGoods,        false, false, false, true, false);
+        Common.ExportGoodsList        = new ListPage('ExportGoodsList','dynamic_panel',        Common.EntityMap.ExportGoods,        false, false, false, true, false);
+        Common.ImportMoveDocumentList = new ListPage('ImportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ImportMoveDocument, false, false, false, false, false);
+        Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ExportMoveDocument, false, false, false, false, false);
+        Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     false, false, true, false, false);
+        Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     false, false, false, false, false);
+        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      false, false, false, false, false);
+        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      false, false, false, false, false);
+
+        Common.StorageList.filterable = false;
     }
 }
 class TemplateHandler {
@@ -340,47 +343,72 @@ class EntityFilters {
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
+    static getRepresentDataField(entity) {
+        switch (entity) {
+            case Common.EntityMap.Provider :
+            case Common.EntityMap.Customer :
+            case Common.EntityMap.Goods :
+            case Common.EntityMap.Storage :
+                return 'name';
+            default: return 'id';
+        }
+    }
 }
 class ListPage {
     static base_list_size = Object.freeze(5);
     static list_size = Object.freeze(5);
     listpage_name;
+    dynamic_panel_name;
+    show_title;
 
     current_entity;
     list_begin_ind;
     table_data;
     limited;
+
+    filterable;
     filter;
 
     in_pocket;
     pocket = [];
+
+    choosed_item = null;
 
     actionable;
     editable;
     deletable;
     pocketable;
     getinfoable;
+    choosable;
 
-    constructor(listpage_name, entity, editable, deletable, pocketable, getinfoable) {
+    frozen = false;
+
+    constructor(listpage_name, dynamic_table, entity, editable, deletable, pocketable, getinfoable, choosable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
         }
         this.listpage_name = listpage_name;
+        this.dynamic_panel_name = dynamic_table;
+        this.show_title = true;
+
         this.current_entity = entity;
         this.list_begin_ind = 0;
         this.table_data = [];
         this.limited = true;
+
+        this.filterable = true;
         this.filter = EntityFilters.getEmptyFilter(entity);
 
         this.in_pocket = false;
         this.pocket = [];
 
-        this.actionable = editable || deletable || pocketable || getinfoable;
+        this.actionable = editable || deletable || pocketable || getinfoable || choosable;
         this.editable = editable;
         this.deletable = deletable;
         this.pocketable = pocketable;
         this.getinfoable = getinfoable;
+        this.choosable = choosable;
     }
 
     BuildList() {
@@ -389,22 +417,30 @@ class ListPage {
         this.TableLoadAndBuildByFilter();
     }
     TableBuildFacad() {
+        document.getElementById(this.dynamic_panel_name).innerHTML = TemplateHandler.Render('list_template', {});
         let data = {
             entity_uppercase: Common.capitalizeFirstLetter(this.current_entity),
             entity_lowercase: this.current_entity,
-            listpage : this.listpage_name,
         };
-        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('list_template', data);
+        if (this.show_title)
+            document.getElementById('list_title').innerHTML = TemplateHandler.Render('list_title_template', data);
 
-        let ul = document.getElementById(Common.dynamic_panel_name).getElementsByTagName('ul')[0];
-        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
-        let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
-        for (let i = 0; i < properties.length; i++) {
-            let sub_data = {
-                property_uppercase : properties_view[i],
-                property_lowercase : properties[i],
-            };
-            ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
+        if (this.filterable) {
+            document.getElementById('filter').innerHTML = TemplateHandler.Render('filter_template', { listpage : this.listpage_name });
+            let ul = document.getElementById(this.dynamic_panel_name).getElementsByTagName('ul')[0];
+            let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
+            let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
+            for (let i = 0; i < properties.length; i++) {
+                let sub_data = {
+                    property_uppercase : properties_view[i],
+                    property_lowercase : properties[i],
+                };
+                ul.insertAdjacentHTML('beforeend', TemplateHandler.Render('filter_input', sub_data));
+            }
+        }
+        if (this.choosable) {
+            this.choosed_item = null;
+            document.getElementById('choosed').innerHTML = TemplateHandler.Render('choosed_template', { id : 'none' });
         }
     }
     TableLoadAndBuildByFilter() {
@@ -446,7 +482,8 @@ class ListPage {
             if (this.pocketable)
                 table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_show_pocket', { listpage : this.listpage_name }));
         } else {
-            table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', { listpage : this.listpage_name }));
+            if (!this.frozen)
+                table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', { listpage : this.listpage_name }));
         }
 
         let list_header = table_place.getElementsByTagName('tr')[0];
@@ -489,6 +526,8 @@ class ListPage {
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_pocket',{ id : data[i].id, listpage : this.listpage_name} ));
                 if (this.getinfoable)
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_get_info',{ id : data[i].id, listpage : this.listpage_name} ));
+                if (this.choosable)
+                    action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_button_choose',{ id : data[i].id, listpage : this.listpage_name} ));
 
                 record.insertAdjacentElement('beforeend', action_buttons);
             }
@@ -528,7 +567,7 @@ class ListPage {
         let data = {
             entity_lowercase : this.current_entity,
         };
-        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('add_template', data);
+        document.getElementById(this.dynamic_panel_name).innerHTML = TemplateHandler.Render('add_template', data);
         let panel = document.getElementsByClassName('add_panel')[0];
         let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
         let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
@@ -561,10 +600,10 @@ class ListPage {
             let data = {
                 entity_lowercase : cur_entity,
             };
-            document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
+            document.getElementById(obj.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
             let panel = document.getElementsByClassName('edit_panel')[0];
             let properties = EntityFilters.getEntityLogicProperties();
-            let properties_view = EntityFilters.getEntityViewProperties(this.current_entity);
+            let properties_view = EntityFilters.getEntityViewProperties(obj.current_entity);
             for (let i = 0; i < properties.length; i++) {
                 if (properties[i] === 'id') continue;
                 let sub_data = {
@@ -748,6 +787,25 @@ class ListPage {
         child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
         child_list.TableLoadAndBuildByFilter();
     }
+
+    FreezeTable() {
+        this.frozen = true;
+        this.filterable = false;
+        this.pocketable = false;
+        this.actionable = false;
+    }
+    UnfreezeTable() {
+        this.frozen = false;
+        this.filterable = true;
+        this.pocketable = true;
+        this.actionable = true;
+    }
+
+    TableChooseItem(id) {
+        this.choosed_item = this.table_data.find(x => x['id'] === id);
+        document.getElementById('choosed').innerHTML = TemplateHandler.Render('choosed_template',
+            { id : this.choosed_item[EntityFilters.getRepresentDataField(this.current_entity)] });
+    }
 }
 
 class Router {
@@ -861,7 +919,7 @@ class InterfaceHashHandler {
 
     static Provider() {
         if (this.CheckPermission( [Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager] )) return;
-        document.getElementById(Common.dynamic_panel_name).innerHTML = TemplateHandler.Render('provider_template', {});
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('provider_template', {});
     }
     static ProviderList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ImportManager])) return;
@@ -889,6 +947,8 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('goods_template', {});
     }
     static GoodsList() {
+        Common.GoodsList.dynamic_panel_name = 'dynamic_panel';
+        Common.GoodsList.show_title = true;
         Common.GoodsList.BuildList();
     }
     static GoodsAdd() {
@@ -900,13 +960,12 @@ class InterfaceHashHandler {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('storage_template', {});
     }
     static StorageAvailable() {
+        Common.AvailableList.dynamic_panel_name = 'dynamic_panel';
+        Common.AvailableList.show_title = true;
         Common.AvailableList.BuildList();
     }
     static StorageInfo() {
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('storage_info_template', data);
+        Common.StorageList.BuildList();
     }
 
     static Imports() {
@@ -915,13 +974,18 @@ class InterfaceHashHandler {
     }
     static ImportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ImportManager])) return;
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('import_action_template', {});
-        let import_content = document.getElementById('import_content');
-        if (Common.GoodsList.pocket.length === 0) {
-            import_content.innerHTML = TemplateHandler.Render('import_action_not_ready', {});
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('import_action_template', {});
+        if (Common.GoodsList.pocket.length === 0 || Common.ProviderList.choosed_item === null) {
+            document.getElementById('import_content').innerHTML = TemplateHandler.Render('import_action_not_ready', {});
         } else {
-            import_content.innerHTML = TemplateHandler.Render('import_action_content_template', {});
+            Common.GoodsList.dynamic_panel_name = 'import_content';
+            Common.GoodsList.show_title = false;
+            Common.GoodsList.FreezeTable();
+            Common.GoodsList.TableBuildFacad();
+            Common.GoodsList.ShowPocket();
+            document.getElementById('provider_title').innerHTML = TemplateHandler.Render('import_provider_template',
+                { provider : Common.ProviderList.choosed_item[EntityFilters.getRepresentDataField(Common.EntityMap.Provider)]});
+            Common.GoodsList.UnfreezeTable();
         }
     }
     static ImportsList() {
@@ -935,13 +999,18 @@ class InterfaceHashHandler {
     }
     static ExportsAction() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ExportManager])) return;
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('export_action_template', {});
-        let export_content = document.getElementById('export_content');
-        if (Common.AvailableList.pocket.length === 0) {
-            export_content.innerHTML = TemplateHandler.Render('export_action_not_ready', {});
+        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('export_action_template', {});
+        if (Common.AvailableList.pocket.length === 0 || Common.CustomerList.choosed_item === null) {
+            document.getElementById('export_content').innerHTML = TemplateHandler.Render('export_action_not_ready', {});
         } else {
-            export_content.innerHTML = TemplateHandler.Render('export_action_content_template', {});
+            Common.AvailableList.dynamic_panel_name = 'export_content';
+            Common.AvailableList.show_title = false;
+            Common.AvailableList.FreezeTable();
+            Common.AvailableList.TableBuildFacad();
+            Common.AvailableList.ShowPocket();
+            document.getElementById('customer_title').innerHTML = TemplateHandler.Render('export_costumer_template',
+                { customer : Common.CustomerList.choosed_item[EntityFilters.getRepresentDataField(Common.EntityMap.Provider)]});
+            Common.AvailableList.UnfreezeTable();
         }
     }
     static ExportsList() {
