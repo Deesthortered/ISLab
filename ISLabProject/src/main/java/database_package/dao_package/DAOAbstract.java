@@ -13,6 +13,7 @@ public interface DAOAbstract {
     boolean DeleteEntity(Connection connection, long id);
     boolean DeleteEntityList(Connection connection, Entity filter);
     boolean EditEntity(Connection connection, Entity entity);
+    long GetLastID(Connection connection);
 
     Entity createEntity();
 }

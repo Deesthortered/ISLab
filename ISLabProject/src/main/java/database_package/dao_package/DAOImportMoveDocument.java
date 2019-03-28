@@ -128,6 +128,26 @@ public class DAOImportMoveDocument implements DAOAbstract {
     }
 
     @Override
+    public long GetLastID(Connection connection) {
+        long res = -1;
+        try {
+            String sql_code =   "SELECT AUTO_INCREMENT " +
+                    "FROM information_schema.TABLES" +
+                    "WHERE TABLE_SCHEMA = 'islabdb'" +
+                    "AND   TABLE_NAME   = 'importmovedocument'";
+
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @Override
     public Entity createEntity() {
         return new ImportMoveDocument();
     }

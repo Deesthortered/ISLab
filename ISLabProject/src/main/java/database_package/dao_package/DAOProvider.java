@@ -132,6 +132,11 @@ public class DAOProvider implements DAOAbstract {
     }
 
     @Override
+    public long GetLastID(Connection connection) {
+        return 0;
+    }
+
+    @Override
     public Entity createEntity() {
         return new Provider();
     }

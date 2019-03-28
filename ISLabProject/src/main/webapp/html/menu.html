@@ -304,6 +304,13 @@
         <div id="provider_title"></div>
         <br>
         <div id="import_content"></div>
+        <div id="import_bottom"></div>
+    </script>
+    <script id="import_action_bottom" type="text/template">
+        <div>
+            <p> Descritpion: </p>
+            <td> <input type="text" id="import_description" value=""></td>
+        </div>
         <button onclick="InterfaceHashHandler.MakeImport()"> Make Import!</button>
     </script>
     <script id="import_action_not_ready" type="text/template">
@@ -339,6 +346,13 @@
         <div id="customer_title"></div>
         <br>
         <div id="export_content"></div>
+        <div id="export_bottom"></div>
+    </script>
+    <script id="export_action_bottom" type="text/template">
+        <div>
+            <p> Descritpion: </p>
+            <td> <input type="text" id="export_description" value=""></td>
+        </div>
         <button onclick="InterfaceHashHandler.MakeExport()"> Make Export!</button>
     </script>
     <script id="export_action_not_ready" type="text/template">
@@ -455,6 +469,9 @@
     </script>
     <script id="datatable_row_count_input_import" type="text/template">
         <td> <input type="text" id="count_id_{{ id }}" value="1"></td>
+    </script>
+    <script id="datatable_row_price_input_import" type="text/template">
+        <td> <input type="text" id="price_id_{{ id }}" value="1"></td>
     </script>
     <script id="datatable_row_count_input_export" type="text/template">
         <td> <input type="text" id="count_id_{{ id }}" value="1"> / {{ max_value }}</td>

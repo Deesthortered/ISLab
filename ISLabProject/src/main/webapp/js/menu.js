@@ -444,6 +444,12 @@ class ListPage {
             this.choosed_item = null;
             document.getElementById('choosed').innerHTML = TemplateHandler.Render('choosed_template', { id : 'none' });
         }
+        if (this.is_import){
+            document.getElementById('import_bottom').innerHTML = TemplateHandler.Render('import_action_bottom', {});
+        }
+        if (this.is_export){
+            document.getElementById('export_bottom').innerHTML = TemplateHandler.Render('export_action_bottom', {});
+        }
     }
     TableLoadAndBuildByFilter() {
         this.TableLoad(function(data, obj) {
@@ -514,6 +520,11 @@ class ListPage {
             list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
         }
         if (this.is_import) {
+            let sub_data = {
+                property_uppercase : 'Goods Price',
+            };
+            list_header.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_header_title', sub_data));
+            list_footer.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_footer_title', sub_data));
             let sub_data1 = {
                 property_uppercase : 'Storage ID',
             };
@@ -551,10 +562,13 @@ class ListPage {
                 if (this.is_import) {
                     let action_buttons = document.createElement('td');
                     let action_buttons2 = document.createElement('td');
+                    let action_buttons3 = document.createElement('td');
                     action_buttons.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_count_input_import',{ id : data[i].id} ));
                     action_buttons2.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_storage_id',{ id : data[i].id} ));
+                    action_buttons3.insertAdjacentHTML('beforeend', TemplateHandler.Render('datatable_row_price_input_import',{ id : data[i].id} ));
                     record.insertAdjacentElement('beforeend', action_buttons);
                     record.insertAdjacentElement('beforeend', action_buttons2);
+                    record.insertAdjacentElement('beforeend', action_buttons3);
                 }
                 if (this.is_export) {
                     let action_buttons = document.createElement('td');
@@ -1105,10 +1119,13 @@ class InterfaceHashHandler {
         let goods_ids = [];
         let goods_counts = [];
         let storage_ids = [];
+        let goods_prices = [];
+        let description = document.getElementById('import_description').value;
         for (let i = 0; i < Common.GoodsList.pocket.length; i++) {
             goods_ids[goods_ids.length] = Common.GoodsList.pocket[i]['id'];
             goods_counts[goods_counts.length] = document.getElementById('count_id_'+goods_ids[i] ).value;
             storage_ids[storage_ids.length] = document.getElementById('storage_id_'+goods_ids[i] ).value;
+            goods_prices[goods_prices.length] = document.getElementById('price_id_'+goods_ids[i] ).value;
         }
 
         let http = new XMLHttpRequest();
@@ -1135,16 +1152,19 @@ class InterfaceHashHandler {
             query_body += goods_ids[i] + "\n";
             query_body += goods_counts[i] + "\n";
             query_body += storage_ids[i] + "\n";
+            query_body += goods_prices[i] + "\n";
         }
+        query_body += description + "\n";
         http.send(query_body);
     }
     static MakeExport() {
         let customer_id = Common.CustomerList.choosed_item['id'];
-        let goods_ids = [];
+        let availble_ids = [];
         let goods_counts = [];
+        let description = document.getElementById('export_description').value;
         for (let i = 0; i < Common.AvailableList.pocket.length; i++) {
-            goods_ids[goods_ids.length] = Common.AvailableList.pocket[i]['id'];
-            goods_counts[goods_counts.length] = document.getElementById('count_id_'+goods_ids[i] ).value;
+            availble_ids[availble_ids.length] = Common.AvailableList.pocket[i]['id'];
+            goods_counts[goods_counts.length] = document.getElementById('count_id_'+availble_ids[i] ).value;
         }
 
         let http = new XMLHttpRequest();
@@ -1166,11 +1186,12 @@ class InterfaceHashHandler {
         let query_body =
             "export\n" +
             customer_id + "\n" +
-            goods_ids.length + "\n";
-        for (let i = 0; i < goods_ids.length; i++) {
-            query_body += goods_ids[i] + "\n";
+            availble_ids.length + "\n";
+        for (let i = 0; i < availble_ids.length; i++) {
+            query_body += availble_ids[i] + "\n";
             query_body += goods_counts[i] + "\n";
         }
+        query_body += description + "\n";
         http.send(query_body);
     }
 }
