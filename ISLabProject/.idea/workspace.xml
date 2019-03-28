@@ -7,24 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/menu.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/menu.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -76,11 +59,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
+            <state relative-caret-position="505">
+              <caret line="157" column="90" selection-start-line="157" selection-start-column="90" selection-end-line="157" selection-end-column="90" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#doPost#0;class#UserHandlerServlet#0" />
@@ -91,13 +74,14 @@
                 <element signature="method#DefineHandler#0;class#UserHandlerServlet#0" />
                 <element signature="method#HandleEntityQuery#0;class#UserHandlerServlet#0" />
                 <element signature="method#MakeImport#0;class#UserHandlerServlet#0" />
+                <element signature="method#MakeExport#0;class#UserHandlerServlet#0" />
                 <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="140">
@@ -355,8 +339,8 @@
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/menu.html" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
       </list>
     </option>
   </component>
@@ -455,7 +439,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553764651011" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553765988606" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="MySQL&#10;PostgreSQL" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
@@ -684,7 +668,7 @@
       <workItem from="1553677292466" duration="6662000" />
       <workItem from="1553711039074" duration="10952000" />
       <workItem from="1553723735370" duration="1481000" />
-      <workItem from="1553755792516" duration="8212000" />
+      <workItem from="1553755792516" duration="9540000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -702,7 +686,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="468575000" />
+    <option name="totallyTimeSpent" value="469903000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -728,7 +712,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3286119" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.34419262" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" visible="true" weight="0.40084985" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49932885" weight="0.40084985" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="Build" order="6" weight="0.3286119" />
@@ -839,24 +823,6 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Try to commit inside Intelij IDEA." />
     <option name="LAST_COMMIT_MESSAGE" value="Try to commit inside Intelij IDEA." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java</url>
-          <line>226</line>
-          <properties />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java</url>
-          <line>214</line>
-          <properties />
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -1573,25 +1539,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="218" lean-forward="true" selection-start-line="218" selection-end-line="218" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
-            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
-            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
-            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
-            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
-            <element signature="method#DefineHandler#0;class#UserHandlerServlet#0" />
-            <element signature="method#HandleEntityQuery#0;class#UserHandlerServlet#0" />
-            <element signature="method#MakeImport#0;class#UserHandlerServlet#0" />
-            <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -1673,6 +1620,26 @@
             <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#MakeImport#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#MakeExport#0;n#InterfaceHashHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="505">
+          <caret line="157" column="90" selection-start-line="157" selection-start-column="90" selection-end-line="157" selection-end-column="90" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
+            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+            <element signature="method#DefineHandler#0;class#UserHandlerServlet#0" />
+            <element signature="method#HandleEntityQuery#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeImport#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeExport#0;class#UserHandlerServlet#0" />
+            <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
           </folding>
         </state>
       </provider>

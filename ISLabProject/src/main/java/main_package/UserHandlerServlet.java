@@ -39,7 +39,7 @@ public class UserHandlerServlet extends HttpServlet {
                 }
                 break;
             case Common.q_rebuild_database:
-                RebuildDatabase(request, response);
+                RebuildDatabase();
                 break;
             case Common.q_import:
                 MakeImport(reader, writer);
@@ -191,7 +191,7 @@ public class UserHandlerServlet extends HttpServlet {
             for (int i = 0; i < count; i++) {
 
                 long import_goods_id = dao_importgoods.GetLastID(connection);
-                Entity new_imported_goods = new ImportGoods(Entity.undefined_long, document_id, goods_ids.get(i), goods_counts.get(i), 0);
+                Entity new_imported_goods = new ImportGoods(Entity.undefined_long, document_id, goods_ids.get(i), goods_counts.get(i), prices_ids.get(i));
                 Entity new_move_document = new ImportMoveDocument(Entity.undefined_long, import_goods_id, storage_ids.get(i));
 
                 ArrayList<Entity> imported_goods_in_array = new ArrayList<>();
@@ -203,6 +203,7 @@ public class UserHandlerServlet extends HttpServlet {
                 if (!dao_movedocument.AddEntityList(connection, move_document_in_array)) throw new IOException("blyat3!");
             }
 
+            RebuildDatabase();
             writer.print("ok");
         } catch (IOException e) {
             writer.print("bad");
@@ -214,11 +215,11 @@ public class UserHandlerServlet extends HttpServlet {
         long customer_id = Long.parseLong(reader.readLine());
         int count = Integer.parseInt(reader.readLine());
 
-        ArrayList<Long> available_id = new ArrayList<>();
+        ArrayList<Long> available_ids = new ArrayList<>();
         ArrayList<Integer> goods_counts = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            available_id.add(Long.parseLong(reader.readLine()));
+            available_ids.add(Long.parseLong(reader.readLine()));
             goods_counts.add(Integer.parseInt(reader.readLine()));
         }
 
@@ -227,6 +228,7 @@ public class UserHandlerServlet extends HttpServlet {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
+        DAOAbstract dao_goods = DAOGoods.getInstance();
         DAOAbstract dao_document = DAOExportDocument.getInstance();
         DAOAbstract dao_exportgoods = DAOExportGoods.getInstance();
         DAOAbstract dao_movedocument = DAOExportMoveDocument.getInstance();
@@ -241,9 +243,19 @@ public class UserHandlerServlet extends HttpServlet {
             if (!dao_document.AddEntityList(connection, document_in_array)) throw new IOException("blyat1!");
 
             for (int i = 0; i < count; i++) {
+                Entity filter = new AvailableGoods();
+                filter.setId(available_ids.get(i));
+                ArrayList<Entity> current_available_list = dao_available.GetEntityList(connection, filter, false, 0, 0);
+                AvailableGoods res = (AvailableGoods) current_available_list.get(0);
+
+                filter = new Goods();
+                filter.setId(res.getGoods_id());
+                ArrayList<Entity> current_goods_list = dao_goods.GetEntityList(connection, filter, false, 0, 0);
+                Goods res1 = (Goods) current_available_list.get(0);
+
                 long export_goods_id = dao_exportgoods.GetLastID(connection);
-                Entity new_exported_goods = new ExportGoods(Entity.undefined_long, document_id, 0, goods_counts.get(i), 0);
-                Entity new_move_document = new ExportMoveDocument(Entity.undefined_long, export_goods_id, 0);
+                Entity new_exported_goods = new ExportGoods(Entity.undefined_long, document_id, res.getGoods_id(), goods_counts.get(i), res1.getAverage_price());
+                Entity new_move_document = new ExportMoveDocument(Entity.undefined_long, export_goods_id, res.getStorage_id());
 
                 ArrayList<Entity> exported_goods_in_array = new ArrayList<>();
                 ArrayList<Entity> move_document_in_array = new ArrayList<>();
@@ -254,6 +266,7 @@ public class UserHandlerServlet extends HttpServlet {
                 if (!dao_movedocument.AddEntityList(connection, move_document_in_array)) throw new IOException("blyat3!");
             }
 
+            RebuildDatabase();
             writer.print("ok");
         } catch (IOException e) {
             writer.print("bad");
@@ -261,10 +274,7 @@ public class UserHandlerServlet extends HttpServlet {
             pool.DropConnection(connection);
         }
     }
-    private void RebuildDatabase(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        BufferedReader reader = request.getReader();
-        PrintWriter writer = response.getWriter();
-
+    private void RebuildDatabase() throws IOException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
