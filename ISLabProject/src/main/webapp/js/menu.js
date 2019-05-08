@@ -647,7 +647,7 @@ class ListPage {
             };
             document.getElementById(obj.dynamic_panel_name).innerHTML = TemplateHandler.Render('edit_template', data);
             let panel = document.getElementsByClassName('edit_panel')[0];
-            let properties = EntityFilters.getEntityLogicProperties();
+            let properties = EntityFilters.getEntityLogicProperties(obj.current_entity);
             let properties_view = EntityFilters.getEntityViewProperties(obj.current_entity);
             for (let i = 0; i < properties.length; i++) {
                 if (properties[i] === 'id') continue;
@@ -708,7 +708,7 @@ class ListPage {
     }
     TableSetFilter() {
         this.filter = EntityFilters.getEmptyFilter(this.current_entity);
-        let properties = EntityFilters.getEntityLogicProperties();
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
         let panel = $('#filter');
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'filter_' + properties[i] + '\']').val();
@@ -723,7 +723,7 @@ class ListPage {
         let panel = $('.add_panel');
 
         let ok = true;
-        let properties = EntityFilters.getEntityLogicProperties();
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'input_' + properties[i] + '\']');
             if (!(properties[i] === 'description') && input.val() === '') {
@@ -762,7 +762,7 @@ class ListPage {
         let panel = $('.edit_panel');
 
         let ok = false;
-        let properties = EntityFilters.getEntityLogicProperties();
+        let properties = EntityFilters.getEntityLogicProperties(this.current_entity);
         for (let i = 0; i < properties.length; i++) {
             let input = panel.find('input[name=\'input_' + properties[i] + '\']');
             if (properties[i] === 'description' || !(input.val() === '')) {

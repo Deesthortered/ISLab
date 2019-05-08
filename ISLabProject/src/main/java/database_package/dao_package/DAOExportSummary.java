@@ -164,11 +164,7 @@ public class DAOExportSummary implements DAOAbstract {
     public long GetLastID(Connection connection) {
         long res = -1;
         try {
-            String sql_code =   "SELECT AUTO_INCREMENT " +
-                    "FROM information_schema.TABLES" +
-                    "WHERE TABLE_SCHEMA = 'islabdb'" +
-                    "AND   TABLE_NAME   = 'exportsummary'";
-
+            String sql_code = "SELECT max(Summary_ID) FROM islabdb.exportsummary;";
             PreparedStatement statement = connection.prepareStatement(sql_code);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

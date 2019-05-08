@@ -77,7 +77,7 @@ public class Common {
         return "" + year + "-" + month + "-" + day + "";
     }
     public static Date SQLDateToJavaDate(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date res = null;
         try {
             res = format.parse(date);

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import static utility_package.Common.JavaDateToSQLDate;
+import static utility_package.Common.SQLDateToJavaDate;
 
 public class DAOImportDocument implements DAOAbstract {
 
@@ -54,7 +55,7 @@ public class DAOImportDocument implements DAOAbstract {
             while (resultSet.next()) {
                 long id = resultSet.getLong("Document_ID");
                 long name = resultSet.getLong("Document_ProviderID");
-                Date date = resultSet.getDate("Document_ImportDate");
+                Date date = SQLDateToJavaDate(resultSet.getString("Document_ImportDate"));
                 String description = resultSet.getString("Document_Description");
                 result.add(new ImportDocument(id, name, date, description));
             }
@@ -140,11 +141,7 @@ public class DAOImportDocument implements DAOAbstract {
     public long GetLastID(Connection connection) {
         long res = -1;
         try {
-            String sql_code =   "SELECT AUTO_INCREMENT " +
-                    "FROM information_schema.TABLES" +
-                    "WHERE TABLE_SCHEMA = 'islabdb'" +
-                    "AND   TABLE_NAME   = 'importdocument'";
-
+            String sql_code = "SELECT max(Document_ID) FROM islabdb.importdocument;";
             PreparedStatement statement = connection.prepareStatement(sql_code);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

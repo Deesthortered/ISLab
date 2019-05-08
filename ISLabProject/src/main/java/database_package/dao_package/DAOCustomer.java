@@ -133,7 +133,18 @@ public class DAOCustomer implements DAOAbstract {
 
     @Override
     public long GetLastID(Connection connection) {
-        return 0;
+        long res = -1;
+        try {
+            String sql_code = "SELECT max(Customer_ID) FROM islabdb.customer";
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @Override

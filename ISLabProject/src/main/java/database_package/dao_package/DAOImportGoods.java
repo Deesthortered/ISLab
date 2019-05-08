@@ -73,9 +73,9 @@ public class DAOImportGoods implements DAOAbstract {
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importgoods (ImportGoods_DocumentID, ImportGoods_GoodsID, ImportGoods_GoodsCount, ImportGoods_GoodsPrice) VALUES (?, ?, ?, ?);");
                 statement.setLong(1, casted_item.getDocument_id());
-                statement.setLong(1, casted_item.getGoods_id());
-                statement.setLong(2, casted_item.getGoods_count());
-                statement.setLong(3, casted_item.getGoods_price());
+                statement.setLong(2, casted_item.getGoods_id());
+                statement.setLong(3, casted_item.getGoods_count());
+                statement.setLong(4, casted_item.getGoods_price());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -145,11 +145,7 @@ public class DAOImportGoods implements DAOAbstract {
     public long GetLastID(Connection connection) {
         long res = -1;
         try {
-            String sql_code =   "SELECT AUTO_INCREMENT " +
-                    "FROM information_schema.TABLES" +
-                    "WHERE TABLE_SCHEMA = 'islabdb'" +
-                    "AND   TABLE_NAME   = 'importgoods'";
-
+            String sql_code = "SELECT max(ImportGoods_ID) FROM islabdb.importgoods;";
             PreparedStatement statement = connection.prepareStatement(sql_code);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {

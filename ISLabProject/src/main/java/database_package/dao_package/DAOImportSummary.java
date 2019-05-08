@@ -162,7 +162,18 @@ public class DAOImportSummary implements DAOAbstract {
 
     @Override
     public long GetLastID(Connection connection) {
-        return 0;
+        long res = -1;
+        try {
+            String sql_code = "SELECT max(Summary_ID) FROM islabdb.importsummary;";
+            PreparedStatement statement = connection.prepareStatement(sql_code);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                res = resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return res;
     }
 
     @Override
