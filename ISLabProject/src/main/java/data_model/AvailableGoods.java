@@ -6,7 +6,7 @@ import database_package.dao_package.DAOProvider;
 import database_package.dao_package.DAOStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utility_package.Common;
+import utility_package.DateHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,7 +97,7 @@ public class AvailableGoods implements Entity {
             object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(1));
             object.put("storage_id",  "(" + storage_id + ") " + represantive_data.get(2));
             object.put("current",     current);
-            object.put("snapshot_date", Common.JavaDateToSQLDate(snapshot_date));
+            object.put("snapshot_date", DateHandler.JavaDateToSQLDate(snapshot_date));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,7 +112,7 @@ public class AvailableGoods implements Entity {
             this.provider_id   = (!json.has("provider_id") || json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
             this.storage_id    = (!json.has("storage_id") || json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
             this.current       = (!json.has("current") || !json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));
-            this.snapshot_date = (!json.has("snapshot_date") || json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("snapshot_date")));
+            this.snapshot_date = (!json.has("snapshot_date") || json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("snapshot_date")));
         } catch (JSONException e) {
             e.printStackTrace();
         }

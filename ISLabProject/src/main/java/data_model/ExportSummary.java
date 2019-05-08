@@ -3,7 +3,7 @@ package data_model;
 import database_package.dao_package.DAOAbstract;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utility_package.Common;
+import utility_package.DateHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,8 +94,8 @@ public class ExportSummary implements Entity {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("start_date",     Common.JavaDateToSQLDate(start_date));
-            object.put("end_date",       Common.JavaDateToSQLDate(end_date));
+            object.put("start_date",     DateHandler.JavaDateToSQLDate(start_date));
+            object.put("end_date",       DateHandler.JavaDateToSQLDate(end_date));
             object.put("exports_count",  exports_count);
             object.put("exports_amount", exports_amount);
             object.put("max_price",      max_price);
@@ -109,8 +109,8 @@ public class ExportSummary implements Entity {
     public void setByJSON(JSONObject json) {
         try {
             this.id             = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.start_date     = (!json.has("start_date") || json.getString("start_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("start_date")));
-            this.end_date       = (!json.has("end_date") || json.getString("end_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("end_date")));
+            this.start_date     = (!json.has("start_date") || json.getString("start_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("start_date")));
+            this.end_date       = (!json.has("end_date") || json.getString("end_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("end_date")));
             this.exports_count  = (!json.has("exports_count") || json.getString("exports_count").equals(Entity.undefined_string) ? Entity.undefined_int : Integer.parseInt(json.getString("exports_count")));
             this.exports_amount = (!json.has("exports_amount") || json.getString("exports_amount").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("exports_amount")));
             this.max_price      = (!json.has("max_price") || json.getString("max_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("max_price")));

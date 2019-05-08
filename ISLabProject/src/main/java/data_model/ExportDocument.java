@@ -4,7 +4,7 @@ import database_package.dao_package.DAOAbstract;
 import database_package.dao_package.DAOCustomer;
 import org.json.JSONException;
 import org.json.JSONObject;
-import utility_package.Common;
+import utility_package.DateHandler;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +66,7 @@ public class ExportDocument implements Entity {
         try {
             object.put("id",          id);
             object.put("customer_id", "(" + customer_id + ") " + represantive_data.get(0));
-            object.put("export_date", Common.JavaDateToSQLDate(export_date));
+            object.put("export_date", DateHandler.JavaDateToSQLDate(export_date));
             object.put("description", description);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -78,7 +78,7 @@ public class ExportDocument implements Entity {
         try {
             this.id          = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
             this.customer_id = (!json.has("customer_id") || json.getString("customer_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("customer_id")));
-            this.export_date = (!json.has("export_date") || json.getString("export_date").equals(Entity.undefined_string) ? Entity.undefined_date : Common.SQLDateToJavaDate(json.getString("export_date")));
+            this.export_date = (!json.has("export_date") || json.getString("export_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("export_date")));
             this.description = (!json.has("description") || json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
         } catch (JSONException e) {
             e.printStackTrace();

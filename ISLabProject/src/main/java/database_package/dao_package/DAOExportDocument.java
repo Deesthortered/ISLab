@@ -2,13 +2,11 @@ package database_package.dao_package;
 
 import data_model.Entity;
 import data_model.ExportDocument;
+import utility_package.DateHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static utility_package.Common.JavaDateToSQLDate;
-import static utility_package.Common.SQLDateToJavaDate;
 
 public class DAOExportDocument implements DAOAbstract {
 
@@ -32,7 +30,7 @@ public class DAOExportDocument implements DAOAbstract {
             String sql_query = "SELECT * FROM islabdb.exportdocument " +
                     "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
                     "(Document_CustomerID = ?  OR ? = " + Entity.undefined_long   + ") AND " +
-                    "(Document_ExportDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Document_ExportDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                     "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                     ( limited ? " limit ? offset ?" : "");
 
@@ -41,8 +39,8 @@ public class DAOExportDocument implements DAOAbstract {
             statement.setLong(2, casted_filter.getId());
             statement.setLong(3, casted_filter.getCustomer_id());
             statement.setLong(4, casted_filter.getCustomer_id());
-            statement.setString(5, JavaDateToSQLDate(casted_filter.getExport_date()));
-            statement.setString(6, JavaDateToSQLDate(casted_filter.getExport_date()));
+            statement.setString(5, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
+            statement.setString(6, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
             statement.setString(7, casted_filter.getDescription());
             statement.setString(8, casted_filter.getDescription());
             if (limited) {
@@ -54,7 +52,7 @@ public class DAOExportDocument implements DAOAbstract {
             while (resultSet.next()) {
                 long id = resultSet.getLong("Document_ID");
                 long name = resultSet.getLong("Document_CustomerID");
-                Date date = SQLDateToJavaDate(resultSet.getString("Document_ExportDate"));
+                Date date = DateHandler.SQLDateToJavaDate(resultSet.getString("Document_ExportDate"));
                 String description = resultSet.getString("Document_Description");
                 result.add(new ExportDocument(id, name, date, description));
             }
@@ -70,7 +68,7 @@ public class DAOExportDocument implements DAOAbstract {
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
                 statement.setLong(1, casted_item.getCustomer_id());
-                statement.setString(2, JavaDateToSQLDate(casted_item.getExport_date()));
+                statement.setString(2, DateHandler.JavaDateToSQLDate(casted_item.getExport_date()));
                 statement.setString(3, casted_item.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -125,7 +123,7 @@ public class DAOExportDocument implements DAOAbstract {
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
             statement.setLong(1, document.getCustomer_id());
-            statement.setString(2, JavaDateToSQLDate(document.getExport_date()));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(document.getExport_date()));
             statement.setString(3, document.getDescription());
             statement.setLong(4, document.getId());
             statement.executeUpdate();
@@ -155,5 +153,76 @@ public class DAOExportDocument implements DAOAbstract {
     @Override
     public Entity createEntity() {
         return new ExportDocument();
+    }
+
+    public ExportDocument GetEarlierDocument(Connection connection) {
+        ExportDocument result = new ExportDocument();
+        try {
+            String sql_query =
+                            "SELECT * " +
+                            "FROM islabdb.exportdocument " +
+                            "WHERE Document_ExportDate = " +
+                                "(SELECT MIN(Document_ExportDate) " +
+                                " FROM islabdb.exportdocument)";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("Document_ID");
+                long name = resultSet.getLong("Document_CustomerID");
+                Date date = DateHandler.SQLDateToJavaDate(resultSet.getString("Document_ExportDate"));
+                String description = resultSet.getString("Document_Description");
+                result = new ExportDocument(id, name, date, description);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public ExportDocument GetLatestDocument(Connection connection) {
+        ExportDocument result = new ExportDocument();
+        try {
+            String sql_query =
+                    "SELECT * " +
+                            "FROM islabdb.exportdocument " +
+                            "WHERE Document_ExportDate = " +
+                            "(SELECT MAX(Document_ExportDate) " +
+                            " FROM islabdb.exportdocument)";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("Document_ID");
+                long name = resultSet.getLong("Document_CustomerID");
+                Date date = DateHandler.SQLDateToJavaDate(resultSet.getString("Document_ExportDate"));
+                String description = resultSet.getString("Document_Description");
+                result = new ExportDocument(id, name, date, description);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    public ArrayList<ExportDocument> GetDocumentsBetweenDates(Connection connection, Date from, Date to) {
+        ArrayList<ExportDocument> result = new ArrayList<>();
+        try {
+            String sql_query =
+                    "SELECT * " +
+                            "FROM islabdb.exportdocument " +
+                            "WHERE ? <= Document_ExportDate AND Document_ExportDate < ?";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setString(1, DateHandler.JavaDateToSQLDate(from));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(to));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("Document_ID");
+                long name = resultSet.getLong("Document_CustomerID");
+                Date date = DateHandler.SQLDateToJavaDate(resultSet.getString("Document_ExportDate"));
+                String description = resultSet.getString("Document_Description");
+                result.add(new ExportDocument(id, name, date, description));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

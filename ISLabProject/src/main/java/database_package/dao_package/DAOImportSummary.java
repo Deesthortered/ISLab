@@ -2,6 +2,7 @@ package database_package.dao_package;
 
 import data_model.Entity;
 import data_model.ImportSummary;
+import utility_package.DateHandler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static utility_package.Common.JavaDateToSQLDate;
 
 public class DAOImportSummary implements DAOAbstract {
 
@@ -34,8 +33,8 @@ public class DAOImportSummary implements DAOAbstract {
         try {
             String sql_query = "SELECT * FROM islabdb.importsummary " +
                       "WHERE (Summary_ID = ?            OR ? = "   + Entity.undefined_long + ") AND " +
-                            "(Summary_StartDate = ?     OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
-                            "(Summary_EndDate = ?       OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                            "(Summary_StartDate = ?     OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                            "(Summary_EndDate = ?       OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                             "(Summary_ImportsCount = ?  OR ? = "   + Entity.undefined_int  + ") AND " +
                             "(Summary_ImportsAmount = ? OR ? = "   + Entity.undefined_long + ") AND " +
                             "(Summary_MaxPrice = ?      OR ? = "   + Entity.undefined_long + ") AND " +
@@ -45,10 +44,10 @@ public class DAOImportSummary implements DAOAbstract {
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
-            statement.setString(3, JavaDateToSQLDate(casted_filter.getStart_date()));
-            statement.setString(4, JavaDateToSQLDate(casted_filter.getStart_date()));
-            statement.setString(5, JavaDateToSQLDate(casted_filter.getEnd_date()));
-            statement.setString(6, JavaDateToSQLDate(casted_filter.getEnd_date()));
+            statement.setString(3, DateHandler.JavaDateToSQLDate(casted_filter.getStart_date()));
+            statement.setString(4, DateHandler.JavaDateToSQLDate(casted_filter.getStart_date()));
+            statement.setString(5, DateHandler.JavaDateToSQLDate(casted_filter.getEnd_date()));
+            statement.setString(6, DateHandler.JavaDateToSQLDate(casted_filter.getEnd_date()));
             statement.setInt(7, casted_filter.getImports_count());
             statement.setInt(8, casted_filter.getImports_count());
             statement.setLong(9, casted_filter.getImports_amount());
@@ -84,8 +83,8 @@ public class DAOImportSummary implements DAOAbstract {
             ImportSummary casted_item = (ImportSummary) item;
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importsummary (Summary_StartDate, Summary_EndDate, Summary_ImportsCount, Summary_ImportsAmount, Summary_MaxPrice, Summary_MinPrice) VALUES (?, ?, ?, ?, ?, ?);");
-                statement.setString(1, JavaDateToSQLDate(casted_item.getStart_date()));
-                statement.setString(2, JavaDateToSQLDate(casted_item.getEnd_date()));
+                statement.setString(1, DateHandler.JavaDateToSQLDate(casted_item.getStart_date()));
+                statement.setString(2, DateHandler.JavaDateToSQLDate(casted_item.getEnd_date()));
                 statement.setInt(3, casted_item.getImports_count());
                 statement.setLong(4, casted_item.getImports_amount());
                 statement.setLong(5, casted_item.getMax_price());
@@ -145,8 +144,8 @@ public class DAOImportSummary implements DAOAbstract {
                     "WHERE Summary_ID = ?;";
 
             PreparedStatement statement = connection.prepareStatement(sql_code);
-            statement.setString(1, JavaDateToSQLDate(summary.getStart_date()));
-            statement.setString(2, JavaDateToSQLDate(summary.getEnd_date()));
+            statement.setString(1, DateHandler.JavaDateToSQLDate(summary.getStart_date()));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(summary.getEnd_date()));
             statement.setInt(3, summary.getImports_count());
             statement.setLong(4, summary.getImports_amount());
             statement.setLong(5, summary.getMax_price());

@@ -41,7 +41,8 @@ public class Common {
 
     public static final String q_import = "import";
     public static final String q_export = "export";
-    public static final String q_rebuild_database = "db_rebuild";
+    public static final String q_rebuild_database = "db_rebuild_database";
+    public static final String q_rebuild_reports = "db_rebuild_reports";
 
     public static boolean isInitialized() {
         return initialized;
@@ -65,25 +66,5 @@ public class Common {
         if (res.equals(Optional.empty().toString()))
             return null;
         return res.substring(9, res.length()-1);
-    }
-
-    public static String JavaDateToSQLDate(Date date) {
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-
-        return "" + year + "-" + month + "-" + day + "";
-    }
-    public static Date SQLDateToJavaDate(String date) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date res = null;
-        try {
-            res = format.parse(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return res;
     }
 }

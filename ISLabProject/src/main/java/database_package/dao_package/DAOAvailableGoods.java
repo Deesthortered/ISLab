@@ -3,12 +3,11 @@ package database_package.dao_package;
 import data_model.AvailableGoods;
 import data_model.Entity;
 import utility_package.Common;
+import utility_package.DateHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
-
-import static utility_package.Common.JavaDateToSQLDate;
 
 public class DAOAvailableGoods implements DAOAbstract {
 
@@ -36,7 +35,7 @@ public class DAOAvailableGoods implements DAOAbstract {
                     "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
                     "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
                     "(Available_Current = ?       OR ? = false) AND " +
-                    "(Available_SnapshotDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\')" +
+                    "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')" +
                     ( limited ? " limit ? offset ?" : "");
 
             PreparedStatement statement = connection.prepareStatement(sql_query);
@@ -52,8 +51,8 @@ public class DAOAvailableGoods implements DAOAbstract {
             statement.setLong(10, casted_filter.getStorage_id());
             statement.setBoolean(11,  casted_filter.isCurrent());
             statement.setBoolean(12, casted_filter.isCurrent());
-            statement.setString(13, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
-            statement.setString(14, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(13, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(14, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
 
             if (limited) {
                 statement.setLong(15, count_of_records);
@@ -90,7 +89,7 @@ public class DAOAvailableGoods implements DAOAbstract {
                 statement.setLong(3, casted_item.getProvider_id());
                 statement.setLong(4, casted_item.getStorage_id());
                 statement.setBoolean(5, casted_item.isCurrent());
-                statement.setString(6, Common.JavaDateToSQLDate(casted_item.getSnapshot_date()));
+                statement.setString(6, DateHandler.JavaDateToSQLDate(casted_item.getSnapshot_date()));
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -139,7 +138,7 @@ public class DAOAvailableGoods implements DAOAbstract {
                             "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
                             "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
                             "(Available_Current = ?       OR ? = false) AND " +
-                            "(Available_SnapshotDate = ?  OR ? = \'" + JavaDateToSQLDate(Entity.undefined_date) + "\')";
+                            "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')";
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
@@ -153,8 +152,8 @@ public class DAOAvailableGoods implements DAOAbstract {
             statement.setLong(10, casted_filter.getStorage_id());
             statement.setBoolean(11,  casted_filter.isCurrent());
             statement.setBoolean(12, casted_filter.isCurrent());
-            statement.setString(13, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
-            statement.setString(14, Common.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(13, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+            statement.setString(14, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -181,7 +180,7 @@ public class DAOAvailableGoods implements DAOAbstract {
             statement.setLong(3, document.getProvider_id());
             statement.setLong(4, document.getStorage_id());
             statement.setBoolean(5, document.isCurrent());
-            statement.setString(6, JavaDateToSQLDate(document.getSnapshot_date()));
+            statement.setString(6, DateHandler.JavaDateToSQLDate(document.getSnapshot_date()));
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

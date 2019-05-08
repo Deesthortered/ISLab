@@ -297,7 +297,7 @@ class EntityFilters {
             case Common.EntityMap.ImportDocument :
                 return ['id', 'provider_id', 'import_date', 'description'];
             case Common.EntityMap.ExportDocument :
-                return ['id', 'customer_id', 'import_date', 'description'];
+                return ['id', 'customer_id', 'export_date', 'description'];
             case Common.EntityMap.ImportGoods :
             case Common.EntityMap.ExportGoods :
                 return ['id', 'document_id', 'goods_id', 'goods_count', 'goods_price'];
@@ -326,7 +326,7 @@ class EntityFilters {
             case Common.EntityMap.ImportDocument :
                 return ['ID', 'Provider ID', 'Import Date', 'Description'];
             case Common.EntityMap.ExportDocument :
-                return ['ID', 'Customer ID', 'Import Date', 'Description'];
+                return ['ID', 'Customer ID', 'Export Date', 'Description'];
             case Common.EntityMap.ImportGoods :
             case Common.EntityMap.ExportGoods :
                 return ['ID', 'Document ID', 'Goods ID', 'Goods count', 'Goods price'];
@@ -893,6 +893,7 @@ class Router {
 
             case '#system'            : { InterfaceHashHandler.System();           } break;
             case '#rebuild_available' : { InterfaceHashHandler.RebuildAvailable(); } break;
+            case '#rebuild_reports'   : { InterfaceHashHandler.RebuildReports();   } break;
             case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
 
             default: alert("Unknown hash-tag!");
@@ -1104,7 +1105,23 @@ class InterfaceHashHandler {
                     alert("The Rebuild request finished not successful, some trouble happened with the request.");
                 }
             };
-            let query_body = "db_rebuild\n";
+            let query_body = "db_rebuild_database\n";
+            http.send(query_body);
+        }
+        window.location.hash = 'system';
+    }
+    static RebuildReports() {
+        if (confirm("Are you sure? It can take a lot of time")) {
+            let http = new XMLHttpRequest();
+            http.open('POST', window.location.href, true);
+            http.onreadystatechange = function() {
+                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                    alert("Done");
+                } else if (http.readyState === XMLHttpRequest.DONE) {
+                    alert("The Rebuild request finished not successful, some trouble happened with the request.");
+                }
+            };
+            let query_body = "db_rebuild_reports\n";
             http.send(query_body);
         }
         window.location.hash = 'system';

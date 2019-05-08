@@ -6,6 +6,7 @@ import database_package.dao_package.*;
 import database_package.entity_query_handler.*;
 import org.json.JSONException;
 import utility_package.Common;
+import utility_package.DateHandler;
 import utility_package.Pair;
 
 import javax.servlet.ServletException;
@@ -38,14 +39,17 @@ public class UserHandlerServlet extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
-            case Common.q_rebuild_database:
-                RebuildDatabase();
-                break;
             case Common.q_import:
                 MakeImport(reader, writer);
                 break;
             case Common.q_export:
                 MakeExport(reader, writer);
+                break;
+            case Common.q_rebuild_database:
+                RebuildDatabase();
+                break;
+            case Common.q_rebuild_reports:
+                RebuildReports();
                 break;
             default:
                 SendError(request, response);
@@ -405,6 +409,27 @@ public class UserHandlerServlet extends HttpServlet {
         DAOAbstract dao_available = DAOAvailableGoods.getInstance();
         dao_available.DeleteEntityList(connection, new AvailableGoods());
         dao_available.AddEntityList(connection, result);
+        pool.DropConnection(connection);
+    }
+
+    private void RebuildReports() {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.GetConnection();
+
+        DAOImportDocument daoImportDoc = (DAOImportDocument) DAOImportDocument.getInstance();
+        ImportDocument importFirst = daoImportDoc.GetEarlierDocument(connection); //2019-1-1
+        ImportDocument importLast = daoImportDoc.GetLatestDocument(connection);  //2019-5-8
+        int diff = DateHandler.getMonthsDifference(importFirst.getImport_date(), importLast.getImport_date());
+
+
+        DAOExportDocument daoExportDoc = (DAOExportDocument) DAOExportDocument.getInstance();
+        ExportDocument e3 = daoExportDoc.GetEarlierDocument(connection); //2019-1-6
+        ExportDocument e4 = daoExportDoc.GetLatestDocument(connection);  //2019-5-8
+        int diff2 = DateHandler.getMonthsDifference(e3.getExport_date(), e4.getExport_date());
+
+        ArrayList<ImportDocument> list = daoImportDoc.GetDocumentsBetweenDates(connection, DateHandler.SQLDateToJavaDate("2019-1-10"), DateHandler.SQLDateToJavaDate("2019-1-20"));
+        ArrayList<ExportDocument> list2 = daoExportDoc.GetDocumentsBetweenDates(connection, DateHandler.SQLDateToJavaDate("2019-1-10"), DateHandler.SQLDateToJavaDate("2019-1-20"));
+
         pool.DropConnection(connection);
     }
 }
