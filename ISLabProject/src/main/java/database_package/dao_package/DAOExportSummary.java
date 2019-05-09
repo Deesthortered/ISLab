@@ -197,4 +197,32 @@ public class DAOExportSummary implements DAOAbstract {
     public Entity createEntity() {
         return new ExportSummary();
     }
+
+    public ArrayList<ExportSummary> GetSummaryBetweenDates(Connection connection, Date from, Date to) {
+        ArrayList<ExportSummary> result = new ArrayList<>();
+        try {
+            String sql_query =
+                    "SELECT * " +
+                            "FROM islabdb.exportsummary " +
+                            "WHERE ? <= Summary_StartDate AND Summary_EndDate < ?";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setString(1, DateHandler.JavaDateToSQLDate(from));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(to));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("Summary_ID");
+                Date start_date = resultSet.getDate("Summary_StartDate");
+                Date end_date = resultSet.getDate("Summary_EndDate");
+                int count = resultSet.getInt("Summary_ExportsCount");
+                long amount = resultSet.getLong("Summary_ExportsAmount");
+                long max_price = resultSet.getLong("Summary_MaxPrice");
+                long min_price = resultSet.getLong("Summary_MinPrice");
+                result.add(new ExportSummary(id, start_date, end_date, count, amount, max_price, min_price));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

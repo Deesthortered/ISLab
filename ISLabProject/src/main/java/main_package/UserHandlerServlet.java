@@ -280,7 +280,6 @@ public class UserHandlerServlet extends HttpServlet {
         RebuildReports();
         RebuildAvailable();
     }
-    
     private void RebuildReports() throws IOException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
@@ -295,29 +294,7 @@ public class UserHandlerServlet extends HttpServlet {
         Date last_date = importLast.getImport_date();
         while (current_date.before(last_date)) {
             Pair<Date, Date> current_boundaries = DateHandler.getMonthBoundaries(current_date);
-            ArrayList<ImportDocument> list = daoImportDoc.GetDocumentsBetweenDates(connection, current_boundaries.getKey(), current_boundaries.getValue());
-
-            int count = list.size();
-            long amount = 0;
-            long max_price = 0;
-            long min_price = 0;
-            boolean f = true;
-            DAOAbstract daoImportGoods = DAOImportGoods.getInstance();
-            for (ImportDocument item : list) {
-                Entity goodsFilter = new ImportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
-                ArrayList<Entity> goodsList = daoImportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
-
-                for (Entity item2 : goodsList) {
-                    ImportGoods goods = (ImportGoods) item2;
-
-                    amount += goods.getGoods_price();
-                    max_price = Math.max(max_price, goods.getGoods_price());
-                    if (f) { min_price = goods.getGoods_price(); f = false; }
-                    else min_price = Math.min(max_price, goods.getGoods_price());
-                }
-            }
-            ImportSummaries.add(new ImportSummary(Entity.undefined_long, current_boundaries.getKey(), current_boundaries.getValue(), count, amount, max_price, min_price));
-
+            ImportSummaries.add(makeImportSummary(connection, current_boundaries.getKey(), current_boundaries.getValue()));
             current_date = current_boundaries.getValue();
         }
 
@@ -331,29 +308,7 @@ public class UserHandlerServlet extends HttpServlet {
         last_date = exportLast.getExport_date();
         while (current_date.before(last_date)) {
             Pair<Date, Date> current_boundaries = DateHandler.getMonthBoundaries(current_date);
-            ArrayList<ExportDocument> list = daoExportDoc.GetDocumentsBetweenDates(connection, current_boundaries.getKey(), current_boundaries.getValue());
-
-            int count = list.size();
-            long amount = 0;
-            long max_price = 0;
-            long min_price = 0;
-            boolean f = true;
-            DAOAbstract daoExportGoods = DAOExportGoods.getInstance();
-            for (ExportDocument item : list) {
-                Entity goodsFilter = new ExportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
-                ArrayList<Entity> goodsList = daoExportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
-
-                for (Entity item2 : goodsList) {
-                    ExportGoods goods = (ExportGoods) item2;
-
-                    amount += goods.getGoods_price();
-                    max_price = Math.max(max_price, goods.getGoods_price());
-                    if (f) { min_price = goods.getGoods_price(); f = false; }
-                    else min_price = Math.min(max_price, goods.getGoods_price());
-                }
-            }
-            ExportSummaries.add(new ExportSummary(Entity.undefined_long, current_boundaries.getKey(), current_boundaries.getValue(), count, amount, max_price, min_price));
-
+            ExportSummaries.add(makeExportSummary(connection, current_boundaries.getKey(), current_boundaries.getValue()));
             current_date = current_boundaries.getValue();
         }
 
@@ -656,4 +611,119 @@ public class UserHandlerServlet extends HttpServlet {
         dao_available.AddEntityList(connection, result);
         pool.DropConnection(connection);
     }
+
+    private void MakeReportQuery() {
+
+    }
+    private void MakeReport(Date from, Date to) {
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.GetConnection();
+
+        DAOImportSummary daoImportSummary = (DAOImportSummary) DAOImportSummary.getInstance();
+        DAOExportSummary daoExportSummary = (DAOExportSummary) DAOExportSummary.getInstance();
+
+        ArrayList<ImportSummary> importSummaries = daoImportSummary.GetSummaryBetweenDates(connection, from, to);
+        ArrayList<ExportSummary> exportSummaries = daoExportSummary.GetSummaryBetweenDates(connection, from, to);
+
+        if (from.before(importSummaries.get(0).getStart_date())) {
+            importSummaries.add(0, makeImportSummary(connection, from, importSummaries.get(0).getStart_date()));
+            exportSummaries.add(0, makeExportSummary(connection, from, importSummaries.get(0).getStart_date()));
+        }
+
+        if (to.after(importSummaries.get(importSummaries.size() - 1).getEnd_date())){
+            importSummaries.add(makeImportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
+            exportSummaries.add(makeExportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
+        }
+
+        assert (importSummaries.size() == exportSummaries.size());
+
+        int  countImport = 0;
+        int  countExport = 0;
+        long amountImport = 0;
+        long amountExport = 0;
+        long max_priceImport = 0;
+        long max_priceExport = 0;
+        long min_priceImport = 0;
+        long min_priceExport = 0;
+        boolean f = true;
+        for (int i = 0; i < importSummaries.size(); i++) {
+            ImportSummary currentImportSummary = importSummaries.get(i);
+            ExportSummary currentExportSummary = exportSummaries.get(i);
+
+            countImport += currentImportSummary.getImports_count();
+            countExport += currentExportSummary.getExports_count();
+
+            amountImport += currentImportSummary.getImports_amount();
+            amountExport += currentExportSummary.getExports_amount();
+
+            max_priceImport = Math.max(max_priceImport, currentImportSummary.getMax_price());
+            max_priceExport = Math.max(max_priceExport, currentExportSummary.getMax_price());
+
+            if (f) {
+                min_priceImport = currentImportSummary.getMin_price();
+                min_priceExport = currentExportSummary.getMin_price();
+                f = false;
+            } else {
+                min_priceImport = Math.max(min_priceImport, currentImportSummary.getMin_price());
+                min_priceExport = Math.max(min_priceExport, currentExportSummary.getMin_price());
+            }
+        }
+
+        // This is result
+        ImportSummary resultImport = new ImportSummary(Entity.undefined_long, from, to, countImport, amountImport, max_priceImport, min_priceImport);
+        ExportSummary resultExport = new ExportSummary(Entity.undefined_long, from, to, countExport, amountExport, max_priceExport, min_priceExport);
+
+        pool.DropConnection(connection);
+    }
+    private ImportSummary makeImportSummary(Connection connection, Date from, Date to) {
+        DAOImportDocument daoImportDoc = (DAOImportDocument) DAOImportDocument.getInstance();
+        ArrayList<ImportDocument> list = daoImportDoc.GetDocumentsBetweenDates(connection, from, to);
+
+        int count = list.size();
+        long amount = 0;
+        long max_price = 0;
+        long min_price = 0;
+        boolean f = true;
+        DAOAbstract daoImportGoods = DAOImportGoods.getInstance();
+        for (ImportDocument item : list) {
+            Entity goodsFilter = new ImportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
+            ArrayList<Entity> goodsList = daoImportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
+
+            for (Entity item2 : goodsList) {
+                ImportGoods goods = (ImportGoods) item2;
+
+                amount += goods.getGoods_price();
+                max_price = Math.max(max_price, goods.getGoods_price());
+                if (f) { min_price = goods.getGoods_price(); f = false; }
+                else min_price = Math.min(max_price, goods.getGoods_price());
+            }
+        }
+        return new ImportSummary(Entity.undefined_long, from, to, count, amount, max_price, min_price);
+    }
+    private ExportSummary makeExportSummary(Connection connection, Date from, Date to) {
+        DAOExportDocument daoExportDoc = (DAOExportDocument) DAOExportDocument.getInstance();
+        ArrayList<ExportDocument> list = daoExportDoc.GetDocumentsBetweenDates(connection, from, to);
+
+        int count = list.size();
+        long amount = 0;
+        long max_price = 0;
+        long min_price = 0;
+        boolean f = true;
+        DAOAbstract daoExportGoods = DAOExportGoods.getInstance();
+        for (ExportDocument item : list) {
+            Entity goodsFilter = new ExportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
+            ArrayList<Entity> goodsList = daoExportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
+
+            for (Entity item2 : goodsList) {
+                ExportGoods goods = (ExportGoods) item2;
+
+                amount += goods.getGoods_price();
+                max_price = Math.max(max_price, goods.getGoods_price());
+                if (f) { min_price = goods.getGoods_price(); f = false; }
+                else min_price = Math.min(max_price, goods.getGoods_price());
+            }
+        }
+        return new ExportSummary(Entity.undefined_long, from, to, count, amount, max_price, min_price);
+    }
+
 }

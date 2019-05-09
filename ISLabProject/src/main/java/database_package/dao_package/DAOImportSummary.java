@@ -197,4 +197,32 @@ public class DAOImportSummary implements DAOAbstract {
     public Entity createEntity() {
         return new ImportSummary();
     }
+
+    public ArrayList<ImportSummary> GetSummaryBetweenDates(Connection connection, Date from, Date to) {
+        ArrayList<ImportSummary> result = new ArrayList<>();
+        try {
+            String sql_query =
+                    "SELECT * " +
+                            "FROM islabdb.importsummary " +
+                            "WHERE ? <= Summary_StartDate AND Summary_EndDate < ?";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setString(1, DateHandler.JavaDateToSQLDate(from));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(to));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("Summary_ID");
+                Date start_date = resultSet.getDate("Summary_StartDate");
+                Date end_date = resultSet.getDate("Summary_EndDate");
+                int count = resultSet.getInt("Summary_ImportsCount");
+                long amount = resultSet.getLong("Summary_IMportsAmount");
+                long max_price = resultSet.getLong("Summary_MaxPrice");
+                long min_price = resultSet.getLong("Summary_MinPrice");
+                result.add(new ImportSummary(id, start_date, end_date, count, amount, max_price, min_price));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
