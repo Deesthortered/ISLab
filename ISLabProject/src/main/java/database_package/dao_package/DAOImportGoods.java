@@ -85,6 +85,34 @@ public class DAOImportGoods implements DAOAbstract {
         return true;
     }
     @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        try {
+            ImportGoods casted_filter = (ImportGoods) filter;
+            String sql_query = "DELETE FROM islabdb.exportmovedocument " +
+                    "WHERE (ImportGoods_ID = ?         OR ? = " + Entity.undefined_long + ") AND " +
+                    "(ImportGoods_DocumentID = ? OR ? = " + Entity.undefined_long + ") AND " +
+                    "(ImportGoods_GoodsID = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                    "(ImportGoods_GoodsCount = ? OR ? = " + Entity.undefined_long + ") AND " +
+                    "(ImportGoods_GoodsPrice = ? OR ? = " + Entity.undefined_long + ");";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getDocument_id());
+            statement.setLong(4, casted_filter.getDocument_id());
+            statement.setLong(5, casted_filter.getGoods_id());
+            statement.setLong(6, casted_filter.getGoods_id());
+            statement.setLong(7, casted_filter.getGoods_count());
+            statement.setLong(8, casted_filter.getGoods_count());
+            statement.setLong(9, casted_filter.getGoods_price());
+            statement.setLong(10, casted_filter.getGoods_price());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importgoods where ImportGoods_ID = ?");
@@ -100,22 +128,6 @@ public class DAOImportGoods implements DAOAbstract {
             return false;
         }
         return true;
-    }
-    @Override
-    public boolean DeleteEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importgoods WHERE ImportGoods_ID = ?;");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public boolean DeleteEntityList(Connection connection, Entity filter) {
-        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

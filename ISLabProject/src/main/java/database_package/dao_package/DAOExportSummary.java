@@ -98,6 +98,40 @@ public class DAOExportSummary implements DAOAbstract {
         return true;
     }
     @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        try {
+            ExportSummary casted_filter = (ExportSummary) filter;
+            String sql_query = "DELETE FROM islabdb.exportsummary " +
+                    "WHERE (Summary_ID = ?            OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Summary_StartDate = ?     OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Summary_EndDate = ?       OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Summary_ExportsCount = ?  OR ? = "   + Entity.undefined_int  + ") AND " +
+                    "(Summary_ExportsAmount = ? OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Summary_MaxPrice = ?      OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Summary_MinPrice = ?      OR ? = "   + Entity.undefined_long + ");";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setString(3, DateHandler.JavaDateToSQLDate(casted_filter.getStart_date()));
+            statement.setString(4, DateHandler.JavaDateToSQLDate(casted_filter.getStart_date()));
+            statement.setString(5, DateHandler.JavaDateToSQLDate(casted_filter.getEnd_date()));
+            statement.setString(6, DateHandler.JavaDateToSQLDate(casted_filter.getEnd_date()));
+            statement.setInt(7, casted_filter.getExports_count());
+            statement.setInt(8, casted_filter.getExports_count());
+            statement.setLong(9, casted_filter.getExports_amount());
+            statement.setLong(10, casted_filter.getExports_amount());
+            statement.setLong(11, casted_filter.getMax_price());
+            statement.setLong(12, casted_filter.getMax_price());
+            statement.setLong(13, casted_filter.getMin_price());
+            statement.setLong(14, casted_filter.getMin_price());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportsummary where Summary_ID = ?");
@@ -113,22 +147,6 @@ public class DAOExportSummary implements DAOAbstract {
             return false;
         }
         return true;
-    }
-    @Override
-    public boolean DeleteEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportsummary WHERE Summary_ID = ?;");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public boolean DeleteEntityList(Connection connection, Entity filter) {
-        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

@@ -80,6 +80,31 @@ public class DAOImportDocument implements DAOAbstract {
         return true;
     }
     @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        try {
+            ImportDocument casted_filter = (ImportDocument) filter;
+            String sql_query = "DELETE FROM islabdb.importdocument " +
+                    "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Document_ProviderID = ?  OR ? = "   + Entity.undefined_long + ") AND " +
+                    "(Document_ImportDate = ?  OR ? = \'"   + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
+                    "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getProvider_id());
+            statement.setLong(4, casted_filter.getProvider_id());
+            statement.setString(5, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
+            statement.setString(6, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
+            statement.setString(7, casted_filter.getDescription());
+            statement.setString(8, casted_filter.getDescription());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importdocument where Document_ID = ?");
@@ -95,22 +120,6 @@ public class DAOImportDocument implements DAOAbstract {
             return false;
         }
         return true;
-    }
-    @Override
-    public boolean DeleteEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.importdocument WHERE Document_ID = ?;");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public boolean DeleteEntityList(Connection connection, Entity filter) {
-        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

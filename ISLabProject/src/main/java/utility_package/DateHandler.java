@@ -37,6 +37,22 @@ public class DateHandler {
         int m2 = cal2.get(Calendar.YEAR) * 12 + cal2.get(Calendar.MONTH);
         return m2 - m1 + 1;
     }
+    public static Pair<Date, Date> getMonthBoundaries(Date date) {
+        Calendar cal_now  = Calendar.getInstance();
+        Calendar cal_before  = Calendar.getInstance();
+        Calendar cal_after = Calendar.getInstance();
 
-    
+        cal_now.setTime(date);
+
+        cal_before.set(Calendar.YEAR, cal_now.get(Calendar.YEAR));
+        cal_before.set(Calendar.MONTH, cal_now.get(Calendar.MONTH));
+        cal_before.set(Calendar.DAY_OF_MONTH, cal_now.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        cal_after.set(Calendar.YEAR, cal_now.get(Calendar.YEAR));
+        cal_after.set(Calendar.MONTH, cal_now.get(Calendar.MONTH));
+        cal_after.add(Calendar.MONTH, 1);
+        cal_after.set(Calendar.DAY_OF_MONTH, cal_now.getActualMinimum(Calendar.DAY_OF_MONTH));
+
+        return new Pair<>(cal_before.getTime(), cal_after.getTime());
+    }
 }

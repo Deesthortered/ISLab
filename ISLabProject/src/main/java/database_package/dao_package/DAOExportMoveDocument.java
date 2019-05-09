@@ -75,6 +75,28 @@ public class DAOExportMoveDocument implements DAOAbstract {
         return true;
     }
     @Override
+    public boolean DeleteEntityList(Connection connection, Entity filter) {
+        try {
+            ExportMoveDocument casted_filter = (ExportMoveDocument) filter;
+            String sql_query = "DELETE FROM islabdb.exportmovedocument " +
+                    "WHERE (Document_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Document_ExportGoodsID = ? OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Document_StorageID = ?     OR ? = " + Entity.undefined_long + ");";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setLong(1, casted_filter.getId());
+            statement.setLong(2, casted_filter.getId());
+            statement.setLong(3, casted_filter.getExportGoods_id());
+            statement.setLong(4, casted_filter.getExportGoods_id());
+            statement.setLong(5, casted_filter.getStorage_id());
+            statement.setLong(6, casted_filter.getStorage_id());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
     public boolean IsExistsEntity(Connection connection, long id) {
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportmovedocument where Document_ID = ?");
@@ -90,22 +112,6 @@ public class DAOExportMoveDocument implements DAOAbstract {
             return false;
         }
         return true;
-    }
-    @Override
-    public boolean DeleteEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.exportmovedocument WHERE Document_ID = ?;");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public boolean DeleteEntityList(Connection connection, Entity filter) {
-        return false;
     }
     @Override
     public boolean EditEntity(Connection connection, Entity entity) {

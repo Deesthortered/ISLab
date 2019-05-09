@@ -71,7 +71,9 @@ public abstract class EntityQueryHandler {
 
         Connection connection = pool.GetConnection();
         if (dao.IsExistsEntity(connection, id)) {
-            if (dao.DeleteEntity(connection, id))
+            Entity filter = dao.createEntity();
+            filter.setId(id);
+            if (dao.DeleteEntityList(connection, filter))
                 writer.print("ok");
             else
                 writer.print("bad");

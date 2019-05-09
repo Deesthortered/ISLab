@@ -2,7 +2,6 @@ package database_package.dao_package;
 
 import data_model.AvailableGoods;
 import data_model.Entity;
-import utility_package.Common;
 import utility_package.DateHandler;
 
 import java.sql.*;
@@ -99,46 +98,17 @@ public class DAOAvailableGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean IsExistsEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?");
-            statement.setLong(1, id);
-            ResultSet set = statement.executeQuery();
-            if (!set.next())
-                return false;
-            int count = set.getInt(1);
-            if (count != 1)
-                return false;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
-    public boolean DeleteEntity(Connection connection, long id) {
-        try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM islabdb.availablegoods WHERE Available_ID = ?;");
-            statement.setLong(1, id);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-    @Override
     public boolean DeleteEntityList(Connection connection, Entity filter) {
         try {
             AvailableGoods casted_filter = (AvailableGoods) filter;
             String sql_query = "DELETE FROM islabdb.availablegoods " +
-                      "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_GoodsCount = ?    OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
-                            "(Available_Current = ?       OR ? = false) AND " +
-                            "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')";
+                    "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_GoodsCount = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_ProviderID = ?    OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
+                    "(Available_Current = ?       OR ? = false) AND " +
+                    "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')";
             PreparedStatement statement = connection.prepareStatement(sql_query);
             statement.setLong(1, casted_filter.getId());
             statement.setLong(2, casted_filter.getId());
@@ -155,6 +125,23 @@ public class DAOAvailableGoods implements DAOAbstract {
             statement.setString(13, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
             statement.setString(14, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
             statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    @Override
+    public boolean IsExistsEntity(Connection connection, long id) {
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?");
+            statement.setLong(1, id);
+            ResultSet set = statement.executeQuery();
+            if (!set.next())
+                return false;
+            int count = set.getInt(1);
+            if (count != 1)
+                return false;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

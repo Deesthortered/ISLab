@@ -416,19 +416,88 @@ public class UserHandlerServlet extends HttpServlet {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        DAOImportDocument daoImportDoc = (DAOImportDocument) DAOImportDocument.getInstance();
-        ImportDocument importFirst = daoImportDoc.GetEarlierDocument(connection); //2019-1-1
-        ImportDocument importLast = daoImportDoc.GetLatestDocument(connection);  //2019-5-8
-        int diff = DateHandler.getMonthsDifference(importFirst.getImport_date(), importLast.getImport_date());
+        ArrayList<Entity> ImportSummaries = new ArrayList<>();
 
+        DAOImportDocument daoImportDoc = (DAOImportDocument) DAOImportDocument.getInstance();
+        ImportDocument importFirst = daoImportDoc.GetEarlierDocument(connection);
+        ImportDocument importLast = daoImportDoc.GetLatestDocument(connection);
+
+        Date current_date = importFirst.getImport_date();
+        Date last_date = importLast.getImport_date();
+        while (current_date.before(last_date)) {
+            Pair<Date, Date> current_boundaries = DateHandler.getMonthBoundaries(current_date);
+            ArrayList<ImportDocument> list = daoImportDoc.GetDocumentsBetweenDates(connection, current_boundaries.getKey(), current_boundaries.getValue());
+
+            int count = list.size();
+            long amount = 0;
+            long max_price = 0;
+            long min_price = 0;
+            boolean f = true;
+            DAOAbstract daoImportGoods = DAOImportGoods.getInstance();
+            for (ImportDocument item : list) {
+                Entity goodsFilter = new ImportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
+                ArrayList<Entity> goodsList = daoImportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
+
+                for (Entity item2 : goodsList) {
+                    ImportGoods goods = (ImportGoods) item2;
+
+                    amount += goods.getGoods_price();
+                    max_price = Math.max(max_price, goods.getGoods_price());
+                    if (f) { min_price = goods.getGoods_price(); f = false; }
+                    else min_price = Math.min(max_price, goods.getGoods_price());
+                }
+            }
+            ImportSummaries.add(new ImportSummary(Entity.undefined_long, current_boundaries.getKey(), current_boundaries.getValue(), count, amount, max_price, min_price));
+
+            current_date = current_boundaries.getValue();
+        }
+
+        ArrayList<Entity> ExportSummaries = new ArrayList<>();
 
         DAOExportDocument daoExportDoc = (DAOExportDocument) DAOExportDocument.getInstance();
-        ExportDocument e3 = daoExportDoc.GetEarlierDocument(connection); //2019-1-6
-        ExportDocument e4 = daoExportDoc.GetLatestDocument(connection);  //2019-5-8
-        int diff2 = DateHandler.getMonthsDifference(e3.getExport_date(), e4.getExport_date());
+        ExportDocument exportFirst = daoExportDoc.GetEarlierDocument(connection);
+        ExportDocument exportLast = daoExportDoc.GetLatestDocument(connection);
 
-        ArrayList<ImportDocument> list = daoImportDoc.GetDocumentsBetweenDates(connection, DateHandler.SQLDateToJavaDate("2019-1-10"), DateHandler.SQLDateToJavaDate("2019-1-20"));
-        ArrayList<ExportDocument> list2 = daoExportDoc.GetDocumentsBetweenDates(connection, DateHandler.SQLDateToJavaDate("2019-1-10"), DateHandler.SQLDateToJavaDate("2019-1-20"));
+        current_date = exportFirst.getExport_date();
+        last_date = exportLast.getExport_date();
+        while (current_date.before(last_date)) {
+            Pair<Date, Date> current_boundaries = DateHandler.getMonthBoundaries(current_date);
+            ArrayList<ExportDocument> list = daoExportDoc.GetDocumentsBetweenDates(connection, current_boundaries.getKey(), current_boundaries.getValue());
+
+            int count = list.size();
+            long amount = 0;
+            long max_price = 0;
+            long min_price = 0;
+            boolean f = true;
+            DAOAbstract daoExportGoods = DAOExportGoods.getInstance();
+            for (ExportDocument item : list) {
+                Entity goodsFilter = new ExportGoods(Entity.undefined_long, item.getId(), Entity.undefined_long, Entity.undefined_long, Entity.undefined_long);
+                ArrayList<Entity> goodsList = daoExportGoods.GetEntityList(connection, goodsFilter, false, 0, 0);
+
+                for (Entity item2 : goodsList) {
+                    ExportGoods goods = (ExportGoods) item2;
+
+                    amount += goods.getGoods_price();
+                    max_price = Math.max(max_price, goods.getGoods_price());
+                    if (f) { min_price = goods.getGoods_price(); f = false; }
+                    else min_price = Math.min(max_price, goods.getGoods_price());
+                }
+            }
+            ExportSummaries.add(new ExportSummary(Entity.undefined_long, current_boundaries.getKey(), current_boundaries.getValue(), count, amount, max_price, min_price));
+
+            current_date = current_boundaries.getValue();
+        }
+
+        DAOAbstract daoImportSummary = DAOImportSummary.getInstance();
+        DAOAbstract daoExportSummary = DAOExportSummary.getInstance();
+
+        Entity empty_ImportSummary = new ImportSummary();
+        Entity empty_ExportSummary = new ExportSummary();
+        daoImportSummary.DeleteEntityList(connection, empty_ImportSummary);
+        daoExportSummary.DeleteEntityList(connection, empty_ExportSummary);
+
+        daoImportSummary.AddEntityList(connection, ImportSummaries);
+        daoExportSummary.AddEntityList(connection, ExportSummaries);
 
         pool.DropConnection(connection);
     }
