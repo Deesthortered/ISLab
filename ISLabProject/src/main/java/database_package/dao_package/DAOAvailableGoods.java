@@ -196,4 +196,32 @@ public class DAOAvailableGoods implements DAOAbstract {
     public Entity createEntity() {
         return new AvailableGoods();
     }
+
+    public ArrayList<AvailableGoods> GetAvailableGoodsBetweenDates(Connection connection, Date from, Date to) {
+        ArrayList<AvailableGoods> result = new ArrayList<>();
+        try {
+            String sql_query =
+                    "SELECT * " +
+                            "FROM islabdb.availablegoods " +
+                            "WHERE Available_Current = false AND ? <= Available_SnapshotDate AND Available_SnapshotDate < ?";
+            PreparedStatement statement = connection.prepareStatement(sql_query);
+            statement.setString(1, DateHandler.JavaDateToSQLDate(from));
+            statement.setString(2, DateHandler.JavaDateToSQLDate(to));
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                long id          = resultSet.getLong("Available_ID");
+                long goods_id    = resultSet.getLong("Available_GoodsID");
+                long goods_count = resultSet.getLong("Available_GoodsCount");
+                long provider_id = resultSet.getLong("Available_ProviderID");
+                long storage_id  = resultSet.getLong("Available_StorageID");
+                boolean current  = resultSet.getBoolean("Available_Current");
+                Date snapshot_date = resultSet.getDate("Available_SnapshotDate");
+                result.add(new AvailableGoods(id, goods_id, goods_count, provider_id, storage_id, current, snapshot_date));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }
