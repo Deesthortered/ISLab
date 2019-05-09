@@ -7,24 +7,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/EntityQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/EntityQueryHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -98,8 +81,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="721">
-              <caret line="414" column="34" selection-start-line="414" selection-start-column="34" selection-end-line="414" selection-end-column="34" />
+            <state relative-caret-position="677">
+              <caret line="282" column="4" selection-start-line="282" selection-start-column="4" selection-end-line="282" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#doPost#0;class#UserHandlerServlet#0" />
@@ -113,6 +96,47 @@
                 <element signature="method#MakeExport#0;class#UserHandlerServlet#0" />
                 <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
                 <element signature="method#RebuildReports#0;class#UserHandlerServlet#0" />
+                <element signature="method#rebuildSummaryAvailableGoods#0;class#UserHandlerServlet#0" />
+                <element signature="e#26458#28168#1" />
+                <element signature="e#28502#30206#1" />
+                <element signature="e#30361#31674#1" />
+                <element signature="e#31725#33040#1" />
+                <element signature="e#33169#33990#1" />
+                <element signature="method#RebuildAvailable#0;class#UserHandlerServlet#0" />
+                <element signature="e#27326#29036#1" />
+                <element signature="e#29369#31073#1" />
+                <element signature="e#31228#32541#1" />
+                <element signature="e#32591#33906#1" />
+                <element signature="e#34035#34856#1" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/availablegoods">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true">
+                <filter text="" />
+              </filtering>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-19">
+              <caret line="20" column="3" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#AvailableGoods#0;class#AvailableGoods#0" />
+                <element signature="method#AvailableGoods#1;class#AvailableGoods#0" />
+                <element signature="method#getJSON#0;class#AvailableGoods#0" />
+                <element signature="method#setByJSON#0;class#AvailableGoods#0" />
+                <element signature="method#getForeingDAO#0;class#AvailableGoods#0" />
+                <element signature="method#getForeingKeys#0;class#AvailableGoods#0" />
               </folding>
             </state>
           </provider>
@@ -137,7 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>table_data</find>
       <find>$('#dtProviderTable').DataTable(</find>
       <find>table_pla</find>
       <find>f</find>
@@ -167,6 +190,7 @@
       <find>TableBuildFacad</find>
       <find>dynamic_panel_name</find>
       <find>getEntityLogicProperties</find>
+      <find>DAOAvaila</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -213,7 +237,6 @@
         <option value="$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java" />
         <option value="$PROJECT_DIR$/src/main/java/data_model/ImportSummary.java" />
         <option value="$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" />
@@ -229,6 +252,7 @@
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/EntityQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
       </list>
     </option>
   </component>
@@ -240,9 +264,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="2439" />
-    <option name="y" value="-10" />
-    <option name="width" value="1936" />
+    <option name="x" value="2080" />
+    <option name="y" value="-13" />
+    <option name="width" value="1645" />
     <option name="height" value="882" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -272,30 +296,6 @@
               <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="database_package" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="database_package" type="462c0819:PsiDirectoryNode" />
-              <item name="dao_package" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -553,7 +553,7 @@
       <workItem from="1557329666996" duration="288000" />
       <workItem from="1557330372373" duration="66000" />
       <workItem from="1557336318032" duration="14513000" />
-      <workItem from="1557382683010" duration="5315000" />
+      <workItem from="1557382683010" duration="10035000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -571,7 +571,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="501506000" />
+    <option name="totallyTimeSpent" value="506226000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -619,7 +619,7 @@
       <window_info anchor="right" id="Palette" order="4" />
       <window_info anchor="right" id="Capture Analysis" order="5" />
       <window_info anchor="right" id="Gradle" order="6" weight="0.3295302" />
-      <window_info anchor="right" id="Database" order="7" weight="0.21908316" />
+      <window_info anchor="right" id="Database" order="7" weight="0.27558637" />
       <window_info anchor="right" id="Palette&#9;" order="8" />
       <window_info anchor="right" id="Theme Preview" order="9" />
       <window_info anchor="right" id="SciView" order="10" weight="0.32995737" />
@@ -715,34 +715,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Provider.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="78" column="37" lean-forward="true" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Provider#0;class#Provider#0" />
-            <element signature="method#Provider#1;class#Provider#0" />
-            <element signature="method#getJSON#0;class#Provider#0" />
-            <element signature="method#setByJSON#0;class#Provider#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Storage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="443">
-          <caret line="65" column="43" selection-start-line="65" selection-start-column="43" selection-end-line="65" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#Storage#0;class#Storage#0" />
-            <element signature="method#Storage#1;class#Storage#0" />
-            <element signature="method#getJSON#0;class#Storage#0" />
-            <element signature="method#setByJSON#0;class#Storage#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/html/login_page.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1137,21 +1109,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
-          <folding>
-            <element signature="method#AvailableGoods#0;class#AvailableGoods#0" />
-            <element signature="method#AvailableGoods#1;class#AvailableGoods#0" />
-            <element signature="method#getJSON#0;class#AvailableGoods#0" />
-            <element signature="method#setByJSON#0;class#AvailableGoods#0" />
-            <element signature="method#getForeingDAO#0;class#AvailableGoods#0" />
-            <element signature="method#getForeingKeys#0;class#AvailableGoods#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ImportDocument.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
@@ -1493,10 +1450,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/customer">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-19">
+          <caret line="20" column="3" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#AvailableGoods#0;class#AvailableGoods#0" />
+            <element signature="method#AvailableGoods#1;class#AvailableGoods#0" />
+            <element signature="method#getJSON#0;class#AvailableGoods#0" />
+            <element signature="method#setByJSON#0;class#AvailableGoods#0" />
+            <element signature="method#getForeingDAO#0;class#AvailableGoods#0" />
+            <element signature="method#getForeingKeys#0;class#AvailableGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/availablegoods">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="721">
-          <caret line="414" column="34" selection-start-line="414" selection-start-column="34" selection-end-line="414" selection-end-column="34" />
+        <state relative-caret-position="677">
+          <caret line="282" column="4" selection-start-line="282" selection-start-column="4" selection-end-line="282" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#doPost#0;class#UserHandlerServlet#0" />
@@ -1510,6 +1501,18 @@
             <element signature="method#MakeExport#0;class#UserHandlerServlet#0" />
             <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
             <element signature="method#RebuildReports#0;class#UserHandlerServlet#0" />
+            <element signature="method#rebuildSummaryAvailableGoods#0;class#UserHandlerServlet#0" />
+            <element signature="e#26458#28168#1" />
+            <element signature="e#28502#30206#1" />
+            <element signature="e#30361#31674#1" />
+            <element signature="e#31725#33040#1" />
+            <element signature="e#33169#33990#1" />
+            <element signature="method#RebuildAvailable#0;class#UserHandlerServlet#0" />
+            <element signature="e#27326#29036#1" />
+            <element signature="e#29369#31073#1" />
+            <element signature="e#31228#32541#1" />
+            <element signature="e#32591#33906#1" />
+            <element signature="e#34035#34856#1" />
           </folding>
         </state>
       </provider>
