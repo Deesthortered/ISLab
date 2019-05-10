@@ -1194,10 +1194,36 @@ class InterfaceHashHandler {
         }
     }
     static SendReportShowImportSummary(json_string) {
+        let data = JSON.parse(json_string);
+        let import_summary_start_date = $('#import_summary_start_date');
+        let import_summary_end_date = $('#import_summary_end_date');
+        let import_summary_import_count = $('#imports_summary_import_count');
+        let import_summary_import_amount = $('#imports_summary_import_amount');
+        let import_summary_max_price = $('#import_summary_max_price');
+        let import_summary_min_price = $('#import_summary_min_price');
 
+        import_summary_start_date.val(data["start_date"]);
+        import_summary_end_date.val(data["end_date"]);
+        import_summary_import_count.val(data["imports_count"]);
+        import_summary_import_amount.val(data["imports_amount"]);
+        import_summary_max_price.val(data["max_price"]);
+        import_summary_min_price.val(data["min_price"]);
     }
     static SendReportShowExportSummary(json_string) {
+        let data = JSON.parse(json_string);
+        let export_summary_start_date = $('#export_summary_start_date');
+        let export_summary_end_date = $('#export_summary_end_date');
+        let export_summary_export_count = $('#exports_summary_export_count');
+        let export_summary_export_amount = $('#exports_summary_export_amount');
+        let export_summary_max_price = $('#export_summary_max_price');
+        let export_summary_min_price = $('#export_summary_min_price');
 
+        export_summary_start_date.val(data["start_date"]);
+        export_summary_end_date.val(data["end_date"]);
+        export_summary_export_count.val(data["exports_count"]);
+        export_summary_export_amount.val(data["exports_amount"]);
+        export_summary_max_price.val(data["max_price"]);
+        export_summary_min_price.val(data["min_price"]);
     }
 
     static System() {

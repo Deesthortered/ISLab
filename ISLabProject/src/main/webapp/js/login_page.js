@@ -1,5 +1,5 @@
 function CheckInvalidCredentialsAttribute() {
-    let val = "${invalid_credentials}";
+    let val = $('invalid_credentials');
     if (val === "true") {
         const templateElement = document.getElementById('invalid_credentials_template');
         const templateSource = templateElement.innerHTML;
