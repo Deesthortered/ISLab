@@ -46,14 +46,11 @@ public class UserHandlerServlet extends HttpServlet {
             case Common.q_export:
                 MakeExport(reader, writer);
                 break;
-            case Common.q_rebuild_database:
-                RebuildAvailable();
-                break;
             case Common.q_rebuild_reports:
                 RebuildDatabase();
                 break;
             case Common.q_get_report_available:
-                MakeReportQuery(reader, writer);
+                MakeReportAvailableQuery(reader, writer);
                 break;
             default:
                 SendError(request, response);
@@ -209,7 +206,7 @@ public class UserHandlerServlet extends HttpServlet {
                 move_document_in_array.add(new_move_document);
                 if (!dao_movedocument.AddEntityList(connection, move_document_in_array)) throw new IOException("blyat3!");
             }
-            RebuildAvailable();
+            RebuildDatabase(); //!!!
             writer.print("ok");
         } catch (IOException e) {
             writer.print("bad");
@@ -271,7 +268,7 @@ public class UserHandlerServlet extends HttpServlet {
                 if (!dao_movedocument.AddEntityList(connection, move_document_in_array)) throw new IOException("blyat3!");
             }
 
-            RebuildAvailable();
+            RebuildDatabase(); //!!!
             writer.print("ok");
         } catch (IOException e) {
             writer.print("bad");
@@ -477,7 +474,7 @@ public class UserHandlerServlet extends HttpServlet {
         pool.DropConnection(connection);
     }
 
-    private void MakeReportQuery(BufferedReader reader, PrintWriter writer) throws IOException {
+    private void MakeReportAvailableQuery(BufferedReader reader, PrintWriter writer) throws IOException {
         String entity_name = reader.readLine();
         long id = Long.parseLong(reader.readLine());
 
@@ -522,8 +519,6 @@ public class UserHandlerServlet extends HttpServlet {
         writer.write(json_list.toString());
     }
 
-    //MakeReportSummary
-    //MakeAvailableGoodsForReport
     private Pair<ImportSummary, ExportSummary> MakeReportSummary(Date from, Date to) {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();

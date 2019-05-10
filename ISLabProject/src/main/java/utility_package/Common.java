@@ -41,7 +41,6 @@ public class Common {
 
     public static final String q_import = "import";
     public static final String q_export = "export";
-    public static final String q_rebuild_database = "db_rebuild_database";
     public static final String q_rebuild_reports = "db_rebuild_reports";
 
     public static final String q_get_report_available = "get_report_available";

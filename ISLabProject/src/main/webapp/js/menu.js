@@ -967,7 +967,6 @@ class Router {
             case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
 
             case '#system'            : { InterfaceHashHandler.System();           } break;
-            case '#rebuild_available' : { InterfaceHashHandler.RebuildAvailable(); } break;
             case '#rebuild_reports'   : { InterfaceHashHandler.RebuildReports();   } break;
             case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
 
@@ -1162,22 +1161,6 @@ class InterfaceHashHandler {
     static System() {
         if (this.CheckPermission( [Common.roles.Admin])) return;
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('system_template', {});
-    }
-    static RebuildAvailable() {
-        if (confirm("Are you sure? It can take a lot of time")) {
-            let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
-            http.onreadystatechange = function() {
-                if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                    alert("Done");
-                } else if (http.readyState === XMLHttpRequest.DONE) {
-                    alert("The Rebuild request finished not successful, some trouble happened with the request.");
-                }
-            };
-            let query_body = "db_rebuild_database\n";
-            http.send(query_body);
-        }
-        window.location.hash = 'system';
     }
     static RebuildReports() {
         if (confirm("Are you sure? It can take a lot of time")) {
