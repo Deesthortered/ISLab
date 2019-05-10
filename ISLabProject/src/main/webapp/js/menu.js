@@ -67,8 +67,8 @@ class Common {
         Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ExportMoveDocument, false, false, false, false, false);
         Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     false, false, true, false, false);
         Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     false, false, false, false, false);
-        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      false, false, false, false, false);
-        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      false, false, false, false, false);
+        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      false, false, false, true, false);
+        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      false, false, false, true, false);
 
         Common.StorageList.filterable = false;
     }
@@ -825,12 +825,18 @@ class ListPage {
     }
 
     TableGetElementInfo(id) {
-        let child_entity = EntityFilters.getChildEntity(this.current_entity);
-        if (child_entity === EntityFilters.undefined_value) return;
-        let child_list = EntityFilters.getListEntity(child_entity);
-        child_list.TableBuildFacad();
-        child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
-        child_list.TableLoadAndBuildByFilter();
+        if (this.current_entity === Common.EntityMap.ImportSummary) {
+            this.ImportSummaryGetInfo(id);
+        } else if (this.current_entity === Common.EntityMap.ExportSummary) {
+            this.ExportSummaryGetInfo(id);
+        } else {
+            let child_entity = EntityFilters.getChildEntity(this.current_entity);
+            if (child_entity === EntityFilters.undefined_value) return;
+            let child_list = EntityFilters.getListEntity(child_entity);
+            child_list.TableBuildFacad();
+            child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
+            child_list.TableLoadAndBuildByFilter();
+        }
     }
 
     FreezeTable() {
@@ -850,6 +856,46 @@ class ListPage {
         this.choosed_item = this.table_data.find(x => x['id'] === id);
         document.getElementById('choosed').innerHTML = TemplateHandler.Render('choosed_template',
             { id : this.choosed_item[EntityFilters.getRepresentDataField(this.current_entity)] });
+    }
+
+    //Special
+    ImportSummaryGetInfo(id) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = this.ImportSummaryGetInfoCallback(http, this);
+        let query_body =
+            "get_report_available\n" +
+            "get_import_report_available\n" +
+            id + "\n";
+        http.send(query_body);
+    }
+    ImportSummaryGetInfoCallback(http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                alert("ok");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
+            }
+        }
+    }
+    ExportSummaryGetInfo(id) {
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = this.ExportSummaryGetInfoCallback(http, this);
+        let query_body =
+            "get_report_available\n" +
+            "get_export_report_available\n" +
+            id + "\n";
+        http.send(query_body);
+    }
+    ExportSummaryGetInfoCallback(http, obj) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                alert("ok");
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
+            }
+        }
     }
 }
 
@@ -887,8 +933,8 @@ class Router {
             case '#export_list'       : { InterfaceHashHandler.ExportsList();      } break;
 
             case '#reports'           : { InterfaceHashHandler.Reports();          } break;
-            case '#report_last'       : { InterfaceHashHandler.ReportLast();       } break;
-            case '#report_list'       : { InterfaceHashHandler.ReportList();       } break;
+            case '#report_list_import': { InterfaceHashHandler.ImportReportList(); } break;
+            case '#report_list_export': { InterfaceHashHandler.ExportReportList(); } break;
             case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
 
             case '#system'            : { InterfaceHashHandler.System();           } break;
@@ -1071,17 +1117,11 @@ class InterfaceHashHandler {
     static Reports() {
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('reports_template', {});
     }
-    static ReportLast() {
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('report_last_template', data);
+    static ImportReportList() {
+        Common.ImportSummaryList.BuildList();
     }
-    static ReportList() {
-        const data = {
-        };
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('report_list_template', data);
+    static ExportReportList() {
+        Common.ExportSummaryList.BuildList();
     }
     static ReportMake() {
         const data = {

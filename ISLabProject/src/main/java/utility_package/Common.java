@@ -44,6 +44,10 @@ public class Common {
     public static final String q_rebuild_database = "db_rebuild_database";
     public static final String q_rebuild_reports = "db_rebuild_reports";
 
+    public static final String q_get_report_available = "get_report_available";
+    public static final String q_import_report = "get_import_report_available";
+    public static final String q_export_report = "get_export_report_available";
+
     public static boolean isInitialized() {
         return initialized;
     }
