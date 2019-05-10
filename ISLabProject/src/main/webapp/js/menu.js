@@ -52,23 +52,29 @@ class Common {
     static ImportSummaryList;
     static ExportSummaryList;
 
+    static ImportSummaryAvailableGoods;
+    static ExportSummaryAvailableGoods;
+
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
     static initialize() {
-        Common.ProviderList           = new ListPage('ProviderList', 'dynamic_panel',          Common.EntityMap.Provider,           true, true, false, false, true);
-        Common.CustomerList           = new ListPage('CustomerList', 'dynamic_panel',          Common.EntityMap.Customer,           true, true, false, false, true);
-        Common.GoodsList              = new ListPage('GoodsList', 'dynamic_panel',             Common.EntityMap.Goods,              true, true, true, false, false);
-        Common.ImportsList            = new ListPage('ImportsList', 'dynamic_panel',           Common.EntityMap.ImportDocument,     false, false, false, true, false);
-        Common.ExportsList            = new ListPage('ExportsList', 'dynamic_panel',           Common.EntityMap.ExportDocument,     false, false, false, true, false);
-        Common.ImportGoodsList        = new ListPage('ImportGoodsList', 'dynamic_panel',       Common.EntityMap.ImportGoods,        false, false, false, true, false);
-        Common.ExportGoodsList        = new ListPage('ExportGoodsList','dynamic_panel',        Common.EntityMap.ExportGoods,        false, false, false, true, false);
-        Common.ImportMoveDocumentList = new ListPage('ImportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ImportMoveDocument, false, false, false, false, false);
-        Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ExportMoveDocument, false, false, false, false, false);
-        Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     false, false, true, false, false);
-        Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     false, false, false, false, false);
-        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      false, false, false, true, false);
-        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      false, false, false, true, false);
+        Common.ProviderList           = new ListPage('ProviderList', 'dynamic_panel',          Common.EntityMap.Provider,           true, true, true, false, false, true);
+        Common.CustomerList           = new ListPage('CustomerList', 'dynamic_panel',          Common.EntityMap.Customer,           true, true, true, false, false, true);
+        Common.GoodsList              = new ListPage('GoodsList', 'dynamic_panel',             Common.EntityMap.Goods,              true, true, true, true, false, false);
+        Common.ImportsList            = new ListPage('ImportsList', 'dynamic_panel',           Common.EntityMap.ImportDocument,     true, false, false, false, true, false);
+        Common.ExportsList            = new ListPage('ExportsList', 'dynamic_panel',           Common.EntityMap.ExportDocument,     true, false, false, false, true, false);
+        Common.ImportGoodsList        = new ListPage('ImportGoodsList', 'dynamic_panel',       Common.EntityMap.ImportGoods,        true, false, false, false, true, false);
+        Common.ExportGoodsList        = new ListPage('ExportGoodsList','dynamic_panel',        Common.EntityMap.ExportGoods,        true, false, false, false, true, false);
+        Common.ImportMoveDocumentList = new ListPage('ImportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ImportMoveDocument, true, false, false, false, false, false);
+        Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ExportMoveDocument, true, false, false, false, false, false);
+        Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     true, false, false, true, false, false);
+        Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     true, false, false, false, false, false);
+        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      true, false, false, false, true, false);
+        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      true, false, false, false, true, false);
+
+        Common.ImportSummaryAvailableGoods = new ListPage('ImportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoods, false, false, false, false, false, false);
+        Common.ExportSummaryAvailableGoods = new ListPage('ExportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoods, false, false, false, false, false, false);
 
         Common.StorageList.filterable = false;
     }
@@ -374,6 +380,8 @@ class ListPage {
 
     choosed_item = null;
 
+    extendable;
+
     actionable;
     editable;
     deletable;
@@ -385,7 +393,7 @@ class ListPage {
     is_import = false;
     is_export = false;
 
-    constructor(listpage_name, dynamic_table, entity, editable, deletable, pocketable, getinfoable, choosable) {
+    constructor(listpage_name, dynamic_table, entity, extendable, editable, deletable, pocketable, getinfoable, choosable) {
         if (!Common.EntityArray.includes(entity)) {
             alert("Entity  \'" + entity + "\' is not defined.");
             return;
@@ -404,6 +412,8 @@ class ListPage {
 
         this.in_pocket = false;
         this.pocket = [];
+
+        this.extendable = extendable;
 
         this.actionable = editable || deletable || pocketable || getinfoable || choosable;
         this.editable = editable;
@@ -490,7 +500,7 @@ class ListPage {
             if (this.pocketable)
                 table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_show_pocket', { listpage : this.listpage_name }));
         } else {
-            if (!this.frozen)
+            if (!this.frozen && this.extendable)
                 table_place.insertAdjacentHTML('beforeend', TemplateHandler.Render('list_table_hide_pocket', { listpage : this.listpage_name }));
         }
 
@@ -872,7 +882,8 @@ class ListPage {
     ImportSummaryGetInfoCallback(http, obj) {
         return function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                alert("ok");
+                Common.ImportSummaryAvailableGoods.TableBuildFacad();
+                Common.ImportSummaryAvailableGoods.TableFill(JSON.parse(http.responseText), false);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
             }
@@ -891,7 +902,8 @@ class ListPage {
     ExportSummaryGetInfoCallback(http, obj) {
         return function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                alert("ok");
+                Common.ExportSummaryAvailableGoods.TableBuildFacad();
+                Common.ExportSummaryAvailableGoods.TableFill(JSON.parse(http.responseText), false);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
             }
