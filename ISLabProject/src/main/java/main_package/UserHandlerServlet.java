@@ -588,19 +588,21 @@ public class UserHandlerServlet extends HttpServlet {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
+        Date beforeTo = (Date) to.clone();
         to = DateHandler.nextDay(to);
 
         DAOImportDocument daoImportDocument = (DAOImportDocument) DAOImportDocument.getInstance();
         Date from = daoImportDocument.GetEarlierDocument(connection).getImport_date();
 
         DAOAvailableGoods daoAvailableGoods = (DAOAvailableGoods) DAOAvailableGoods.getInstance();
-        ArrayList<AvailableGoods> availableList = daoAvailableGoods.GetAvailableGoodsBetweenDates(connection, from, to);
+        ArrayList<AvailableGoods> availableList = daoAvailableGoods.GetAvailableGoodsBetweenDates(connection, beforeTo, to);
 
         if (availableList.isEmpty()) {
             ArrayList<AvailableGoods> tmp = makeAvailableGoodsForReports(connection, new ArrayList<>(), new ArrayList<>(), from, to);
             availableList.addAll(tmp);
         } else {
-            if (to.after(availableList.get(availableList.size()-1).getSnapshot_date())) {
+            Date last_there = DateHandler.nextDay(availableList.get(availableList.size()-1).getSnapshot_date());
+            if (to.after(last_there)) {
                 ArrayList<Entity> import_available = (ArrayList<Entity>) availableList.clone();
                 ArrayList<AvailableGoods> tmp = makeAvailableGoodsForReports(connection, import_available, new ArrayList<>(), availableList.get(availableList.size()-1).getSnapshot_date(), to);
                 availableList.addAll(tmp);

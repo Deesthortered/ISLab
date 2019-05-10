@@ -19,6 +19,7 @@ class Common {
         'import summary',
         'export summary',
         'available goods',
+        'available goods report',
     ]);
     static EntityMap = Object.freeze({
         Provider           : 'provider',
@@ -34,6 +35,8 @@ class Common {
         ImportSummary      : 'import summary',
         ExportSummary      : 'export summary',
         AvailableGoods     : 'available goods',
+
+        AvailableGoodsReports : 'available goods report',
     });
     // Temporary
     static role;
@@ -73,8 +76,8 @@ class Common {
         Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      true, false, false, false, true, false);
         Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      true, false, false, false, true, false);
 
-        Common.ImportSummaryAvailableGoods = new ListPage('ImportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoods, false, false, false, false, false, false);
-        Common.ExportSummaryAvailableGoods = new ListPage('ExportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoods, false, false, false, false, false, false);
+        Common.ImportSummaryAvailableGoods = new ListPage('ImportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
+        Common.ExportSummaryAvailableGoods = new ListPage('ExportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
 
         Common.StorageList.filterable = false;
     }
@@ -200,6 +203,16 @@ class EntityFilters {
                     current       : true,
                     snapshot_date : this.undefined_value,
                 };
+            case Common.EntityMap.AvailableGoodsReports :
+                return {
+                    id            : this.undefined_value,
+                    goods_id      : this.undefined_value,
+                    goods_count   : this.undefined_value,
+                    provider_id   : this.undefined_value,
+                    storage_id    : this.undefined_value,
+                    current       : false,
+                    snapshot_date : this.undefined_value,
+                };
 
             default : {
                 alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
@@ -317,6 +330,8 @@ class EntityFilters {
                 return ['id', 'start_date', 'end_date', 'exports_count', 'exports_amount', 'max_price', 'min_price'];
             case Common.EntityMap.AvailableGoods :
                 return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id'];
+            case Common.EntityMap.AvailableGoodsReports :
+                return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id', 'snapshot_date'];
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
@@ -346,6 +361,8 @@ class EntityFilters {
                 return ['ID', 'Start Date', 'End Date', 'Exports count', 'Exports amount', 'Max price', 'Min price'];
             case Common.EntityMap.AvailableGoods :
                 return ['ID', 'Goods ID', 'Goods Count', 'Provider ID', 'Storage ID'];
+            case Common.EntityMap.AvailableGoodsReports :
+                return ['ID', 'Goods ID', 'Goods Count', 'Provider ID', 'Storage ID', 'Snapshot Date'];
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
