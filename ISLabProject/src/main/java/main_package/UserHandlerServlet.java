@@ -52,6 +52,9 @@ public class UserHandlerServlet extends HttpServlet {
             case Common.q_get_report_available:
                 MakeReportAvailableQuery(reader, writer);
                 break;
+            case Common.q_custom_report:
+                MakeCustomReport(reader, writer);
+                break;
             default:
                 SendError(request, response);
         }
@@ -492,8 +495,8 @@ public class UserHandlerServlet extends HttpServlet {
             DAOAbstract daoExportSummary = DAOExportSummary.getInstance();
             Entity filter = new ExportSummary();
             filter.setId(id);
-            ArrayList<Entity> imports = daoExportSummary.GetEntityList(connection, filter, false, 0, 0);
-            date = ((ExportSummary) imports.get(0)).getEnd_date();
+            ArrayList<Entity> exports = daoExportSummary.GetEntityList(connection, filter, false, 0, 0);
+            date = ((ExportSummary) exports.get(0)).getEnd_date();
         } else {
             writer.println("bad");
             return;
@@ -518,6 +521,64 @@ public class UserHandlerServlet extends HttpServlet {
         pool.DropConnection(connection);
         writer.write(json_list.toString());
     }
+    private void MakeCustomReport(BufferedReader reader, PrintWriter writer) throws IOException {
+        Date date_from = DateHandler.SQLDateToJavaDate(reader.readLine());
+        Date date_to = DateHandler.SQLDateToJavaDate(reader.readLine());
+
+        Pair<ImportSummary, ExportSummary> summaries = MakeReportSummary(date_from, date_to);
+        ArrayList<AvailableGoods> availableGoods = MakeAvailableGoodsForReport(date_to);
+
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.GetConnection();
+
+        {
+            Entity entity = summaries.getKey();
+            ArrayList<String> represantiveData = new ArrayList<>();
+            ArrayList<Long> foreingKeys = entity.getForeingKeys();
+            ArrayList<DAOAbstract> dao_array = entity.getForeingDAO();
+            if (dao_array != null)
+                for (int i = 0; i < dao_array.size(); i++) {
+                    Entity sub_filter = dao_array.get(i).createEntity();
+                    sub_filter.setId(foreingKeys.get(i));
+                    Entity sub_entity = dao_array.get(i).GetEntityList(connection, sub_filter, true, 0, 1).get(0);
+                    represantiveData.add(sub_entity.getRepresantiveData());
+                }
+            writer.println(entity.getJSON(represantiveData).toString());
+        }
+
+        {
+            Entity entity = summaries.getValue();
+            ArrayList<String> represantiveData = new ArrayList<>();
+            ArrayList<Long> foreingKeys = entity.getForeingKeys();
+            ArrayList<DAOAbstract> dao_array = entity.getForeingDAO();
+            if (dao_array != null)
+                for (int i = 0; i < dao_array.size(); i++) {
+                    Entity sub_filter = dao_array.get(i).createEntity();
+                    sub_filter.setId(foreingKeys.get(i));
+                    Entity sub_entity = dao_array.get(i).GetEntityList(connection, sub_filter, true, 0, 1).get(0);
+                    represantiveData.add(sub_entity.getRepresantiveData());
+                }
+            writer.println(entity.getJSON(represantiveData).toString());
+        }
+
+        JSONArray json_list = new JSONArray();
+        for (Entity entity :  (ArrayList<Entity>)(ArrayList<?>) availableGoods) {
+            ArrayList<String> represantiveData = new ArrayList<>();
+            ArrayList<Long> foreingKeys = entity.getForeingKeys();
+            ArrayList<DAOAbstract> dao_array = entity.getForeingDAO();
+            if (dao_array != null)
+                for (int i = 0; i < dao_array.size(); i++) {
+                    Entity sub_filter = dao_array.get(i).createEntity();
+                    sub_filter.setId(foreingKeys.get(i));
+                    Entity sub_entity = dao_array.get(i).GetEntityList(connection, sub_filter, true, 0, 1).get(0);
+                    represantiveData.add(sub_entity.getRepresantiveData());
+                }
+            json_list.put(entity.getJSON(represantiveData));
+        }
+        writer.println(json_list.toString());
+
+        pool.DropConnection(connection);
+    }
 
     private Pair<ImportSummary, ExportSummary> MakeReportSummary(Date from, Date to) {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -529,14 +590,19 @@ public class UserHandlerServlet extends HttpServlet {
         ArrayList<ImportSummary> importSummaries = daoImportSummary.GetSummaryBetweenDates(connection, from, to);
         ArrayList<ExportSummary> exportSummaries = daoExportSummary.GetSummaryBetweenDates(connection, from, to);
 
-        if (from.before(importSummaries.get(0).getStart_date())) {
-            importSummaries.add(0, makeImportSummary(connection, from, importSummaries.get(0).getStart_date()));
-            exportSummaries.add(0, makeExportSummary(connection, from, importSummaries.get(0).getStart_date()));
-        }
+        if (importSummaries.isEmpty()) {
+            importSummaries.add(0, makeImportSummary(connection, from, to));
+            exportSummaries.add(0, makeExportSummary(connection, from, to));
+        } else {
+            if (from.before(importSummaries.get(0).getStart_date())) {
+                importSummaries.add(0, makeImportSummary(connection, from, importSummaries.get(0).getStart_date()));
+                exportSummaries.add(0, makeExportSummary(connection, from, importSummaries.get(0).getStart_date()));
+            }
 
-        if (to.after(importSummaries.get(importSummaries.size() - 1).getEnd_date())){
-            importSummaries.add(makeImportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
-            exportSummaries.add(makeExportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
+            if (to.after(importSummaries.get(importSummaries.size() - 1).getEnd_date())){
+                importSummaries.add(makeImportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
+                exportSummaries.add(makeExportSummary(connection, to, importSummaries.get(importSummaries.size() - 1).getEnd_date()));
+            }
         }
 
         assert (importSummaries.size() == exportSummaries.size());

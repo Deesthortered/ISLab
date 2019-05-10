@@ -7,7 +7,7 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
-    <title>Title</title>
+    <title>*! Little Storage !* Workplace</title>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -382,7 +382,22 @@
         </ul>
     </script>
     <script id="report_make_template" type="text/template">
-        
+        <ul>
+            <li>
+                <p>Date from (YYYY-MM-DD): </p>
+                <input name="date_from" type="text" value="2019-1-1">
+            </li>
+            <li>
+                <p>Date to (YYYY-MM-DD): </p>
+                <input name="date_to" type="text" value="2019-1-1">
+            </li>
+            <li><button onclick="InterfaceHashHandler.SendReportDates()">Send query</button></li>
+        </ul>
+        <div id="sub_dynamic_panel"></div>
+    </script>
+    <script id="report_make_result" type="text/template">
+        <P>boom</P>
+        <div id="list_panel"></div>
     </script>
 
     <script id="system_template" type="text/template">

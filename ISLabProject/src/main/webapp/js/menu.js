@@ -57,6 +57,7 @@ class Common {
 
     static ImportSummaryAvailableGoods;
     static ExportSummaryAvailableGoods;
+    static CustomSummaryAvailableGoods;
 
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -78,6 +79,11 @@ class Common {
 
         Common.ImportSummaryAvailableGoods = new ListPage('ImportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
         Common.ExportSummaryAvailableGoods = new ListPage('ExportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
+        Common.CustomSummaryAvailableGoods = new ListPage('CustomSummaryAvailableGoods','list_panel',    Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
+
+        Common.ImportSummaryAvailableGoods.filterable = false;
+        Common.ExportSummaryAvailableGoods.filterable = false;
+        Common.CustomSummaryAvailableGoods.filterable = false;
 
         Common.StorageList.filterable = false;
     }
@@ -843,10 +849,14 @@ class ListPage {
     }
     ShowPocket() {
         this.in_pocket = true;
+        this.filterable = false;
+        this.TableBuildFacad();
         this.TableFill(this.pocket, false);
     }
     HidePocket() {
         this.in_pocket = false;
+        this.filterable = true;
+        this.TableBuildFacad();
         this.TableFill(this.table_data, true);
         this.TableRefresh();
     }
@@ -1152,10 +1162,42 @@ class InterfaceHashHandler {
         Common.ExportSummaryList.BuildList();
     }
     static ReportMake() {
-        const data = {
-        };
         const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('report_make_template', data);
+        dynamic_panel.innerHTML = TemplateHandler.Render('report_make_template', {});
+    }
+
+    static SendReportDates() {
+        let date_from = $('.dynamic_panel').find('input[name=\'date_from\']');
+        let date_to = $('.dynamic_panel').find('input[name=\'date_to\']');
+
+        let http = new XMLHttpRequest();
+        http.open('POST', window.location.href, true);
+        http.onreadystatechange = InterfaceHashHandler.SendReportDatesCallback(http);
+        let query_body =
+            "custom_report\n" +
+            date_from.val() + "\n" +
+            date_to.val() + "\n";
+        http.send(query_body);
+    }
+    static SendReportDatesCallback(http) {
+        return function () {
+            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
+                document.getElementById('sub_dynamic_panel').innerHTML = TemplateHandler.Render('report_make_result', {});
+                let strings = http.responseText.split('\n');
+                InterfaceHashHandler.SendReportShowImportSummary(strings[0]);
+                InterfaceHashHandler.SendReportShowExportSummary(strings[1]);
+                Common.CustomSummaryAvailableGoods.TableBuildFacad();
+                Common.CustomSummaryAvailableGoods.TableFill(JSON.parse(strings[2]), false);
+            } else if (http.readyState === XMLHttpRequest.DONE) {
+                alert("The report data is not loaded, some trouble happened with the request.");
+            }
+        }
+    }
+    static SendReportShowImportSummary(json_string) {
+
+    }
+    static SendReportShowExportSummary(json_string) {
+
     }
 
     static System() {

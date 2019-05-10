@@ -47,6 +47,8 @@ public class Common {
     public static final String q_import_report = "get_import_report_available";
     public static final String q_export_report = "get_export_report_available";
 
+    public static final String q_custom_report = "custom_report";
+
     public static boolean isInitialized() {
         return initialized;
     }

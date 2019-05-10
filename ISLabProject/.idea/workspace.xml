@@ -84,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="25" column="121" selection-start-line="25" selection-start-column="121" selection-end-line="25" selection-end-column="121" />
+            <state relative-caret-position="659">
+              <caret line="523" column="96" selection-start-line="523" selection-start-column="96" selection-end-line="523" selection-end-column="96" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#doPost#0;class#UserHandlerServlet#0" />
@@ -101,6 +101,7 @@
                 <element signature="method#RebuildReports#0;class#UserHandlerServlet#0" />
                 <element signature="method#RebuildAvailable#0;class#UserHandlerServlet#0" />
                 <element signature="method#MakeReportQuery#0;class#UserHandlerServlet#0" />
+                <element signature="method#MakeCustomReport#0;class#UserHandlerServlet#0" />
                 <element signature="method#MakeReportSummary#0;class#UserHandlerServlet#0" />
                 <element signature="method#MakeAvailableGoodsForReport#0;class#UserHandlerServlet#0" />
                 <element signature="method#makeImportSummary#0;class#UserHandlerServlet#0" />
@@ -112,14 +113,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="384" column="8" selection-start-line="384" selection-start-column="8" selection-end-line="384" selection-end-column="8" />
+            <state relative-caret-position="194">
+              <caret line="399" column="27" selection-start-line="399" selection-start-column="17" selection-end-line="399" selection-end-column="27" />
               <folding>
                 <element signature="n#head#0;n#html#0;n#!!top" />
+                <element signature="e#825#1368#0" />
                 <element signature="e#1405#1633#0" />
+                <element signature="e#1671#3575#0" />
                 <element signature="e#3580#5098#0" />
                 <element signature="e#5103#6479#0" />
                 <element signature="e#6484#7797#0" />
@@ -139,6 +142,7 @@
                 <element signature="e#14797#15193#0" />
                 <element signature="e#15198#15321#0" />
                 <element signature="e#15327#16155#0" />
+                <element signature="e#16160#16230#0" />
                 <element signature="e#16371#17262#0" />
                 <element signature="e#17267#17434#0" />
                 <element signature="e#17476#17702#0" />
@@ -147,16 +151,37 @@
                 <element signature="e#18115#18278#0" />
                 <element signature="e#18283#18395#0" />
                 <element signature="e#18400#18785#0" />
+                <element signature="e#18790#19143#0" />
+                <element signature="e#19148#19301#0" />
+                <element signature="e#19306#19459#0" />
+                <element signature="e#19464#19587#0" />
+                <element signature="e#19592#19701#0" />
+                <element signature="e#19706#19803#0" />
+                <element signature="e#19808#19960#0" />
+                <element signature="e#19965#20117#0" />
+                <element signature="e#20122#20292#0" />
+                <element signature="e#20297#20443#0" />
+                <element signature="e#20449#20636#0" />
+                <element signature="e#20641#20830#0" />
+                <element signature="e#20835#21038#0" />
+                <element signature="e#21043#21241#0" />
+                <element signature="e#21246#21436#0" />
+                <element signature="e#21442#21657#0" />
+                <element signature="e#21662#21836#0" />
+                <element signature="e#21841#21998#0" />
+                <element signature="e#22004#22276#0" />
+                <element signature="e#22281#22485#0" />
+                <element signature="e#22490#22714#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="593">
-              <caret line="1153" selection-start-line="1153" selection-end-line="1153" />
+            <state relative-caret-position="643">
+              <caret line="857" column="30" selection-start-line="857" selection-start-column="30" selection-end-line="857" selection-end-column="30" />
               <folding>
                 <element signature="n#Common#0" />
                 <element signature="e#48#209#0" />
@@ -177,7 +202,6 @@
                 <element signature="n#!!block;n#getEntityLogicProperties#0;n#EntityFilters#0" />
                 <element signature="n#!!block;n#getEntityViewProperties#0;n#EntityFilters#0" />
                 <element signature="n#!!block;n#getRepresentDataField#0;n#EntityFilters#0" />
-                <element signature="n#ListPage#0" />
                 <element signature="n#!!block;n#constructor#0;n#ListPage#0" />
                 <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableBuildFacad#0;n#ListPage#0" />
@@ -199,8 +223,6 @@
                 <element signature="n#!!block;n#TableEditSend#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableEditCallback#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableAddToPocket#0;n#ListPage#0" />
-                <element signature="n#!!block;n#ShowPocket#0;n#ListPage#0" />
-                <element signature="n#!!block;n#HidePocket#0;n#ListPage#0" />
                 <element signature="n#!!block;n#TableGetElementInfo#0;n#ListPage#0" />
                 <element signature="n#!!block;n#FreezeTable#0;n#ListPage#0" />
                 <element signature="n#!!block;n#UnfreezeTable#0;n#ListPage#0" />
@@ -237,6 +259,9 @@
                 <element signature="n#!!block;n#Reports#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#ImportReportList#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#ExportReportList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ReportMake#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#SendReportDates#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#SendReportDatesCallback#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#System#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#RebuildReports#0;n#InterfaceHashHandler#0" />
                 <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
@@ -266,7 +291,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Entity</find>
       <find>list_ta</find>
       <find>(10 by step)</find>
       <find>'TR</find>
@@ -296,6 +320,7 @@
       <find>listpage_name</find>
       <find>report_last_template</find>
       <find>report_list_template</find>
+      <find>in_pocket</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -354,10 +379,10 @@
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" />
         <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" />
         <option value="$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
-        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/html/menu.html" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
       </list>
     </option>
   </component>
@@ -699,7 +724,7 @@
       <workItem from="1557469131788" duration="1476000" />
       <workItem from="1557476185335" duration="426000" />
       <workItem from="1557476870549" duration="900000" />
-      <workItem from="1557490726534" duration="17410000" />
+      <workItem from="1557490726534" duration="21519000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -717,7 +742,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="541066000" />
+    <option name="totallyTimeSpent" value="545175000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1433,9 +1458,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/login_page.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/availablegoods">
       <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
@@ -1445,10 +1467,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/login_page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="11" selection-end-line="5" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Common.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="43" selection-start-line="43" selection-end-line="43" />
+        <state relative-caret-position="669">
+          <caret line="49" column="63" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="63" />
           <folding>
             <element signature="method#Initialize#0;class#Common#0" />
             <element signature="method#readCookie#0;class#Common#0" />
@@ -1458,8 +1487,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="25" column="121" selection-start-line="25" selection-start-column="121" selection-end-line="25" selection-end-column="121" />
+        <state relative-caret-position="659">
+          <caret line="523" column="96" selection-start-line="523" selection-start-column="96" selection-end-line="523" selection-end-column="96" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#doPost#0;class#UserHandlerServlet#0" />
@@ -1475,6 +1504,7 @@
             <element signature="method#RebuildReports#0;class#UserHandlerServlet#0" />
             <element signature="method#RebuildAvailable#0;class#UserHandlerServlet#0" />
             <element signature="method#MakeReportQuery#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeCustomReport#0;class#UserHandlerServlet#0" />
             <element signature="method#MakeReportSummary#0;class#UserHandlerServlet#0" />
             <element signature="method#MakeAvailableGoodsForReport#0;class#UserHandlerServlet#0" />
             <element signature="method#makeImportSummary#0;class#UserHandlerServlet#0" />
@@ -1485,10 +1515,72 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="399" column="27" selection-start-line="399" selection-start-column="17" selection-end-line="399" selection-end-column="27" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+            <element signature="e#825#1368#0" />
+            <element signature="e#1405#1633#0" />
+            <element signature="e#1671#3575#0" />
+            <element signature="e#3580#5098#0" />
+            <element signature="e#5103#6479#0" />
+            <element signature="e#6484#7797#0" />
+            <element signature="e#7803#8203#0" />
+            <element signature="e#8208#9003#0" />
+            <element signature="e#9008#9803#0" />
+            <element signature="e#9808#10560#0" />
+            <element signature="e#10565#11375#0" />
+            <element signature="e#11381#12234#0" />
+            <element signature="e#12239#12539#0" />
+            <element signature="e#12544#12834#0" />
+            <element signature="e#12839#13219#0" />
+            <element signature="e#13224#13347#0" />
+            <element signature="e#13353#14192#0" />
+            <element signature="e#14197#14497#0" />
+            <element signature="e#14502#14792#0" />
+            <element signature="e#14797#15193#0" />
+            <element signature="e#15198#15321#0" />
+            <element signature="e#15327#16155#0" />
+            <element signature="e#16160#16230#0" />
+            <element signature="e#16371#17262#0" />
+            <element signature="e#17267#17434#0" />
+            <element signature="e#17476#17702#0" />
+            <element signature="e#17707#17901#0" />
+            <element signature="e#17906#18110#0" />
+            <element signature="e#18115#18278#0" />
+            <element signature="e#18283#18395#0" />
+            <element signature="e#18400#18785#0" />
+            <element signature="e#18790#19143#0" />
+            <element signature="e#19148#19301#0" />
+            <element signature="e#19306#19459#0" />
+            <element signature="e#19464#19587#0" />
+            <element signature="e#19592#19701#0" />
+            <element signature="e#19706#19803#0" />
+            <element signature="e#19808#19960#0" />
+            <element signature="e#19965#20117#0" />
+            <element signature="e#20122#20292#0" />
+            <element signature="e#20297#20443#0" />
+            <element signature="e#20449#20636#0" />
+            <element signature="e#20641#20830#0" />
+            <element signature="e#20835#21038#0" />
+            <element signature="e#21043#21241#0" />
+            <element signature="e#21246#21436#0" />
+            <element signature="e#21442#21657#0" />
+            <element signature="e#21662#21836#0" />
+            <element signature="e#21841#21998#0" />
+            <element signature="e#22004#22276#0" />
+            <element signature="e#22281#22485#0" />
+            <element signature="e#22490#22714#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="593">
-          <caret line="1153" selection-start-line="1153" selection-end-line="1153" />
+        <state relative-caret-position="643">
+          <caret line="857" column="30" selection-start-line="857" selection-start-column="30" selection-end-line="857" selection-end-column="30" />
           <folding>
             <element signature="n#Common#0" />
             <element signature="e#48#209#0" />
@@ -1509,7 +1601,6 @@
             <element signature="n#!!block;n#getEntityLogicProperties#0;n#EntityFilters#0" />
             <element signature="n#!!block;n#getEntityViewProperties#0;n#EntityFilters#0" />
             <element signature="n#!!block;n#getRepresentDataField#0;n#EntityFilters#0" />
-            <element signature="n#ListPage#0" />
             <element signature="n#!!block;n#constructor#0;n#ListPage#0" />
             <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableBuildFacad#0;n#ListPage#0" />
@@ -1531,8 +1622,6 @@
             <element signature="n#!!block;n#TableEditSend#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableEditCallback#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableAddToPocket#0;n#ListPage#0" />
-            <element signature="n#!!block;n#ShowPocket#0;n#ListPage#0" />
-            <element signature="n#!!block;n#HidePocket#0;n#ListPage#0" />
             <element signature="n#!!block;n#TableGetElementInfo#0;n#ListPage#0" />
             <element signature="n#!!block;n#FreezeTable#0;n#ListPage#0" />
             <element signature="n#!!block;n#UnfreezeTable#0;n#ListPage#0" />
@@ -1569,49 +1658,14 @@
             <element signature="n#!!block;n#Reports#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ImportReportList#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ExportReportList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ReportMake#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#SendReportDates#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#SendReportDatesCallback#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#System#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#RebuildReports#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#MakeImport#0;n#InterfaceHashHandler#0" />
             <element signature="n#!!block;n#MakeExport#0;n#InterfaceHashHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="384" column="8" selection-start-line="384" selection-start-column="8" selection-end-line="384" selection-end-column="8" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" />
-            <element signature="e#1405#1633#0" />
-            <element signature="e#3580#5098#0" />
-            <element signature="e#5103#6479#0" />
-            <element signature="e#6484#7797#0" />
-            <element signature="e#7803#8203#0" />
-            <element signature="e#8208#9003#0" />
-            <element signature="e#9008#9803#0" />
-            <element signature="e#9808#10560#0" />
-            <element signature="e#10565#11375#0" />
-            <element signature="e#11381#12234#0" />
-            <element signature="e#12239#12539#0" />
-            <element signature="e#12544#12834#0" />
-            <element signature="e#12839#13219#0" />
-            <element signature="e#13224#13347#0" />
-            <element signature="e#13353#14192#0" />
-            <element signature="e#14197#14497#0" />
-            <element signature="e#14502#14792#0" />
-            <element signature="e#14797#15193#0" />
-            <element signature="e#15198#15321#0" />
-            <element signature="e#15327#16155#0" />
-            <element signature="e#16371#17262#0" />
-            <element signature="e#17267#17434#0" />
-            <element signature="e#17476#17702#0" />
-            <element signature="e#17707#17901#0" />
-            <element signature="e#17906#18110#0" />
-            <element signature="e#18115#18278#0" />
-            <element signature="e#18283#18395#0" />
-            <element signature="e#18400#18785#0" />
           </folding>
         </state>
       </provider>
