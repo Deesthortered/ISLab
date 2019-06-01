@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "com.bmuschko:gradle-cargo-plugin:2.6"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'war'
+}
+
+apply plugin: 'com.bmuschko.cargo'
+
+group 'ISLabProjectGroup'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.44'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.0'
+    compile group: 'org.json', name: 'json', version: '20090211'
+}
+
+cargo {
+    containerId = 'tomcat9x'
+    port = 8090
+
+    deployable {
+        context = 'ISLab'
+    }
+
+    remote {
+        hostname = 'localhost'
+        username =  'admin'
+        password =  'admin'
+    }
+}

@@ -1,0 +1,570 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+
+    <title>*! Little Storage !* Workplace</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/mdb.min.css" rel="stylesheet">
+    <link href="css/addons/datatables.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="css/menu.css" rel="stylesheet">
+</head>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="main_title">
+                <h1 class="title">Welcome to The System!)</h1>
+            </div>
+            <div id="username_field" class="logout_corner"></div>
+        </header>
+        <div class="content">
+            <div class="menu">
+                <nav class="dws-menu">
+                    <ul id="menu_ul" ></ul>
+                </nav>
+            </div>
+
+            <div id="dynamic_panel" class="dynamic_panel"></div>
+
+        </div>
+        <footer></footer>
+    </div>
+
+    <!-- There are scripts -->
+    <script id="username_template" type="text/template" >
+        <p class="username_corner"><b>User:</b> <u>{{ username }}</u></p>
+        <button class="logout" onclick="InterfaceHashHandler.Logout()">Logout</button>
+    </script>
+
+    <!-- Menu for each role -->
+    <script id="admin_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers</a></li>
+                <li><a href="#provider_add">Add new Provider</a></li>
+            </ul>
+        </li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers</a></li>
+                <li><a href="#customer_add">Add new Customer</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods</a></li>
+                <li><a href="#goods_add">Add new Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_action">Import goods</a></li>
+                <li><a href="#import_list">Import Documents list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_action">Export goods</a></li>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_list_import">Show import reports list</a></li>
+                <li><a href="#report_list_export">Show export reports list</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+        <li><a href="#system">System</a></li>
+
+    </script>
+    <script id="view_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers</a></li>
+            </ul>
+        </li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_list">Import Documents list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_list_import">Show import reports list</a></li>
+                <li><a href="#report_list_export">Show export reports list</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+    <script id="import_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#provider">Provider</a>
+            <ul>
+                <li><a href="#provider_list">List of Providers</a></li>
+                <li><a href="#provider_add">Add new Provider</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods</a></li>
+                <li><a href="#goods_add">Add new Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#imports">Imports</a>
+            <ul>
+                <li><a href="#import_action">Import goods</a></li>
+                <li><a href="#import_list">Import Document list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_list_import">Show import reports list</a></li>
+                <li><a href="#report_list_export">Show export reports list</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+    <script id="export_menu_template" type="text/template">
+        <li><a href="#">Start Page</a></li>
+        <li><a href="#customer">Customer</a>
+            <ul>
+                <li><a href="#customer_list">List of Customers</a></li>
+                <li><a href="#customer_add">Add new Customer</a></li>
+            </ul>
+        </li>
+        <li><a href="#goods">Goods</a>
+            <ul>
+                <li><a href="#goods_list">List of Goods</a></li>
+            </ul>
+        </li>
+        <li><a href="#storage">Storage</a>
+            <ul>
+                <li><a href="#storage_available">Show available goods</a></li>
+                <li><a href="#storage_info">Show storage info</a></li>
+            </ul>
+        </li>
+        <li><a href="#exports">Exports</a>
+            <ul>
+                <li><a href="#export_action">Export goods</a></li>
+                <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
+            </ul>
+        </li>
+        <li><a href="#reports">Reports</a>
+            <ul>
+                <li><a href="#report_list_import">Show import reports list</a></li>
+                <li><a href="#report_list_export">Show export reports list</a></li>
+                <li><a href="#report_make">Make report</a></li>
+            </ul>
+        </li>
+    </script>
+
+    <script id="startpage_template" type="text/template">
+        <h1> Hello, {{ user_name }}, Welcome to the ISLabStorage!</h1>
+        <p> Yours role is {{ user_role }} and you have relevant permissions: {{ user_permissions }}. </p>
+        <br>
+        <h3> Short list of latest info: </h3>
+        <ul class="content_ul">
+            <li>Last visit: {{ last_visit }}.</li>
+        </ul>
+    </script>
+    <script id="provider_template" type="text/template">
+        <h1>Provider menu</h1>
+        <p> In the menu you can review provider's info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#provider_list"><u>List of Providers</u></a> - show first 10 providers, you can expand list by each 10 next providers.</li>
+            <li><a href="#provider_add"><u>Add new Provider</u></a> - you can add new provider if you need to import some goods, but provider is not exist in the database.</li>
+        </ul>
+    </script>
+    <script id="customer_template" type="text/template">
+        <h1>Customer menu</h1>
+        <p> In the menu you can review customer's info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#customer_list"><u>List of Customers</u></a> - show first 10 customers, you can expand list by each 10 next customers.</li>
+            <li><a href="#customer_add"><u>Add new Customer</u></a> - you can add new customer if you need to export some goods, but customer is not exist in the database.</li>
+        </ul>
+    </script>
+    <script id="goods_template" type="text/template">
+        <h1>Goods menu</h1>
+        <p> In the menu you can review goods info and control data.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#goods_list"><u>List of Goods</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
+            <li><a href="#goods_add"><u>Add new Goods</u></a> - you can add new one if you need to export some goods, but it is not exist in the database.</li>
+        </ul>
+    </script>
+    <script id="storage_template" type="text/template">
+        <h1>Storage menu</h1>
+        <p> In the menu you can review available goods and storage info.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#storage_available"><u>List of available Goods</u></a> - show first 10 goods in one of storages, you can expand list by each 10 next goods.</li>
+            <li><a href="#storage_info"><u>Review storage info</u></a> - you can choose one storage and review all necessary info (choose point above to review goods).</li>
+        </ul>
+    </script>
+
+    <script id="imports_template" type="text/template">
+        <h1>Import menu</h1>
+        <p> In the menu you can review all imports, check imports info and make new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#import_action"><u>Make new Import</u></a> - Choose the point if you are going to import some new goods.
+                <b>!Be sure goods and provider already exist in the database!</b>.</li>
+            <li><a href="#import_find"><u>Find Import Document</u></a> - you can find one (by using ID) or more document by using filter of fields.</li>
+        </ul>
+    </script>
+    <script id="import_action_template" type="text/template">
+        <h1>Import action</h1>
+        <p> In the menu you can make new import.</p>
+        <br>
+        <div id="provider_title"></div>
+        <br>
+        <div id="import_content"></div>
+        <div id="import_bottom"></div>
+    </script>
+    <script id="import_action_bottom" type="text/template">
+        <div>
+            <p> Descritpion: </p>
+            <td> <input type="text" id="import_description" value=""></td>
+        </div>
+        <button onclick="InterfaceHashHandler.MakeImport()"> Make Import!</button>
+    </script>
+    <script id="import_action_not_ready" type="text/template">
+        <h3>First of all, go to <b> Goods -> <a href="#goods_list">List of Goods</a></b> add put in the pocket all you need goods, and return here.</h3>
+        <h3>The second is - go to <b> Provider -> <a href="#provider_list">List of Providers</a></b> and choose the provider, who will import goods. </h3>
+    </script>
+    <script id="import_provider_template" type="text/template">
+        <p> Provider is <b>{{ provider }}</b></P>
+    </script>
+
+    <script id="exports_template" type="text/template">
+        <h1>Export menu</h1>
+        <p> In the menu you can review all exports, check exports info and make new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#import_action"><u>Make new Export</u></a> - Choose the point if you are going to export some goods.
+                <b>!Be sure customer already exist in the database!</b>.</li>
+            <li><a href="#import_find"><u>Find Export Document</u></a> - you can find one (by using ID) or more document by using filter of fields.</li>
+        </ul>
+    </script>
+    <script id="export_action_template" type="text/template">
+        <h1>Export action</h1>
+        <p> In the menu you can make new export.</p>
+        <br>
+        <div id="customer_title"></div>
+        <br>
+        <div id="export_content"></div>
+        <div id="export_bottom"></div>
+    </script>
+    <script id="export_action_bottom" type="text/template">
+        <div>
+            <p> Descritpion: </p>
+            <td> <input type="text" id="export_description" value=""></td>
+        </div>
+        <button onclick="InterfaceHashHandler.MakeExport()"> Make Export!</button>
+    </script>
+    <script id="export_action_not_ready" type="text/template">
+        <h3>First of all, go to <b> Storage -> <a href="#storage_available">Show available goods</a></b> add put in the pocket all you need goods, and return here.</h3>
+        <h3>The second is - go to <b> Customer -> <a href="#customer_list">List of Customers</a></b> and choose the customer, who will export goods. </h3>
+    </script>
+    <script id="export_costumer_template" type="text/template">
+        <p> Customer is <b>{{ customer }}</b></P>
+    </script>
+
+    <script id="reports_template" type="text/template">
+        <h1>Report menu</h1>
+        <p> In the menu you can review reports and create new one.</p>
+        <br>
+        <h3><i>General info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+            <li>Something2</li>
+            <li>Something3</li>
+        </ul>
+        <br>
+        <h3><i>Available actions:</i></h3>
+        <ul class="content_ul">
+            <li><a href="#report_last"><u>Show last Report</u></a> - show last made Report by any user.</li>
+            <li><a href="#report_list"><u>Show Report list</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
+            <li><a href="#report_make"><u>Make new Report</u></a> - you can make new Report for custom date period.</li>
+        </ul>
+    </script>
+    <script id="report_make_template" type="text/template">
+        <ul>
+            <li>
+                <p>Date from (YYYY-MM-DD): </p>
+                <input name="date_from" type="text" value="2019-1-1">
+            </li>
+            <li>
+                <p>Date to (YYYY-MM-DD): </p>
+                <input name="date_to" type="text" value="2019-1-1">
+            </li>
+            <li><button onclick="InterfaceHashHandler.SendReportDates()">Send query</button></li>
+        </ul>
+        <div id="sub_dynamic_panel"></div>
+    </script>
+    <script id="report_make_result" type="text/template">
+        <P><B>Import summary</B></P>
+        <ul>
+            <li>Start date <input id="import_summary_start_date" type="text" value=""></li>
+            <li>End date <input id="import_summary_end_date" type="text" value=""></li>
+            <li>Import count <input id="imports_summary_import_count" type="text" value=""></li>
+            <li>Import amount <input id="imports_summary_import_amount" type="text" value=""></li>
+            <li>Max price <input id="import_summary_max_price" type="text" value=""></li>
+            <li>Min price <input id="import_summary_min_price" type="text" value=""></li>
+        </ul>
+        <P><B>Export summary</B></P>
+        <ul>
+            <li>Start date <input id="export_summary_start_date" type="text" value=""></li>
+            <li>End date <input id="export_summary_end_date" type="text" value=""></li>
+            <li>Export count <input id="exports_summary_export_count" type="text" value=""></li>
+            <li>Export amount <input id="exports_summary_export_amount" type="text" value=""></li>
+            <li>Max price <input id="export_summary_max_price" type="text" value=""></li>
+            <li>Min price <input id="export_summary_min_price" type="text" value=""></li>
+        </ul>
+        <div id="list_panel"></div>
+    </script>
+
+    <script id="system_template" type="text/template">
+        <h1>System settings</h1>
+        <p><b>Be careful!</b> There are important settings which can break system.</p>
+        <h3><i>System info:</i></h3>
+        <ul class="content_ul">
+            <li>Something1</li>
+        </ul>
+        <br>
+        <h3>System action</h3>
+        <ul class="content_ul">
+            <li><a href="#rebuild_reports"><u>Rebuild database</u></a> - reports data writes in base relatively import and export documents.
+                If reports data are damaged, choose the point to rebuild the base.</li>
+        </ul>
+    </script>
+    <script id="forbidden_template" type="text/template">
+        <h1>Forbidden!!!</h1>
+        <p>You don't have permissions for access to this section.</p>
+    </script>
+
+    <!-- Table template scripts -->
+    <script id="list_template" type="text/template">
+        <div id="list_title"></div>
+        <div id="filter"></div>
+        <br>
+        <div id="choosed"></div>
+        <div id="table_place"></div>
+        <br>
+    </script>
+    <script id="list_title_template" type="text/template">
+        <h1> {{ entity_uppercase }} list</h1>
+        <p>There you can review list of {{ entity_lowercase }} and edit it.</p>
+    </script>
+    <script id="filter_template" type="text/template">
+        <h3>Filter.</h3>
+        <ul>
+
+        </ul>
+        <button onclick="Common.{{ listpage }}.TableSetFilter()">Send request</button>
+    </script>
+    <script id="filter_input" type="text/template">
+        <li>{{ property_uppercase }}: <input type="text" name="filter_{{ property_lowercase }}"></li>
+    </script>
+    <script id="choosed_template" type="text/template">
+        <p>Choosed item is <b>{{ id }}</b></p>
+    </script>
+    <script id="list_table" type="text/template">
+        <table id="dt_Table" class="table table-striped table-bordered table-sm" cellspacing="0" width="1200px">
+            <thead>
+            <tr>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+            <tfoot>
+            <tr>
+
+            </tr>
+            </tfoot>
+        </table>
+    </script>
+    <script id="list_table_extend_buttons" type="text/template">
+        <button onclick="Common.{{ listpage }}.TableExtendList(true)">Load more (+{{ extend_size }})</button>
+        <button onclick="Common.{{ listpage }}.TableExtendList(false)">Load all</button>
+        <button onclick="Common.{{ listpage }}.TableRefresh()">Refresh</button>
+    </script>
+    <script id="list_table_show_pocket" type="text/template">
+        <button onclick="Common.{{ listpage }}.ShowPocket()">Show Pocket</button>
+    </script>
+    <script id="list_table_hide_pocket" type="text/template">
+        <button onclick="Common.{{ listpage }}.HidePocket()">Hide Pocket</button>
+    </script>
+    <script id="list_header_title" type="text/template">
+        <th class="th-sm">{{ property_uppercase }} </th>
+    </script>
+    <script id="list_footer_title" type="text/template">
+        <th>{{ property_uppercase }} </th>
+    </script>
+    <script id="datatable_row_field" type="text/template">
+        <td>{{ value }}</td>
+    </script>
+    <script id="datatable_row_count_input_import" type="text/template">
+        <td> <input type="text" id="count_id_{{ id }}" value="1"></td>
+    </script>
+    <script id="datatable_row_price_input_import" type="text/template">
+        <td> <input type="text" id="price_id_{{ id }}" value="1"></td>
+    </script>
+    <script id="datatable_row_count_input_export" type="text/template">
+        <td> <input type="text" id="count_id_{{ id }}" value="1"> / {{ max_value }}</td>
+    </script>
+    <script id="datatable_row_storage_id" type="text/template">
+        <td> <input type="text" id="storage_id_{{ id }}" value="1"></td>
+    </script>
+
+    <script id="datatable_row_button_edit" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableEditRowMenu( {{ id }} );">Edit</button>
+    </script>
+    <script id="datatable_row_button_delete" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableDeleteRow( {{ id }} );">Delete</button>
+    </script>
+    <script id="datatable_row_button_pocket" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableAddToPocket( {{ id }} );">Pocket(Add/Remove)</button>
+    </script>
+    <script id="datatable_row_button_get_info" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableGetElementInfo( {{ id }} );">Get info</button>
+    </script>
+    <script id="datatable_row_button_choose" type="text/template">
+        <button class="table_action" onclick="Common.{{ listpage }}.TableChooseItem( {{ id }} );">Choose</button>
+    </script>
+
+    <script id="add_template" type="text/template">
+        <h1>Add {{ entity_lowercase }}</h1>
+        <p> There you can add new {{ entity_lowercase }} to base.</p>
+        <div class = "add_panel"></div>
+    </script>
+    <script id="add_template_field" type="text/template">
+        <p>{{ property_uppercase }}:</p>
+        <input type="text" name="input_{{ property_lowercase }}">
+    </script>
+    <script id="add_template_button" type="text/template">
+        <p><button onclick="Common.{{ listpage }}.TableAddSend()">Send data</button></p>
+    </script>
+
+    <script id="edit_template" type="text/template">
+        <h1>Edit {{ entity_lowercase }}</h1>
+        <p> There you can edit {{ entity_lowercase }} in the base.</p>
+        <p> Edit field which you want to change.</p>
+        <div class = "edit_panel"></div>
+    </script>
+    <script id="edit_template_field" type="text/template">
+        <p>{{ property_uppercase }}:</p>
+        <input type="text" name="input_{{ property_lowercase }}" value="{{ property_value }}">
+    </script>
+    <script id="edit_template_button" type="text/template">
+        <input type="hidden" name="input_id" value="{{ id }}" />
+        <p><button onclick="Common.{{ listpage }}.TableEditSend()">Send data</button></p>
+    </script>
+    <!--  -->
+
+    <!-- Additional external scripts -->
+    <script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="js/addons/datatables.min.js"></script>
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/mdb.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="js/menu.js" ></script>
+    <!--  -->
+</body>
+</html>

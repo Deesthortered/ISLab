@@ -1,0 +1,63 @@
+ 1  1- 1 1 '2019-01-01'     50000  Damler-Benz             = Mercedes-Benz
+ 2  2- 2 1 '2019-01-02'    100000  Maybach                 = Pz4V Tiger 1
+ 3  4- 5 2 '2019-01-02'       300  FaradayWorkshop         = Compass
+ 4  9-12 4 '2019-01-03'       100  RomeEmpire              = Building Cobblestone
+ 5  3-32 4 '2019-01-03'       600  East India Company      = Sugar
+  
+ 6  9-44 3 '2019-01-03'         5  RomeEmpire              = Arrow
+ 6  9-43 3 '2019-01-03'        10  RomeEmpire              = Bow
+
+ 7  7- 9 2 '2019-01-06'       100  Catholic Church         = Papirus
+ 8  2- 3 1 '2019-01-07'   3000000  Maybach                 = Maus
+ 9 12-20 4 '2019-01-07'       250  National Mining Comp    = Wood
+10  6-23 2 '2019-01-07'     15000  Apple                   = iMac
+11  3- 6 2 '2019-01-08'       150  East India Company      = Tabaco
+12 11- 4 2 '2019-01-09'       777  Alkaida                 = East Carpet
+
+13  5-21 2 '2019-01-13'      1500  Microsoft               = OS Windows
+13  5-19 4 '2019-01-13'      2000  Microsoft               = Coil
+
+14  6-22 2 '2019-01-16'     25000  Apple                   = iPhone XS
+15 16-11 4 '2019-01-16'    100000  Brotherhood of Nod      = Golden Bricks
+16  4-14 4 '2019-01-17'       150  FaradayWorkshop         = Copper wires (100 m)
+17  9-15 3 '2019-01-18'       100  RomeEmpire              = Iron sword
+18 10-16 1 '2019-01-19'     15000  KnigthCompany           = War horse
+19  9-10 4 '2019-01-20'       843  RomeEmpire              = Old Rome Wine
+20  3- 8 4 '2019-01-20'       700  East India Company      = Gunpowder
+21 15-40 2 '2019-01-21'       333  Catholic Church         = Indulgence
+22  8-33 3 '2019-01-22'       200  Winchester              = Pistol
+
+23  4-26 3 '2019-01-23'      5500  FaradayWorkshop         = Electric Chair
+23  4-47 3 '2019-01-23'    134000  FaradayWorkshop         = Tesla Coil
+
+24  7-24 2 '2019-01-25'         5  IKEA                    = Chair
+25 16-27 3 '2019-01-26'         1  Brotherhood of Nod      = Tazik-Evtanazik
+26 11-35 4 '2019-01-26'    100000  Alkaida                 = Diamond
+27 13-28 1 '2019-01-28'   1560000  Pirate Society          = BattleShip
+28 10-45 1 '2019-01-30'   1000000  KnigthCompany           = Crusade(Palestina)
+29 15-48 2 '2019-02-01'    143000  Catholic Church         = Letter of marque
+
+30  4-18 2 '2019-02-01'       300  FaradayWorkshop         = Leiden Battery
+30  4-49 2 '2019-02-01'      1500  FaradayWorkshop         = Watches
+
+31  8-34 3 '2019-02-03'       250  Winchester              = Shotgun
+32 10-46 1 '2019-02-03' 100000000  KnigthCompany           = Crusade(Jerusalem)
+
+33 14-39 2 '2019-02-03'        50  Oxford Medical          = Painkiller
+33 14-37 2 '2019-02-03'       100  Oxford Medical          = Medicines
+33 14-38 2 '2019-02-03'      1500  Oxford Medical          = Surgery Kit
+
+34  7-26 3 '2019-02-06'      2300  IKEA                    = Electric Chair
+35 15-41 2 '2019-02-06'    707000  Catholic Church         = Christening
+36 13-29 1 '2019-02-07'     30000  Pirate Society          = Yacht
+37 14-42 2 '2019-02-10'      3000  Oxford Medical          = Weed
+38  3-36 4 '2019-02-10'     10000  East India Company      = Spices
+39 16-48 2 '2019-02-11'    145000  Brotherhood of Nod      = Letter of marque
+
+40 13-30 1 '2019-02-11'     30000  Pirate Society          = Caravel
+40 13-31 3 '2019-02-11'      1000  Pirate Society          = Canon
+40 13-31 3 '2019-02-11'      1000  Pirate Society          = Canon
+40 13-31 3 '2019-02-11'      1000  Pirate Society          = Canon
+
+41 12-35 4 '2019-02-15'   1230000  National Mining Comp    = Diamond
+41 12-25 4 '2019-02-15'        50  National Mining Comp    = Metal

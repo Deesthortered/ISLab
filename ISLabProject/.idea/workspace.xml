@@ -1,0 +1,1654 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Gradle : ISLabProjectGroup : ISLabProject-1.0-SNAPSHOT.war" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/html/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/html/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/login_page.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/login_page.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/js/menu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/js/menu.js" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <ignored path="$PROJECT_DIR$/out/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ISLabDB@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ISLabDB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="ISLabDB@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="islabdb: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="DefaultGradleProjectSettings">
+    <option name="isMigrated" value="true" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ISLabProject" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/login_page.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="25" lean-forward="true" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-770">
+              <caret line="986" column="27" lean-forward="true" selection-start-line="986" selection-start-column="27" selection-end-line="986" selection-end-column="27" />
+              <folding>
+                <element signature="n#Common#0" />
+                <element signature="e#48#209#0" />
+                <element signature="n#!!block;n#capitalizeFirstLetter#0;n#Common#0" />
+                <element signature="n#!!block;n#initialize#0;n#Common#0" />
+                <element signature="n#TemplateHandler#0" />
+                <element signature="n#QueryMaker#0" />
+                <element signature="n#!!block;n#GetEntityList#0;n#QueryMaker#0" />
+                <element signature="n#!!block;n#AddEntity#0;n#QueryMaker#0" />
+                <element signature="n#!!block;n#DeleteEntity#0;n#QueryMaker#0" />
+                <element signature="n#!!block;n#EditEntity#0;n#QueryMaker#0" />
+                <element signature="n#EntityFilters#0" />
+                <element signature="n#!!block;n#getChildConnectedFilter#0;n#EntityFilters#0" />
+                <element signature="n#!!block;n#getChildEntity#0;n#EntityFilters#0" />
+                <element signature="n#!!block;n#getListEntity#0;n#EntityFilters#0" />
+                <element signature="n#!!block;n#getEntityLogicProperties#0;n#EntityFilters#0" />
+                <element signature="n#!!block;n#getEntityViewProperties#0;n#EntityFilters#0" />
+                <element signature="n#!!block;n#getRepresentDataField#0;n#EntityFilters#0" />
+                <element signature="n#ListPage#0" />
+                <element signature="n#!!block;n#constructor#0;n#ListPage#0" />
+                <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableBuildFacad#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableLoadAndBuildByFilter#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableLoad#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableLoadCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableFill#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableClear#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableRefresh#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableAddRowMenu#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableEditRowMenu#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableEditRowMenuCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableDeleteRow#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableDeleteRowCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableExtendList#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableSetFilter#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableAddSend#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableAddCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableEditSend#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableEditCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableAddToPocket#0;n#ListPage#0" />
+                <element signature="n#!!block;n#ShowPocket#0;n#ListPage#0" />
+                <element signature="n#!!block;n#HidePocket#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableGetElementInfo#0;n#ListPage#0" />
+                <element signature="n#!!block;n#FreezeTable#0;n#ListPage#0" />
+                <element signature="n#!!block;n#UnfreezeTable#0;n#ListPage#0" />
+                <element signature="n#!!block;n#TableChooseItem#0;n#ListPage#0" />
+                <element signature="n#!!block;n#ImportSummaryGetInfo#0;n#ListPage#0" />
+                <element signature="n#!!block;n#ImportSummaryGetInfoCallback#0;n#ListPage#0" />
+                <element signature="n#!!block;n#ExportSummaryGetInfo#0;n#ListPage#0" />
+                <element signature="n#!!block;n#ExportSummaryGetInfoCallback#0;n#ListPage#0" />
+                <element signature="n#Router#0" />
+                <element signature="n#!!block;n#initialize#0;n#Router#0" />
+                <element signature="n#!!block;n#handleHash#0;n#Router#0" />
+                <element signature="n#!!block;n#DefineUser#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#CheckPermission#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Logout#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#StartPage#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Provider#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ProviderList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ProviderAdd#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Customer#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#CustomerList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#CustomerAdd#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Goods#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#GoodsList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#GoodsAdd#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Storage#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#StorageAvailable#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#StorageInfo#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Imports#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ImportsAction#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ImportsList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Exports#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ExportsAction#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ExportsList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#Reports#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ImportReportList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ExportReportList#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ReportMake#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#SendReportDates#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#SendReportDatesCallback#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#SendReportShowImportSummary#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#System#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#RebuildReports#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#MakeImport#0;n#InterfaceHashHandler#0" />
+                <element signature="n#!!block;n#MakeExport#0;n#InterfaceHashHandler#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JUnit5 Test Class" />
+        <option value="Tag Library Descriptor" />
+        <option value="HTML File" />
+        <option value="CSS File" />
+        <option value="Enum" />
+        <option value="Jsp File" />
+        <option value="JavaScript File" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>(10 by step)</find>
+      <find>'TR</find>
+      <find>datarow</find>
+      <find>datatable_r</find>
+      <find>TableFill</find>
+      <find>ListPage.list_size</find>
+      <find>TableLoad</find>
+      <find>entity_uppercase</find>
+      <find>entity_lowercase</find>
+      <find>properties</find>
+      <find>let properties</find>
+      <find>pocket</find>
+      <find>TableBuildFacad</find>
+      <find>dynamic_panel_name</find>
+      <find>getEntityLogicProperties</find>
+      <find>DAOAvaila</find>
+      <find>makeAvailableGoodsForReports</find>
+      <find>getinfoable</find>
+      <find>get</find>
+      <find>rebuildSummaryAvailableGoods</find>
+      <find>is_import</find>
+      <find>frozen</find>
+      <find>FreezeTable</find>
+      <find>list_table_extend_buttons</find>
+      <find>external</find>
+      <find>listpage_name</find>
+      <find>report_last_template</find>
+      <find>report_list_template</find>
+      <find>in_pocket</find>
+      <find>JSON</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/data_model/SystemUsers.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/StorageQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ImportSummaryQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ImportMoveDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ImportGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ImportDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/GoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportMoveDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportSummaryQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/CustomerQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/AvailableGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Provider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Customer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ExportGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Goods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ImportGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/Storage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/utility_package/Pair.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ImportMoveDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ExportMoveDocument.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/697485fd-1365-4965-af32-6b48ba59e787/console.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ImportDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ExportSummary.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ExportDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/data_model/ImportSummary.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/EntityQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java" />
+        <option value="$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java" />
+        <option value="$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/utility_package/Common.java" />
+        <option value="$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/menu.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/html/menu.html" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/login_page.js" />
+      </list>
+    </option>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="1912" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="webapp" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ISLabProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ISLabProject" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="GO_FMT" value="true" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553765988606" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/SQL Dialect" value="MySQL&#10;PostgreSQL" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit5" />
+    <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5" value="" />
+    <property name="database.console.LAST_STATE" value="false" />
+    <property name="go.gopath.indexing.explicitly.defined" value="true" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/mysql-connector-java-5.1.47.jar!/" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.32528734" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="main_package" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp\html" />
+      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp" />
+      <recent name="D:\2.Programming\ISLab\ISLabProject\src\main\webapp\WEB_INF" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.16">
+    <configuration name="ISLabProject [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tomcat 9.0.16" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 9.0.16" ALTERNATIVE_JRE_ENABLED="false" nameIsGenerated="true">
+      <option name="SHOW_DIALOG_ON_UPDATE" value="false" />
+      <option name="UPDATING_POLICY" value="redeploy-artifacts" />
+      <deployment>
+        <artifact name="Gradle : ISLabProjectGroup : ISLabProject-1.0-SNAPSHOT.war">
+          <settings>
+            <option name="CONTEXT_PATH" value="/ISLab" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_ISLabProject_2" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="57010" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method v="2">
+        <option name="Make" enabled="true" />
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Gradle : ISLabProjectGroup : ISLabProject-1.0-SNAPSHOT.war" />
+        </option>
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.ISLabProject [dependencies]" />
+      <item itemvalue="Tomcat Server.Tomcat 9.0.16" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.ISLabProject [dependencies]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="" />
+      <created>1550692883441</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1550692883441</updated>
+      <workItem from="1550692886640" duration="4172000" />
+      <workItem from="1550698338324" duration="64000" />
+      <workItem from="1550734101253" duration="3787000" />
+      <workItem from="1550765772081" duration="7000" />
+      <workItem from="1550827764237" duration="642000" />
+      <workItem from="1550832238266" duration="2426000" />
+      <workItem from="1550931648041" duration="3397000" />
+      <workItem from="1550939983697" duration="5811000" />
+      <workItem from="1551000637009" duration="11196000" />
+      <workItem from="1551011984727" duration="156000" />
+      <workItem from="1551012162931" duration="23000" />
+      <workItem from="1551012189176" duration="62000" />
+      <workItem from="1551012279633" duration="7724000" />
+      <workItem from="1551084197763" duration="710000" />
+      <workItem from="1551119658768" duration="6807000" />
+      <workItem from="1551128321724" duration="1176000" />
+      <workItem from="1551174035303" duration="2155000" />
+      <workItem from="1551256579946" duration="6426000" />
+      <workItem from="1551272600639" duration="1576000" />
+      <workItem from="1551285488357" duration="131000" />
+      <workItem from="1551383200826" duration="598000" />
+      <workItem from="1551512697720" duration="17774000" />
+      <workItem from="1551563564822" duration="3969000" />
+      <workItem from="1551613933563" duration="17879000" />
+      <workItem from="1551644030069" duration="1234000" />
+      <workItem from="1551651988665" duration="555000" />
+      <workItem from="1551689326136" duration="1593000" />
+      <workItem from="1551700435017" duration="3293000" />
+      <workItem from="1551769801954" duration="1445000" />
+      <workItem from="1551791763705" duration="8921000" />
+      <workItem from="1551801062214" duration="7442000" />
+      <workItem from="1551861822118" duration="3036000" />
+      <workItem from="1551865048095" duration="3831000" />
+      <workItem from="1551873339146" duration="2925000" />
+      <workItem from="1551967625778" duration="32000" />
+      <workItem from="1551967812873" duration="2972000" />
+      <workItem from="1552048529863" duration="3095000" />
+      <workItem from="1552112523834" duration="17866000" />
+      <workItem from="1552208666399" duration="6624000" />
+      <workItem from="1552226351488" duration="1494000" />
+      <workItem from="1552228022597" duration="4790000" />
+      <workItem from="1552251077314" duration="733000" />
+      <workItem from="1552293172279" duration="33921000" />
+      <workItem from="1552421219940" duration="40000" />
+      <workItem from="1552459710106" duration="9984000" />
+      <workItem from="1552472427260" duration="3367000" />
+      <workItem from="1552480335136" duration="1514000" />
+      <workItem from="1552505267375" duration="6780000" />
+      <workItem from="1552545800853" duration="7709000" />
+      <workItem from="1552580911789" duration="3686000" />
+      <workItem from="1552633824281" duration="11801000" />
+      <workItem from="1552722335554" duration="9481000" />
+      <workItem from="1552746977208" duration="13611000" />
+      <workItem from="1552806439833" duration="6120000" />
+      <workItem from="1552826387092" duration="11344000" />
+      <workItem from="1552907391324" duration="7747000" />
+      <workItem from="1552916696585" duration="1695000" />
+      <workItem from="1552998509001" duration="21608000" />
+      <workItem from="1553065363241" duration="7409000" />
+      <workItem from="1553110736889" duration="4398000" />
+      <workItem from="1553152039584" duration="2161000" />
+      <workItem from="1553154226652" duration="16000" />
+      <workItem from="1553154422384" duration="2638000" />
+      <workItem from="1553158499678" duration="3298000" />
+      <workItem from="1553172154267" duration="21293000" />
+      <workItem from="1553238263018" duration="8185000" />
+      <workItem from="1553274427207" duration="7995000" />
+      <workItem from="1553330455473" duration="2679000" />
+      <workItem from="1553430969045" duration="23674000" />
+      <workItem from="1553467090204" duration="1728000" />
+      <workItem from="1553507440810" duration="20060000" />
+      <workItem from="1553584394492" duration="14777000" />
+      <workItem from="1553677292466" duration="6662000" />
+      <workItem from="1553711039074" duration="10952000" />
+      <workItem from="1553723735370" duration="1481000" />
+      <workItem from="1553755792516" duration="9540000" />
+      <workItem from="1557241512530" duration="88000" />
+      <workItem from="1557241603918" duration="623000" />
+      <workItem from="1557255141286" duration="597000" />
+      <workItem from="1557296193051" duration="8038000" />
+      <workItem from="1557315472402" duration="2071000" />
+      <workItem from="1557329666996" duration="288000" />
+      <workItem from="1557330372373" duration="66000" />
+      <workItem from="1557336318032" duration="14513000" />
+      <workItem from="1557382683010" duration="19021000" />
+      <workItem from="1557429315210" duration="5642000" />
+      <workItem from="1557469131788" duration="1476000" />
+      <workItem from="1557476185335" duration="426000" />
+      <workItem from="1557476870549" duration="900000" />
+      <workItem from="1557490726534" duration="23543000" />
+    </task>
+    <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
+      <created>1552916480707</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1552916480707</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="MainServletTest - 2019.02.20 at 22h 07m 58s.xml">
+      <configuration name="MainServletTest" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="547199000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.18496802" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Image Layers" order="6" />
+      <window_info id="Web" order="7" sideWeight="0.5056657" side_tool="true" weight="0.20067114" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32719547" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3434453" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.4989339" visible="true" weight="0.3618635" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Build" order="6" weight="0.3286119" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32827735" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.32827735" />
+      <window_info anchor="bottom" id="Database Console" order="9" weight="0.30010834" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5010661" side_tool="true" weight="0.37703142" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32827735" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" weight="0.3286119" />
+      <window_info anchor="bottom" id="Database Changes" order="15" weight="0.3286119" />
+      <window_info anchor="bottom" id="Version Control" order="16" weight="0.3286119" />
+      <window_info anchor="bottom" id="Duplicate detector" order="17" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.24899329" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Gradle" order="6" weight="0.3295302" />
+      <window_info anchor="right" id="Database" order="7" weight="0.27558637" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="SciView" order="10" weight="0.32995737" />
+    </layout>
+    <layout-to-restore>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49433428" visible="true" weight="0.18496802" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="Image Layers" order="6" />
+      <window_info id="Web" order="7" sideWeight="0.5056657" side_tool="true" weight="0.20067114" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32719547" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3434453" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.4989339" visible="true" weight="0.3618635" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Build" order="6" weight="0.3286119" />
+      <window_info anchor="bottom" id="TODO" order="7" weight="0.32827735" />
+      <window_info anchor="bottom" id="Application Servers" order="8" weight="0.32827735" />
+      <window_info anchor="bottom" id="Database Console" order="9" weight="0.30010834" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="12" sideWeight="0.5010661" side_tool="true" weight="0.37703142" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.32827735" />
+      <window_info anchor="bottom" id="Java Enterprise" order="14" weight="0.3286119" />
+      <window_info anchor="bottom" id="Database Changes" order="15" weight="0.3286119" />
+      <window_info anchor="bottom" id="Version Control" order="16" weight="0.3286119" />
+      <window_info anchor="bottom" id="Duplicate detector" order="17" weight="0.3286119" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="1" weight="0.25" />
+      <window_info anchor="right" id="Ant Build" order="2" weight="0.24899329" />
+      <window_info anchor="right" id="Maven" order="3" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Gradle" order="6" weight="0.3295302" />
+      <window_info anchor="right" id="Database" order="7" weight="0.27558637" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+      <window_info anchor="right" id="SciView" order="10" weight="0.32995737" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Try to commit inside Intelij IDEA." />
+    <option name="LAST_COMMIT_MESSAGE" value="Try to commit inside Intelij IDEA." />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportMoveDocumentQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="8" column="50" selection-start-line="8" selection-start-column="50" selection-end-line="8" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ExportMoveDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="76" column="50" selection-start-line="76" selection-start-column="50" selection-end-line="76" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ExportMoveDocument#0;class#ExportMoveDocument#0" />
+            <element signature="method#ExportMoveDocument#1;class#ExportMoveDocument#0" />
+            <element signature="method#getJSON#0;class#ExportMoveDocument#0" />
+            <element signature="method#setByJSON#0;class#ExportMoveDocument#0" />
+            <element signature="method#getForeingDAO#0;class#ExportMoveDocument#0" />
+            <element signature="method#getForeingKeys#0;class#ExportMoveDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="23" column="18" lean-forward="true" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Pair.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="10" column="23" lean-forward="true" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/UserRole.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ExportGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="65" lean-forward="true" selection-start-line="65" selection-end-line="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ExportGoods#0;class#ExportGoods#0" />
+            <element signature="method#ExportGoods#1;class#ExportGoods#0" />
+            <element signature="method#getJSON#0;class#ExportGoods#0" />
+            <element signature="method#setByJSON#0;class#ExportGoods#0" />
+            <element signature="method#getForeingDAO#0;class#ExportGoods#0" />
+            <element signature="method#getForeingKeys#0;class#ExportGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Goods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="403">
+          <caret line="76" column="43" lean-forward="true" selection-start-line="76" selection-start-column="43" selection-end-line="76" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Goods#0;class#Goods#0" />
+            <element signature="method#Goods#1;class#Goods#0" />
+            <element signature="method#getJSON#0;class#Goods#0" />
+            <element signature="method#setByJSON#0;class#Goods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Customer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="78" column="43" selection-start-line="78" selection-start-column="43" selection-end-line="78" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#Customer#0;class#Customer#0" />
+            <element signature="method#Customer#1;class#Customer#0" />
+            <element signature="method#getJSON#0;class#Customer#0" />
+            <element signature="method#setByJSON#0;class#Customer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/ConnectionPool.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+          <folding>
+            <element signature="method#ConnectionPool#0;class#ConnectionPool#0" />
+            <element signature="method#getInstance#0;class#ConnectionPool#0" />
+            <element signature="method#GetConnection#0;class#ConnectionPool#0" />
+            <element signature="method#DropConnection#0;class#ConnectionPool#0" />
+            <element signature="method#LoadDriver#0;class#ConnectionPool#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/SystemUserAccess.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding>
+            <element signature="method#getInstance#0;class#SystemUserAccess#0" />
+            <element signature="method#ConfirmationAuthoritarian#0;class#SystemUserAccess#0" />
+            <element signature="method#getUserRole#0;class#SystemUserAccess#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/SessionFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-357">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="method#init#0;class#SessionFilter#0" />
+            <element signature="method#destroy#0;class#SessionFilter#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/CustomerQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/ExportGoodsQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#262#263#0" expanded="true" />
+            <element signature="e#313#314#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="34" lean-forward="true" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/importmovedocument" />
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/exportdocument" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/697485fd-1365-4965-af32-6b48ba59e787/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/importdocument" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ExportDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="6" />
+          <folding>
+            <element signature="method#ExportDocument#0;class#ExportDocument#0" />
+            <element signature="method#ExportDocument#1;class#ExportDocument#0" />
+            <element signature="method#getJSON#0;class#ExportDocument#0" />
+            <element signature="method#setByJSON#0;class#ExportDocument#0" />
+            <element signature="method#getForeingDAO#0;class#ExportDocument#0" />
+            <element signature="method#getForeingKeys#0;class#ExportDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ImportDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ImportDocument#0;class#ImportDocument#0" />
+            <element signature="method#ImportDocument#1;class#ImportDocument#0" />
+            <element signature="method#getJSON#0;class#ImportDocument#0" />
+            <element signature="method#setByJSON#0;class#ImportDocument#0" />
+            <element signature="method#getForeingDAO#0;class#ImportDocument#0" />
+            <element signature="method#getForeingKeys#0;class#ImportDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ImportGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="590">
+          <caret line="81" selection-start-line="81" selection-end-line="81" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ImportGoods#0;class#ImportGoods#0" />
+            <element signature="method#ImportGoods#1;class#ImportGoods#0" />
+            <element signature="method#getJSON#0;class#ImportGoods#0" />
+            <element signature="method#setByJSON#0;class#ImportGoods#0" />
+            <element signature="method#getForeingDAO#0;class#ImportGoods#0" />
+            <element signature="method#getForeingKeys#0;class#ImportGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAbstract.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOCustomer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="79" column="32" selection-start-line="79" selection-start-column="32" selection-end-line="79" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOCustomer#0;class#DAOCustomer#0" />
+            <element signature="method#getInstance#0;class#DAOCustomer#0" />
+            <element signature="method#GetEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#AddEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOCustomer#0" />
+            <element signature="method#EditEntity#0;class#DAOCustomer#0" />
+            <element signature="method#GetLastID#0;class#DAOCustomer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="87" column="3" selection-start-line="87" selection-start-column="3" selection-end-line="87" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOExportGoods#0;class#DAOExportGoods#0" />
+            <element signature="method#getInstance#0;class#DAOExportGoods#0" />
+            <element signature="method#GetEntityList#0;class#DAOExportGoods#0" />
+            <element signature="method#AddEntityList#0;class#DAOExportGoods#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOExportGoods#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOExportGoods#0" />
+            <element signature="method#EditEntity#0;class#DAOExportGoods#0" />
+            <element signature="method#GetLastID#0;class#DAOExportGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="79" column="74" selection-start-line="79" selection-start-column="74" selection-end-line="79" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOGoods#0;class#DAOGoods#0" />
+            <element signature="method#getInstance#0;class#DAOGoods#0" />
+            <element signature="method#GetEntityList#0;class#DAOGoods#0" />
+            <element signature="method#AddEntityList#0;class#DAOGoods#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOGoods#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOGoods#0" />
+            <element signature="method#EditEntity#0;class#DAOGoods#0" />
+            <element signature="method#GetLastID#0;class#DAOGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportMoveDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="77" column="74" selection-start-line="77" selection-start-column="74" selection-end-line="77" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOImportMoveDocument#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#getInstance#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#GetEntityList#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#AddEntityList#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#EditEntity#0;class#DAOImportMoveDocument#0" />
+            <element signature="method#GetLastID#0;class#DAOImportMoveDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOProvider.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="440">
+          <caret line="79" column="74" selection-start-line="79" selection-start-column="74" selection-end-line="79" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOProvider#0;class#DAOProvider#0" />
+            <element signature="method#getInstance#0;class#DAOProvider#0" />
+            <element signature="method#GetEntityList#0;class#DAOProvider#0" />
+            <element signature="method#AddEntityList#0;class#DAOProvider#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOProvider#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOProvider#0" />
+            <element signature="method#EditEntity#0;class#DAOProvider#0" />
+            <element signature="method#GetLastID#0;class#DAOProvider#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="77" column="74" selection-start-line="77" selection-start-column="74" selection-end-line="77" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOStorage#0;class#DAOStorage#0" />
+            <element signature="method#getInstance#0;class#DAOStorage#0" />
+            <element signature="method#GetEntityList#0;class#DAOStorage#0" />
+            <element signature="method#AddEntityList#0;class#DAOStorage#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOStorage#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOStorage#0" />
+            <element signature="method#EditEntity#0;class#DAOStorage#0" />
+            <element signature="method#GetLastID#0;class#DAOStorage#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportMoveDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="76" column="13" lean-forward="true" selection-start-line="76" selection-start-column="13" selection-end-line="76" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOExportMoveDocument#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#getInstance#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#GetEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#AddEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#EditEntity#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#GetLastID#0;class#DAOExportMoveDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/importsummary" />
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/exportsummary" />
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/customer" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="502">
+          <caret line="87" column="74" selection-start-line="87" selection-start-column="74" selection-end-line="87" selection-end-column="74" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOImportGoods#0;class#DAOImportGoods#0" />
+            <element signature="method#getInstance#0;class#DAOImportGoods#0" />
+            <element signature="method#GetEntityList#0;class#DAOImportGoods#0" />
+            <element signature="method#AddEntityList#0;class#DAOImportGoods#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOImportGoods#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOImportGoods#0" />
+            <element signature="method#EditEntity#0;class#DAOImportGoods#0" />
+            <element signature="method#GetLastID#0;class#DAOImportGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ImportSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ImportSummary#0;class#ImportSummary#0" />
+            <element signature="method#ImportSummary#1;class#ImportSummary#0" />
+            <element signature="method#getJSON#0;class#ImportSummary#0" />
+            <element signature="method#setByJSON#0;class#ImportSummary#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/ExportSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="17" column="27" lean-forward="true" selection-start-line="17" selection-start-column="27" selection-end-line="17" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#ExportSummary#0;class#ExportSummary#0" />
+            <element signature="method#ExportSummary#1;class#ExportSummary#0" />
+            <element signature="method#getJSON#0;class#ExportSummary#0" />
+            <element signature="method#setByJSON#0;class#ExportSummary#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/data_model/AvailableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5">
+          <caret line="20" column="3" selection-start-line="20" selection-start-column="3" selection-end-line="20" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#AvailableGoods#0;class#AvailableGoods#0" />
+            <element signature="method#AvailableGoods#1;class#AvailableGoods#0" />
+            <element signature="method#getJSON#0;class#AvailableGoods#0" />
+            <element signature="method#setByJSON#0;class#AvailableGoods#0" />
+            <element signature="method#getForeingDAO#0;class#AvailableGoods#0" />
+            <element signature="method#getForeingKeys#0;class#AvailableGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/entity_query_handler/EntityQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="17" column="107" selection-start-line="17" selection-start-column="107" selection-end-line="17" selection-end-column="107" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#GetEntityList#0;class#EntityQueryHandler#0" />
+            <element signature="method#AddEntity#0;class#EntityQueryHandler#0" />
+            <element signature="method#DeleteEntity#0;class#EntityQueryHandler#0" />
+            <element signature="method#EditEntity#0;class#EntityQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOAvailableGoods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="199" selection-start-line="199" selection-end-line="199" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOAvailableGoods#0;class#DAOAvailableGoods#0" />
+            <element signature="method#getInstance#0;class#DAOAvailableGoods#0" />
+            <element signature="method#GetEntityList#0;class#DAOAvailableGoods#0" />
+            <element signature="method#AddEntityList#0;class#DAOAvailableGoods#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOAvailableGoods#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOAvailableGoods#0" />
+            <element signature="method#EditEntity#0;class#DAOAvailableGoods#0" />
+            <element signature="method#GetLastID#0;class#DAOAvailableGoods#0" />
+            <element signature="method#GetAvailableGoodsBetweenDates#0;class#DAOAvailableGoods#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="200" column="102" selection-start-line="200" selection-start-column="102" selection-end-line="200" selection-end-column="102" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOExportSummary#0;class#DAOExportSummary#0" />
+            <element signature="method#getInstance#0;class#DAOExportSummary#0" />
+            <element signature="method#GetEntityList#0;class#DAOExportSummary#0" />
+            <element signature="method#AddEntityList#0;class#DAOExportSummary#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOExportSummary#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOExportSummary#0" />
+            <element signature="method#EditEntity#0;class#DAOExportSummary#0" />
+            <element signature="method#GetLastID#0;class#DAOExportSummary#0" />
+            <element signature="method#GetSummaryBetweenDates#0;class#DAOExportSummary#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="373">
+          <caret line="214" column="105" selection-start-line="214" selection-start-column="105" selection-end-line="214" selection-end-column="105" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOImportDocument#0;class#DAOImportDocument#0" />
+            <element signature="method#getInstance#0;class#DAOImportDocument#0" />
+            <element signature="method#GetEntityList#0;class#DAOImportDocument#0" />
+            <element signature="method#AddEntityList#0;class#DAOImportDocument#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOImportDocument#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOImportDocument#0" />
+            <element signature="method#EditEntity#0;class#DAOImportDocument#0" />
+            <element signature="method#GetLastID#0;class#DAOImportDocument#0" />
+            <element signature="method#GetEarlierDocument#0;class#DAOImportDocument#0" />
+            <element signature="method#GetLatestDocument#0;class#DAOImportDocument#0" />
+            <element signature="method#GetDocumentsBetweenDates#0;class#DAOImportDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOImportSummary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="200" selection-start-line="200" selection-end-line="200" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOImportSummary#0;class#DAOImportSummary#0" />
+            <element signature="method#getInstance#0;class#DAOImportSummary#0" />
+            <element signature="method#GetEntityList#0;class#DAOImportSummary#0" />
+            <element signature="method#AddEntityList#0;class#DAOImportSummary#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOImportSummary#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOImportSummary#0" />
+            <element signature="method#EditEntity#0;class#DAOImportSummary#0" />
+            <element signature="method#GetLastID#0;class#DAOImportSummary#0" />
+            <element signature="method#GetSummaryBetweenDates#0;class#DAOImportSummary#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/database_package/dao_package/DAOExportDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="212" column="105" selection-start-line="212" selection-start-column="105" selection-end-line="212" selection-end-column="105" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#DAOExportDocument#0;class#DAOExportDocument#0" />
+            <element signature="method#getInstance#0;class#DAOExportDocument#0" />
+            <element signature="method#GetEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#AddEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#DeleteEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#IsExistsEntity#0;class#DAOExportDocument#0" />
+            <element signature="method#EditEntity#0;class#DAOExportDocument#0" />
+            <element signature="method#GetLastID#0;class#DAOExportDocument#0" />
+            <element signature="method#GetEarlierDocument#0;class#DAOExportDocument#0" />
+            <element signature="method#GetLatestDocument#0;class#DAOExportDocument#0" />
+            <element signature="method#GetDocumentsBetweenDates#0;class#DAOExportDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/DateHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="286">
+          <caret line="57" column="42" selection-start-line="57" selection-start-column="42" selection-end-line="57" selection-end-column="42" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#JavaDateToSQLDate#0;class#DateHandler#0" />
+            <element signature="method#SQLDateToJavaDate#0;class#DateHandler#0" />
+            <element signature="method#getMonthsDifference#0;class#DateHandler#0" />
+            <element signature="method#getMonthBoundaries#0;class#DateHandler#0" />
+            <element signature="method#nextDay#0;class#DateHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://697485fd-1365-4965-af32-6b48ba59e787/schema/islabdb/table/availablegoods">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true">
+            <filter text="" />
+          </filtering>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/utility_package/Common.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="669">
+          <caret line="49" column="63" selection-start-line="49" selection-start-column="50" selection-end-line="49" selection-end-column="63" />
+          <folding>
+            <element signature="method#Initialize#0;class#Common#0" />
+            <element signature="method#readCookie#0;class#Common#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/UserHandlerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="659">
+          <caret line="523" column="96" selection-start-line="523" selection-start-column="96" selection-end-line="523" selection-end-column="96" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#doPost#0;class#UserHandlerServlet#0" />
+            <element signature="method#doGet#0;class#UserHandlerServlet#0" />
+            <element signature="method#SendError#0;class#UserHandlerServlet#0" />
+            <element signature="method#GetRole#0;class#UserHandlerServlet#0" />
+            <element signature="method#Logout#0;class#UserHandlerServlet#0" />
+            <element signature="method#DefineHandler#0;class#UserHandlerServlet#0" />
+            <element signature="method#HandleEntityQuery#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeImport#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeExport#0;class#UserHandlerServlet#0" />
+            <element signature="method#RebuildDatabase#0;class#UserHandlerServlet#0" />
+            <element signature="method#RebuildReports#0;class#UserHandlerServlet#0" />
+            <element signature="method#RebuildAvailable#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeReportQuery#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeCustomReport#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeReportSummary#0;class#UserHandlerServlet#0" />
+            <element signature="method#MakeAvailableGoodsForReport#0;class#UserHandlerServlet#0" />
+            <element signature="method#makeImportSummary#0;class#UserHandlerServlet#0" />
+            <element signature="method#makeExportSummary#0;class#UserHandlerServlet#0" />
+            <element signature="method#rebuildSummaryAvailableGoods#0;class#UserHandlerServlet#0" />
+            <element signature="method#makeAvailableGoodsForReports#0;class#UserHandlerServlet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/menu.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="748">
+          <caret line="397" column="56" selection-start-line="397" selection-start-column="56" selection-end-line="397" selection-end-column="56" />
+          <folding>
+            <element signature="n#head#0;n#html#0;n#!!top" />
+            <element signature="e#825#1368#0" />
+            <element signature="e#1405#1633#0" />
+            <element signature="e#1671#3575#0" />
+            <element signature="e#3580#5098#0" />
+            <element signature="e#5103#6479#0" />
+            <element signature="e#6484#7797#0" />
+            <element signature="e#7803#8203#0" />
+            <element signature="e#8208#9003#0" />
+            <element signature="e#9008#9803#0" />
+            <element signature="e#9808#10560#0" />
+            <element signature="e#10565#11375#0" />
+            <element signature="e#11381#12234#0" />
+            <element signature="e#12239#12539#0" />
+            <element signature="e#12544#12834#0" />
+            <element signature="e#12839#13219#0" />
+            <element signature="e#13224#13347#0" />
+            <element signature="e#13353#14192#0" />
+            <element signature="e#14197#14497#0" />
+            <element signature="e#14502#14792#0" />
+            <element signature="e#14797#15193#0" />
+            <element signature="e#15198#15321#0" />
+            <element signature="e#15327#16155#0" />
+            <element signature="e#16160#16230#0" />
+            <element signature="e#16729#16797#0" />
+            <element signature="e#16371#17262#0" />
+            <element signature="e#17267#17434#0" />
+            <element signature="e#17476#17702#0" />
+            <element signature="e#17707#17901#0" />
+            <element signature="e#17906#18110#0" />
+            <element signature="e#18115#18278#0" />
+            <element signature="e#18283#18395#0" />
+            <element signature="e#18400#18785#0" />
+            <element signature="e#18790#19143#0" />
+            <element signature="e#19148#19301#0" />
+            <element signature="e#19306#19459#0" />
+            <element signature="e#19464#19587#0" />
+            <element signature="e#19592#19701#0" />
+            <element signature="e#19706#19803#0" />
+            <element signature="e#19808#19960#0" />
+            <element signature="e#19965#20117#0" />
+            <element signature="e#20122#20292#0" />
+            <element signature="e#20297#20443#0" />
+            <element signature="e#20449#20636#0" />
+            <element signature="e#20641#20830#0" />
+            <element signature="e#20835#21038#0" />
+            <element signature="e#21043#21241#0" />
+            <element signature="e#21246#21436#0" />
+            <element signature="e#21442#21657#0" />
+            <element signature="e#21662#21836#0" />
+            <element signature="e#21841#21998#0" />
+            <element signature="e#22004#22276#0" />
+            <element signature="e#22281#22485#0" />
+            <element signature="e#22490#22714#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/main_package/AuthorizationServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="17" column="121" selection-start-line="17" selection-start-column="121" selection-end-line="17" selection-end-column="121" />
+          <folding>
+            <element signature="method#doPost#0;class#AuthorizationServlet#0" />
+            <element signature="method#doGet#0;class#AuthorizationServlet#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/html/login_page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/menu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-770">
+          <caret line="986" column="27" lean-forward="true" selection-start-line="986" selection-start-column="27" selection-end-line="986" selection-end-column="27" />
+          <folding>
+            <element signature="n#Common#0" />
+            <element signature="e#48#209#0" />
+            <element signature="n#!!block;n#capitalizeFirstLetter#0;n#Common#0" />
+            <element signature="n#!!block;n#initialize#0;n#Common#0" />
+            <element signature="n#TemplateHandler#0" />
+            <element signature="n#QueryMaker#0" />
+            <element signature="n#!!block;n#GetEntityList#0;n#QueryMaker#0" />
+            <element signature="n#!!block;n#AddEntity#0;n#QueryMaker#0" />
+            <element signature="n#!!block;n#DeleteEntity#0;n#QueryMaker#0" />
+            <element signature="n#!!block;n#EditEntity#0;n#QueryMaker#0" />
+            <element signature="n#EntityFilters#0" />
+            <element signature="n#!!block;n#getChildConnectedFilter#0;n#EntityFilters#0" />
+            <element signature="n#!!block;n#getChildEntity#0;n#EntityFilters#0" />
+            <element signature="n#!!block;n#getListEntity#0;n#EntityFilters#0" />
+            <element signature="n#!!block;n#getEntityLogicProperties#0;n#EntityFilters#0" />
+            <element signature="n#!!block;n#getEntityViewProperties#0;n#EntityFilters#0" />
+            <element signature="n#!!block;n#getRepresentDataField#0;n#EntityFilters#0" />
+            <element signature="n#ListPage#0" />
+            <element signature="n#!!block;n#constructor#0;n#ListPage#0" />
+            <element signature="n#!!block;n#BuildList#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableBuildFacad#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableLoadAndBuildByFilter#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableLoad#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableLoadCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableFill#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableClear#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableRefresh#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableAddRowMenu#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableEditRowMenu#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableEditRowMenuCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableDeleteRow#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableDeleteRowCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableExtendList#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableSetFilter#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableAddSend#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableAddCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableEditSend#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableEditCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableAddToPocket#0;n#ListPage#0" />
+            <element signature="n#!!block;n#ShowPocket#0;n#ListPage#0" />
+            <element signature="n#!!block;n#HidePocket#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableGetElementInfo#0;n#ListPage#0" />
+            <element signature="n#!!block;n#FreezeTable#0;n#ListPage#0" />
+            <element signature="n#!!block;n#UnfreezeTable#0;n#ListPage#0" />
+            <element signature="n#!!block;n#TableChooseItem#0;n#ListPage#0" />
+            <element signature="n#!!block;n#ImportSummaryGetInfo#0;n#ListPage#0" />
+            <element signature="n#!!block;n#ImportSummaryGetInfoCallback#0;n#ListPage#0" />
+            <element signature="n#!!block;n#ExportSummaryGetInfo#0;n#ListPage#0" />
+            <element signature="n#!!block;n#ExportSummaryGetInfoCallback#0;n#ListPage#0" />
+            <element signature="n#Router#0" />
+            <element signature="n#!!block;n#initialize#0;n#Router#0" />
+            <element signature="n#!!block;n#handleHash#0;n#Router#0" />
+            <element signature="n#!!block;n#DefineUser#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#CheckPermission#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Logout#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#StartPage#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Provider#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ProviderList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ProviderAdd#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Customer#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#CustomerList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#CustomerAdd#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Goods#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#GoodsList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#GoodsAdd#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Storage#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#StorageAvailable#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#StorageInfo#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Imports#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ImportsAction#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ImportsList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Exports#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ExportsAction#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ExportsList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#Reports#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ImportReportList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ExportReportList#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ReportMake#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#SendReportDates#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#SendReportDatesCallback#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#SendReportShowImportSummary#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#System#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#RebuildReports#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#ForbiddenPage#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#MakeImport#0;n#InterfaceHashHandler#0" />
+            <element signature="n#!!block;n#MakeExport#0;n#InterfaceHashHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/login_page.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="44">
+          <caret line="2" column="25" lean-forward="true" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>Gradle : ISLabProjectGroup : ISLabProject-1.0-SNAPSHOT.war (exploded)</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.32528734" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Web</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3494253" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>handlebars</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>main|ISLabProject</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.32528734" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Gradle: junit:junit:4.12</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.3494253" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
