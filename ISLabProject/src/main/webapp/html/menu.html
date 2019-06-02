@@ -82,13 +82,6 @@
                 <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
             </ul>
         </li>
-        <li><a href="#reports">Reports</a>
-            <ul>
-                <li><a href="#report_list_import">Show import reports list</a></li>
-                <li><a href="#report_list_export">Show export reports list</a></li>
-                <li><a href="#report_make">Make report</a></li>
-            </ul>
-        </li>
         <li><a href="#system">System</a></li>
 
     </script>
@@ -125,13 +118,6 @@
                 <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
             </ul>
         </li>
-        <li><a href="#reports">Reports</a>
-            <ul>
-                <li><a href="#report_list_import">Show import reports list</a></li>
-                <li><a href="#report_list_export">Show export reports list</a></li>
-                <li><a href="#report_make">Make report</a></li>
-            </ul>
-        </li>
     </script>
     <script id="import_menu_template" type="text/template">
         <li><a href="#">Start Page</a></li>
@@ -159,13 +145,6 @@
                 <li><a href="#import_list">Import Document list (Filter/ID)</a></li>
             </ul>
         </li>
-        <li><a href="#reports">Reports</a>
-            <ul>
-                <li><a href="#report_list_import">Show import reports list</a></li>
-                <li><a href="#report_list_export">Show export reports list</a></li>
-                <li><a href="#report_make">Make report</a></li>
-            </ul>
-        </li>
     </script>
     <script id="export_menu_template" type="text/template">
         <li><a href="#">Start Page</a></li>
@@ -190,13 +169,6 @@
             <ul>
                 <li><a href="#export_action">Export goods</a></li>
                 <li><a href="#export_list">Exports Document list (Filter/ID)</a></li>
-            </ul>
-        </li>
-        <li><a href="#reports">Reports</a>
-            <ul>
-                <li><a href="#report_list_import">Show import reports list</a></li>
-                <li><a href="#report_list_export">Show export reports list</a></li>
-                <li><a href="#report_make">Make report</a></li>
             </ul>
         </li>
     </script>
@@ -361,60 +333,6 @@
     </script>
     <script id="export_costumer_template" type="text/template">
         <p> Customer is <b>{{ customer }}</b></P>
-    </script>
-
-    <script id="reports_template" type="text/template">
-        <h1>Report menu</h1>
-        <p> In the menu you can review reports and create new one.</p>
-        <br>
-        <h3><i>General info:</i></h3>
-        <ul class="content_ul">
-            <li>Something1</li>
-            <li>Something2</li>
-            <li>Something3</li>
-        </ul>
-        <br>
-        <h3><i>Available actions:</i></h3>
-        <ul class="content_ul">
-            <li><a href="#report_last"><u>Show last Report</u></a> - show last made Report by any user.</li>
-            <li><a href="#report_list"><u>Show Report list</u></a> - show first 10 goods, you can expand list by each 10 next goods.</li>
-            <li><a href="#report_make"><u>Make new Report</u></a> - you can make new Report for custom date period.</li>
-        </ul>
-    </script>
-    <script id="report_make_template" type="text/template">
-        <ul>
-            <li>
-                <p>Date from (YYYY-MM-DD): </p>
-                <input name="date_from" type="text" value="2019-1-1">
-            </li>
-            <li>
-                <p>Date to (YYYY-MM-DD): </p>
-                <input name="date_to" type="text" value="2019-1-1">
-            </li>
-            <li><button onclick="InterfaceHashHandler.SendReportDates()">Send query</button></li>
-        </ul>
-        <div id="sub_dynamic_panel"></div>
-    </script>
-    <script id="report_make_result" type="text/template">
-        <P><B>Import summary</B></P>
-        <ul>
-            <li>Start date <input id="import_summary_start_date" type="text" value=""></li>
-            <li>End date <input id="import_summary_end_date" type="text" value=""></li>
-            <li>Import count <input id="imports_summary_import_count" type="text" value=""></li>
-            <li>Import amount <input id="imports_summary_import_amount" type="text" value=""></li>
-            <li>Max price <input id="import_summary_max_price" type="text" value=""></li>
-            <li>Min price <input id="import_summary_min_price" type="text" value=""></li>
-        </ul>
-        <P><B>Export summary</B></P>
-        <ul>
-            <li>Start date <input id="export_summary_start_date" type="text" value=""></li>
-            <li>End date <input id="export_summary_end_date" type="text" value=""></li>
-            <li>Export count <input id="exports_summary_export_count" type="text" value=""></li>
-            <li>Export amount <input id="exports_summary_export_amount" type="text" value=""></li>
-            <li>Max price <input id="export_summary_max_price" type="text" value=""></li>
-            <li>Min price <input id="export_summary_min_price" type="text" value=""></li>
-        </ul>
-        <div id="list_panel"></div>
     </script>
 
     <script id="system_template" type="text/template">

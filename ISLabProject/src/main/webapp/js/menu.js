@@ -16,10 +16,7 @@ class Common {
         'export goods',
         'import move document',
         'export move document',
-        'import summary',
-        'export summary',
         'available goods',
-        'available goods report',
     ]);
     static EntityMap = Object.freeze({
         Provider           : 'provider',
@@ -32,11 +29,7 @@ class Common {
         ExportGoods        : 'export goods',
         ImportMoveDocument : 'import move document',
         ExportMoveDocument : 'export move document',
-        ImportSummary      : 'import summary',
-        ExportSummary      : 'export summary',
         AvailableGoods     : 'available goods',
-
-        AvailableGoodsReports : 'available goods report',
     });
     // Temporary
     static role;
@@ -52,12 +45,9 @@ class Common {
     static ExportMoveDocumentList;
     static AvailableList;
     static StorageList;
-    static ImportSummaryList;
-    static ExportSummaryList;
 
     static ImportSummaryAvailableGoods;
     static ExportSummaryAvailableGoods;
-    static CustomSummaryAvailableGoods;
 
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -74,18 +64,6 @@ class Common {
         Common.ExportMoveDocumentList = new ListPage('ExportMoveDocumentList', 'dynamic_panel',Common.EntityMap.ExportMoveDocument, true, false, false, false, false, false);
         Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     true, false, false, true, false, false);
         Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     true, false, false, false, false, false);
-        Common.ImportSummaryList      = new ListPage('ImportSummaryList','dynamic_panel',      Common.EntityMap.ImportSummary,      true, false, false, false, true, false);
-        Common.ExportSummaryList      = new ListPage('ExportSummaryList','dynamic_panel',      Common.EntityMap.ExportSummary,      true, false, false, false, true, false);
-
-        Common.ImportSummaryAvailableGoods = new ListPage('ImportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
-        Common.ExportSummaryAvailableGoods = new ListPage('ExportSummaryAvailableGoods','dynamic_panel', Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
-        Common.CustomSummaryAvailableGoods = new ListPage('CustomSummaryAvailableGoods','list_panel',    Common.EntityMap.AvailableGoodsReports, false, false, false, false, false, false);
-
-        Common.ImportSummaryAvailableGoods.filterable = false;
-        Common.ExportSummaryAvailableGoods.filterable = false;
-        Common.CustomSummaryAvailableGoods.filterable = false;
-
-        Common.StorageList.filterable = false;
     }
 }
 class TemplateHandler {
@@ -179,26 +157,6 @@ class EntityFilters {
                     exportGoods_id : this.undefined_value,
                     storage_id     : this.undefined_value,
                 };
-            case Common.EntityMap.ImportSummary :
-                return {
-                    id             : this.undefined_value,
-                    start_date     : this.undefined_value,
-                    end_date       : this.undefined_value,
-                    imports_count  : this.undefined_value,
-                    imports_amount : this.undefined_value,
-                    max_price      : this.undefined_value,
-                    min_price      : this.undefined_value,
-                };
-            case Common.EntityMap.ExportSummary :
-                return {
-                    id             : this.undefined_value,
-                    start_date     : this.undefined_value,
-                    end_date       : this.undefined_value,
-                    exports_count  : this.undefined_value,
-                    exports_amount : this.undefined_value,
-                    max_price      : this.undefined_value,
-                    min_price      : this.undefined_value,
-                };
             case Common.EntityMap.AvailableGoods :
                 return {
                     id            : this.undefined_value,
@@ -209,17 +167,6 @@ class EntityFilters {
                     current       : true,
                     snapshot_date : this.undefined_value,
                 };
-            case Common.EntityMap.AvailableGoodsReports :
-                return {
-                    id            : this.undefined_value,
-                    goods_id      : this.undefined_value,
-                    goods_count   : this.undefined_value,
-                    provider_id   : this.undefined_value,
-                    storage_id    : this.undefined_value,
-                    current       : false,
-                    snapshot_date : this.undefined_value,
-                };
-
             default : {
                 alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
                 return undefined;
@@ -301,10 +248,6 @@ class EntityFilters {
                 return Common.ImportMoveDocumentList;
             case Common.EntityMap.ExportMoveDocument :
                 return Common.ExportMoveDocumentList;
-            case Common.EntityMap.ImportSummary :
-                return Common.ImportSummaryList;
-            case Common.EntityMap.ExportSummary :
-                return Common.ExportSummaryList;
             case Common.EntityMap.AvailableGoods :
                 return Common.AvailableList;
         }
@@ -330,14 +273,8 @@ class EntityFilters {
                 return ['id', 'importGoods_id', 'storage_id'];
             case Common.EntityMap.ExportMoveDocument :
                 return ['id', 'exportGoods_id', 'storage_id'];
-            case Common.EntityMap.ImportSummary :
-                return ['id', 'start_date', 'end_date', 'imports_count', 'imports_amount', 'max_price', 'min_price'];
-            case Common.EntityMap.ExportSummary :
-                return ['id', 'start_date', 'end_date', 'exports_count', 'exports_amount', 'max_price', 'min_price'];
             case Common.EntityMap.AvailableGoods :
                 return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id'];
-            case Common.EntityMap.AvailableGoodsReports :
-                return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id', 'snapshot_date'];
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
@@ -361,14 +298,8 @@ class EntityFilters {
                 return ['ID', 'Import Goods ID', 'Storage ID'];
             case Common.EntityMap.ExportMoveDocument :
                 return ['ID', 'Export Goods ID', 'Storage ID'];
-            case Common.EntityMap.ImportSummary :
-                return ['ID', 'Start Date', 'End Date', 'Imports count', 'Imports amount', 'Max price', 'Min price'];
-            case Common.EntityMap.ExportSummary :
-                return ['ID', 'Start Date', 'End Date', 'Exports count', 'Exports amount', 'Max price', 'Min price'];
             case Common.EntityMap.AvailableGoods :
                 return ['ID', 'Goods ID', 'Goods Count', 'Provider ID', 'Storage ID'];
-            case Common.EntityMap.AvailableGoodsReports :
-                return ['ID', 'Goods ID', 'Goods Count', 'Provider ID', 'Storage ID', 'Snapshot Date'];
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
@@ -971,11 +902,6 @@ class Router {
             case '#export_action'     : { InterfaceHashHandler.ExportsAction();    } break;
             case '#export_list'       : { InterfaceHashHandler.ExportsList();      } break;
 
-            case '#reports'           : { InterfaceHashHandler.Reports();          } break;
-            case '#report_list_import': { InterfaceHashHandler.ImportReportList(); } break;
-            case '#report_list_export': { InterfaceHashHandler.ExportReportList(); } break;
-            case '#report_make'       : { InterfaceHashHandler.ReportMake();       } break;
-
             case '#system'            : { InterfaceHashHandler.System();           } break;
             case '#rebuild_reports'   : { InterfaceHashHandler.RebuildReports();   } break;
             case '#forbidden'         : { InterfaceHashHandler.ForbiddenPage();    } break;
@@ -1150,80 +1076,6 @@ class InterfaceHashHandler {
     static ExportsList() {
         if (this.CheckPermission([Common.roles.Admin, Common.roles.ViewManager, Common.roles.ExportManager])) return;
         Common.ExportsList.BuildList();
-    }
-
-    static Reports() {
-        document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('reports_template', {});
-    }
-    static ImportReportList() {
-        Common.ImportSummaryList.BuildList();
-    }
-    static ExportReportList() {
-        Common.ExportSummaryList.BuildList();
-    }
-    static ReportMake() {
-        const dynamic_panel = document.getElementById('dynamic_panel');
-        dynamic_panel.innerHTML = TemplateHandler.Render('report_make_template', {});
-    }
-
-    static SendReportDates() {
-        let date_from = $('.dynamic_panel').find('input[name=\'date_from\']');
-        let date_to = $('.dynamic_panel').find('input[name=\'date_to\']');
-
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = InterfaceHashHandler.SendReportDatesCallback(http);
-        let query_body =
-            "custom_report\n" +
-            date_from.val() + "\n" +
-            date_to.val() + "\n";
-        http.send(query_body);
-    }
-    static SendReportDatesCallback(http) {
-        return function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                document.getElementById('sub_dynamic_panel').innerHTML = TemplateHandler.Render('report_make_result', {});
-                let strings = http.responseText.split('\n');
-                InterfaceHashHandler.SendReportShowImportSummary(strings[0]);
-                InterfaceHashHandler.SendReportShowExportSummary(strings[1]);
-                Common.CustomSummaryAvailableGoods.TableBuildFacad();
-                Common.CustomSummaryAvailableGoods.TableFill(JSON.parse(strings[2]), false);
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The report data is not loaded, some trouble happened with the request.");
-            }
-        }
-    }
-    static SendReportShowImportSummary(json_string) {
-        let data = JSON.parse(json_string);
-        let import_summary_start_date = $('#import_summary_start_date');
-        let import_summary_end_date = $('#import_summary_end_date');
-        let import_summary_import_count = $('#imports_summary_import_count');
-        let import_summary_import_amount = $('#imports_summary_import_amount');
-        let import_summary_max_price = $('#import_summary_max_price');
-        let import_summary_min_price = $('#import_summary_min_price');
-
-        import_summary_start_date.val(data["start_date"]);
-        import_summary_end_date.val(data["end_date"]);
-        import_summary_import_count.val(data["imports_count"]);
-        import_summary_import_amount.val(data["imports_amount"]);
-        import_summary_max_price.val(data["max_price"]);
-        import_summary_min_price.val(data["min_price"]);
-    }
-    static SendReportShowExportSummary(json_string) {
-        let data = JSON.parse(json_string);
-        let export_summary_start_date = $('#export_summary_start_date');
-        let export_summary_end_date = $('#export_summary_end_date');
-        let export_summary_export_count = $('#exports_summary_export_count');
-        let export_summary_export_amount = $('#exports_summary_export_amount');
-        let export_summary_max_price = $('#export_summary_max_price');
-        let export_summary_min_price = $('#export_summary_min_price');
-
-        export_summary_start_date.val(data["start_date"]);
-        export_summary_end_date.val(data["end_date"]);
-        export_summary_export_count.val(data["exports_count"]);
-        export_summary_export_amount.val(data["exports_amount"]);
-        export_summary_max_price.val(data["max_price"]);
-        export_summary_min_price.val(data["min_price"]);
     }
 
     static System() {

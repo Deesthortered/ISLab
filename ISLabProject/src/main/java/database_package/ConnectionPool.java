@@ -1,7 +1,5 @@
 package database_package;
 
-// Singleton pattern
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;

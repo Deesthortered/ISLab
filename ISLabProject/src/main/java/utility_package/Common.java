@@ -30,8 +30,8 @@ public class Common {
     public static final String atr_role   = "role";
     public static final String art_invalid_credentials = "invalid_credentials";
 
-    public static final String par_logout          = "logout";
-    public static final String q_get_role          = "get_role";
+    public static final String par_logout        = "logout";
+    public static final String q_get_role        = "get_role";
 
     public static final String q_entity_query    = "entity_query";
     public static final String q_get_entity_list = "get_entity_list";
@@ -39,15 +39,9 @@ public class Common {
     public static final String q_delete_entity   = "delete_entity";
     public static final String q_edit_entity     = "edit_entity";
 
-    public static final String q_import = "import";
-    public static final String q_export = "export";
+    public static final String q_import          = "import";
+    public static final String q_export          = "export";
     public static final String q_rebuild_reports = "db_rebuild_reports";
-
-    public static final String q_get_report_available = "get_report_available";
-    public static final String q_import_report = "get_import_report_available";
-    public static final String q_export_report = "get_export_report_available";
-
-    public static final String q_custom_report = "custom_report";
 
     public static boolean isInitialized() {
         return initialized;
