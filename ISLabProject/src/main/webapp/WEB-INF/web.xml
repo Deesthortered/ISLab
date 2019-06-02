@@ -6,7 +6,7 @@
 
     <filter>
         <filter-name>SessionFilter</filter-name>
-        <filter-class>main_package.SessionFilter</filter-class>
+        <filter-class>Main.SessionFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SessionFilter</filter-name>
@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>AuthorizationServlet</servlet-name>
-        <servlet-class>main_package.AuthorizationServlet</servlet-class>
+        <servlet-class>Main.AuthorizationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AuthorizationServlet</servlet-name>
@@ -24,11 +24,110 @@
 
     <servlet>
         <servlet-name>UserHandlerServlet</servlet-name>
-        <servlet-class>main_package.UserHandlerServlet</servlet-class>
+        <servlet-class>Main.UserHandlerServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UserHandlerServlet</servlet-name>
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>AvailableGoodsServlet</servlet-name>
+        <servlet-class>EntityServlets.AvailableGoodsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AvailableGoodsServlet</servlet-name>
+        <url-pattern>/AvailableGoods</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CustomerServlet</servlet-name>
+        <servlet-class>EntityServlets.CustomerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CustomerServlet</servlet-name>
+        <url-pattern>/Customer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExportDocumentServlet</servlet-name>
+        <servlet-class>EntityServlets.ExportDocumentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportDocumentServlet</servlet-name>
+        <url-pattern>/ExportDocument</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExportGoodsServlet</servlet-name>
+        <servlet-class>EntityServlets.ExportGoodsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportGoodsServlet</servlet-name>
+        <url-pattern>/ExportGoods</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExportMoveDocumentServlet</servlet-name>
+        <servlet-class>EntityServlets.ExportMoveDocumentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportMoveDocumentServlet</servlet-name>
+        <url-pattern>/ExportMoveDocument</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GoodsServlet</servlet-name>
+        <servlet-class>EntityServlets.GoodsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GoodsServlet</servlet-name>
+        <url-pattern>/Goods</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ImportDocumentServlet</servlet-name>
+        <servlet-class>EntityServlets.ImportDocumentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImportDocumentServlet</servlet-name>
+        <url-pattern>/ImportDocument</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ImportGoodsServlet</servlet-name>
+        <servlet-class>EntityServlets.ImportGoodsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImportGoodsServlet</servlet-name>
+        <url-pattern>/ImportGoods</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ImportMoveDocumentServlet</servlet-name>
+        <servlet-class>EntityServlets.ImportMoveDocumentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImportMoveDocumentServlet</servlet-name>
+        <url-pattern>/ImportMoveDocument</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProviderServlet</servlet-name>
+        <servlet-class>EntityServlets.ProviderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProviderServlet</servlet-name>
+        <url-pattern>/Provider</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StorageServlet</servlet-name>
+        <servlet-class>EntityServlets.StorageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StorageServlet</servlet-name>
+        <url-pattern>/Storage</url-pattern>
+    </servlet-mapping>
 </web-app>

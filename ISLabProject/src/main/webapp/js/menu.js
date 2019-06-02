@@ -1,4 +1,5 @@
 class Common {
+    static url = '';
     static roles = Object.freeze({
         Admin         : 'Admin',
         ViewManager   : 'ViewManager',
@@ -31,6 +32,20 @@ class Common {
         ExportMoveDocument : 'export move document',
         AvailableGoods     : 'available goods',
     });
+    static ServletsURL = Object.freeze({
+        Provider           : 'Provider',
+        Customer           : 'Customer',
+        Goods              : 'Goods',
+        Storage            : 'Storage',
+        ImportDocument     : 'ImportDocument',
+        ExportDocument     : 'ExportDocument',
+        ImportGoods        : 'ImportGoods',
+        ExportGoods        : 'ExportGoods',
+        ImportMoveDocument : 'ImportMoveDocument',
+        ExportMoveDocument : 'ExportMoveDocument',
+        AvailableGoods     : 'AvailableGoods',
+    });
+
     // Temporary
     static role;
 
@@ -171,6 +186,32 @@ class EntityFilters {
                 alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
                 return undefined;
             }
+        }
+    }
+    static getServletPath(entity) {
+        switch (entity) {
+            case Common.EntityMap.Provider :
+                return Common.ServletsURL.Provider;
+            case Common.EntityMap.Customer :
+                return Common.ServletsURL.Customer;
+            case Common.EntityMap.Goods :
+                return Common.ServletsURL.Goods;
+            case Common.EntityMap.Storage :
+                return Common.ServletsURL.Storage;
+            case Common.EntityMap.ImportDocument :
+                return Common.ServletsURL.ImportDocument;
+            case Common.EntityMap.ExportDocument :
+                return Common.ServletsURL.ExportDocument;
+            case Common.EntityMap.ImportGoods :
+                return Common.ServletsURL.ImportGoods;
+            case Common.EntityMap.ExportGoods :
+                return Common.ServletsURL.ExportGoods;
+            case Common.EntityMap.ImportMoveDocument :
+                return Common.ServletsURL.ImportMoveDocument;
+            case Common.EntityMap.ExportMoveDocument :
+                return Common.ServletsURL.ExportMoveDocument;
+            case Common.EntityMap.AvailableGoods :
+                return Common.ServletsURL.AvailableGoods;
         }
     }
     static getChildConnectedFilter(entity, id) {
@@ -425,15 +466,15 @@ class ListPage {
 
     TableLoad(callback) {
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
+        let params = '?' +
+            'filter=' + JSON.stringify(this.filter) + '&' +
+            'limited=' + String(this.limited) + '&' +
+            'listBeginInd=' + String(this.list_begin_ind) + '&' +
+            'listSize=' + String(ListPage.list_size);
+        http.open('GET', Common.url + servlet + params, true);
         http.onreadystatechange = this.TableLoadCallback(callback, http, this);
-        let query_body =
-            QueryMaker.GetEntityList(this.current_entity) +
-            JSON.stringify(this.filter) + '\n' +
-            String(this.limited) + "\n" +
-            String(this.list_begin_ind) + "\n" +
-            String(ListPage.list_size) + "\n";
-        http.send(query_body);
+        http.send();
     }
     TableLoadCallback(callback, http, obj) {
         return function () {
@@ -634,7 +675,8 @@ class ListPage {
         let sure = confirm("Are you sure want to delete the record with ID = " + id +"?");
         if (sure) {
             let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
+            let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
+            http.open('DELETE', Common.url + servlet, true);
             http.onreadystatechange = this.TableDeleteRowCallback(http, this);
             let query_body =
                 QueryMaker.DeleteEntity(this.current_entity) +
@@ -700,7 +742,8 @@ class ListPage {
         if (!ok) return;
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
+        http.open('POST', Common.url + servlet, true);
         http.onreadystatechange = this.TableAddCallback(http, this);
         let query_body =
             QueryMaker.AddEntity(this.current_entity) +
@@ -741,7 +784,8 @@ class ListPage {
         }
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
+        http.open('PUT', Common.url + servlet, true);
         http.onreadystatechange = this.TableEditCallback(http, this);
         let query_body =
             QueryMaker.EditEntity(this.current_entity) +
@@ -793,18 +837,12 @@ class ListPage {
     }
 
     TableGetElementInfo(id) {
-        if (this.current_entity === Common.EntityMap.ImportSummary) {
-            this.ImportSummaryGetInfo(id);
-        } else if (this.current_entity === Common.EntityMap.ExportSummary) {
-            this.ExportSummaryGetInfo(id);
-        } else {
-            let child_entity = EntityFilters.getChildEntity(this.current_entity);
-            if (child_entity === EntityFilters.undefined_value) return;
-            let child_list = EntityFilters.getListEntity(child_entity);
-            child_list.TableBuildFacad();
-            child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
-            child_list.TableLoadAndBuildByFilter();
-        }
+        let child_entity = EntityFilters.getChildEntity(this.current_entity);
+        if (child_entity === EntityFilters.undefined_value) return;
+        let child_list = EntityFilters.getListEntity(child_entity);
+        child_list.TableBuildFacad();
+        child_list.filter = EntityFilters.getChildConnectedFilter(child_entity, id);
+        child_list.TableLoadAndBuildByFilter();
     }
 
     FreezeTable() {
@@ -824,48 +862,6 @@ class ListPage {
         this.choosed_item = this.table_data.find(x => x['id'] === id);
         document.getElementById('choosed').innerHTML = TemplateHandler.Render('choosed_template',
             { id : this.choosed_item[EntityFilters.getRepresentDataField(this.current_entity)] });
-    }
-
-    //Special
-    ImportSummaryGetInfo(id) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = this.ImportSummaryGetInfoCallback(http, this);
-        let query_body =
-            "get_report_available\n" +
-            "get_import_report_available\n" +
-            id + "\n";
-        http.send(query_body);
-    }
-    ImportSummaryGetInfoCallback(http, obj) {
-        return function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                Common.ImportSummaryAvailableGoods.TableBuildFacad();
-                Common.ImportSummaryAvailableGoods.TableFill(JSON.parse(http.responseText), false);
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
-            }
-        }
-    }
-    ExportSummaryGetInfo(id) {
-        let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
-        http.onreadystatechange = this.ExportSummaryGetInfoCallback(http, this);
-        let query_body =
-            "get_report_available\n" +
-            "get_export_report_available\n" +
-            id + "\n";
-        http.send(query_body);
-    }
-    ExportSummaryGetInfoCallback(http, obj) {
-        return function () {
-            if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
-                Common.ExportSummaryAvailableGoods.TableBuildFacad();
-                Common.ExportSummaryAvailableGoods.TableFill(JSON.parse(http.responseText), false);
-            } else if (http.readyState === XMLHttpRequest.DONE) {
-                alert("The " + obj.current_entity + " is not loaded, some trouble happened with the request.");
-            }
-        }
     }
 }
 
@@ -1186,6 +1182,10 @@ class InterfaceHashHandler {
 }
 
 (() => {
+    Common.url = window.location.href;
+    let lastIndex = Common.url.lastIndexOf("/");
+    Common.url = Common.url.substring(0, lastIndex + 1);
+
     Common.initialize();
     Router.initialize();
     InterfaceHashHandler.DefineUser();
