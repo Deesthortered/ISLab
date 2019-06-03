@@ -14,18 +14,18 @@ import java.io.IOException;
 public class StorageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new StorageQueryHandler();
-        queryHandler.GetEntityList(request, response);
+        queryHandler.getEntityList(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new StorageQueryHandler();
-        queryHandler.AddEntity(request, response);
+        queryHandler.addEntity(request, response);
     }
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new StorageQueryHandler();
-        queryHandler.EditEntity(request, response);
+        queryHandler.editEntity(request, response);
     }
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new StorageQueryHandler();
-        queryHandler.DeleteEntity(request, response);
+        queryHandler.deleteEntity(request, response);
     }
 }

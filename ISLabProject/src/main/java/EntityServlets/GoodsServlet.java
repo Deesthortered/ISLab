@@ -14,18 +14,18 @@ import java.io.IOException;
 public class GoodsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new GoodsQueryHandler();
-        queryHandler.GetEntityList(request, response);
+        queryHandler.getEntityList(request, response);
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new GoodsQueryHandler();
-        queryHandler.AddEntity(request, response);
+        queryHandler.addEntity(request, response);
     }
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new GoodsQueryHandler();
-        queryHandler.EditEntity(request, response);
+        queryHandler.editEntity(request, response);
     }
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityQueryHandler queryHandler = new GoodsQueryHandler();
-        queryHandler.DeleteEntity(request, response);
+        queryHandler.deleteEntity(request, response);
     }
 }

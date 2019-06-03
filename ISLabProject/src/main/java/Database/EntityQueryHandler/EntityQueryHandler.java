@@ -17,26 +17,25 @@ import java.util.ArrayList;
 
 public abstract class EntityQueryHandler {
 
-    public void GetEntityList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        BufferedReader reader = request.getReader();
+    public void getEntityList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter writer = response.getWriter();
 
         DAOAbstract dao = getDAO();
-        Entity filter = dao.createEntity();
+        Entity filteringEntity = dao.createEntity();
 
         try {
-            filter.setByJSON(new JSONObject(reader.readLine()));
+            filteringEntity.setByJSON(new JSONObject(request.getHeader("filter")));
         } catch (JSONException e) {
             throw new ServletException(e.getMessage());
         }
 
-        boolean limited = Boolean.parseBoolean(reader.readLine());
-        int begin_index = Integer.parseInt(reader.readLine());
-        int count_of_records = Integer.parseInt(reader.readLine());
+        boolean limited = Boolean.parseBoolean(request.getHeader("limited"));
+        int beginIndex = Integer.parseInt(request.getHeader("listBeginInd"));
+        int countOfRecords = Integer.parseInt(request.getHeader("listSize"));
 
         ArrayList<Entity> list;
         try {
-            list = dao.GetEntityList(filter, limited, begin_index, count_of_records);
+            list = dao.getEntityList(filteringEntity, limited, beginIndex, countOfRecords);
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }
@@ -52,7 +51,7 @@ public abstract class EntityQueryHandler {
                 sub_filter.setId(foreingKeys.get(i));
                 Entity sub_entity;
                 try {
-                    sub_entity = dao_array.get(i).GetEntityList(sub_filter, limited, 0, 1).get(0);
+                    sub_entity = dao_array.get(i).getEntityList(sub_filter, limited, 0, 1).get(0);
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
@@ -62,7 +61,7 @@ public abstract class EntityQueryHandler {
         }
         writer.write(json_list.toString());
     }
-    public void AddEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void addEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
@@ -81,7 +80,7 @@ public abstract class EntityQueryHandler {
         ArrayList<Entity> list = new ArrayList<>();
         list.add(entity);
         try {
-            if (dao.AddEntityList(list))
+            if (dao.addEntityList(list))
                 writer.print("ok");
             else
                 writer.print("bad");
@@ -89,7 +88,7 @@ public abstract class EntityQueryHandler {
             throw new ServletException(e.getMessage());
         }
     }
-    public void DeleteEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void deleteEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
@@ -97,10 +96,10 @@ public abstract class EntityQueryHandler {
         DAOAbstract dao = getDAO();
 
         try {
-            if (dao.IsExistsEntity(id)) {
+            if (dao.isExistsEntity(id)) {
                 Entity filter = dao.createEntity();
                 filter.setId(id);
-                if (dao.DeleteEntityList(filter))
+                if (dao.deleteEntityList(filter))
                     writer.print("ok");
                 else
                     writer.print("bad");
@@ -110,7 +109,7 @@ public abstract class EntityQueryHandler {
             throw new ServletException(e.getMessage());
         }
     }
-    public void EditEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void editEntity(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         BufferedReader reader = request.getReader();
         PrintWriter writer = response.getWriter();
 
@@ -123,8 +122,8 @@ public abstract class EntityQueryHandler {
         }
 
         try {
-            if (dao.IsExistsEntity(entity.getId())) {
-                if (dao.EditEntity(entity))
+            if (dao.isExistsEntity(entity.getId())) {
+                if (dao.editEntity(entity))
                     writer.print("ok");
                 else
                     writer.print("bad");

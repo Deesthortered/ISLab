@@ -24,32 +24,32 @@ public class DAOImportDocument implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> GetEntityList(Entity filter, boolean limited, int start_index, int count_of_records) throws ClassNotFoundException, SQLException, InterruptedException {
+    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        ImportDocument casted_filter = (ImportDocument) filter;
+        ImportDocument castedFilteringEntity = (ImportDocument) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
-        String sql_query = "SELECT * FROM islabdb.importdocument " +
+        String sqlQuery = "SELECT * FROM islabdb.importdocument " +
                 "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_ProviderID = ?  OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_ImportDate = ?  OR ? = \'"   + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                 "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index++, casted_filter.getDescription());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getImport_date()));
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getImport_date()));
+        statement.setString(index++, castedFilteringEntity.getDescription());
+        statement.setString(index++, castedFilteringEntity.getDescription());
         if (limited) {
-            statement.setLong(index++, count_of_records);
-            statement.setLong(index, start_index);
+            statement.setLong(index++, countOfRecords);
+            statement.setLong(index, startIndex);
         }
         ResultSet resultSet = statement.executeQuery();
 
@@ -65,49 +65,49 @@ public class DAOImportDocument implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean AddEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         for (Entity item : list) {
-            ImportDocument casted_item = (ImportDocument) item;
+            ImportDocument castedItem = (ImportDocument) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importdocument (Document_ProviderID, Document_ImportDate, Document_Description) VALUES (?, ?, ?);");
             int index = 1;
-            statement.setLong(index++, casted_item.getProvider_id());
-            statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_item.getImport_date()));
-            statement.setString(index, casted_item.getDescription());
+            statement.setLong(index++, castedItem.getProvider_id());
+            statement.setString(index++, DateHandler.JavaDateToSQLDate(castedItem.getImport_date()));
+            statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean DeleteEntityList(Entity filter) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        ImportDocument casted_filter = (ImportDocument) filter;
-        String sql_query = "DELETE FROM islabdb.importdocument " +
+        ImportDocument castedFilteringEntity = (ImportDocument) filteringEntity;
+        String sqlQuery = "DELETE FROM islabdb.importdocument " +
                 "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_ProviderID = ?  OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_ImportDate = ?  OR ? = \'"   + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                 "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getImport_date()));
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index, casted_filter.getDescription());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getImport_date()));
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getImport_date()));
+        statement.setString(index++, castedFilteringEntity.getDescription());
+        statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean IsExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
@@ -124,18 +124,18 @@ public class DAOImportDocument implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean EditEntity(Entity entity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        ImportDocument document = (ImportDocument) entity;
+        ImportDocument document = (ImportDocument) editingEntity;
 
-        String sql_code =   "UPDATE islabdb.importdocument SET " +
+        String sqlCode =   "UPDATE islabdb.importdocument SET " +
                 "Document_ProviderID = ?, " +
                 "Document_ImportDate = ?, " +
                 "Document_Description = ? " +
                 "WHERE Document_ID = ?;";
 
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         int index = 1;
         statement.setLong(index++, document.getProvider_id());
         statement.setString(index++, DateHandler.JavaDateToSQLDate(document.getImport_date()));
@@ -148,13 +148,13 @@ public class DAOImportDocument implements DAOAbstract {
     }
 
     @Override
-    public long GetLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         long res = -1;
 
-        String sql_code = "SELECT max(Document_ID) FROM islabdb.importdocument;";
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        String sqlCode = "SELECT max(Document_ID) FROM islabdb.importdocument;";
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

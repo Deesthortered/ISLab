@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public interface DAOAbstract {
 
-    ArrayList<Entity> GetEntityList(Entity filter, boolean limited, int start_index, int count_of_records) throws ClassNotFoundException, SQLException, InterruptedException;
-    boolean AddEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException;
-    boolean DeleteEntityList(Entity filter) throws ClassNotFoundException, SQLException, InterruptedException;
-    boolean IsExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException;
-    boolean EditEntity(Entity entity) throws SQLException, InterruptedException, ClassNotFoundException;
-    long GetLastID() throws ClassNotFoundException, SQLException, InterruptedException;
+    ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException;
+    boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException;
+    boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException;
+    boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException;
+    boolean editEntity(Entity editingEntity) throws SQLException, InterruptedException, ClassNotFoundException;
+    long getLastID() throws ClassNotFoundException, SQLException, InterruptedException;
 
     Entity createEntity();
 }

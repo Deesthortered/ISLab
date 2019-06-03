@@ -24,13 +24,13 @@ public class DAOAvailableGoods implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> GetEntityList(Entity filter, boolean limited, int start_index, int count_of_records) throws ClassNotFoundException, SQLException, InterruptedException {
+    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        AvailableGoods casted_filter = (AvailableGoods) filter;
+        AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
-        String sql_query = "SELECT * FROM islabdb.availablegoods " +
+        String sqlQuery = "SELECT * FROM islabdb.availablegoods " +
                 "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
                 "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
                 "(Available_GoodsCount = ?    OR ? = " + Entity.undefined_long + ") AND " +
@@ -40,71 +40,71 @@ public class DAOAvailableGoods implements DAOAbstract {
                 "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getGoods_id());
-        statement.setLong(index++, casted_filter.getGoods_id());
-        statement.setLong(index++, casted_filter.getGoods_count());
-        statement.setLong(index++, casted_filter.getGoods_count());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getStorage_id());
-        statement.setLong(index++, casted_filter.getStorage_id());
-        statement.setBoolean(index++,  casted_filter.isCurrent());
-        statement.setBoolean(index++, casted_filter.isCurrent());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getGoods_id());
+        statement.setLong(index++, castedFilteringEntity.getGoods_id());
+        statement.setLong(index++, castedFilteringEntity.getGoods_count());
+        statement.setLong(index++, castedFilteringEntity.getGoods_count());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getStorage_id());
+        statement.setLong(index++, castedFilteringEntity.getStorage_id());
+        statement.setBoolean(index++,  castedFilteringEntity.isCurrent());
+        statement.setBoolean(index++, castedFilteringEntity.isCurrent());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getSnapshot_date()));
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getSnapshot_date()));
 
         if (limited) {
-            statement.setLong(index++, count_of_records);
-            statement.setLong(index, start_index);
+            statement.setLong(index++, countOfRecords);
+            statement.setLong(index, startIndex);
         }
         ResultSet resultSet = statement.executeQuery();
 
         while (resultSet.next()) {
             long id          = resultSet.getLong("Available_ID");
-            long goods_id    = resultSet.getLong("Available_GoodsID");
-            long goods_count = resultSet.getLong("Available_GoodsCount");
-            long provider_id = resultSet.getLong("Available_ProviderID");
-            long storage_id  = resultSet.getLong("Available_StorageID");
+            long goodsId    = resultSet.getLong("Available_GoodsID");
+            long goodsCount = resultSet.getLong("Available_GoodsCount");
+            long providerId = resultSet.getLong("Available_ProviderID");
+            long storageId  = resultSet.getLong("Available_StorageID");
             boolean current  = resultSet.getBoolean("Available_Current");
-            Date snapshot_date = resultSet.getDate("Available_SnapshotDate");
-            result.add(new AvailableGoods(id, goods_id, goods_count, provider_id, storage_id, current, snapshot_date));
+            Date snapshotDate = resultSet.getDate("Available_SnapshotDate");
+            result.add(new AvailableGoods(id, goodsId, goodsCount, providerId, storageId, current, snapshotDate));
         }
 
         pool.DropConnection(connection);
         return result;
     }
     @Override
-    public boolean AddEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         for (Entity item : list) {
-            AvailableGoods casted_item = (AvailableGoods) item;
+            AvailableGoods castedItem = (AvailableGoods) item;
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO islabdb.availablegoods " +
                             "(Available_GoodsID, Available_GoodsCount, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
                             "VALUES (?, ?, ?, ?, ?, ?);");
             int index = 1;
-            statement.setLong(index++, casted_item.getGoods_id());
-            statement.setLong(index++, casted_item.getGoods_count());
-            statement.setLong(index++, casted_item.getProvider_id());
-            statement.setLong(index++, casted_item.getStorage_id());
-            statement.setBoolean(index++, casted_item.isCurrent());
-            statement.setString(index, DateHandler.JavaDateToSQLDate(casted_item.getSnapshot_date()));
+            statement.setLong(index++, castedItem.getGoods_id());
+            statement.setLong(index++, castedItem.getGoods_count());
+            statement.setLong(index++, castedItem.getProvider_id());
+            statement.setLong(index++, castedItem.getStorage_id());
+            statement.setBoolean(index++, castedItem.isCurrent());
+            statement.setString(index, DateHandler.JavaDateToSQLDate(castedItem.getSnapshot_date()));
             statement.executeUpdate();
         }
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean DeleteEntityList(Entity filter) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        AvailableGoods casted_filter = (AvailableGoods) filter;
-        String sql_query = "DELETE FROM islabdb.availablegoods " +
+        AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
+        String sqlQuery = "DELETE FROM islabdb.availablegoods " +
                 "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
                 "(Available_GoodsID = ?       OR ? = " + Entity.undefined_long + ") AND " +
                 "(Available_GoodsCount = ?    OR ? = " + Entity.undefined_long + ") AND " +
@@ -112,30 +112,30 @@ public class DAOAvailableGoods implements DAOAbstract {
                 "(Available_StorageID = ?     OR ? = " + Entity.undefined_long + ") AND " +
                 "(Available_Current = ?       OR ? = false) AND " +
                 "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\')";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
 
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getGoods_id());
-        statement.setLong(index++, casted_filter.getGoods_id());
-        statement.setLong(index++, casted_filter.getGoods_count());
-        statement.setLong(index++, casted_filter.getGoods_count());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getProvider_id());
-        statement.setLong(index++, casted_filter.getStorage_id());
-        statement.setLong(index++, casted_filter.getStorage_id());
-        statement.setBoolean(index++,  casted_filter.isCurrent());
-        statement.setBoolean(index++, casted_filter.isCurrent());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
-        statement.setString(index, DateHandler.JavaDateToSQLDate(casted_filter.getSnapshot_date()));
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getGoods_id());
+        statement.setLong(index++, castedFilteringEntity.getGoods_id());
+        statement.setLong(index++, castedFilteringEntity.getGoods_count());
+        statement.setLong(index++, castedFilteringEntity.getGoods_count());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getProvider_id());
+        statement.setLong(index++, castedFilteringEntity.getStorage_id());
+        statement.setLong(index++, castedFilteringEntity.getStorage_id());
+        statement.setBoolean(index++,  castedFilteringEntity.isCurrent());
+        statement.setBoolean(index++, castedFilteringEntity.isCurrent());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getSnapshot_date()));
+        statement.setString(index, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getSnapshot_date()));
         statement.executeUpdate();
 
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean IsExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
@@ -152,12 +152,12 @@ public class DAOAvailableGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean EditEntity(Entity entity) throws SQLException, InterruptedException, ClassNotFoundException {
+    public boolean editEntity(Entity editingEntity) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        AvailableGoods document = (AvailableGoods) entity;
-        String sql_code =   "UPDATE islabdb.availablegoods SET " +
+        AvailableGoods document = (AvailableGoods) editingEntity;
+        String sqlCode =   "UPDATE islabdb.availablegoods SET " +
                 "Available_GoodsID = ?, " +
                 "Available_GoodsCount = ?, " +
                 "Available_ProviderID = ?, " +
@@ -166,7 +166,7 @@ public class DAOAvailableGoods implements DAOAbstract {
                 "Available_SnapshotDate = ? " +
                 "WHERE Available_ID = ?;";
 
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
 
         int index = 1;
         statement.setLong(index++, document.getGoods_id());
@@ -182,13 +182,13 @@ public class DAOAvailableGoods implements DAOAbstract {
     }
 
     @Override
-    public long GetLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
         long res = -1;
-        String sql_code = "SELECT max(Available_ID) FROM islabdb.availablegoods;";
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        String sqlCode = "SELECT max(Available_ID) FROM islabdb.availablegoods;";
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

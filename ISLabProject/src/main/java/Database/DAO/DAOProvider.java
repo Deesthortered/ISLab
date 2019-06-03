@@ -22,32 +22,32 @@ public class DAOProvider implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> GetEntityList(Entity filter, boolean limited, int start_index, int count_of_records) throws ClassNotFoundException, SQLException, InterruptedException {
+    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        Provider casted_filter = (Provider) filter;
+        Provider castedFilteringEntity = (Provider) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
-        String sql_query = "SELECT * FROM islabdb.provider " +
+        String sqlQuery = "SELECT * FROM islabdb.provider " +
                 "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
                 "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
                 "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
                 "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setString(index++, casted_filter.getName());
-        statement.setString(index++, casted_filter.getName());
-        statement.setString(index++, casted_filter.getCountry());
-        statement.setString(index++, casted_filter.getCountry());
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index++, casted_filter.getDescription());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setString(index++, castedFilteringEntity.getName());
+        statement.setString(index++, castedFilteringEntity.getName());
+        statement.setString(index++, castedFilteringEntity.getCountry());
+        statement.setString(index++, castedFilteringEntity.getCountry());
+        statement.setString(index++, castedFilteringEntity.getDescription());
+        statement.setString(index++, castedFilteringEntity.getDescription());
         if (limited) {
-            statement.setLong(index++, count_of_records);
-            statement.setLong(index++, start_index);
+            statement.setLong(index++, countOfRecords);
+            statement.setLong(index, startIndex);
         }
         ResultSet resultSet = statement.executeQuery();
 
@@ -63,17 +63,17 @@ public class DAOProvider implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean AddEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         for (Entity item : list) {
-            Provider casted_item = (Provider) item;
+            Provider castedItem = (Provider) item;
             try {
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
                 int index = 1;
-                statement.setString(index++, casted_item.getName());
-                statement.setString(index++, casted_item.getCountry());
-                statement.setString(index, casted_item.getDescription());
+                statement.setString(index++, castedItem.getName());
+                statement.setString(index++, castedItem.getCountry());
+                statement.setString(index, castedItem.getDescription());
                 statement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -84,11 +84,11 @@ public class DAOProvider implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean DeleteEntityList(Entity filter) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        Provider casted_filter = (Provider) filter;
+        Provider castedFilter = (Provider) filteringEntity;
         String sql_query = "DELETE FROM islabdb.provider " +
                 "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
                 "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
@@ -96,21 +96,21 @@ public class DAOProvider implements DAOAbstract {
                 "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
         PreparedStatement statement = connection.prepareStatement(sql_query);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setString(index++, casted_filter.getName());
-        statement.setString(index++, casted_filter.getName());
-        statement.setString(index++, casted_filter.getCountry());
-        statement.setString(index++, casted_filter.getCountry());
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index, casted_filter.getDescription());
+        statement.setLong(index++, castedFilter.getId());
+        statement.setLong(index++, castedFilter.getId());
+        statement.setString(index++, castedFilter.getName());
+        statement.setString(index++, castedFilter.getName());
+        statement.setString(index++, castedFilter.getCountry());
+        statement.setString(index++, castedFilter.getCountry());
+        statement.setString(index++, castedFilter.getDescription());
+        statement.setString(index, castedFilter.getDescription());
         statement.executeUpdate();
 
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean IsExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
@@ -127,17 +127,17 @@ public class DAOProvider implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean EditEntity(Entity entity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        Provider provider = (Provider) entity;
+        Provider provider = (Provider) editingEntity;
 
-        String sql_code =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
+        String sqlCode =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
                 "Provider_Country = ?, " +
                 "Provider_Description = ? " +
                 "WHERE Provider_ID = ?;";
 
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         int index = 1;
         statement.setString(index++, provider.getName());
         statement.setString(index++, provider.getCountry());
@@ -150,13 +150,13 @@ public class DAOProvider implements DAOAbstract {
     }
 
     @Override
-    public long GetLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         long res = -1;
 
-        String sql_code = "SELECT max(Provider_ID) FROM islabdb.provider;";
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        String sqlCode = "SELECT max(Provider_ID) FROM islabdb.provider;";
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

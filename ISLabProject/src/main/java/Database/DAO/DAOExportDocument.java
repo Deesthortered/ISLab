@@ -24,32 +24,32 @@ public class DAOExportDocument implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> GetEntityList(Entity filter, boolean limited, int start_index, int count_of_records) throws ClassNotFoundException, SQLException, InterruptedException {
+    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        ExportDocument casted_filter = (ExportDocument) filter;
+        ExportDocument castedFilteringEntity = (ExportDocument) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
-        String sql_query = "SELECT * FROM islabdb.exportdocument " +
+        String sqlQuery = "SELECT * FROM islabdb.exportdocument " +
                 "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_CustomerID = ?  OR ? = " + Entity.undefined_long   + ") AND " +
                 "(Document_ExportDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                 "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getCustomer_id());
-        statement.setLong(index++, casted_filter.getCustomer_id());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index++, casted_filter.getDescription());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getCustomer_id());
+        statement.setLong(index++, castedFilteringEntity.getCustomer_id());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getExport_date()));
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getExport_date()));
+        statement.setString(index++, castedFilteringEntity.getDescription());
+        statement.setString(index++, castedFilteringEntity.getDescription());
         if (limited) {
-            statement.setLong(index++, count_of_records);
-            statement.setLong(index, start_index);
+            statement.setLong(index++, countOfRecords);
+            statement.setLong(index, startIndex);
         }
         ResultSet resultSet = statement.executeQuery();
 
@@ -65,49 +65,49 @@ public class DAOExportDocument implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean AddEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         for (Entity item : list) {
-            ExportDocument casted_item = (ExportDocument) item;
+            ExportDocument castedItem = (ExportDocument) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
             int index = 1;
-            statement.setLong(index++, casted_item.getCustomer_id());
-            statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_item.getExport_date()));
-            statement.setString(index, casted_item.getDescription());
+            statement.setLong(index++, castedItem.getCustomer_id());
+            statement.setString(index++, DateHandler.JavaDateToSQLDate(castedItem.getExport_date()));
+            statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean DeleteEntityList(Entity filter) throws SQLException, InterruptedException, ClassNotFoundException {
+    public boolean deleteEntityList(Entity filteringEntity) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
-        ExportDocument casted_filter = (ExportDocument) filter;
-        String sql_query = "DELETE FROM islabdb.exportdocument " +
+        ExportDocument castedFilteringEntity = (ExportDocument) filteringEntity;
+        String sqlQuery = "DELETE FROM islabdb.exportdocument " +
                 "WHERE (Document_ID = ?          OR ? = "   + Entity.undefined_long + ") AND " +
                 "(Document_CustomerID = ?  OR ? = " + Entity.undefined_long   + ") AND " +
                 "(Document_ExportDate = ?  OR ? = \'" + DateHandler.JavaDateToSQLDate(Entity.undefined_date) + "\') AND " +
                 "(Document_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getId());
-        statement.setLong(index++, casted_filter.getCustomer_id());
-        statement.setLong(index++, casted_filter.getCustomer_id());
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
-        statement.setString(index++, DateHandler.JavaDateToSQLDate(casted_filter.getExport_date()));
-        statement.setString(index++, casted_filter.getDescription());
-        statement.setString(index, casted_filter.getDescription());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getId());
+        statement.setLong(index++, castedFilteringEntity.getCustomer_id());
+        statement.setLong(index++, castedFilteringEntity.getCustomer_id());
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getExport_date()));
+        statement.setString(index++, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getExport_date()));
+        statement.setString(index++, castedFilteringEntity.getDescription());
+        statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
         pool.DropConnection(connection);
         return true;
     }
     @Override
-    public boolean IsExistsEntity(long id) throws SQLException, InterruptedException, ClassNotFoundException {
+    public boolean isExistsEntity(long id) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
 
@@ -124,18 +124,18 @@ public class DAOExportDocument implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean EditEntity(Entity entity) throws SQLException, InterruptedException, ClassNotFoundException {
+    public boolean editEntity(Entity editingEntity) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
-        ExportDocument document = (ExportDocument) entity;
+        ExportDocument document = (ExportDocument) editingEntity;
 
-        String sql_code =   "UPDATE islabdb.exportdocument SET " +
+        String sqlCode =   "UPDATE islabdb.exportdocument SET " +
                 "Document_CustomerID = ?, " +
                 "Document_ExportDate = ?, " +
                 "Document_Description = ? " +
                 "WHERE Document_ID = ?;";
 
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         int index = 1;
         statement.setLong(index++, document.getCustomer_id());
         statement.setString(index++, DateHandler.JavaDateToSQLDate(document.getExport_date()));
@@ -148,13 +148,13 @@ public class DAOExportDocument implements DAOAbstract {
     }
 
     @Override
-    public long GetLastID() throws SQLException, InterruptedException, ClassNotFoundException {
+    public long getLastID() throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.GetConnection();
         long res = -1;
 
-        String sql_code = "SELECT max(Document_ID) FROM islabdb.exportdocument;";
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        String sqlCode = "SELECT max(Document_ID) FROM islabdb.exportdocument;";
+        PreparedStatement statement = connection.prepareStatement(sqlCode);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);
