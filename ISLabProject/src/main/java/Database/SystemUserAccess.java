@@ -1,5 +1,6 @@
 package Database;
 
+import javax.servlet.ServletException;
 import java.sql.*;
 
 public class SystemUserAccess {
@@ -16,7 +17,16 @@ public class SystemUserAccess {
         return instance;
     }
 
-    public boolean confirmationAuthoritarian(Connection connection, String login, String password) throws SQLException {
+    public boolean confirmationAuthoritarian(String login, String password) throws SQLException, ServletException {
+        ConnectionPool pool = null;
+        Connection connection = null;
+        try {
+            pool = ConnectionPool.getInstance();
+            connection = pool.getConnection();
+        } catch (ClassNotFoundException | InterruptedException e) {
+            throw new ServletException(e.getMessage());
+        }
+
         String sqlQuery = "SELECT COUNT(*) from islabdb.systemusers where user_login = ? and  user_password = ?";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
@@ -31,22 +41,32 @@ public class SystemUserAccess {
         } else {
             throw new SQLException("User is not exist");
         }
+        pool.dropConnection(connection);
         return count == 1;
     }
-    public int getUserRole(Connection connection, String login) throws SQLException {
-        String sql_query = "SELECT user_role from islabdb.systemusers where user_login = ?";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+    public int getUserRole(String login) throws SQLException, ServletException {
+        ConnectionPool pool = null;
+        Connection connection = null;
+        try {
+            pool = ConnectionPool.getInstance();
+            connection = pool.getConnection();
+        } catch (ClassNotFoundException | InterruptedException e) {
+            throw new ServletException(e.getMessage());
+        }
+
+        String sqlQuery = "SELECT user_role from islabdb.systemusers where user_login = ?";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
         statement.setString(1, login);
         ResultSet resultSet = statement.executeQuery();
 
-        int user_role;
+        int userRole;
         assert resultSet != null;
         if (resultSet.next()) {
-            user_role = resultSet.getInt("user_role");
+            userRole = resultSet.getInt("user_role");
         } else {
             throw new SQLException("User is not exist");
         }
-
-        return user_role;
+        pool.dropConnection(connection);
+        return userRole;
     }
 }
