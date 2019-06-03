@@ -26,7 +26,7 @@ public class DAOImportDocument implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         ImportDocument castedFilteringEntity = (ImportDocument) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
@@ -61,13 +61,13 @@ public class DAOImportDocument implements DAOAbstract {
             result.add(new ImportDocument(id, name, date, description));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             ImportDocument castedItem = (ImportDocument) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importdocument (Document_ProviderID, Document_ImportDate, Document_Description) VALUES (?, ?, ?);");
@@ -77,13 +77,13 @@ public class DAOImportDocument implements DAOAbstract {
             statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         ImportDocument castedFilteringEntity = (ImportDocument) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.importdocument " +
@@ -103,13 +103,13 @@ public class DAOImportDocument implements DAOAbstract {
         statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importdocument where Document_ID = ?");
         statement.setLong(1, id);
@@ -120,13 +120,13 @@ public class DAOImportDocument implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         ImportDocument document = (ImportDocument) editingEntity;
 
         String sqlCode =   "UPDATE islabdb.importdocument SET " +
@@ -143,14 +143,14 @@ public class DAOImportDocument implements DAOAbstract {
         statement.setLong(index++, document.getId());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         long res = -1;
 
         String sqlCode = "SELECT max(Document_ID) FROM islabdb.importdocument;";
@@ -160,7 +160,7 @@ public class DAOImportDocument implements DAOAbstract {
             res = resultSet.getLong(1);
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

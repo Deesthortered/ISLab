@@ -24,7 +24,7 @@ public class DAOGoods implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Goods castedFilteringEntity = (Goods) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
@@ -59,13 +59,13 @@ public class DAOGoods implements DAOAbstract {
             result.add(new Goods(id, name, average_price, description));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             Goods castedItem = (Goods) item;
 
@@ -76,13 +76,13 @@ public class DAOGoods implements DAOAbstract {
             statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         Goods castedFilteringEntity = (Goods) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.goods " +
@@ -102,13 +102,13 @@ public class DAOGoods implements DAOAbstract {
         statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.goods where Goods_ID = ?");
         statement.setLong(1, id);
@@ -119,13 +119,13 @@ public class DAOGoods implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Goods goods = (Goods) editingEntity;
 
         String sqlCode =   "UPDATE islabdb.goods SET " +
@@ -142,14 +142,14 @@ public class DAOGoods implements DAOAbstract {
         statement.setLong(index, goods.getId());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         long res = -1;
 
         String sqlCode = "SELECT max(Goods_ID) FROM islabdb.goods;";
@@ -159,7 +159,7 @@ public class DAOGoods implements DAOAbstract {
             res = resultSet.getLong(1);
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

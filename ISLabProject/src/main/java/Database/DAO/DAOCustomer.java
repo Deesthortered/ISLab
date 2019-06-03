@@ -24,7 +24,7 @@ public class DAOCustomer implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Customer castedFilteringEntity = (Customer) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
@@ -59,13 +59,13 @@ public class DAOCustomer implements DAOAbstract {
             result.add(new Customer(id, name, country, description));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             Customer castedItem = (Customer) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);");
@@ -75,13 +75,13 @@ public class DAOCustomer implements DAOAbstract {
             statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Customer castedFilteringEntity = (Customer) filteringEntity;
 
         String sqlQuery = "DELETE FROM islabdb.customer " +
@@ -101,13 +101,13 @@ public class DAOCustomer implements DAOAbstract {
         statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.customer where Customer_ID = ?");
         statement.setLong(1, id);
@@ -118,13 +118,13 @@ public class DAOCustomer implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Customer customer = (Customer) editingEntity;
 
         String sqlCode =   "UPDATE islabdb.customer SET Customer_Name = ?, " +
@@ -139,14 +139,14 @@ public class DAOCustomer implements DAOAbstract {
         statement.setLong(4, customer.getId());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         long res = -1;
 
         String sqlCode = "SELECT max(Customer_ID) FROM islabdb.customer";
@@ -156,7 +156,7 @@ public class DAOCustomer implements DAOAbstract {
             res = resultSet.getLong(1);
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

@@ -27,7 +27,7 @@ public class DAOStorage implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Storage castedFilteringEntity = (Storage) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
@@ -58,13 +58,13 @@ public class DAOStorage implements DAOAbstract {
             result.add(new Storage(id, name, description));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             Storage castedItem = (Storage) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.storage (Storage_Name, Storage_Description) VALUES (?, ?);");
@@ -73,13 +73,13 @@ public class DAOStorage implements DAOAbstract {
             statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         Storage castedFilteringEntity = (Storage) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.storage " +
@@ -96,13 +96,13 @@ public class DAOStorage implements DAOAbstract {
         statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.storage where Storage_ID = ?");
         statement.setLong(1, id);
@@ -113,13 +113,13 @@ public class DAOStorage implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         Storage storage = (Storage) editingEntity;
 
         String sqlCode =   "UPDATE islabdb.storage SET Storage_Name = ?, " +
@@ -133,14 +133,14 @@ public class DAOStorage implements DAOAbstract {
         statement.setLong(index, storage.getId());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         long res = -1;
 
         String sqlCode = "SELECT max(Storage_ID) FROM islabdb.storage;";
@@ -150,7 +150,7 @@ public class DAOStorage implements DAOAbstract {
             res = resultSet.getLong(1);
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

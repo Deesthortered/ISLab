@@ -27,7 +27,7 @@ public class DAOExportGoods implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         ExportGoods castedFilteringEntity = (ExportGoods) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
 
@@ -66,13 +66,13 @@ public class DAOExportGoods implements DAOAbstract {
             result.add(new ExportGoods(id, documentId, goodsId, goodsCount, goodsPrice));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws SQLException, ClassNotFoundException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             ExportGoods castedItem = (ExportGoods) item;
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportgoods (ExportGoods_DocumentID, ExportGoods_GoodsID, ExportGoods_GoodsCount, ExportGoods_GoodsPrice) VALUES (?, ?, ?, ?);");
@@ -83,13 +83,13 @@ public class DAOExportGoods implements DAOAbstract {
             statement.setLong(index, castedItem.getGoods_price());
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         ExportGoods castedFilter = (ExportGoods) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.exportgoods " +
@@ -112,13 +112,13 @@ public class DAOExportGoods implements DAOAbstract {
         statement.setLong(index, castedFilter.getGoods_price());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportgoods where ExportGoods_ID = ?");
         statement.setLong(1, id);
@@ -129,13 +129,13 @@ public class DAOExportGoods implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         ExportGoods exportGoods = (ExportGoods) editingEntity;
 
         String sqlCode =   "UPDATE islabdb.exportgoods SET ExportGoods_DocumentID = ?, " +
@@ -153,14 +153,14 @@ public class DAOExportGoods implements DAOAbstract {
         statement.setLong(index, exportGoods.getId());
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         long res = -1;
 
         String sqlCode = "SELECT max(ExportGoods_ID) FROM islabdb.exportgoods;";
@@ -170,7 +170,7 @@ public class DAOExportGoods implements DAOAbstract {
             res = resultSet.getLong(1);
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

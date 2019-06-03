@@ -110,7 +110,7 @@ public class UserHandlerServlet extends HttpServlet {
         String description = reader.readLine();
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         DAOAbstract dao_document = DAOImportDocument.getInstance();
         DAOAbstract dao_importgoods = DAOImportGoods.getInstance();
@@ -142,7 +142,7 @@ public class UserHandlerServlet extends HttpServlet {
         } catch (IOException e) {
             writer.print("bad");
         } finally {
-            pool.DropConnection(connection);
+            pool.dropConnection(connection);
         }
     }
     private void MakeExport(BufferedReader reader, PrintWriter writer) throws IOException {
@@ -160,7 +160,7 @@ public class UserHandlerServlet extends HttpServlet {
         String description = reader.readLine();
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         DAOAbstract dao_goods = DAOGoods.getInstance();
         DAOAbstract dao_document = DAOExportDocument.getInstance();
@@ -204,13 +204,13 @@ public class UserHandlerServlet extends HttpServlet {
         } catch (IOException e) {
             writer.print("bad");
         } finally {
-            pool.DropConnection(connection);
+            pool.dropConnection(connection);
         }
     }
 
     private void RebuildDatabase() throws IOException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         ArrayList<Entity> imported_available = new ArrayList<>();
         ArrayList<Entity> exported_available = new ArrayList<>();
@@ -339,6 +339,6 @@ public class UserHandlerServlet extends HttpServlet {
         DAOAbstract dao_available = DAOAvailableGoods.getInstance();
         dao_available.deleteEntityList(connection, new AvailableGoods(Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, true, Entity.undefined_date));
         dao_available.addEntityList(connection, result);
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
     }
 }

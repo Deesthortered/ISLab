@@ -24,16 +24,16 @@ public class AuthorizationServlet extends HttpServlet {
         ConnectionPool pool = ConnectionPool.getInstance();
         SystemUserAccess dao = SystemUserAccess.getInstance();
 
-        Connection auth_conn = pool.GetConnection();
-        boolean is_ok = dao.ConfirmationAuthoritarian(auth_conn, login, password);
-        pool.DropConnection(auth_conn);
+        Connection auth_conn = pool.getConnection();
+        boolean is_ok = dao.confirmationAuthoritarian(auth_conn, login, password);
+        pool.dropConnection(auth_conn);
 
         if (is_ok) {
             request.removeAttribute(Common.art_invalid_credentials);
 
-            Connection role_conn = pool.GetConnection();
+            Connection role_conn = pool.getConnection();
             int role = dao.getUserRole(role_conn, login);
-            pool.DropConnection(role_conn);
+            pool.dropConnection(role_conn);
 
             HttpSession session = request.getSession();
             session.setAttribute(Common.atr_logged, Common.strTrue);

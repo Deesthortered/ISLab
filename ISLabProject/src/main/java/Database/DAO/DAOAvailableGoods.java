@@ -26,7 +26,7 @@ public class DAOAvailableGoods implements DAOAbstract {
     @Override
     public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
         ArrayList<Entity> result = new ArrayList<>();
@@ -74,13 +74,13 @@ public class DAOAvailableGoods implements DAOAbstract {
             result.add(new AvailableGoods(id, goodsId, goodsCount, providerId, storageId, current, snapshotDate));
         }
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return result;
     }
     @Override
     public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         for (Entity item : list) {
             AvailableGoods castedItem = (AvailableGoods) item;
             PreparedStatement statement = connection.prepareStatement(
@@ -96,13 +96,13 @@ public class DAOAvailableGoods implements DAOAbstract {
             statement.setString(index, DateHandler.JavaDateToSQLDate(castedItem.getSnapshot_date()));
             statement.executeUpdate();
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
         AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.availablegoods " +
                 "WHERE (Available_ID = ?            OR ? = " + Entity.undefined_long + ") AND " +
@@ -131,13 +131,13 @@ public class DAOAvailableGoods implements DAOAbstract {
         statement.setString(index, DateHandler.JavaDateToSQLDate(castedFilteringEntity.getSnapshot_date()));
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?");
         statement.setLong(1, id);
@@ -148,13 +148,13 @@ public class DAOAvailableGoods implements DAOAbstract {
         if (count != 1)
             return false;
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
     @Override
     public boolean editEntity(Entity editingEntity) throws SQLException, InterruptedException, ClassNotFoundException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         AvailableGoods document = (AvailableGoods) editingEntity;
         String sqlCode =   "UPDATE islabdb.availablegoods SET " +
@@ -177,14 +177,14 @@ public class DAOAvailableGoods implements DAOAbstract {
         statement.setString(index, DateHandler.JavaDateToSQLDate(document.getSnapshot_date()));
         statement.executeUpdate();
 
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return true;
     }
 
     @Override
     public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
         ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.GetConnection();
+        Connection connection = pool.getConnection();
 
         long res = -1;
         String sqlCode = "SELECT max(Available_ID) FROM islabdb.availablegoods;";
@@ -193,7 +193,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         if (resultSet.next()) {
             res = resultSet.getLong(1);
         }
-        pool.DropConnection(connection);
+        pool.dropConnection(connection);
         return res;
     }
 

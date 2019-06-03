@@ -16,11 +16,12 @@ public class SystemUserAccess {
         return instance;
     }
 
-    public boolean ConfirmationAuthoritarian(Connection connection, String login, String password) throws SQLException {
-        String sql_query = "SELECT COUNT(*) from islabdb.systemusers where user_login = ? and  user_password = ?";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
-        statement.setString(1, login);
-        statement.setString(2, password);
+    public boolean confirmationAuthoritarian(Connection connection, String login, String password) throws SQLException {
+        String sqlQuery = "SELECT COUNT(*) from islabdb.systemusers where user_login = ? and  user_password = ?";
+        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        int index = 1;
+        statement.setString(index++, login);
+        statement.setString(index, password);
         ResultSet resultSet = statement.executeQuery();
 
         int count = 0;
