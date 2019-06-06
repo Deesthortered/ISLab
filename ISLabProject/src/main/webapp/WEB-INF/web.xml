@@ -31,6 +31,33 @@
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ImportServlet</servlet-name>
+        <servlet-class>Main.ImportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImportServlet</servlet-name>
+        <url-pattern>/import</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ExportServlet</servlet-name>
+        <servlet-class>Main.ExportServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ExportServlet</servlet-name>
+        <url-pattern>/export</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RebuildServlet</servlet-name>
+        <servlet-class>Main.RebuildServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RebuildServlet</servlet-name>
+        <url-pattern>/rebuild</url-pattern>
+    </servlet-mapping>
+
 
     <servlet>
         <servlet-name>AvailableGoodsServlet</servlet-name>

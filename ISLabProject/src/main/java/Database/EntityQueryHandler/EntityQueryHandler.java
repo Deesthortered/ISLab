@@ -50,9 +50,9 @@ public abstract class EntityQueryHandler {
             throw new ServletException(e.getMessage());
         }
 
-        boolean limited = Boolean.parseBoolean(request.getHeader("limited"));
-        int beginIndex = Integer.parseInt(request.getHeader("listBeginInd"));
-        int countOfRecords = Integer.parseInt(request.getHeader("listSize"));
+        boolean limited = Boolean.parseBoolean((String) request.getAttribute("limited"));
+        int beginIndex = Integer.parseInt((String) request.getAttribute("listBeginInd"));
+        int countOfRecords = Integer.parseInt((String) request.getAttribute("listSize"));
 
         List<Entity> list;
         try {

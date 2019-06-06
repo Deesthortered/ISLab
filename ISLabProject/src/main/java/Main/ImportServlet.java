@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ImportServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserActions actions = UserActions.getInstance();
-        actions.makeImport(request.getReader(), response.getWriter());
+        actions.makeImport(request.getReader());
     }
 }

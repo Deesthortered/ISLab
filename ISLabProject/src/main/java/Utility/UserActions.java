@@ -123,7 +123,7 @@ public class UserActions {
         return false;
     }
 
-    public void makeImport(BufferedReader reader, PrintWriter writer) throws IOException {
+    public void makeImport(BufferedReader reader) throws IOException, ServletException {
         long providerId = Long.parseLong(reader.readLine());
         int count = Integer.parseInt(reader.readLine());
 
@@ -147,53 +147,48 @@ public class UserActions {
 
         Entity newDocument = new ImportDocument(Entity.UNDEFINED_LONG, providerId, new Date(), description);
 
+        List<Entity> documentInArray = new ArrayList<>();
+        documentInArray.add(newDocument);
         try {
-            List<Entity> documentInArray = new ArrayList<>();
-            documentInArray.add(newDocument);
+            if (!daoDocument.addEntityList(documentInArray)) throw new ServletException("1!");
+        } catch (ClassNotFoundException | SQLException | InterruptedException e) {
+            throw new ServletException(e.getMessage());            }
+        long documentId = 0;
+        try {
+            documentId = daoDocument.getLastID();
+        } catch (ClassNotFoundException | SQLException | InterruptedException e) {
+            throw new ServletException(e.getMessage());
+        }
+
+        for (int i = 0; i < count; i++) {
+
+            Entity newImportedGoods = new ImportGoods(Entity.UNDEFINED_LONG, documentId, goodsIds.get(i), goodsCounts.get(i), pricesIds.get(i));
+            List<Entity> importedGoodsInArray = new ArrayList<>();
+            importedGoodsInArray.add(newImportedGoods);
             try {
-                if (!daoDocument.addEntityList(documentInArray)) throw new ServletException("1!");
-            } catch (ClassNotFoundException | SQLException | InterruptedException e) {
-                throw new ServletException(e.getMessage());            }
-            long documentId = 0;
-            try {
-                documentId = daoDocument.getLastID();
+                if (!daoImportGoods.addEntityList(importedGoodsInArray)) throw new ServletException("2!");
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
 
-            for (int i = 0; i < count; i++) {
-
-                Entity newImportedGoods = new ImportGoods(Entity.UNDEFINED_LONG, documentId, goodsIds.get(i), goodsCounts.get(i), pricesIds.get(i));
-                List<Entity> importedGoodsInArray = new ArrayList<>();
-                importedGoodsInArray.add(newImportedGoods);
-                try {
-                    if (!daoImportGoods.addEntityList(importedGoodsInArray)) throw new ServletException("2!");
-                } catch (ClassNotFoundException | SQLException | InterruptedException e) {
-                    throw new ServletException(e.getMessage());
-                }
-
-                long importGoodsId = 0;
-                try {
-                    importGoodsId = daoImportGoods.getLastID();
-                } catch (ClassNotFoundException | SQLException | InterruptedException e) {
-                    throw new ServletException(e.getMessage());
-                }
-                Entity newMoveDocument = new ImportMoveDocument(Entity.UNDEFINED_LONG, importGoodsId, storageIds.get(i));
-                List<Entity> moveDocumentInArray = new ArrayList<>();
-                moveDocumentInArray.add(newMoveDocument);
-                try {
-                    if (!daoMoveDocument.addEntityList(moveDocumentInArray)) throw new IOException("3!");
-                } catch (ClassNotFoundException | SQLException | InterruptedException e) {
-                    throw new ServletException(e.getMessage());
-                }
+            long importGoodsId = 0;
+            try {
+                importGoodsId = daoImportGoods.getLastID();
+            } catch (ClassNotFoundException | SQLException | InterruptedException e) {
+                throw new ServletException(e.getMessage());
             }
-            rebuildDatabase();
-            writer.print("ok");
-        } catch (IOException | ServletException e) {
-            writer.print("bad");
+            Entity newMoveDocument = new ImportMoveDocument(Entity.UNDEFINED_LONG, importGoodsId, storageIds.get(i));
+            List<Entity> moveDocumentInArray = new ArrayList<>();
+            moveDocumentInArray.add(newMoveDocument);
+            try {
+                if (!daoMoveDocument.addEntityList(moveDocumentInArray)) throw new IOException("3!");
+            } catch (ClassNotFoundException | SQLException | InterruptedException e) {
+                throw new ServletException(e.getMessage());
+            }
         }
+        rebuildDatabase();
     }
-    public void makeExport(BufferedReader reader, PrintWriter writer) throws IOException, ServletException {
+    public void makeExport(BufferedReader reader) throws IOException, ServletException {
         long customerId = Long.parseLong(reader.readLine());
         int count = Integer.parseInt(reader.readLine());
 
@@ -274,6 +269,7 @@ public class UserActions {
                 throw new ServletException(e.getMessage());
             }
         }
+        rebuildDatabase();
     }
 
     public void rebuildDatabase() throws IOException, ServletException {

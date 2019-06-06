@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ExportServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         UserActions actions = UserActions.getInstance();
-        actions.makeExport(request.getReader(), response.getWriter());
+        actions.makeExport(request.getReader());
     }
 }

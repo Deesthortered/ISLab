@@ -61,9 +61,6 @@ class Common {
     static AvailableList;
     static StorageList;
 
-    static ImportSummaryAvailableGoods;
-    static ExportSummaryAvailableGoods;
-
     static capitalizeFirstLetter(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
     }
@@ -89,28 +86,6 @@ class TemplateHandler {
         return renderFn(data);
     }
 }
-class QueryMaker {
-    static GetEntityList(entity) {
-        return "entity_query\n" +
-               "" + entity + "\n" +
-               "get_entity_list\n";
-    }
-    static AddEntity(entity) {
-        return "entity_query\n" +
-               "" + entity + "\n" +
-               "add_entity\n";
-    }
-    static DeleteEntity(entity) {
-        return "entity_query\n" +
-               "" + entity + "\n" +
-               "delete_entity\n";
-    }
-    static EditEntity(entity) {
-        return "entity_query\n" +
-               "" + entity + "\n" +
-               "edit_entity\n";
-    }
-}
 class EntityFilters {
     static undefined_value = Object.freeze('____undefined____');
 
@@ -128,7 +103,7 @@ class EntityFilters {
                 return {
                     id            : this.undefined_value,
                     name          : this.undefined_value,
-                    average_price : this.undefined_value,
+                    averagePrice  : this.undefined_value,
                     description   : this.undefined_value,
                 };
             case Common.EntityMap.Storage :
@@ -140,47 +115,47 @@ class EntityFilters {
             case Common.EntityMap.ImportDocument :
                 return {
                     id          : this.undefined_value,
-                    provider_id : this.undefined_value,
-                    import_date : this.undefined_value,
+                    providerId  : this.undefined_value,
+                    importDate  : this.undefined_value,
                     description : this.undefined_value,
                 };
             case Common.EntityMap.ExportDocument :
                 return {
                     id          : this.undefined_value,
-                    customer_id : this.undefined_value,
-                    export_date : this.undefined_value,
+                    customerId  : this.undefined_value,
+                    exportDate  : this.undefined_value,
                     description : this.undefined_value,
                 };
             case Common.EntityMap.ImportGoods :
             case Common.EntityMap.ExportGoods :
                 return {
-                    id          : this.undefined_value,
-                    document_id : this.undefined_value,
-                    goods_id    : this.undefined_value,
-                    goods_count : this.undefined_value,
-                    goods_price : this.undefined_value,
+                    id         : this.undefined_value,
+                    documentId : this.undefined_value,
+                    goodsId    : this.undefined_value,
+                    goodsCount : this.undefined_value,
+                    goodsPrice : this.undefined_value,
                 };
             case Common.EntityMap.ImportMoveDocument :
                 return {
-                    id             : this.undefined_value,
-                    importGoods_id : this.undefined_value,
-                    storage_id     : this.undefined_value,
+                    id            : this.undefined_value,
+                    importGoodsId : this.undefined_value,
+                    storageId     : this.undefined_value,
                 };
             case Common.EntityMap.ExportMoveDocument :
                 return {
                     id             : this.undefined_value,
-                    exportGoods_id : this.undefined_value,
-                    storage_id     : this.undefined_value,
+                    exportGoodsId : this.undefined_value,
+                    storageId     : this.undefined_value,
                 };
             case Common.EntityMap.AvailableGoods :
                 return {
-                    id            : this.undefined_value,
-                    goods_id      : this.undefined_value,
-                    goods_count   : this.undefined_value,
-                    provider_id   : this.undefined_value,
-                    storage_id    : this.undefined_value,
-                    current       : true,
-                    snapshot_date : this.undefined_value,
+                    id           : this.undefined_value,
+                    goodsId      : this.undefined_value,
+                    goodsCount   : this.undefined_value,
+                    providerId   : this.undefined_value,
+                    storageId    : this.undefined_value,
+                    current      : true,
+                    snapshotDate : this.undefined_value,
                 };
             default : {
                 alert("Unknown entity \'" + entity + "\' at getEmptyFilter");
@@ -219,37 +194,37 @@ class EntityFilters {
             case Common.EntityMap.ImportDocument :
                 return {
                     id          : this.undefined_value,
-                    provider_id : id,
-                    import_date : this.undefined_value,
+                    providerId  : id,
+                    importDate  : this.undefined_value,
                     description : this.undefined_value,
                 };
             case Common.EntityMap.ExportDocument :
                 return {
                     id          : this.undefined_value,
-                    customer_id : id,
-                    export_date : this.undefined_value,
+                    customerId  : id,
+                    exportDate  : this.undefined_value,
                     description : this.undefined_value,
                 };
             case Common.EntityMap.ImportGoods :
             case Common.EntityMap.ExportGoods :
                 return {
-                    id          : this.undefined_value,
-                    document_id : id,
-                    goods_id    : this.undefined_value,
-                    goods_count : this.undefined_value,
-                    goods_price : this.undefined_value,
+                    id         : this.undefined_value,
+                    documentId : id,
+                    goodsId    : this.undefined_value,
+                    goodsCount : this.undefined_value,
+                    goodsPrice : this.undefined_value,
                 };
             case Common.EntityMap.ImportMoveDocument :
                 return {
-                    id             : this.undefined_value,
-                    importGoods_id : id,
-                    storage_id     : this.undefined_value,
+                    id            : this.undefined_value,
+                    importGoodsId : id,
+                    storageId     : this.undefined_value,
                 };
             case Common.EntityMap.ExportMoveDocument :
                 return {
-                    id             : this.undefined_value,
-                    exportGoods_id : id,
-                    storage_id     : this.undefined_value,
+                    id            : this.undefined_value,
+                    exportGoodsId : id,
+                    storageId     : this.undefined_value,
                 };
             default: return this.undefined_value;
         }
@@ -300,22 +275,22 @@ class EntityFilters {
             case Common.EntityMap.Customer :
                 return ['id', 'name', 'country', 'description'];
             case Common.EntityMap.Goods :
-                return ['id', 'name', 'average_price', 'description'];
+                return ['id', 'name', 'averagePrice', 'description'];
             case Common.EntityMap.Storage :
                 return ['id', 'name', 'description'];
             case Common.EntityMap.ImportDocument :
-                return ['id', 'provider_id', 'import_date', 'description'];
+                return ['id', 'providerId', 'importDate', 'description'];
             case Common.EntityMap.ExportDocument :
-                return ['id', 'customer_id', 'export_date', 'description'];
+                return ['id', 'customerId', 'exportDate', 'description'];
             case Common.EntityMap.ImportGoods :
             case Common.EntityMap.ExportGoods :
-                return ['id', 'document_id', 'goods_id', 'goods_count', 'goods_price'];
+                return ['id', 'documentId', 'goodsId', 'goodsCount', 'goodsPrice'];
             case Common.EntityMap.ImportMoveDocument :
-                return ['id', 'importGoods_id', 'storage_id'];
+                return ['id', 'importGoodsId', 'storageId'];
             case Common.EntityMap.ExportMoveDocument :
-                return ['id', 'exportGoods_id', 'storage_id'];
+                return ['id', 'exportGoodsId', 'storageId'];
             case Common.EntityMap.AvailableGoods :
-                return ['id', 'goods_id', 'goods_count', 'provider_id', 'storage_id'];
+                return ['id', 'goodsId', 'goodsCount', 'providerId', 'storageId'];
             default: return Object.keys(EntityFilters.getEmptyFilter(entity));
         }
     }
@@ -483,6 +458,7 @@ class ListPage {
                 callback(new_data, obj);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The Load request finished not successful, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         }
     }
@@ -678,9 +654,7 @@ class ListPage {
             let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
             http.open('DELETE', Common.url + servlet, true);
             http.onreadystatechange = this.TableDeleteRowCallback(http, this);
-            let query_body =
-                QueryMaker.DeleteEntity(this.current_entity) +
-                id + "\n";
+            let query_body = id + "\n";
             http.send(query_body);
         }
     }
@@ -691,10 +665,13 @@ class ListPage {
                     alert("The " + obj.current_entity + " are deleted successfully");
                     obj.TableRefresh();
                 }
-                else
+                else {
                     alert("The " + obj.current_entity + " was not deleted, some trouble happened on the server side.");
+                    document = jQuery.parseHTML(http.responseText);
+                }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not deleted, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         }
     }
@@ -745,9 +722,7 @@ class ListPage {
         let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
         http.open('POST', Common.url + servlet, true);
         http.onreadystatechange = this.TableAddCallback(http, this);
-        let query_body =
-            QueryMaker.AddEntity(this.current_entity) +
-            JSON.stringify(new_entry) + '\n';
+        let query_body = JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
     TableAddCallback(http, obj) {
@@ -756,10 +731,13 @@ class ListPage {
                 if (http.responseText === "ok"){
                     alert("The " + obj.current_entity + " is added successfully");
                 }
-                else
+                else {
                     alert("The " + obj.current_entity + " was not added, some trouble happened on the server side.");
+                    document = jQuery.parseHTML(http.responseText);
+                }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not added, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         }
     }
@@ -787,9 +765,7 @@ class ListPage {
         let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
         http.open('PUT', Common.url + servlet, true);
         http.onreadystatechange = this.TableEditCallback(http, this);
-        let query_body =
-            QueryMaker.EditEntity(this.current_entity) +
-            JSON.stringify(new_entry) + '\n';
+        let query_body = JSON.stringify(new_entry) + '\n';
         http.send(query_body);
     }
     TableEditCallback(http, obj) {
@@ -798,10 +774,13 @@ class ListPage {
                 if (http.responseText === "ok"){
                     alert("The " + obj.current_entity + " is edited successfully");
                 }
-                else
+                else {
                     alert("The " + obj.current_entity + " was not edited, some trouble happened on the server side.");
+                    document = jQuery.parseHTML(http.responseText);
+                }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not edited, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         }
     }
@@ -912,7 +891,8 @@ class InterfaceHashHandler {
         document.location.hash = '';
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        let url = Common.url + "menu";
+        http.open('POST', url, true);
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 Common.role = http.responseText;
@@ -937,9 +917,10 @@ class InterfaceHashHandler {
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The role is not defined, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         };
-        http.send('get_role');
+        http.send();
     }
     static CheckPermission(privileged_users) {
         if (privileged_users.includes(Common.role))
@@ -951,7 +932,7 @@ class InterfaceHashHandler {
     static Logout() {
         document.location.hash = '';
         let Http = new XMLHttpRequest();
-        let url = window.location.href.split('#')[0];
+        let url = Common.url + "menu";
         let param = "logout=true";
         Http.open("GET", url+"?"+param, true);
         Http.send(param);
@@ -961,10 +942,10 @@ class InterfaceHashHandler {
 
     static StartPage() {
         let data = {
-            user_name: 'user_name',
-            user_role: 'role',
-            user_permissions: 'user_permissions',
-            last_visit: 'last_visit'
+            user_name: '%user_name%',
+            user_role: '%role%',
+            user_permissions: '%user_permissions%',
+            last_visit: '%last_visit%'
         };
         document.getElementById('dynamic_panel').innerHTML = TemplateHandler.Render('startpage_template', data);
     }
@@ -1081,16 +1062,16 @@ class InterfaceHashHandler {
     static RebuildReports() {
         if (confirm("Are you sure? It can take a lot of time")) {
             let http = new XMLHttpRequest();
-            http.open('POST', window.location.href, true);
+            http.open('POST', Common.url + 'rebuild', true);
             http.onreadystatechange = function() {
                 if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                     alert("Done");
                 } else if (http.readyState === XMLHttpRequest.DONE) {
                     alert("The Rebuild request finished not successful, some trouble happened with the request.");
+                    document = jQuery.parseHTML(http.responseText);
                 }
             };
-            let query_body = "db_rebuild_reports\n";
-            http.send(query_body);
+            http.send();
         }
         window.location.hash = 'system';
     }
@@ -1114,7 +1095,7 @@ class InterfaceHashHandler {
         }
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        http.open('POST', Common.url + 'import', true);
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
@@ -1125,8 +1106,10 @@ class InterfaceHashHandler {
                 }
                 else
                     alert("The import was not added, some trouble happened on the server side.");
+                document = jQuery.parseHTML(http.responseText);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The import was not added, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         };
         let query_body =
@@ -1153,7 +1136,7 @@ class InterfaceHashHandler {
         }
 
         let http = new XMLHttpRequest();
-        http.open('POST', window.location.href, true);
+        http.open('POST', Common.url + 'export', true);
         http.onreadystatechange = function () {
             if(http.readyState === XMLHttpRequest.DONE && http.status === 200) {
                 if (http.responseText === "ok"){
@@ -1162,10 +1145,13 @@ class InterfaceHashHandler {
                     Common.CustomerList.choosed_item = null;
                     document.location.hash = '#';
                 }
-                else
+                else {
                     alert("The export was not added, some trouble happened on the server side.");
+                    document = jQuery.parseHTML(http.responseText);
+                }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The export was not added, some trouble happened with the request.");
+                document = jQuery.parseHTML(http.responseText);
             }
         };
         let query_body =
