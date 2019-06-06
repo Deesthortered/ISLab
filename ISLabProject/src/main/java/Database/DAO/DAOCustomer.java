@@ -4,8 +4,10 @@ import Database.ConnectionPool;
 import Entity.Customer;
 import Entity.Entity;
 
+import javax.servlet.ServletException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAOCustomer implements DAOAbstract {
 
@@ -22,17 +24,17 @@ public class DAOCustomer implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
+    public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Customer castedFilteringEntity = (Customer) filteringEntity;
-        ArrayList<Entity> result = new ArrayList<>();
+        List<Entity> result = new ArrayList<>();
 
         String sqlQuery = "SELECT * FROM islabdb.customer " +
-                "WHERE (Customer_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Customer_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Customer_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Customer_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
@@ -63,7 +65,7 @@ public class DAOCustomer implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(List<Entity> list) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         for (Entity item : list) {
@@ -79,16 +81,16 @@ public class DAOCustomer implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Customer castedFilteringEntity = (Customer) filteringEntity;
 
         String sqlQuery = "DELETE FROM islabdb.customer " +
-                "WHERE (Customer_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Customer_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Customer_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Customer_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
+                "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -105,7 +107,7 @@ public class DAOCustomer implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -122,7 +124,7 @@ public class DAOCustomer implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Customer customer = (Customer) editingEntity;
@@ -144,7 +146,7 @@ public class DAOCustomer implements DAOAbstract {
     }
 
     @Override
-    public long getLastID() throws SQLException, InterruptedException, ClassNotFoundException {
+    public long getLastID() throws SQLException, ClassNotFoundException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         long res = -1;

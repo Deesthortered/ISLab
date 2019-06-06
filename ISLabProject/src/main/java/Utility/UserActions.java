@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class UserActions {
     private static UserActions instance;
@@ -37,15 +38,15 @@ public class UserActions {
 
         SystemUserAccess dao = SystemUserAccess.getInstance();
 
-        boolean is_ok;
+        boolean isOk;
         try {
-            is_ok = dao.confirmationAuthoritarian(login, password);
+            isOk = dao.confirmationAuthoritarian(login, password);
         } catch (SQLException e) {
             throw new ServletException(e.getMessage());
         }
 
-        if (is_ok) {
-            request.removeAttribute(Common.art_invalid_credentials);
+        if (isOk) {
+            request.removeAttribute(Common.ART_INVALID_CREDENTIALS);
 
             int role;
             try {
@@ -55,37 +56,37 @@ public class UserActions {
             }
 
             HttpSession session = request.getSession();
-            session.setAttribute(Common.atr_logged, Common.strTrue);
+            session.setAttribute(Common.ATR_LOGGED, Common.STR_TRUE);
 
-            Cookie authCookie = new Cookie(Common.atr_logged, Common.strTrue);
+            Cookie authCookie = new Cookie(Common.ATR_LOGGED, Common.STR_TRUE);
             Cookie roleCookie = null;
 
-            session.setMaxInactiveInterval(Common.session_max_age);
-            authCookie.setMaxAge(Common.cookies_max_age);
+            session.setMaxInactiveInterval(Common.SESSION_MAX_AGE);
+            authCookie.setMaxAge(Common.COOKIES_MAX_AGE);
 
             switch (role) {
                 case 0: {   // Admin
-                    session.setAttribute(Common.atr_role, UserRole.Admin.toString());
-                    roleCookie = new Cookie(Common.atr_role, UserRole.Admin.toString());
+                    session.setAttribute(Common.ATR_ROLE, UserRole.Admin.toString());
+                    roleCookie = new Cookie(Common.ATR_ROLE, UserRole.Admin.toString());
                 } break;
                 case 1: {   // View Manager
-                    session.setAttribute(Common.atr_role, UserRole.ViewManager.toString());
-                    roleCookie = new Cookie(Common.atr_role, UserRole.ViewManager.toString());
+                    session.setAttribute(Common.ATR_ROLE, UserRole.ViewManager.toString());
+                    roleCookie = new Cookie(Common.ATR_ROLE, UserRole.ViewManager.toString());
                 } break;
                 case 2: {   // Import Manager
-                    session.setAttribute(Common.atr_role, UserRole.ImportManager.toString());
-                    roleCookie = new Cookie(Common.atr_role, UserRole.ImportManager.toString());
+                    session.setAttribute(Common.ATR_ROLE, UserRole.ImportManager.toString());
+                    roleCookie = new Cookie(Common.ATR_ROLE, UserRole.ImportManager.toString());
                 } break;
                 case 3: {   // Export Manager
-                    session.setAttribute(Common.atr_role, UserRole.ExportManager.toString());
-                    roleCookie = new Cookie(Common.atr_role, UserRole.ExportManager.toString());
+                    session.setAttribute(Common.ATR_ROLE, UserRole.ExportManager.toString());
+                    roleCookie = new Cookie(Common.ATR_ROLE, UserRole.ExportManager.toString());
                 } break;
                 default:
                     PrintWriter writer = response.getWriter();
                     writer.println("ERROR 56");
             }
             assert roleCookie != null;
-            roleCookie.setMaxAge(Common.cookies_max_age);
+            roleCookie.setMaxAge(Common.COOKIES_MAX_AGE);
             if (stayInSystemFlag) {
                 response.addCookie(authCookie);
                 response.addCookie(roleCookie);
@@ -93,24 +94,24 @@ public class UserActions {
 
             response.sendRedirect(Common.urlMenu);
         } else {
-            request.setAttribute(Common.art_invalid_credentials, Common.strTrue);
-            request.getRequestDispatcher(Common.htmlLogin).forward(request, response);
+            request.setAttribute(Common.ART_INVALID_CREDENTIALS, Common.STR_TRUE);
+            request.getRequestDispatcher(Common.HTML_LOGIN).forward(request, response);
         }
     }
 
     public void getRole(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter writer = response.getWriter();
-        writer.print(request.getSession().getAttribute(Common.atr_role));
+        writer.print(request.getSession().getAttribute(Common.ATR_ROLE));
     }
     public boolean logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        String logout = request.getParameter(Common.par_logout);
-        if (logout != null && logout.equals(Common.strTrue)) {
-            session.removeAttribute(Common.atr_role);
-            session.setAttribute(Common.atr_logged, Common.strFalse);
+        String logout = request.getParameter(Common.PAR_LOGOUT);
+        if (logout != null && logout.equals(Common.STR_TRUE)) {
+            session.removeAttribute(Common.ATR_ROLE);
+            session.setAttribute(Common.ATR_LOGGED, Common.STR_FALSE);
 
-            Cookie authCookie = new Cookie(Common.atr_logged, "");
-            Cookie roleCookie = new Cookie(Common.atr_role, "");
+            Cookie authCookie = new Cookie(Common.ATR_LOGGED, "");
+            Cookie roleCookie = new Cookie(Common.ATR_ROLE, "");
 
             authCookie.setMaxAge(0);
             roleCookie.setMaxAge(0);
@@ -123,13 +124,13 @@ public class UserActions {
     }
 
     public void makeImport(BufferedReader reader, PrintWriter writer) throws IOException {
-        long provider_id = Long.parseLong(reader.readLine());
+        long providerId = Long.parseLong(reader.readLine());
         int count = Integer.parseInt(reader.readLine());
 
-        ArrayList<Long> goodsIds = new ArrayList<>();
-        ArrayList<Integer> goodsCounts = new ArrayList<>();
-        ArrayList<Long> storageIds = new ArrayList<>();
-        ArrayList<Long> pricesIds = new ArrayList<>();
+        List<Long> goodsIds = new ArrayList<>();
+        List<Integer> goodsCounts = new ArrayList<>();
+        List<Long> storageIds = new ArrayList<>();
+        List<Long> pricesIds = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
             goodsIds.add(Long.parseLong(reader.readLine()));
@@ -140,48 +141,48 @@ public class UserActions {
 
         String description = reader.readLine();
 
-        DAOAbstract dao_document = DAOImportDocument.getInstance();
-        DAOAbstract dao_importgoods = DAOImportGoods.getInstance();
-        DAOAbstract dao_movedocument = DAOImportMoveDocument.getInstance();
+        DAOAbstract daoDocument = DAOImportDocument.getInstance();
+        DAOAbstract daoImportGoods = DAOImportGoods.getInstance();
+        DAOAbstract daoMoveDocument = DAOImportMoveDocument.getInstance();
 
-        Entity new_document = new ImportDocument(Entity.undefined_long, provider_id, new Date(), description);
+        Entity newDocument = new ImportDocument(Entity.UNDEFINED_LONG, providerId, new Date(), description);
 
         try {
-            ArrayList<Entity> document_in_array = new ArrayList<>();
-            document_in_array.add(new_document);
+            List<Entity> documentInArray = new ArrayList<>();
+            documentInArray.add(newDocument);
             try {
-                if (!dao_document.addEntityList(document_in_array)) throw new ServletException("1!");
+                if (!daoDocument.addEntityList(documentInArray)) throw new ServletException("1!");
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());            }
-            long document_id = 0;
+            long documentId = 0;
             try {
-                document_id = dao_document.getLastID();
+                documentId = daoDocument.getLastID();
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
 
             for (int i = 0; i < count; i++) {
 
-                Entity new_imported_goods = new ImportGoods(Entity.undefined_long, document_id, goodsIds.get(i), goodsCounts.get(i), pricesIds.get(i));
-                ArrayList<Entity> imported_goods_in_array = new ArrayList<>();
-                imported_goods_in_array.add(new_imported_goods);
+                Entity newImportedGoods = new ImportGoods(Entity.UNDEFINED_LONG, documentId, goodsIds.get(i), goodsCounts.get(i), pricesIds.get(i));
+                List<Entity> importedGoodsInArray = new ArrayList<>();
+                importedGoodsInArray.add(newImportedGoods);
                 try {
-                    if (!dao_importgoods.addEntityList(imported_goods_in_array)) throw new ServletException("2!");
+                    if (!daoImportGoods.addEntityList(importedGoodsInArray)) throw new ServletException("2!");
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
 
-                long import_goods_id = 0;
+                long importGoodsId = 0;
                 try {
-                    import_goods_id = dao_importgoods.getLastID();
+                    importGoodsId = daoImportGoods.getLastID();
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
-                Entity new_move_document = new ImportMoveDocument(Entity.undefined_long, import_goods_id, storageIds.get(i));
-                ArrayList<Entity> move_document_in_array = new ArrayList<>();
-                move_document_in_array.add(new_move_document);
+                Entity newMoveDocument = new ImportMoveDocument(Entity.UNDEFINED_LONG, importGoodsId, storageIds.get(i));
+                List<Entity> moveDocumentInArray = new ArrayList<>();
+                moveDocumentInArray.add(newMoveDocument);
                 try {
-                    if (!dao_movedocument.addEntityList(move_document_in_array)) throw new IOException("3!");
+                    if (!daoMoveDocument.addEntityList(moveDocumentInArray)) throw new IOException("3!");
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
@@ -193,82 +194,82 @@ public class UserActions {
         }
     }
     public void makeExport(BufferedReader reader, PrintWriter writer) throws IOException, ServletException {
-        long customer_id = Long.parseLong(reader.readLine());
+        long customerId = Long.parseLong(reader.readLine());
         int count = Integer.parseInt(reader.readLine());
 
-        ArrayList<Long> available_ids = new ArrayList<>();
-        ArrayList<Integer> goods_counts = new ArrayList<>();
+        List<Long> availableIds = new ArrayList<>();
+        List<Integer> goodsCounts = new ArrayList<>();
 
         for (int i = 0; i < count; i++) {
-            available_ids.add(Long.parseLong(reader.readLine()));
-            goods_counts.add(Integer.parseInt(reader.readLine()));
+            availableIds.add(Long.parseLong(reader.readLine()));
+            goodsCounts.add(Integer.parseInt(reader.readLine()));
         }
 
         String description = reader.readLine();
 
-        DAOAbstract dao_goods = DAOGoods.getInstance();
-        DAOAbstract dao_document = DAOExportDocument.getInstance();
-        DAOAbstract dao_exportgoods = DAOExportGoods.getInstance();
-        DAOAbstract dao_movedocument = DAOExportMoveDocument.getInstance();
-        DAOAbstract dao_available = DAOAvailableGoods.getInstance();
+        DAOAbstract daoGoods = DAOGoods.getInstance();
+        DAOAbstract daoDocument = DAOExportDocument.getInstance();
+        DAOAbstract daoExportGoods = DAOExportGoods.getInstance();
+        DAOAbstract daoMoveDocument = DAOExportMoveDocument.getInstance();
+        DAOAbstract daoAvailable = DAOAvailableGoods.getInstance();
 
-        Entity new_document = new ExportDocument(Entity.undefined_long, customer_id, new Date(), description);
+        Entity newDocument = new ExportDocument(Entity.UNDEFINED_LONG, customerId, new Date(), description);
 
-        ArrayList<Entity> document_in_array = new ArrayList<>();
-        document_in_array.add(new_document);
+        List<Entity> documentInArray = new ArrayList<>();
+        documentInArray.add(newDocument);
         try {
-            if (!dao_document.addEntityList(document_in_array)) throw new IOException("blyat1!");
+            if (!daoDocument.addEntityList(documentInArray)) throw new IOException("blyat1!");
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }
-        long document_id = 0;
+        long documentId = 0;
         try {
-            document_id = dao_document.getLastID();
+            documentId = daoDocument.getLastID();
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }
 
         for (int i = 0; i < count; i++) {
             Entity filter = new AvailableGoods();
-            filter.setId(available_ids.get(i));
-            ArrayList<Entity> current_available_list = null;
+            filter.setId(availableIds.get(i));
+            List<Entity> currentAvailableList = null;
             try {
-                current_available_list = dao_available.getEntityList(filter, false, 0, 0);
+                currentAvailableList = daoAvailable.getEntityList(filter, false, 0, 0);
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
-            AvailableGoods res = (AvailableGoods) current_available_list.get(0);
+            AvailableGoods res = (AvailableGoods) currentAvailableList.get(0);
 
             filter = new Goods();
-            filter.setId(res.getGoods_id());
-            ArrayList<Entity> current_goods_list = null;
+            filter.setId(res.getGoodsId());
+            List<Entity> currentGoodsList = null;
             try {
-                current_goods_list = dao_goods.getEntityList(filter, false, 0, 0);
+                currentGoodsList = daoGoods.getEntityList(filter, false, 0, 0);
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
-            Goods res1 = (Goods) current_goods_list.get(0);
+            Goods res1 = (Goods) currentGoodsList.get(0);
 
-            Entity new_exported_goods = new ExportGoods(Entity.undefined_long, document_id, res.getGoods_id(), goods_counts.get(i), res1.getAverage_price());
-            ArrayList<Entity> exported_goods_in_array = new ArrayList<>();
-            exported_goods_in_array.add(new_exported_goods);
+            Entity newExportedGoods = new ExportGoods(Entity.UNDEFINED_LONG, documentId, res.getGoodsId(), goodsCounts.get(i), res1.getAveragePrice());
+            List<Entity> exportedGoodsInArray = new ArrayList<>();
+            exportedGoodsInArray.add(newExportedGoods);
             try {
-                if (!dao_exportgoods.addEntityList(exported_goods_in_array)) throw new IOException("blyat2!");
+                if (!daoExportGoods.addEntityList(exportedGoodsInArray)) throw new IOException("blyat2!");
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
 
-            long export_goods_id = 0;
+            long exportGoodsId = 0;
             try {
-                export_goods_id = dao_exportgoods.getLastID();
+                exportGoodsId = daoExportGoods.getLastID();
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
-            Entity new_move_document = new ExportMoveDocument(Entity.undefined_long, export_goods_id, res.getStorage_id());
-            ArrayList<Entity> move_document_in_array = new ArrayList<>();
-            move_document_in_array.add(new_move_document);
+            Entity newMoveDocument = new ExportMoveDocument(Entity.UNDEFINED_LONG, exportGoodsId, res.getStorageId());
+            List<Entity> moveDocumentInArray = new ArrayList<>();
+            moveDocumentInArray.add(newMoveDocument);
             try {
-                if (!dao_movedocument.addEntityList(move_document_in_array)) throw new IOException("blyat3!");
+                if (!daoMoveDocument.addEntityList(moveDocumentInArray)) throw new IOException("blyat3!");
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
@@ -276,153 +277,153 @@ public class UserActions {
     }
 
     public void rebuildDatabase() throws IOException, ServletException {
-        ArrayList<Entity> imported_available = new ArrayList<>();
-        ArrayList<Entity> exported_available = new ArrayList<>();
+        List<Entity> importedAvailable = new ArrayList<>();
+        List<Entity> exportedAvailable = new ArrayList<>();
 
-        DAOAbstract dao_importDocument = DAOImportDocument.getInstance();
-        Entity importDocument_filter = dao_importDocument.createEntity();
-        ArrayList<Entity> all_imported_document = null;
+        DAOAbstract daoImportDocument = DAOImportDocument.getInstance();
+        Entity importDocumentFilteringEntity = daoImportDocument.createEntity();
+        List<Entity> allImportedDocument = null;
         try {
-            all_imported_document = dao_importDocument.getEntityList(importDocument_filter, false, 0,0);
+            allImportedDocument = daoImportDocument.getEntityList(importDocumentFilteringEntity, false, 0,0);
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }
-        for (Entity entity : all_imported_document) {
+        for (Entity entity : allImportedDocument) {
             ImportDocument importDocument = (ImportDocument) entity;
-            DAOAbstract dao_importGoods = DAOImportGoods.getInstance();
-            Entity filter_import = dao_importGoods.createEntity();
-            ((ImportGoods) filter_import).setDocument_id(importDocument.getId());
-            ArrayList<Entity> all_imported_goods;
+            DAOAbstract daoImportGoods = DAOImportGoods.getInstance();
+            Entity filterImport = daoImportGoods.createEntity();
+            ((ImportGoods) filterImport).setDocumentId(importDocument.getId());
+            List<Entity> allImportedGoods;
             try {
-                all_imported_goods = dao_importGoods.getEntityList(filter_import, false, 0,0);
+                allImportedGoods = daoImportGoods.getEntityList(filterImport, false, 0,0);
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
 
-            ArrayList<Long> storage_id = new ArrayList<>();
-            for (Entity sub_entity : all_imported_goods) {
-                ImportGoods importGoods = (ImportGoods) sub_entity;
-                DAOAbstract dao_importMoveDocument = DAOImportMoveDocument.getInstance();
-                ImportMoveDocument importMoveDocument_filter = (ImportMoveDocument) dao_importMoveDocument.createEntity();
-                importMoveDocument_filter.setImportGoods_id(importGoods.getId());
-                ArrayList<Entity> all_import_movedocument;
+            List<Long> storageId = new ArrayList<>();
+            for (Entity subEntity : allImportedGoods) {
+                ImportGoods importGoods = (ImportGoods) subEntity;
+                DAOAbstract daoImportMoveDocument = DAOImportMoveDocument.getInstance();
+                ImportMoveDocument importMoveDocumentFilteringEntity = (ImportMoveDocument) daoImportMoveDocument.createEntity();
+                importMoveDocumentFilteringEntity.setImportGoodsId(importGoods.getId());
+                List<Entity> allImportMoveDocument;
                 try {
-                    all_import_movedocument = dao_importMoveDocument.getEntityList(importMoveDocument_filter, false, 0,0);
+                    allImportMoveDocument = daoImportMoveDocument.getEntityList(importMoveDocumentFilteringEntity, false, 0,0);
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
-                storage_id.add( ((ImportMoveDocument)all_import_movedocument.get(all_import_movedocument.size() - 1)).getStorage_id() );
+                storageId.add( ((ImportMoveDocument)allImportMoveDocument.get(allImportMoveDocument.size() - 1)).getStorageId() );
             }
 
-            for (int i = 0; i < all_imported_goods.size(); i++)
-                imported_available.add(new AvailableGoods(
-                        Entity.undefined_long,
-                        ((ImportGoods) all_imported_goods.get(i)).getGoods_id(),
-                        ((ImportGoods) all_imported_goods.get(i)).getGoods_count(),
-                        importDocument.getProvider_id(),
-                        storage_id.get(i),
+            for (int i = 0; i < allImportedGoods.size(); i++)
+                importedAvailable.add(new AvailableGoods(
+                        Entity.UNDEFINED_LONG,
+                        ((ImportGoods) allImportedGoods.get(i)).getGoodsId(),
+                        ((ImportGoods) allImportedGoods.get(i)).getGoodsCount(),
+                        importDocument.getProviderId(),
+                        storageId.get(i),
                         false,
                         new Date()));
         }
 
-        DAOAbstract dao_exportDocument = DAOExportDocument.getInstance();
-        Entity exportDocument_filter = dao_exportDocument.createEntity();
-        ArrayList<Entity> all_exported_document = null;
+        DAOAbstract daoExportDocument = DAOExportDocument.getInstance();
+        Entity exportDocumentFilteringEntity = daoExportDocument.createEntity();
+        List<Entity> allExportedDocument = null;
         try {
-            all_exported_document = dao_exportDocument.getEntityList(exportDocument_filter, false, 0,0);
+            allExportedDocument = daoExportDocument.getEntityList(exportDocumentFilteringEntity, false, 0,0);
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }
-        for (Entity entity : all_exported_document) {
+        for (Entity entity : allExportedDocument) {
             ExportDocument exportDocument = (ExportDocument) entity;
-            DAOAbstract dao_exportGoods = DAOExportGoods.getInstance();
-            ExportGoods filter_export = (ExportGoods) dao_exportGoods.createEntity();
-            filter_export.setDocument_id(exportDocument.getId());
-            ArrayList<Entity> all_exported_goods = null;
+            DAOAbstract daoExportGoods = DAOExportGoods.getInstance();
+            ExportGoods filterExport = (ExportGoods) daoExportGoods.createEntity();
+            filterExport.setDocumentId(exportDocument.getId());
+            List<Entity> allExportedGoods = null;
             try {
-                all_exported_goods = dao_exportGoods.getEntityList(filter_export, false, 0, 0);
+                allExportedGoods = daoExportGoods.getEntityList(filterExport, false, 0, 0);
             } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                 throw new ServletException(e.getMessage());
             }
 
-            ArrayList<Long> storage_id = new ArrayList<>();
-            for (Entity sub_entity : all_exported_goods) {
-                ExportGoods exportGoods = (ExportGoods) sub_entity;
-                DAOAbstract dao_exportMoveDocument = DAOExportMoveDocument.getInstance();
-                ExportMoveDocument exportMoveDocument_filter = (ExportMoveDocument) dao_exportMoveDocument.createEntity();
-                exportMoveDocument_filter.setExportGoods_id(exportGoods.getId());
-                ArrayList<Entity> all_export_movedocument = null;
+            List<Long> storageId = new ArrayList<>();
+            for (Entity subEntity : allExportedGoods) {
+                ExportGoods exportGoods = (ExportGoods) subEntity;
+                DAOAbstract daoExportMoveDocument = DAOExportMoveDocument.getInstance();
+                ExportMoveDocument exportMoveDocumentFilteringEntity = (ExportMoveDocument) daoExportMoveDocument.createEntity();
+                exportMoveDocumentFilteringEntity.setExportGoodsId(exportGoods.getId());
+                List<Entity> allExportMoveDocument = null;
                 try {
-                    all_export_movedocument = dao_exportMoveDocument.getEntityList(exportMoveDocument_filter, false, 0,0);
+                    allExportMoveDocument = daoExportMoveDocument.getEntityList(exportMoveDocumentFilteringEntity, false, 0,0);
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
-                storage_id.add( ((ExportMoveDocument)all_export_movedocument.get(all_export_movedocument.size() - 1)).getStorage_id() );
+                storageId.add( ((ExportMoveDocument)allExportMoveDocument.get(allExportMoveDocument.size() - 1)).getStorageId() );
             }
 
-            for (int i = 0; i < all_exported_goods.size(); i++)
-                exported_available.add(new AvailableGoods(
-                        Entity.undefined_long,
-                        ((ExportGoods) all_exported_goods.get(i)).getGoods_id(),
-                        ((ExportGoods) all_exported_goods.get(i)).getGoods_count(),
-                        Entity.undefined_long,
-                        storage_id.get(i),
+            for (int i = 0; i < allExportedGoods.size(); i++)
+                exportedAvailable.add(new AvailableGoods(
+                        Entity.UNDEFINED_LONG,
+                        ((ExportGoods) allExportedGoods.get(i)).getGoodsId(),
+                        ((ExportGoods) allExportedGoods.get(i)).getGoodsCount(),
+                        Entity.UNDEFINED_LONG,
+                        storageId.get(i),
                         false,
                         new Date()));
         }
 
-        HashMap<Long, HashMap<Long, Pair<Long,Long>>> storage_goodsId_count_provider = new HashMap<>();
-        for (Entity entity : imported_available) {
-            AvailableGoods casted_entity = (AvailableGoods) entity;
+        HashMap<Long, HashMap<Long, Pair<Long,Long>>> storageGoodsIdCountProvider = new HashMap<>();
+        for (Entity entity : importedAvailable) {
+            AvailableGoods castedEntity = (AvailableGoods) entity;
 
-            if (storage_goodsId_count_provider.containsKey(casted_entity.getStorage_id())) {
-                if (storage_goodsId_count_provider.get(casted_entity.getStorage_id()).containsKey(casted_entity.getGoods_id())) {
-                    Pair<Long,Long> before = storage_goodsId_count_provider.get(casted_entity.getStorage_id()).get(casted_entity.getGoods_id());
-                    Pair<Long,Long> after = new Pair<>(before.getKey() + casted_entity.getGoods_count(), before.getValue());
-                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+            if (storageGoodsIdCountProvider.containsKey(castedEntity.getStorageId())) {
+                if (storageGoodsIdCountProvider.get(castedEntity.getStorageId()).containsKey(castedEntity.getGoodsId())) {
+                    Pair<Long,Long> before = storageGoodsIdCountProvider.get(castedEntity.getStorageId()).get(castedEntity.getGoodsId());
+                    Pair<Long,Long> after = new Pair<>(before.getKey() + castedEntity.getGoodsCount(), before.getValue());
+                    storageGoodsIdCountProvider.get(castedEntity.getStorageId()).put(castedEntity.getGoodsId(), after);
                 } else {
-                    Pair<Long,Long> after = new Pair<>(casted_entity.getGoods_count(), casted_entity.getProvider_id());
-                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                    Pair<Long,Long> after = new Pair<>(castedEntity.getGoodsCount(), castedEntity.getProviderId());
+                    storageGoodsIdCountProvider.get(castedEntity.getStorageId()).put(castedEntity.getGoodsId(), after);
                 }
             } else {
                 HashMap<Long, Pair<Long,Long>> sub = new HashMap<>();
-                sub.put(casted_entity.getGoods_id(), new Pair<>(casted_entity.getGoods_count(), casted_entity.getProvider_id()));
-                storage_goodsId_count_provider.put(casted_entity.getStorage_id(), sub);
+                sub.put(castedEntity.getGoodsId(), new Pair<>(castedEntity.getGoodsCount(), castedEntity.getProviderId()));
+                storageGoodsIdCountProvider.put(castedEntity.getStorageId(), sub);
             }
         }
-        for (Entity entity : exported_available) {
-            AvailableGoods casted_entity = (AvailableGoods) entity;
+        for (Entity entity : exportedAvailable) {
+            AvailableGoods castedEntity = (AvailableGoods) entity;
 
-            if (storage_goodsId_count_provider.containsKey(casted_entity.getStorage_id())) {
-                if (storage_goodsId_count_provider.get(casted_entity.getStorage_id()).containsKey(casted_entity.getGoods_id())) {
-                    Pair<Long,Long> before = storage_goodsId_count_provider.get(casted_entity.getStorage_id()).get(casted_entity.getGoods_id());
-                    Pair<Long,Long> after = new Pair<>(before.getKey() - casted_entity.getGoods_count(), before.getValue());
-                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+            if (storageGoodsIdCountProvider.containsKey(castedEntity.getStorageId())) {
+                if (storageGoodsIdCountProvider.get(castedEntity.getStorageId()).containsKey(castedEntity.getGoodsId())) {
+                    Pair<Long,Long> before = storageGoodsIdCountProvider.get(castedEntity.getStorageId()).get(castedEntity.getGoodsId());
+                    Pair<Long,Long> after = new Pair<>(before.getKey() - castedEntity.getGoodsCount(), before.getValue());
+                    storageGoodsIdCountProvider.get(castedEntity.getStorageId()).put(castedEntity.getGoodsId(), after);
                 } else {
-                    Pair<Long,Long> after = new Pair<>(-casted_entity.getGoods_count(), casted_entity.getProvider_id());
-                    storage_goodsId_count_provider.get(casted_entity.getStorage_id()).put(casted_entity.getGoods_id(), after);
+                    Pair<Long,Long> after = new Pair<>(-castedEntity.getGoodsCount(), castedEntity.getProviderId());
+                    storageGoodsIdCountProvider.get(castedEntity.getStorageId()).put(castedEntity.getGoodsId(), after);
                 }
             } else {
                 HashMap<Long, Pair<Long,Long>> sub = new HashMap<>();
-                sub.put(casted_entity.getGoods_id(), new Pair<>(-casted_entity.getGoods_count(), casted_entity.getProvider_id()));
-                storage_goodsId_count_provider.put(casted_entity.getStorage_id(), sub);
+                sub.put(castedEntity.getGoodsId(), new Pair<>(-castedEntity.getGoodsCount(), castedEntity.getProviderId()));
+                storageGoodsIdCountProvider.put(castedEntity.getStorageId(), sub);
             }
         }
 
-        ArrayList<Entity> result = new ArrayList<>();
-        for (Long storage_key : storage_goodsId_count_provider.keySet()) {
-            HashMap<Long, Pair<Long,Long>> sub_map = storage_goodsId_count_provider.get(storage_key);
-            for (Long goods_key : sub_map.keySet()) {
-                long goods_val = sub_map.get(goods_key).getKey();
-                long provider_val = sub_map.get(goods_key).getValue();
-                if (goods_val < 0) throw new IOException("Pizdets nahooy blyat!");
-                else if (goods_val > 0) {
+        List<Entity> result = new ArrayList<>();
+        for (Long storageKey : storageGoodsIdCountProvider.keySet()) {
+            HashMap<Long, Pair<Long,Long>> subMap = storageGoodsIdCountProvider.get(storageKey);
+            for (Long goodsKey : subMap.keySet()) {
+                long goodsVal = subMap.get(goodsKey).getKey();
+                long providerVal = subMap.get(goodsKey).getValue();
+                if (goodsVal < 0) throw new IOException("Pizdets nahooy blyat!");
+                else if (goodsVal > 0) {
                     result.add(new AvailableGoods(
-                            Entity.undefined_long,
-                            goods_key,
-                            goods_val,
-                            provider_val,
-                            storage_key,
+                            Entity.UNDEFINED_LONG,
+                            goodsKey,
+                            goodsVal,
+                            providerVal,
+                            storageKey,
                             true,
                             new Date()
                     ));
@@ -430,10 +431,10 @@ public class UserActions {
             }
         }
 
-        DAOAbstract dao_available = DAOAvailableGoods.getInstance();
+        DAOAbstract daoAvailable = DAOAvailableGoods.getInstance();
         try {
-            dao_available.deleteEntityList(new AvailableGoods(Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, Entity.undefined_long, true, Entity.undefined_date));
-            dao_available.addEntityList(result);
+            daoAvailable.deleteEntityList(new AvailableGoods(Entity.UNDEFINED_LONG, Entity.UNDEFINED_LONG, Entity.UNDEFINED_LONG, Entity.UNDEFINED_LONG, Entity.UNDEFINED_LONG, true, Entity.UNDEFINED_DATE));
+            daoAvailable.addEntityList(result);
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
             throw new ServletException(e.getMessage());
         }

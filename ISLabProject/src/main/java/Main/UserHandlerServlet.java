@@ -20,12 +20,12 @@ public class UserHandlerServlet extends HttpServlet {
         if (actions.logout(request, response))
             return;
         HttpSession session = request.getSession();
-        String logged = (String) session.getAttribute(Common.atr_logged);
+        String logged = (String) session.getAttribute(Common.ATR_LOGGED);
 
-        if (logged.equals(Common.strTrue)) {
-            String role = (String) session.getAttribute(Common.atr_role);
-            request.setAttribute(Common.atr_role, role);
-            request.getRequestDispatcher(Common.html_menu).forward(request, response);
+        if (logged.equals(Common.STR_TRUE)) {
+            String role = (String) session.getAttribute(Common.ATR_ROLE);
+            request.setAttribute(Common.ATR_ROLE, role);
+            request.getRequestDispatcher(Common.HTML_MENU).forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();
             writer.println("ERROR");

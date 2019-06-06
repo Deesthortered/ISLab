@@ -20,25 +20,25 @@ public class SessionFilter implements Filter {
 
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
         if (!Common.isInitialized())
-            Common.Initialize(req);
+            Common.initialize(req);
 
         HttpServletRequest  request  = (HttpServletRequest)  req;
         HttpServletResponse response = (HttpServletResponse) resp;
         String url_current = request.getRequestURI();
 
         HttpSession session = request.getSession();
-        String logged = (String) session.getAttribute(Common.atr_logged);
+        String logged = (String) session.getAttribute(Common.ATR_LOGGED);
 
         Cookie[] cookies =  request.getCookies();
-        if (logged == null || logged.equals(Common.strFalse)) {
+        if (logged == null || logged.equals(Common.STR_FALSE)) {
 
-            String cookie_logged = Common.readCookie(cookies, Common.atr_logged);
-            if (cookie_logged != null && cookie_logged.equals(Common.strTrue)) {
-                String cookie_role = Common.readCookie(cookies, Common.atr_role);
+            String cookie_logged = Common.readCookie(cookies, Common.ATR_LOGGED);
+            if (cookie_logged != null && cookie_logged.equals(Common.STR_TRUE)) {
+                String cookie_role = Common.readCookie(cookies, Common.ATR_ROLE);
                 if (cookie_role != null) {
-                    session.setAttribute(Common.atr_logged, Common.strTrue);
-                    session.setMaxInactiveInterval(Common.session_max_age);
-                    session.setAttribute(Common.atr_role, cookie_role);
+                    session.setAttribute(Common.ATR_LOGGED, Common.STR_TRUE);
+                    session.setMaxInactiveInterval(Common.SESSION_MAX_AGE);
+                    session.setAttribute(Common.ATR_ROLE, cookie_role);
                     response.sendRedirect(Common.urlMenu);
                     return;
                 }
@@ -49,14 +49,14 @@ public class SessionFilter implements Filter {
             else
                 chain.doFilter(req, resp);
 
-        } else if (logged.equals(Common.strTrue)) {
+        } else if (logged.equals(Common.STR_TRUE)) {
 
             if (url_current.equals(Common.urlLogin) || url_current.equals(Common.urlBasic))
                 response.sendRedirect(Common.urlMenu);
             else chain.doFilter(req, resp);
         } else {
             PrintWriter writer = response.getWriter();
-            writer.println("ERROR 66");
+            writer.println("ERROR");
         }
     }
 }

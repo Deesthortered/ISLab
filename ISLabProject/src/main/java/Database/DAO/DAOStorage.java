@@ -4,11 +4,13 @@ import Database.ConnectionPool;
 import Entity.Entity;
 import Entity.Storage;
 
+import javax.servlet.ServletException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAOStorage implements DAOAbstract {
 
@@ -25,16 +27,16 @@ public class DAOStorage implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
+    public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Storage castedFilteringEntity = (Storage) filteringEntity;
-        ArrayList<Entity> result = new ArrayList<>();
+        List<Entity> result = new ArrayList<>();
 
         String sqlQuery = "SELECT * FROM islabdb.storage " +
-                "WHERE (Storage_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Storage_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Storage_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                "WHERE (Storage_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Storage_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Storage_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
@@ -62,7 +64,7 @@ public class DAOStorage implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(List<Entity> list) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         for (Entity item : list) {
@@ -77,15 +79,15 @@ public class DAOStorage implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
         Storage castedFilteringEntity = (Storage) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.storage " +
-                "WHERE (Storage_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Storage_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Storage_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
+                "WHERE (Storage_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Storage_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Storage_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -100,7 +102,7 @@ public class DAOStorage implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -117,7 +119,7 @@ public class DAOStorage implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Storage storage = (Storage) editingEntity;
@@ -138,7 +140,7 @@ public class DAOStorage implements DAOAbstract {
     }
 
     @Override
-    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         long res = -1;

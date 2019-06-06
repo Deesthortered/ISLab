@@ -1,5 +1,6 @@
 package Database;
 
+import javax.servlet.ServletException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,14 +14,12 @@ public class ConnectionPool {
 
     private static ConnectionPool instance;
     private ArrayList<Connection> connections;
-    private LinkedList<Integer> free_connections;
-    private Semaphore connectionDistributor;
+    private LinkedList<Integer> freeConnections;
 
     private ConnectionPool() throws ClassNotFoundException {
         loadDriver();
         this.connections = new ArrayList<>();
-        this.free_connections = new LinkedList<>();
-        this.connectionDistributor = new Semaphore(MAX_CONNECTION_COUNT);
+        this.freeConnections = new LinkedList<>();
     }
     public static synchronized ConnectionPool getInstance() throws ClassNotFoundException {
         if (instance == null) {
@@ -29,16 +28,18 @@ public class ConnectionPool {
         return instance;
     }
 
-    public Connection getConnection() throws InterruptedException, SQLException {
+    public Connection getConnection() throws SQLException, ServletException {
         Connection result;
-        connectionDistributor.acquire();
-        if (free_connections.isEmpty()) {
+        if (freeConnections.isEmpty()) {
             int last = connections.size();
+            if (last >= MAX_CONNECTION_COUNT) {
+                throw new ServletException("No free connections");
+            }
             connections.add(DriverManager.getConnection(CONNECTION_URL, USERNAME, PASSWORD));
             result = connections.get(last);
         } else {
-            int first_free = free_connections.getFirst();
-            free_connections.removeFirst();
+            int first_free = freeConnections.getFirst();
+            freeConnections.removeFirst();
             result = connections.get(first_free);
         }
         return result;
@@ -48,8 +49,7 @@ public class ConnectionPool {
             return;
         }
         int i = connections.indexOf(connection);
-        free_connections.addFirst(i);
-        connectionDistributor.release();
+        freeConnections.addFirst(i);
     }
 
     private void loadDriver() throws ClassNotFoundException {

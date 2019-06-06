@@ -6,71 +6,73 @@ import Database.DAO.DAOStorage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExportMoveDocument implements Entity {
     private long id;
-    private long exportGoods_id;
-    private long storage_id;
+    private long exportGoodsId;
+    private long storageId;
 
     public ExportMoveDocument() {
-        this.id             = Entity.undefined_long;
-        this.exportGoods_id = Entity.undefined_long;
-        this.storage_id     = Entity.undefined_long;
+        this.id             = Entity.UNDEFINED_LONG;
+        this.exportGoodsId = Entity.UNDEFINED_LONG;
+        this.storageId = Entity.UNDEFINED_LONG;
     }
-    public ExportMoveDocument(long id, long exportGoods_id, long storage_id) {
+    public ExportMoveDocument(long id, long exportGoodsId, long storageId) {
         this.id             = id;
-        this.exportGoods_id = exportGoods_id;
-        this.storage_id     = storage_id;
+        this.exportGoodsId = exportGoodsId;
+        this.storageId = storageId;
     }
 
     @Override
     public long getId() {
         return id;
     }
-    public long getExportGoods_id() {
-        return exportGoods_id;
+    public long getExportGoodsId() {
+        return exportGoodsId;
     }
-    public long getStorage_id() {
-        return storage_id;
+    public long getStorageId() {
+        return storageId;
     }
 
     @Override
     public void setId(long id) {
         this.id = id;
     }
-    public void setExportGoods_id(long exportGoods_id) {
-        this.exportGoods_id = exportGoods_id;
+    public void setExportGoodsId(long exportGoodsId) {
+        this.exportGoodsId = exportGoodsId;
     }
-    public void setStorage_id(long storage_id) {
-        this.storage_id = storage_id;
+    public void setStorageId(long storageId) {
+        this.storageId = storageId;
     }
 
     @Override
-    public JSONObject getJSON(ArrayList<String> represantive_data) {
+    public JSONObject getJSON(List<String> representativeData) throws ServletException {
         JSONObject object = new JSONObject();
         try {
             object.put("id",             id);
-            object.put("exportGoods_id", "(" + exportGoods_id + ") " + represantive_data.get(0));
-            object.put("storage_id",     "(" + storage_id + ") " + represantive_data.get(1));
+            object.put("exportGoodsId", "(" + exportGoodsId + ") " + representativeData.get(0));
+            object.put("storageId",     "(" + storageId + ") " + representativeData.get(1));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
         return object;
     }
     @Override
-    public void setByJSON(JSONObject json) {
+    public void setByJSON(JSONObject json) throws ServletException {
         try {
-            this.id             = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.exportGoods_id = (!json.has("exportGoods_id") || json.getString("exportGoods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("exportGoods_id")));
-            this.storage_id     = (!json.has("storage_id") || json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
+            this.id            = (!json.has("id")            || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
+            this.exportGoodsId = (!json.has("exportGoodsId") || json.getString("exportGoodsId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("exportGoodsId")));
+            this.storageId     = (!json.has("storageId")     || json.getString("storageId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("storageId")));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
     }
 
     @Override
-    public String getRepresantiveData() {
+    public String getRepresentantiveData() {
         return null;
     }
     @Override
@@ -83,8 +85,8 @@ public class ExportMoveDocument implements Entity {
     @Override
     public ArrayList<Long> getForeingKeys() {
         ArrayList<Long> result = new ArrayList<>();
-        result.add(exportGoods_id);
-        result.add(storage_id);
+        result.add(exportGoodsId);
+        result.add(storageId);
         return result;
     }
 }

@@ -6,93 +6,95 @@ import Database.DAO.DAOGoods;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExportGoods implements Entity {
     private long id;
-    private long document_id;
-    private long goods_id;
-    private long goods_count;
-    private long goods_price;
+    private long documentId;
+    private long goodsId;
+    private long goodsCount;
+    private long goodsPrice;
 
     public ExportGoods() {
-        this.id          = Entity.undefined_long;
-        this.document_id = Entity.undefined_long;
-        this.goods_id    = Entity.undefined_long;
-        this.goods_count = Entity.undefined_long;
-        this.goods_price = Entity.undefined_long;
+        this.id         = Entity.UNDEFINED_LONG;
+        this.documentId = Entity.UNDEFINED_LONG;
+        this.goodsId    = Entity.UNDEFINED_LONG;
+        this.goodsCount = Entity.UNDEFINED_LONG;
+        this.goodsPrice = Entity.UNDEFINED_LONG;
     }
-    public ExportGoods(long id, long document_id, long goods_id, long goods_count, long goods_price) {
-        this.id          = id;
-        this.document_id = document_id;
-        this.goods_id    = goods_id;
-        this.goods_count = goods_count;
-        this.goods_price = goods_price;
+    public ExportGoods(long id, long documentId, long goodsId, long goodsCount, long goodsPrice) {
+        this.id         = id;
+        this.documentId = documentId;
+        this.goodsId    = goodsId;
+        this.goodsCount = goodsCount;
+        this.goodsPrice = goodsPrice;
     }
 
     @Override
     public long getId() {
         return id;
     }
-    public long getDocument_id() {
-        return document_id;
+    public long getDocumentId() {
+        return documentId;
     }
-    public long getGoods_id() {
-        return goods_id;
+    public long getGoodsId() {
+        return goodsId;
     }
-    public long getGoods_count() {
-        return goods_count;
+    public long getGoodsCount() {
+        return goodsCount;
     }
-    public long getGoods_price() {
-        return goods_price;
+    public long getGoodsPrice() {
+        return goodsPrice;
     }
 
     @Override
     public void setId(long id) {
         this.id = id;
     }
-    public void setDocument_id(long document_id) {
-        this.document_id = document_id;
+    public void setDocumentId(long documentId) {
+        this.documentId = documentId;
     }
-    public void setGoods_id(long goods_id) {
-        this.goods_id = goods_id;
+    public void setGoodsId(long goodsId) {
+        this.goodsId = goodsId;
     }
-    public void setGoods_count(long goods_count) {
-        this.goods_count = goods_count;
+    public void setGoodsCount(long goodsCount) {
+        this.goodsCount = goodsCount;
     }
-    public void setGoods_price(long goods_price) {
-        this.goods_price = goods_price;
+    public void setGoodsPrice(long goodsPrice) {
+        this.goodsPrice = goodsPrice;
     }
 
     @Override
-    public JSONObject getJSON(ArrayList<String> represantive_data) {
+    public JSONObject getJSON(List<String> representativeData) throws ServletException {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("document_id", "(" + document_id + ") " + represantive_data.get(0));
-            object.put("goods_id",    "(" + goods_id + ") " + represantive_data.get(1));
-            object.put("goods_count", goods_count);
-            object.put("goods_price", goods_price);
+            object.put("documentId", "(" + documentId + ") " + representativeData.get(0));
+            object.put("goodsId",    "(" + goodsId + ") " + representativeData.get(1));
+            object.put("goodsCount", goodsCount);
+            object.put("goodsPrice", goodsPrice);
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
         return object;
     }
     @Override
-    public void setByJSON(JSONObject json) {
+    public void setByJSON(JSONObject json) throws ServletException {
         try {
-            this.id          = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.document_id = (!json.has("document_id") || json.getString("document_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("document_id")));
-            this.goods_id    = (!json.has("goods_id") || json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
-            this.goods_count = (!json.has("goods_count") || json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
-            this.goods_price = (!json.has("goods_price") || json.getString("goods_price").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_price")));
+            this.id         = (!json.has("id")         || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
+            this.documentId = (!json.has("documentId") || json.getString("documentId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("documentId")));
+            this.goodsId    = (!json.has("goodsId")    || json.getString("goodsId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsId")));
+            this.goodsCount = (!json.has("goodsCount") || json.getString("goodsCount").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsCount")));
+            this.goodsPrice = (!json.has("goodsPrice") || json.getString("goodsPrice").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsPrice")));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
     }
 
     @Override
-    public String getRepresantiveData() {
+    public String getRepresentantiveData() {
         return null;
     }
     @Override
@@ -105,8 +107,8 @@ public class ExportGoods implements Entity {
     @Override
     public ArrayList<Long> getForeingKeys() {
         ArrayList<Long> result = new ArrayList<>();
-        result.add(document_id);
-        result.add(goods_id);
+        result.add(documentId);
+        result.add(goodsId);
         return result;
     }
 }

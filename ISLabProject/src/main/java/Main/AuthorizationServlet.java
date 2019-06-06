@@ -20,13 +20,13 @@ public class AuthorizationServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.removeAttribute(Common.art_invalid_credentials);
+        request.removeAttribute(Common.ART_INVALID_CREDENTIALS);
         HttpSession session = request.getSession();
-        String logged = (String) session.getAttribute(Common.atr_logged);
+        String logged = (String) session.getAttribute(Common.ATR_LOGGED);
 
-        if (logged == null || logged.equals(Common.strFalse)) {
-            session.setAttribute(Common.atr_logged, Common.strFalse);
-            RequestDispatcher view = request.getRequestDispatcher(Common.htmlLogin);
+        if (logged == null || logged.equals(Common.STR_FALSE)) {
+            session.setAttribute(Common.ATR_LOGGED, Common.STR_FALSE);
+            RequestDispatcher view = request.getRequestDispatcher(Common.HTML_LOGIN);
             view.forward(request, response);
         } else {
             PrintWriter writer = response.getWriter();

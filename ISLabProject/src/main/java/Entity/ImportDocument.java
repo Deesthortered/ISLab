@@ -6,25 +6,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import Utility.DateHandler;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class ImportDocument implements Entity {
     private long   id;
-    private long   provider_id;
-    private Date   import_date;
+    private long   providerId;
+    private Date   importDate;
     private String description;
 
     public ImportDocument() {
-        this.id          = Entity.undefined_long;
-        this.provider_id = Entity.undefined_long;
-        this.import_date = Entity.undefined_date;
-        this.description = Entity.undefined_string;
+        this.id          = Entity.UNDEFINED_LONG;
+        this.providerId  = Entity.UNDEFINED_LONG;
+        this.importDate  = Entity.UNDEFINED_DATE;
+        this.description = Entity.UNDEFINED_STRING;
     }
-    public ImportDocument(long id, long provider_id, Date import_date, String description) {
+    public ImportDocument(long id, long providerId, Date importDate, String description) {
         this.id = id;
-        this.provider_id = provider_id;
-        this.import_date = import_date;
+        this.providerId = providerId;
+        this.importDate = importDate;
         if (description == null)
             this.description = null;
         else this.description = description;
@@ -34,11 +36,11 @@ public class ImportDocument implements Entity {
     public long getId() {
         return id;
     }
-    public long getProvider_id() {
-        return provider_id;
+    public long getProviderId() {
+        return providerId;
     }
-    public Date getImport_date() {
-        return import_date;
+    public Date getImportDate() {
+        return importDate;
     }
     public String getDescription() {
         return description;
@@ -48,43 +50,43 @@ public class ImportDocument implements Entity {
     public void setId(long id) {
         this.id = id;
     }
-    public void setProvider_id(long provider_id) {
-        this.provider_id = provider_id;
+    public void setProviderId(long providerId) {
+        this.providerId = providerId;
     }
-    public void setImport_date(Date import_date) {
-        this.import_date = import_date;
+    public void setImportDate(Date importDate) {
+        this.importDate = importDate;
     }
     public void setDescription(String description) {
         this.description = description;
     }
 
     @Override
-    public JSONObject getJSON(ArrayList<String> represantive_data) {
+    public JSONObject getJSON(List<String> representativeData) throws ServletException {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(0));
-            object.put("import_date", DateHandler.JavaDateToSQLDate(import_date));
+            object.put("providerId", "(" + providerId + ") " + representativeData.get(0));
+            object.put("importDate",  DateHandler.javaDateToSQLDate(importDate));
             object.put("description", description);
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
         return object;
     }
     @Override
-    public void setByJSON(JSONObject json) {
+    public void setByJSON(JSONObject json) throws ServletException {
         try {
-            this.id          = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.provider_id = (!json.has("provider_id") || json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
-            this.import_date = (!json.has("import_date") || json.getString("import_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("import_date")));
-            this.description = (!json.has("description") || json.getString("description").equals(Entity.undefined_string) ? Entity.undefined_string : json.getString("description"));
+            this.id          = (!json.has("id")          || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
+            this.providerId  = (!json.has("providerId")  || json.getString("providerId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("providerId")));
+            this.importDate  = (!json.has("importDate")  || json.getString("importDate").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_DATE : DateHandler.sqlDateToJavaDate(json.getString("importDate")));
+            this.description = (!json.has("description") || json.getString("description").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_STRING : json.getString("description"));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
     }
 
     @Override
-    public String getRepresantiveData() {
+    public String getRepresentantiveData() {
         return null;
     }
     @Override
@@ -96,7 +98,7 @@ public class ImportDocument implements Entity {
     @Override
     public ArrayList<Long> getForeingKeys() {
         ArrayList<Long> result = new ArrayList<>();
-        result.add(provider_id);
+        result.add(providerId);
         return result;
     }
 }

@@ -8,118 +8,120 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import Utility.DateHandler;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class AvailableGoods implements Entity {
-    private long id;
-    private long goods_id;
-    private long goods_count;
-    private long provider_id;
-    private long storage_id;
+    private long    id;
+    private long    goodsId;
+    private long    goodsCount;
+    private long    providerId;
+    private long    storageId;
     private boolean current;
-    private Date snapshot_date;
+    private Date    snapshotDate;
 
     public AvailableGoods() {
-        this.id          = Entity.undefined_long;
-        this.goods_id    = Entity.undefined_long;
-        this.goods_count = Entity.undefined_long;
-        this.provider_id = Entity.undefined_long;
-        this.storage_id  = Entity.undefined_long;
-        this.current     = false;
-        this.snapshot_date = Entity.undefined_date;
+        this.id           = Entity.UNDEFINED_LONG;
+        this.goodsId      = Entity.UNDEFINED_LONG;
+        this.goodsCount   = Entity.UNDEFINED_LONG;
+        this.providerId   = Entity.UNDEFINED_LONG;
+        this.storageId    = Entity.UNDEFINED_LONG;
+        this.current      = false;
+        this.snapshotDate = Entity.UNDEFINED_DATE;
     }
-    public AvailableGoods(long id, long goods_id, long goods_count, long provider_id, long storage_id, boolean current, Date snapshot_date) {
-        this.id          = id;
-        this.goods_id    = goods_id;
-        this.goods_count = goods_count;
-        this.provider_id = provider_id;
-        this.storage_id  = storage_id;
-        this.current     = current;
-        if (snapshot_date == null)
-            this.snapshot_date = Entity.undefined_date;
-        else this.snapshot_date = snapshot_date;
+    public AvailableGoods(long id, long goodsId, long goodsCount, long providerId, long storageId, boolean current, Date snapshotDate) {
+        this.id         = id;
+        this.goodsId    = goodsId;
+        this.goodsCount = goodsCount;
+        this.providerId = providerId;
+        this.storageId  = storageId;
+        this.current    = current;
+        if (snapshotDate == null)
+            this.snapshotDate = Entity.UNDEFINED_DATE;
+        else this.snapshotDate = snapshotDate;
     }
 
     @Override
     public long    getId() {
         return id;
     }
-    public long    getGoods_id() {
-        return goods_id;
+    public long    getGoodsId() {
+        return goodsId;
     }
-    public long    getGoods_count() {
-        return goods_count;
+    public long    getGoodsCount() {
+        return goodsCount;
     }
-    public long    getProvider_id() {
-        return provider_id;
+    public long    getProviderId() {
+        return providerId;
     }
-    public long    getStorage_id() {
-        return storage_id;
+    public long    getStorageId() {
+        return storageId;
     }
     public boolean isCurrent() {
         return current;
     }
-    public Date    getSnapshot_date() {
-        return snapshot_date;
+    public Date    getSnapshotDate() {
+        return snapshotDate;
     }
 
     @Override
     public void setId(long id) {
         this.id = id;
     }
-    public void setGoods_id(long goods_id) {
-        this.goods_id = goods_id;
+    public void setGoodsId(long goodsId) {
+        this.goodsId = goodsId;
     }
-    public void setGoods_count(long goods_count) {
-        this.goods_count = goods_count;
+    public void setGoodsCount(long goodsCount) {
+        this.goodsCount = goodsCount;
     }
-    public void setProvider_id(long provider_id) {
-        this.provider_id = provider_id;
+    public void setProviderId(long providerId) {
+        this.providerId = providerId;
     }
-    public void setStorage_id(long storage_id) {
-        this.storage_id = storage_id;
+    public void setStorageId(long storageId) {
+        this.storageId = storageId;
     }
     public void setCurrent(boolean current) {
         this.current = current;
     }
-    public void setSnapshot_date(Date snapshot_date) {
-        this.snapshot_date = snapshot_date;
+    public void setSnapshotDate(Date snapshotDate) {
+        this.snapshotDate = snapshotDate;
     }
 
     @Override
-    public JSONObject getJSON(ArrayList<String> represantive_data) {
+    public JSONObject getJSON(List<String> representativeData) throws ServletException {
         JSONObject object = new JSONObject();
         try {
             object.put("id",          id);
-            object.put("goods_id",    "(" + goods_id + ") " + represantive_data.get(0));
-            object.put("goods_count", goods_count);
-            object.put("provider_id", "(" + provider_id + ") " + represantive_data.get(1));
-            object.put("storage_id",  "(" + storage_id + ") " + represantive_data.get(2));
-            object.put("current",     current);
-            object.put("snapshot_date", DateHandler.JavaDateToSQLDate(snapshot_date));
+            object.put("goodsId",    "(" + goodsId + ") " + representativeData.get(0));
+            object.put("goodsCount",  goodsCount);
+            object.put("providerId", "(" + providerId + ") " + representativeData.get(1));
+            object.put("storageId",  "(" + storageId + ") " + representativeData.get(2));
+            object.put("current",      current);
+            object.put("snapshotDate", DateHandler.javaDateToSQLDate(snapshotDate));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
         return object;
     }
     @Override
-    public void setByJSON(JSONObject json) {
+    public void setByJSON(JSONObject json) throws ServletException {
         try {
-            this.id            = (!json.has("id") || json.getString("id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("id")));
-            this.goods_id      = (!json.has("goods_id") || json.getString("goods_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_id")));
-            this.goods_count   = (!json.has("goods_count") || json.getString("goods_count").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("goods_count")));
-            this.provider_id   = (!json.has("provider_id") || json.getString("provider_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("provider_id")));
-            this.storage_id    = (!json.has("storage_id") || json.getString("storage_id").equals(Entity.undefined_string) ? Entity.undefined_long : Long.parseLong(json.getString("storage_id")));
-            this.current       = (!json.has("current") || !json.getString("current").equals(Entity.undefined_string) && json.getBoolean("current"));
-            this.snapshot_date = (!json.has("snapshot_date") || json.getString("snapshot_date").equals(Entity.undefined_string) ? Entity.undefined_date : DateHandler.SQLDateToJavaDate(json.getString("snapshot_date")));
+            this.id           = (!json.has("id")           || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
+            this.goodsId      = (!json.has("goodsId")      || json.getString("goodsId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsId")));
+            this.goodsCount   = (!json.has("goodsCount")   || json.getString("goodsCount").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsCount")));
+            this.providerId   = (!json.has("providerId")   || json.getString("providerId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("providerId")));
+            this.storageId    = (!json.has("storageId")    || json.getString("storageId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("storageId")));
+            this.current      = (!json.has("current")      ||!json.getString("current").equals(Entity.UNDEFINED_STRING) && json.getBoolean("current"));
+            this.snapshotDate = (!json.has("snapshotDate") || json.getString("snapshotDate").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_DATE : DateHandler.sqlDateToJavaDate(json.getString("snapshotDate")));
         } catch (JSONException e) {
-            e.printStackTrace();
+            throw new ServletException(e.getMessage());
         }
     }
 
     @Override
-    public String getRepresantiveData() {
+    public String getRepresentantiveData() {
         return null;
     }
     @Override
@@ -133,9 +135,9 @@ public class AvailableGoods implements Entity {
     @Override
     public ArrayList<Long> getForeingKeys() {
         ArrayList<Long> result = new ArrayList<>();
-        result.add(goods_id);
-        result.add(provider_id);
-        result.add(storage_id);
+        result.add(goodsId);
+        result.add(providerId);
+        result.add(storageId);
         return result;
     }
 }

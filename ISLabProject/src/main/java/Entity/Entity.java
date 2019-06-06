@@ -3,22 +3,24 @@ package Entity;
 import Database.DAO.DAOAbstract;
 import org.json.JSONObject;
 
+import javax.servlet.ServletException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public interface Entity {
-    int    undefined_int    = -1;
-    long   undefined_long   = -1;
-    String undefined_string = "____undefined____";
-    Date   undefined_date   = new Date(Long.MIN_VALUE);
+    int    UNDEFINED_INT    = -1;
+    long   UNDEFINED_LONG   = -1;
+    String UNDEFINED_STRING = "____undefined____";
+    Date   UNDEFINED_DATE   = new Date(Long.MIN_VALUE);
 
     long getId();
     void setId(long id);
 
-    JSONObject getJSON(ArrayList<String> represantive_data);
-    void setByJSON(JSONObject json);
+    JSONObject getJSON(List<String> representativeData) throws ServletException;
+    void setByJSON(JSONObject json) throws ServletException;
 
-    String getRepresantiveData();
+    String getRepresentantiveData();
     ArrayList<DAOAbstract> getForeingDAO();
     ArrayList<Long> getForeingKeys();
 }

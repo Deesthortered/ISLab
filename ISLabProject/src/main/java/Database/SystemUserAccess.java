@@ -18,12 +18,12 @@ public class SystemUserAccess {
     }
 
     public boolean confirmationAuthoritarian(String login, String password) throws SQLException, ServletException {
-        ConnectionPool pool = null;
-        Connection connection = null;
+        ConnectionPool pool;
+        Connection connection;
         try {
             pool = ConnectionPool.getInstance();
             connection = pool.getConnection();
-        } catch (ClassNotFoundException | InterruptedException e) {
+        } catch (ClassNotFoundException e) {
             throw new ServletException(e.getMessage());
         }
 
@@ -34,23 +34,23 @@ public class SystemUserAccess {
         statement.setString(index, password);
         ResultSet resultSet = statement.executeQuery();
 
-        int count = 0;
+        int count;
         assert resultSet != null;
         if (resultSet.next()) {
             count = resultSet.getInt(1);
         } else {
-            throw new SQLException("User is not exist");
+            throw new ServletException("User is not exist");
         }
         pool.dropConnection(connection);
         return count == 1;
     }
     public int getUserRole(String login) throws SQLException, ServletException {
-        ConnectionPool pool = null;
-        Connection connection = null;
+        ConnectionPool pool;
+        Connection connection;
         try {
             pool = ConnectionPool.getInstance();
             connection = pool.getConnection();
-        } catch (ClassNotFoundException | InterruptedException e) {
+        } catch (ClassNotFoundException e) {
             throw new ServletException(e.getMessage());
         }
 

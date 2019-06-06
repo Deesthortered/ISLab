@@ -13,19 +13,27 @@ import java.io.IOException;
 @WebServlet(name = "ProviderServlet")
 public class ProviderServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityQueryHandler queryHandler = new ProviderQueryHandler();
-        queryHandler.getEntityList(request, response);
+        EntityQueryHandler queryHandler = ProviderQueryHandler.getInstance();
+        if (queryHandler != null) {
+            queryHandler.getEntityList(request, response);
+        } else throw new ServletException();
     }
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityQueryHandler queryHandler = new ProviderQueryHandler();
-        queryHandler.addEntity(request, response);
+        EntityQueryHandler queryHandler = ProviderQueryHandler.getInstance();
+        if (queryHandler != null) {
+            queryHandler.addEntity(request, response);
+        } else throw new ServletException();
     }
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityQueryHandler queryHandler = new ProviderQueryHandler();
-        queryHandler.editEntity(request, response);
+        EntityQueryHandler queryHandler = ProviderQueryHandler.getInstance();
+        if (queryHandler != null) {
+            queryHandler.editEntity(request, response);
+        } else throw new ServletException();
     }
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        EntityQueryHandler queryHandler = new ProviderQueryHandler();
-        queryHandler.deleteEntity(request, response);
+        EntityQueryHandler queryHandler = ProviderQueryHandler.getInstance();
+        if (queryHandler != null) {
+            queryHandler.deleteEntity(request, response);
+        } else throw new ServletException();
     }
 }

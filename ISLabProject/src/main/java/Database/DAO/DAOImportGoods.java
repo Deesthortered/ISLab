@@ -4,11 +4,13 @@ import Database.ConnectionPool;
 import Entity.Entity;
 import Entity.ImportGoods;
 
+import javax.servlet.ServletException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAOImportGoods implements DAOAbstract {
 
@@ -25,32 +27,32 @@ public class DAOImportGoods implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
+    public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         ImportGoods castedFilteringEntity = (ImportGoods) filteringEntity;
-        ArrayList<Entity> result = new ArrayList<>();
+        List<Entity> result = new ArrayList<>();
 
         String sqlQuery = "SELECT * FROM islabdb.importgoods " +
-                "WHERE (ImportGoods_ID = ?         OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_DocumentID = ? OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsID = ?    OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsCount = ? OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsPrice = ? OR ? = " + Entity.undefined_long + ")" +
+                "WHERE (ImportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ")" +
                 ( limited ? " limit ? offset ?" : "");
 
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
-        statement.setLong(index++, castedFilteringEntity.getDocument_id());
-        statement.setLong(index++, castedFilteringEntity.getDocument_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_count());
-        statement.setLong(index++, castedFilteringEntity.getGoods_count());
-        statement.setLong(index++, castedFilteringEntity.getGoods_price());
-        statement.setLong(index++, castedFilteringEntity.getGoods_price());
+        statement.setLong(index++, castedFilteringEntity.getDocumentId());
+        statement.setLong(index++, castedFilteringEntity.getDocumentId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsCount());
+        statement.setLong(index++, castedFilteringEntity.getGoodsCount());
+        statement.setLong(index++, castedFilteringEntity.getGoodsPrice());
+        statement.setLong(index++, castedFilteringEntity.getGoodsPrice());
         if (limited) {
             statement.setLong(index++, countOfRecords);
             statement.setLong(index, startIndex);
@@ -70,7 +72,7 @@ public class DAOImportGoods implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(List<Entity> list) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         for (Entity item : list) {
@@ -78,46 +80,46 @@ public class DAOImportGoods implements DAOAbstract {
 
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importgoods (ImportGoods_DocumentID, ImportGoods_GoodsID, ImportGoods_GoodsCount, ImportGoods_GoodsPrice) VALUES (?, ?, ?, ?);");
             int index = 1;
-            statement.setLong(index++, castedItem.getDocument_id());
-            statement.setLong(index++, castedItem.getGoods_id());
-            statement.setLong(index++, castedItem.getGoods_count());
-            statement.setLong(index, castedItem.getGoods_price());
+            statement.setLong(index++, castedItem.getDocumentId());
+            statement.setLong(index++, castedItem.getGoodsId());
+            statement.setLong(index++, castedItem.getGoodsCount());
+            statement.setLong(index, castedItem.getGoodsPrice());
             statement.executeUpdate();
         }
         pool.dropConnection(connection);
         return true;
     }
     @Override
-    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
         ImportGoods castedFilteringEntity = (ImportGoods) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.importgoods " +
-                "WHERE (ImportGoods_ID = ?         OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_DocumentID = ? OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsID = ?    OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsCount = ? OR ? = " + Entity.undefined_long + ") AND " +
-                "(ImportGoods_GoodsPrice = ? OR ? = " + Entity.undefined_long + ");";
+                "WHERE (ImportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+                "(ImportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ");";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
-        statement.setLong(index++, castedFilteringEntity.getDocument_id());
-        statement.setLong(index++, castedFilteringEntity.getDocument_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_id());
-        statement.setLong(index++, castedFilteringEntity.getGoods_count());
-        statement.setLong(index++, castedFilteringEntity.getGoods_count());
-        statement.setLong(index++, castedFilteringEntity.getGoods_price());
-        statement.setLong(index, castedFilteringEntity.getGoods_price());
+        statement.setLong(index++, castedFilteringEntity.getDocumentId());
+        statement.setLong(index++, castedFilteringEntity.getDocumentId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsId());
+        statement.setLong(index++, castedFilteringEntity.getGoodsCount());
+        statement.setLong(index++, castedFilteringEntity.getGoodsCount());
+        statement.setLong(index++, castedFilteringEntity.getGoodsPrice());
+        statement.setLong(index, castedFilteringEntity.getGoodsPrice());
         statement.executeUpdate();
 
         pool.dropConnection(connection);
         return true;
     }
     @Override
-    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -134,7 +136,7 @@ public class DAOImportGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         ImportGoods importGoods = (ImportGoods) editingEntity;
@@ -147,10 +149,10 @@ public class DAOImportGoods implements DAOAbstract {
 
         PreparedStatement statement = connection.prepareStatement(sqlCode);
         int index = 1;
-        statement.setLong(index++, importGoods.getDocument_id());
-        statement.setLong(index++, importGoods.getGoods_id());
-        statement.setLong(index++, importGoods.getGoods_count());
-        statement.setLong(index++, importGoods.getGoods_price());
+        statement.setLong(index++, importGoods.getDocumentId());
+        statement.setLong(index++, importGoods.getGoodsId());
+        statement.setLong(index++, importGoods.getGoodsCount());
+        statement.setLong(index++, importGoods.getGoodsPrice());
         statement.setLong(index, importGoods.getId());
         statement.executeUpdate();
 
@@ -159,7 +161,7 @@ public class DAOImportGoods implements DAOAbstract {
     }
 
     @Override
-    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         long res = -1;

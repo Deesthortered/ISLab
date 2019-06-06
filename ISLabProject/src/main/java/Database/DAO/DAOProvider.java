@@ -4,8 +4,10 @@ import Database.ConnectionPool;
 import Entity.Entity;
 import Entity.Provider;
 
+import javax.servlet.ServletException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAOProvider implements DAOAbstract {
 
@@ -22,17 +24,17 @@ public class DAOProvider implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
+    public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Provider castedFilteringEntity = (Provider) filteringEntity;
-        ArrayList<Entity> result = new ArrayList<>();
+        List<Entity> result = new ArrayList<>();
 
         String sqlQuery = "SELECT * FROM islabdb.provider " +
-                "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\')" +
+                "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
@@ -63,7 +65,7 @@ public class DAOProvider implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(List<Entity> list) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         for (Entity item : list) {
@@ -84,16 +86,16 @@ public class DAOProvider implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
         Provider castedFilter = (Provider) filteringEntity;
         String sql_query = "DELETE FROM islabdb.provider " +
-                "WHERE (Provider_ID = ?          OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Provider_Name = ?        OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Provider_Country = ?     OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Provider_Description = ? OR ? = \'" + Entity.undefined_string + "\');";
+                "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
         PreparedStatement statement = connection.prepareStatement(sql_query);
         int index = 1;
         statement.setLong(index++, castedFilter.getId());
@@ -110,7 +112,7 @@ public class DAOProvider implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -127,7 +129,7 @@ public class DAOProvider implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Provider provider = (Provider) editingEntity;
@@ -150,7 +152,7 @@ public class DAOProvider implements DAOAbstract {
     }
 
     @Override
-    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         long res = -1;

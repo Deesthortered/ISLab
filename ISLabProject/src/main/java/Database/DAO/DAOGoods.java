@@ -4,8 +4,10 @@ import Database.ConnectionPool;
 import Entity.Entity;
 import Entity.Goods;
 
+import javax.servlet.ServletException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DAOGoods implements DAOAbstract {
 
@@ -22,17 +24,17 @@ public class DAOGoods implements DAOAbstract {
     }
 
     @Override
-    public ArrayList<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, InterruptedException {
+    public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Goods castedFilteringEntity = (Goods) filteringEntity;
-        ArrayList<Entity> result = new ArrayList<>();
+        List<Entity> result = new ArrayList<>();
 
         String sqlQuery = "SELECT * FROM islabdb.goods " +
-                "WHERE (Goods_ID = ?           OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Goods_Name = ?         OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Goods_AveragePrice = ? OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Goods_Description = ?  OR ? = \'" + Entity.undefined_string + "\')" +
+                "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
                 ( limited ? " limit ? offset ?" : "");
 
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
@@ -41,8 +43,8 @@ public class DAOGoods implements DAOAbstract {
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setString(index++, castedFilteringEntity.getName());
         statement.setString(index++, castedFilteringEntity.getName());
-        statement.setLong(index++, castedFilteringEntity.getAverage_price());
-        statement.setLong(index++, castedFilteringEntity.getAverage_price());
+        statement.setLong(index++, castedFilteringEntity.getAveragePrice());
+        statement.setLong(index++, castedFilteringEntity.getAveragePrice());
         statement.setString(index++, castedFilteringEntity.getDescription());
         statement.setString(index++, castedFilteringEntity.getDescription());
         if (limited) {
@@ -63,7 +65,7 @@ public class DAOGoods implements DAOAbstract {
         return result;
     }
     @Override
-    public boolean addEntityList(ArrayList<Entity> list) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean addEntityList(List<Entity> list) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         for (Entity item : list) {
@@ -72,7 +74,7 @@ public class DAOGoods implements DAOAbstract {
             PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
             int index = 1;
             statement.setString(index++, castedItem.getName());
-            statement.setLong(index++, castedItem.getAverage_price());
+            statement.setLong(index++, castedItem.getAveragePrice());
             statement.setString(index, castedItem.getDescription());
             statement.executeUpdate();
         }
@@ -80,24 +82,24 @@ public class DAOGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean deleteEntityList(Entity filteringEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
         Goods castedFilteringEntity = (Goods) filteringEntity;
         String sqlQuery = "DELETE FROM islabdb.goods " +
-                "WHERE (Goods_ID = ?           OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Goods_Name = ?         OR ? = \'" + Entity.undefined_string + "\') AND " +
-                "(Goods_AveragePrice = ? OR ? = "   + Entity.undefined_long   +   ") AND " +
-                "(Goods_Description = ?  OR ? = \'" + Entity.undefined_string + "\');";
+                "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+                "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+                "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
         PreparedStatement statement = connection.prepareStatement(sqlQuery);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setString(index++, castedFilteringEntity.getName());
         statement.setString(index++, castedFilteringEntity.getName());
-        statement.setLong(index++, castedFilteringEntity.getAverage_price());
-        statement.setLong(index++, castedFilteringEntity.getAverage_price());
+        statement.setLong(index++, castedFilteringEntity.getAveragePrice());
+        statement.setLong(index++, castedFilteringEntity.getAveragePrice());
         statement.setString(index++, castedFilteringEntity.getDescription());
         statement.setString(index, castedFilteringEntity.getDescription());
         statement.executeUpdate();
@@ -106,7 +108,7 @@ public class DAOGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean isExistsEntity(long id) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
@@ -123,7 +125,7 @@ public class DAOGoods implements DAOAbstract {
         return true;
     }
     @Override
-    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, InterruptedException {
+    public boolean editEntity(Entity editingEntity) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         Goods goods = (Goods) editingEntity;
@@ -137,7 +139,7 @@ public class DAOGoods implements DAOAbstract {
         PreparedStatement statement = connection.prepareStatement(sqlCode);
         int index = 1;
         statement.setString(index++, goods.getName());
-        statement.setLong(index++, goods.getAverage_price());
+        statement.setLong(index++, goods.getAveragePrice());
         statement.setString(index++, goods.getDescription());
         statement.setLong(index, goods.getId());
         statement.executeUpdate();
@@ -147,7 +149,7 @@ public class DAOGoods implements DAOAbstract {
     }
 
     @Override
-    public long getLastID() throws ClassNotFoundException, SQLException, InterruptedException {
+    public long getLastID() throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         long res = -1;

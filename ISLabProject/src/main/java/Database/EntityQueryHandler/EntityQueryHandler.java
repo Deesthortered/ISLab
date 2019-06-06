@@ -14,8 +14,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class EntityQueryHandler {
+
+    protected EntityQueryHandler() {
+
+    }
+
+    public static EntityQueryHandler getInstance() {
+        return null;
+    }
 
     public void getEntityList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter writer = response.getWriter();
@@ -33,7 +42,7 @@ public abstract class EntityQueryHandler {
         int beginIndex = Integer.parseInt(request.getHeader("listBeginInd"));
         int countOfRecords = Integer.parseInt(request.getHeader("listSize"));
 
-        ArrayList<Entity> list;
+        List<Entity> list;
         try {
             list = dao.getEntityList(filteringEntity, limited, beginIndex, countOfRecords);
         } catch (ClassNotFoundException | SQLException | InterruptedException e) {
@@ -42,9 +51,9 @@ public abstract class EntityQueryHandler {
 
         JSONArray json_list = new JSONArray();
         for (Entity entity : list) {
-            ArrayList<String> represantiveData = new ArrayList<>();
-            ArrayList<Long> foreingKeys = entity.getForeingKeys();
-            ArrayList<DAOAbstract> dao_array = entity.getForeingDAO();
+            List<String> represantiveData = new ArrayList<>();
+            List<Long> foreingKeys = entity.getForeingKeys();
+            List<DAOAbstract> dao_array = entity.getForeingDAO();
             if (dao_array != null)
             for (int i = 0; i < dao_array.size(); i++) {
                 Entity sub_filter = dao_array.get(i).createEntity();
@@ -55,7 +64,7 @@ public abstract class EntityQueryHandler {
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
-                represantiveData.add(sub_entity.getRepresantiveData());
+                represantiveData.add(sub_entity.getRepresentantiveData());
             }
             json_list.put(entity.getJSON(represantiveData));
         }
@@ -77,7 +86,7 @@ public abstract class EntityQueryHandler {
         }
         entity.setByJSON(json);
 
-        ArrayList<Entity> list = new ArrayList<>();
+        List<Entity> list = new ArrayList<>();
         list.add(entity);
         try {
             if (dao.addEntityList(list))
@@ -97,9 +106,9 @@ public abstract class EntityQueryHandler {
 
         try {
             if (dao.isExistsEntity(id)) {
-                Entity filter = dao.createEntity();
-                filter.setId(id);
-                if (dao.deleteEntityList(filter))
+                Entity filteringEntity = dao.createEntity();
+                filteringEntity.setId(id);
+                if (dao.deleteEntityList(filteringEntity))
                     writer.print("ok");
                 else
                     writer.print("bad");
