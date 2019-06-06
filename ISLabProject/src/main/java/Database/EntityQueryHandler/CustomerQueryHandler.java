@@ -13,6 +13,6 @@ public class CustomerQueryHandler extends EntityQueryHandler {
     }
     @Override
     public DAOAbstract getDAO() {
-        return DAOCustomer.getInstance();
+        return this.daoCustomer;
     }
 }

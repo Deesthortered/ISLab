@@ -13,6 +13,6 @@ public class ExportMoveDocumentQueryHandler extends EntityQueryHandler {
     }
     @Override
     public DAOAbstract getDAO() {
-        return DAOExportMoveDocument.getInstance();
+        return this.daoExportMoveDocument;
     }
 }

@@ -7,18 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="95789577-4742-4631-b329-c8ebbe337f14" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAvailableGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAvailableGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportGoods.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportGoods.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportMoveDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportMoveDocument.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOProvider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DAO/DAOStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -90,190 +90,125 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="732">
-              <caret line="49" column="13" lean-forward="true" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+            <state relative-caret-position="381">
+              <caret line="26" column="38" lean-forward="true" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
               <folding>
-                <element signature="method#DAOCustomer#0;class#DAOCustomer#0" />
-                <element signature="method#getInstance#0;class#DAOCustomer#0" />
-                <element signature="method#getEntityList#0;class#DAOCustomer#0" />
-                <element signature="method#addEntityList#0;class#DAOCustomer#0" />
-                <element signature="method#deleteEntityList#0;class#DAOCustomer#0" />
-                <element signature="method#isExistsEntity#0;class#DAOCustomer#0" />
-                <element signature="method#editEntity#0;class#DAOCustomer#0" />
-                <element signature="method#getLastID#0;class#DAOCustomer#0" />
+                <element signature="imports" expanded="true" />
+                <element signature="method#EntityQueryHandler#0;class#EntityQueryHandler#0" />
+                <element signature="method#getEntityList#0;class#EntityQueryHandler#0" />
+                <element signature="method#addEntity#0;class#EntityQueryHandler#0" />
+                <element signature="method#deleteEntity#0;class#EntityQueryHandler#0" />
+                <element signature="method#editEntity#0;class#EntityQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportDocument.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1018">
-              <caret line="159" selection-start-line="159" selection-end-line="159" />
+            <state relative-caret-position="242">
+              <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
               <folding>
-                <element signature="method#DAOExportDocument#0;class#DAOExportDocument#0" />
-                <element signature="method#getInstance#0;class#DAOExportDocument#0" />
-                <element signature="method#getEntityList#0;class#DAOExportDocument#0" />
-                <element signature="method#addEntityList#0;class#DAOExportDocument#0" />
-                <element signature="method#deleteEntityList#0;class#DAOExportDocument#0" />
-                <element signature="method#isExistsEntity#0;class#DAOExportDocument#0" />
-                <element signature="method#editEntity#0;class#DAOExportDocument#0" />
-                <element signature="method#getLastID#0;class#DAOExportDocument#0" />
+                <element signature="method#ExportDocumentQueryHandler#0;class#ExportDocumentQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportGoods.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="54" lean-forward="true" selection-start-line="54" selection-end-line="54" />
+            <state relative-caret-position="220">
+              <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
               <folding>
-                <element signature="method#DAOExportGoods#0;class#DAOExportGoods#0" />
-                <element signature="method#getInstance#0;class#DAOExportGoods#0" />
-                <element signature="method#getEntityList#0;class#DAOExportGoods#0" />
-                <element signature="method#addEntityList#0;class#DAOExportGoods#0" />
-                <element signature="method#deleteEntityList#0;class#DAOExportGoods#0" />
-                <element signature="method#isExistsEntity#0;class#DAOExportGoods#0" />
-                <element signature="method#editEntity#0;class#DAOExportGoods#0" />
-                <element signature="method#getLastID#0;class#DAOExportGoods#0" />
+                <element signature="method#ExportGoodsQueryHandler#0;class#ExportGoodsQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportMoveDocument.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="150" column="90" selection-start-line="150" selection-start-column="90" selection-end-line="150" selection-end-column="90" />
+            <state relative-caret-position="220">
+              <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
               <folding>
-                <element signature="method#DAOExportMoveDocument#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#getInstance#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#getEntityList#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#addEntityList#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#deleteEntityList#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#isExistsEntity#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#editEntity#0;class#DAOExportMoveDocument#0" />
-                <element signature="method#getLastID#0;class#DAOExportMoveDocument#0" />
+                <element signature="method#ExportMoveDocumentQueryHandler#0;class#ExportMoveDocumentQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOGoods.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="158" column="90" selection-start-line="158" selection-start-column="90" selection-end-line="158" selection-end-column="90" />
+            <state relative-caret-position="220">
+              <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
               <folding>
-                <element signature="method#DAOGoods#0;class#DAOGoods#0" />
-                <element signature="method#getInstance#0;class#DAOGoods#0" />
-                <element signature="method#getEntityList#0;class#DAOGoods#0" />
-                <element signature="method#addEntityList#0;class#DAOGoods#0" />
-                <element signature="method#deleteEntityList#0;class#DAOGoods#0" />
-                <element signature="method#isExistsEntity#0;class#DAOGoods#0" />
-                <element signature="method#editEntity#0;class#DAOGoods#0" />
-                <element signature="method#getLastID#0;class#DAOGoods#0" />
+                <element signature="method#GoodsQueryHandler#0;class#GoodsQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportDocument.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="424">
-              <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
+            <state relative-caret-position="220">
+              <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
               <folding>
-                <element signature="method#DAOImportDocument#0;class#DAOImportDocument#0" />
-                <element signature="method#getInstance#0;class#DAOImportDocument#0" />
-                <element signature="method#getEntityList#0;class#DAOImportDocument#0" />
-                <element signature="method#addEntityList#0;class#DAOImportDocument#0" />
-                <element signature="method#deleteEntityList#0;class#DAOImportDocument#0" />
-                <element signature="method#isExistsEntity#0;class#DAOImportDocument#0" />
-                <element signature="method#editEntity#0;class#DAOImportDocument#0" />
-                <element signature="method#getLastID#0;class#DAOImportDocument#0" />
+                <element signature="method#ImportDocumentQueryHandler#0;class#ImportDocumentQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportGoods.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="111" column="122" selection-start-line="111" selection-start-column="122" selection-end-line="111" selection-end-column="122" />
+            <state relative-caret-position="220">
+              <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
               <folding>
-                <element signature="method#DAOImportGoods#0;class#DAOImportGoods#0" />
-                <element signature="method#getInstance#0;class#DAOImportGoods#0" />
-                <element signature="method#getEntityList#0;class#DAOImportGoods#0" />
-                <element signature="method#addEntityList#0;class#DAOImportGoods#0" />
-                <element signature="method#deleteEntityList#0;class#DAOImportGoods#0" />
-                <element signature="method#isExistsEntity#0;class#DAOImportGoods#0" />
-                <element signature="method#editEntity#0;class#DAOImportGoods#0" />
-                <element signature="method#getLastID#0;class#DAOImportGoods#0" />
+                <element signature="method#ImportGoodsQueryHandler#0;class#ImportGoodsQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportMoveDocument.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="327">
-              <caret line="96" column="122" selection-start-line="96" selection-start-column="122" selection-end-line="96" selection-end-column="122" />
+            <state relative-caret-position="220">
+              <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
               <folding>
-                <element signature="method#DAOImportMoveDocument#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#getInstance#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#getEntityList#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#addEntityList#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#deleteEntityList#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#isExistsEntity#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#editEntity#0;class#DAOImportMoveDocument#0" />
-                <element signature="method#getLastID#0;class#DAOImportMoveDocument#0" />
+                <element signature="method#ImportMoveDocumentQueryHandler#0;class#ImportMoveDocumentQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOProvider.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="638">
-              <caret line="161" column="90" selection-start-line="161" selection-start-column="90" selection-end-line="161" selection-end-column="90" />
+            <state relative-caret-position="220">
+              <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
               <folding>
-                <element signature="method#DAOProvider#0;class#DAOProvider#0" />
-                <element signature="method#getInstance#0;class#DAOProvider#0" />
-                <element signature="method#getEntityList#0;class#DAOProvider#0" />
-                <element signature="method#addEntityList#0;class#DAOProvider#0" />
-                <element signature="method#deleteEntityList#0;class#DAOProvider#0" />
-                <element signature="method#isExistsEntity#0;class#DAOProvider#0" />
-                <element signature="method#editEntity#0;class#DAOProvider#0" />
-                <element signature="method#getLastID#0;class#DAOProvider#0" />
+                <element signature="method#ProviderQueryHandler#0;class#ProviderQueryHandler#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOStorage.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="113" column="105" selection-start-line="113" selection-start-column="105" selection-end-line="113" selection-end-column="105" />
+            <state relative-caret-position="220">
+              <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
               <folding>
-                <element signature="method#DAOStorage#0;class#DAOStorage#0" />
-                <element signature="method#getInstance#0;class#DAOStorage#0" />
-                <element signature="method#getEntityList#0;class#DAOStorage#0" />
-                <element signature="method#addEntityList#0;class#DAOStorage#0" />
-                <element signature="method#deleteEntityList#0;class#DAOStorage#0" />
-                <element signature="method#isExistsEntity#0;class#DAOStorage#0" />
-                <element signature="method#editEntity#0;class#DAOStorage#0" />
-                <element signature="method#getLastID#0;class#DAOStorage#0" />
+                <element signature="method#StorageQueryHandler#0;class#StorageQueryHandler#0" />
               </folding>
             </state>
           </provider>
@@ -355,17 +290,6 @@
         <option value="$PROJECT_DIR$/src/main/java/Entity/Provider.java" />
         <option value="$PROJECT_DIR$/src/main/java/Entity/Storage.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/SystemUserAccess.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/AvailableGoodsServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/CustomerServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/ExportDocumentServlet.java" />
@@ -377,7 +301,6 @@
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/ImportMoveDocumentServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/ProviderServlet.java" />
         <option value="$PROJECT_DIR$/src/main/java/EntityServlets/StorageServlet.java" />
-        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAbstract.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOAvailableGoods.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java" />
@@ -390,6 +313,18 @@
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportMoveDocument.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOProvider.java" />
         <option value="$PROJECT_DIR$/src/main/java/Database/DAO/DAOStorage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java" />
       </list>
     </option>
   </component>
@@ -400,7 +335,7 @@
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="291" />
     <option name="y" value="-9" />
     <option name="width" value="1440" />
@@ -456,7 +391,7 @@
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Database" type="462c0819:PsiDirectoryNode" />
-              <item name="DAO" type="462c0819:PsiDirectoryNode" />
+              <item name="EntityQueryHandler" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -726,7 +661,7 @@
       <workItem from="1559468481735" duration="89000" />
       <workItem from="1559468770516" duration="18083000" />
       <workItem from="1559539730328" duration="12226000" />
-      <workItem from="1559823494894" duration="7092000" />
+      <workItem from="1559823494894" duration="7522000" />
     </task>
     <task id="LOCAL-00001" summary="Try to commit inside Intelij IDEA.">
       <created>1552916480707</created>
@@ -744,7 +679,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="584689000" />
+    <option name="totallyTimeSpent" value="585119000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1047,113 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#ExportGoodsQueryHandler#0;class#ExportGoodsQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#ExportDocumentQueryHandler#0;class#ExportDocumentQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
-          <folding>
-            <element signature="method#ExportMoveDocumentQueryHandler#0;class#ExportMoveDocumentQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#GoodsQueryHandler#0;class#GoodsQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#ImportDocumentQueryHandler#0;class#ImportDocumentQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#ImportGoodsQueryHandler#0;class#ImportGoodsQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#ImportMoveDocumentQueryHandler#0;class#ImportMoveDocumentQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#StorageQueryHandler#0;class#StorageQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="8" column="18" lean-forward="true" selection-start-line="8" selection-start-column="18" selection-end-line="8" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-          <folding>
-            <element signature="method#CustomerQueryHandler#0;class#CustomerQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding>
-            <element signature="method#ProviderQueryHandler#0;class#ProviderQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/EntityServlets/AvailableGoodsServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -1299,51 +1127,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportMoveDocument.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="28" column="125" selection-start-line="28" selection-start-column="125" selection-end-line="28" selection-end-column="125" />
+        <state relative-caret-position="440">
+          <caret line="150" column="90" selection-start-line="150" selection-start-column="90" selection-end-line="150" selection-end-column="90" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#EntityQueryHandler#0;class#EntityQueryHandler#0" />
-            <element signature="method#getEntityList#0;class#EntityQueryHandler#0" />
-            <element signature="method#addEntity#0;class#EntityQueryHandler#0" />
-            <element signature="method#deleteEntity#0;class#EntityQueryHandler#0" />
-            <element signature="method#editEntity#0;class#EntityQueryHandler#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="732">
-          <caret line="49" column="13" lean-forward="true" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding>
-            <element signature="method#DAOCustomer#0;class#DAOCustomer#0" />
-            <element signature="method#getInstance#0;class#DAOCustomer#0" />
-            <element signature="method#getEntityList#0;class#DAOCustomer#0" />
-            <element signature="method#addEntityList#0;class#DAOCustomer#0" />
-            <element signature="method#deleteEntityList#0;class#DAOCustomer#0" />
-            <element signature="method#isExistsEntity#0;class#DAOCustomer#0" />
-            <element signature="method#editEntity#0;class#DAOCustomer#0" />
-            <element signature="method#getLastID#0;class#DAOCustomer#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1018">
-          <caret line="159" selection-start-line="159" selection-end-line="159" />
-          <folding>
-            <element signature="method#DAOExportDocument#0;class#DAOExportDocument#0" />
-            <element signature="method#getInstance#0;class#DAOExportDocument#0" />
-            <element signature="method#getEntityList#0;class#DAOExportDocument#0" />
-            <element signature="method#addEntityList#0;class#DAOExportDocument#0" />
-            <element signature="method#deleteEntityList#0;class#DAOExportDocument#0" />
-            <element signature="method#isExistsEntity#0;class#DAOExportDocument#0" />
-            <element signature="method#editEntity#0;class#DAOExportDocument#0" />
-            <element signature="method#getLastID#0;class#DAOExportDocument#0" />
+            <element signature="method#DAOExportMoveDocument#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#getInstance#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#getEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#addEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#deleteEntityList#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#isExistsEntity#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#editEntity#0;class#DAOExportMoveDocument#0" />
+            <element signature="method#getLastID#0;class#DAOExportMoveDocument#0" />
           </folding>
         </state>
       </provider>
@@ -1365,6 +1161,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1018">
+          <caret line="159" selection-start-line="159" selection-end-line="159" />
+          <folding>
+            <element signature="method#DAOExportDocument#0;class#DAOExportDocument#0" />
+            <element signature="method#getInstance#0;class#DAOExportDocument#0" />
+            <element signature="method#getEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#addEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#deleteEntityList#0;class#DAOExportDocument#0" />
+            <element signature="method#isExistsEntity#0;class#DAOExportDocument#0" />
+            <element signature="method#editEntity#0;class#DAOExportDocument#0" />
+            <element signature="method#getLastID#0;class#DAOExportDocument#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOCustomer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="49" column="13" lean-forward="true" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
+          <folding>
+            <element signature="method#DAOCustomer#0;class#DAOCustomer#0" />
+            <element signature="method#getInstance#0;class#DAOCustomer#0" />
+            <element signature="method#getEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#addEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#deleteEntityList#0;class#DAOCustomer#0" />
+            <element signature="method#isExistsEntity#0;class#DAOCustomer#0" />
+            <element signature="method#editEntity#0;class#DAOCustomer#0" />
+            <element signature="method#getLastID#0;class#DAOCustomer#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOGoods.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
@@ -1382,26 +1212,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOExportMoveDocument.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="150" column="90" selection-start-line="150" selection-start-column="90" selection-end-line="150" selection-end-column="90" />
-          <folding>
-            <element signature="method#DAOExportMoveDocument#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#getInstance#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#getEntityList#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#addEntityList#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#deleteEntityList#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#isExistsEntity#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#editEntity#0;class#DAOExportMoveDocument#0" />
-            <element signature="method#getLastID#0;class#DAOExportMoveDocument#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportDocument.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="424">
+        <state relative-caret-position="438">
           <caret line="158" lean-forward="true" selection-start-line="158" selection-end-line="158" />
           <folding>
             <element signature="method#DAOImportDocument#0;class#DAOImportDocument#0" />
@@ -1418,7 +1231,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOImportGoods.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
+        <state relative-caret-position="526">
           <caret line="111" column="122" selection-start-line="111" selection-start-column="122" selection-end-line="111" selection-end-column="122" />
           <folding>
             <element signature="method#DAOImportGoods#0;class#DAOImportGoods#0" />
@@ -1469,8 +1282,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Database/DAO/DAOStorage.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="113" column="105" selection-start-line="113" selection-start-column="105" selection-end-line="113" selection-end-column="105" />
+        <state relative-caret-position="864">
+          <caret line="149" column="90" selection-start-line="149" selection-start-column="90" selection-end-line="149" selection-end-column="90" />
           <folding>
             <element signature="method#DAOStorage#0;class#DAOStorage#0" />
             <element signature="method#getInstance#0;class#DAOStorage#0" />
@@ -1480,6 +1293,128 @@
             <element signature="method#isExistsEntity#0;class#DAOStorage#0" />
             <element signature="method#editEntity#0;class#DAOStorage#0" />
             <element signature="method#getLastID#0;class#DAOStorage#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/AvailableGoodsQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="15" column="32" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/CustomerQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+          <folding>
+            <element signature="method#CustomerQueryHandler#0;class#CustomerQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/EntityQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="381">
+          <caret line="26" column="38" lean-forward="true" selection-start-line="26" selection-start-column="38" selection-end-line="26" selection-end-column="38" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#EntityQueryHandler#0;class#EntityQueryHandler#0" />
+            <element signature="method#getEntityList#0;class#EntityQueryHandler#0" />
+            <element signature="method#addEntity#0;class#EntityQueryHandler#0" />
+            <element signature="method#deleteEntity#0;class#EntityQueryHandler#0" />
+            <element signature="method#editEntity#0;class#EntityQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportDocumentQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="17" column="1" lean-forward="true" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+          <folding>
+            <element signature="method#ExportDocumentQueryHandler#0;class#ExportDocumentQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportGoodsQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="34" selection-start-line="15" selection-start-column="34" selection-end-line="15" selection-end-column="34" />
+          <folding>
+            <element signature="method#ExportGoodsQueryHandler#0;class#ExportGoodsQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ExportMoveDocumentQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="method#ExportMoveDocumentQueryHandler#0;class#ExportMoveDocumentQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/GoodsQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+          <folding>
+            <element signature="method#GoodsQueryHandler#0;class#GoodsQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportDocumentQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+          <folding>
+            <element signature="method#ImportDocumentQueryHandler#0;class#ImportDocumentQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportGoodsQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="20" selection-start-line="15" selection-start-column="20" selection-end-line="15" selection-end-column="20" />
+          <folding>
+            <element signature="method#ImportGoodsQueryHandler#0;class#ImportGoodsQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ImportMoveDocumentQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="method#ImportMoveDocumentQueryHandler#0;class#ImportMoveDocumentQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/ProviderQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+          <folding>
+            <element signature="method#ProviderQueryHandler#0;class#ProviderQueryHandler#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Database/EntityQueryHandler/StorageQueryHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="15" column="30" selection-start-line="15" selection-start-column="30" selection-end-line="15" selection-end-column="30" />
+          <folding>
+            <element signature="method#StorageQueryHandler#0;class#StorageQueryHandler#0" />
           </folding>
         </state>
       </provider>

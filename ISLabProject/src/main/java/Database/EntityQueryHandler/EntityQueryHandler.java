@@ -1,7 +1,7 @@
 package Database.EntityQueryHandler;
 
+import Database.DAO.*;
 import Entity.Entity;
-import Database.DAO.DAOAbstract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +17,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class EntityQueryHandler {
+
+    DAOAbstract daoAvailable          = DAOAvailableGoods.getInstance();
+    DAOAbstract daoCustomer           = DAOCustomer.getInstance();
+    DAOAbstract daoProvider           = DAOProvider.getInstance();
+    DAOAbstract daoGoods              = DAOGoods.getInstance();
+    DAOAbstract daoStorage            = DAOStorage.getInstance();
+    DAOAbstract daoImportDocuments    = DAOImportDocument.getInstance();
+    DAOAbstract daoImportGoods        = DAOImportGoods.getInstance();
+    DAOAbstract daoImportMoveDocument = DAOImportMoveDocument.getInstance();
+    DAOAbstract daoExportDocument     = DAOExportDocument.getInstance();
+    DAOAbstract daoExportGoods        = DAOExportGoods.getInstance();
+    DAOAbstract daoExportMoveDocument = DAOExportMoveDocument.getInstance();
 
     protected EntityQueryHandler() {
 

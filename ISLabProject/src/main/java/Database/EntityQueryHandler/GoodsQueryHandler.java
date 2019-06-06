@@ -13,6 +13,6 @@ public class GoodsQueryHandler extends EntityQueryHandler {
     }
     @Override
     public DAOAbstract getDAO() {
-        return DAOGoods.getInstance();
+        return this.daoGoods;
     }
 }

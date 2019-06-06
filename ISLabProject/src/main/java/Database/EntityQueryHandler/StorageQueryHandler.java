@@ -13,6 +13,6 @@ public class StorageQueryHandler extends EntityQueryHandler {
     }
     @Override
     public DAOAbstract getDAO() {
-        return DAOStorage.getInstance();
+        return this.daoStorage;
     }
 }

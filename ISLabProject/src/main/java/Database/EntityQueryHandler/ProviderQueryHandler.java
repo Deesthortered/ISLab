@@ -13,6 +13,6 @@ public class ProviderQueryHandler extends EntityQueryHandler {
     }
     @Override
     public DAOAbstract getDAO() {
-        return DAOProvider.getInstance();
+        return this.daoProvider;
     }
 }
