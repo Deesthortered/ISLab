@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOImportMoveDocument implements DAOAbstract {
+public class DAOImportMoveDocument extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -26,6 +26,27 @@ public class DAOImportMoveDocument implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.importmovedocument " +
+            "WHERE (Document_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_ImportGoodsID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ")";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.importmovedocument (Document_ImportGoodsID, Document_StorageID) VALUES (?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.importmovedocument " +
+            "WHERE (Document_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_ImportGoodsID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ");";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.importmovedocument where Document_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.importmovedocument SET Document_ImportGoodsID = ?, " +
+            "Document_StorageID = ? " +
+            "WHERE Document_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Document_ID) FROM islabdb.importmovedocument;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -33,13 +54,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         ImportMoveDocument castedFilteringEntity = (ImportMoveDocument) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.importmovedocument " +
-                "WHERE (Document_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_ImportGoodsID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ")" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -69,7 +84,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         for (Entity item : list) {
             ImportMoveDocument castedItem = (ImportMoveDocument) item;
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.importmovedocument (Document_ImportGoodsID, Document_StorageID) VALUES (?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setLong(index++, castedItem.getImportGoodsId());
             statement.setLong(index, castedItem.getStorageId());
@@ -84,11 +99,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         ImportMoveDocument castedFilteringEntity = (ImportMoveDocument) filteringEntity;
-        String sqlQuery = "DELETE FROM islabdb.importmovedocument " +
-                "WHERE (Document_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_ImportGoodsID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ");";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -106,7 +117,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.importmovedocument where Document_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -124,11 +135,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         ImportMoveDocument provider = (ImportMoveDocument) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.importmovedocument SET Document_ImportGoodsID = ?, " +
-                "Document_StorageID = ? " +
-                "WHERE Document_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         int index = 1;
         statement.setLong(index++, provider.getImportGoodsId());
         statement.setLong(index++, provider.getStorageId());
@@ -145,8 +152,7 @@ public class DAOImportMoveDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sql_code = "SELECT max(Document_ID) FROM islabdb.importmovedocument;";
-        PreparedStatement statement = connection.prepareStatement(sql_code);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

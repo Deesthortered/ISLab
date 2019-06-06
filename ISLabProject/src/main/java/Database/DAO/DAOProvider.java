@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOProvider implements DAOAbstract {
+public class DAOProvider extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -23,6 +23,30 @@ public class DAOProvider implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.provider " +
+            "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.provider " +
+            "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.provider where Provider_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.provider SET Provider_Name = ?, " +
+            "Provider_Country = ?, " +
+            "Provider_Description = ? " +
+            "WHERE Provider_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Provider_ID) FROM islabdb.provider;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -30,14 +54,7 @@ public class DAOProvider implements DAOAbstract {
         Provider castedFilteringEntity = (Provider) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.provider " +
-                "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -71,7 +88,7 @@ public class DAOProvider implements DAOAbstract {
         for (Entity item : list) {
             Provider castedItem = (Provider) item;
             try {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.provider (Provider_Name, Provider_Country, Provider_Description) VALUES (?, ?, ?);");
+                PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
                 int index = 1;
                 statement.setString(index++, castedItem.getName());
                 statement.setString(index++, castedItem.getCountry());
@@ -91,12 +108,7 @@ public class DAOProvider implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         Provider castedFilter = (Provider) filteringEntity;
-        String sql_query = "DELETE FROM islabdb.provider " +
-                "WHERE (Provider_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Provider_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Provider_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Provider_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
-        PreparedStatement statement = connection.prepareStatement(sql_query);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilter.getId());
         statement.setLong(index++, castedFilter.getId());
@@ -116,7 +128,7 @@ public class DAOProvider implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.provider where Provider_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -134,12 +146,7 @@ public class DAOProvider implements DAOAbstract {
         Connection connection = pool.getConnection();
         Provider provider = (Provider) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.provider SET Provider_Name = ?, " +
-                "Provider_Country = ?, " +
-                "Provider_Description = ? " +
-                "WHERE Provider_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         int index = 1;
         statement.setString(index++, provider.getName());
         statement.setString(index++, provider.getCountry());
@@ -157,8 +164,7 @@ public class DAOProvider implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sqlCode = "SELECT max(Provider_ID) FROM islabdb.provider;";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DAOExportDocument implements DAOAbstract {
+public class DAOExportDocument extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -25,6 +25,31 @@ public class DAOExportDocument implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.exportdocument " +
+            "WHERE (Document_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_CustomerID = ?  OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_ExportDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\') AND " +
+            "(Document_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.exportdocument " +
+            "WHERE (Document_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_CustomerID = ?  OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Document_ExportDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\') AND " +
+            "(Document_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.exportdocument where Document_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.exportdocument SET " +
+            "Document_CustomerID = ?, " +
+            "Document_ExportDate = ?, " +
+            "Document_Description = ? " +
+            "WHERE Document_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Document_ID) FROM islabdb.exportdocument;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -32,14 +57,7 @@ public class DAOExportDocument implements DAOAbstract {
         ExportDocument castedFilteringEntity = (ExportDocument) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.exportdocument " +
-                "WHERE (Document_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_CustomerID = ?  OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_ExportDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\') AND " +
-                "(Document_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY  + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -72,7 +90,7 @@ public class DAOExportDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         for (Entity item : list) {
             ExportDocument castedItem = (ExportDocument) item;
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportdocument (Document_CustomerID, Document_ExportDate, Document_Description) VALUES (?, ?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setLong(index++, castedItem.getCustomerId());
             statement.setString(index++, DateHandler.javaDateToSQLDate(castedItem.getExportDate()));
@@ -88,12 +106,7 @@ public class DAOExportDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         ExportDocument castedFilteringEntity = (ExportDocument) filteringEntity;
-        String sqlQuery = "DELETE FROM islabdb.exportdocument " +
-                "WHERE (Document_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_CustomerID = ?  OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Document_ExportDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\') AND " +
-                "(Document_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -113,7 +126,7 @@ public class DAOExportDocument implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportdocument where Document_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -131,13 +144,7 @@ public class DAOExportDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         ExportDocument document = (ExportDocument) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.exportdocument SET " +
-                "Document_CustomerID = ?, " +
-                "Document_ExportDate = ?, " +
-                "Document_Description = ? " +
-                "WHERE Document_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         int index = 1;
         statement.setLong(index++, document.getCustomerId());
         statement.setString(index++, DateHandler.javaDateToSQLDate(document.getExportDate()));
@@ -155,8 +162,7 @@ public class DAOExportDocument implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sqlCode = "SELECT max(Document_ID) FROM islabdb.exportdocument;";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

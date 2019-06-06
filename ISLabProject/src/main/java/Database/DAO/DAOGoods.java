@@ -9,7 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOGoods implements DAOAbstract {
+public class DAOGoods extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -23,6 +23,31 @@ public class DAOGoods implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.goods " +
+            "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\')";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.goods " +
+            "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.goods where Goods_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.goods SET " +
+            "Goods_Name = ?, " +
+            "Goods_AveragePrice = ?, " +
+            "Goods_Description = ? " +
+            "WHERE Goods_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Goods_ID) FROM islabdb.goods;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -30,14 +55,7 @@ public class DAOGoods implements DAOAbstract {
         Goods castedFilteringEntity = (Goods) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.goods " +
-                "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -49,7 +67,7 @@ public class DAOGoods implements DAOAbstract {
         statement.setString(index++, castedFilteringEntity.getDescription());
         if (limited) {
             statement.setLong(index++, countOfRecords);
-            statement.setLong(index++, startIndex);
+            statement.setLong(index, startIndex);
         }
         ResultSet resultSet = statement.executeQuery();
 
@@ -71,7 +89,7 @@ public class DAOGoods implements DAOAbstract {
         for (Entity item : list) {
             Goods castedItem = (Goods) item;
 
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.goods (Goods_Name, Goods_AveragePrice, Goods_Description) VALUES (?, ?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setString(index++, castedItem.getName());
             statement.setLong(index++, castedItem.getAveragePrice());
@@ -87,12 +105,7 @@ public class DAOGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         Goods castedFilteringEntity = (Goods) filteringEntity;
-        String sqlQuery = "DELETE FROM islabdb.goods " +
-                "WHERE (Goods_ID = ?           OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Goods_Name = ?         OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Goods_AveragePrice = ? OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Goods_Description = ?  OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -112,7 +125,7 @@ public class DAOGoods implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.goods where Goods_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -130,13 +143,7 @@ public class DAOGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         Goods goods = (Goods) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.goods SET " +
-                "Goods_Name = ?, " +
-                "Goods_AveragePrice = ?, " +
-                "Goods_Description = ? " +
-                "WHERE Goods_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         int index = 1;
         statement.setString(index++, goods.getName());
         statement.setLong(index++, goods.getAveragePrice());
@@ -154,8 +161,7 @@ public class DAOGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sqlCode = "SELECT max(Goods_ID) FROM islabdb.goods;";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

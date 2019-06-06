@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOExportGoods implements DAOAbstract {
+public class DAOExportGoods extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -26,6 +26,33 @@ public class DAOExportGoods implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.exportgoods " +
+            "WHERE (ExportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ")";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.exportgoods (ExportGoods_DocumentID, ExportGoods_GoodsID, ExportGoods_GoodsCount, ExportGoods_GoodsPrice) VALUES (?, ?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.exportgoods " +
+            "WHERE (ExportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(ExportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ");";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.exportgoods where ExportGoods_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.exportgoods SET ExportGoods_DocumentID = ?, " +
+            "ExportGoods_GoodsID = ?, " +
+            "ExportGoods_GoodsCount = ?, " +
+            "ExportGoods_GoodsPrice = ? " +
+            "WHERE ExportGoods_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(ExportGoods_ID) FROM islabdb.exportgoods;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws SQLException, ClassNotFoundException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -33,15 +60,7 @@ public class DAOExportGoods implements DAOAbstract {
         ExportGoods castedFilteringEntity = (ExportGoods) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.exportgoods " +
-                "WHERE (ExportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ")" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY  + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -77,7 +96,7 @@ public class DAOExportGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         for (Entity item : list) {
             ExportGoods castedItem = (ExportGoods) item;
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.exportgoods (ExportGoods_DocumentID, ExportGoods_GoodsID, ExportGoods_GoodsCount, ExportGoods_GoodsPrice) VALUES (?, ?, ?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setLong(index++, castedItem.getDocumentId());
             statement.setLong(index++, castedItem.getGoodsId());
@@ -94,13 +113,7 @@ public class DAOExportGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         ExportGoods castedFilter = (ExportGoods) filteringEntity;
-        String sqlQuery = "DELETE FROM islabdb.exportgoods " +
-                "WHERE (ExportGoods_ID = ?         OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_DocumentID = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsCount = ? OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(ExportGoods_GoodsPrice = ? OR ? = " + Entity.UNDEFINED_LONG + ");";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilter.getId());
         statement.setLong(index++, castedFilter.getId());
@@ -122,7 +135,7 @@ public class DAOExportGoods implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.exportgoods where ExportGoods_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -140,13 +153,7 @@ public class DAOExportGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         ExportGoods exportGoods = (ExportGoods) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.exportgoods SET ExportGoods_DocumentID = ?, " +
-                "ExportGoods_GoodsID = ?, " +
-                "ExportGoods_GoodsCount = ?, " +
-                "ExportGoods_GoodsPrice = ? " +
-                "WHERE ExportGoods_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         int index = 1;
         statement.setLong(index++, exportGoods.getDocumentId());
         statement.setLong(index++, exportGoods.getGoodsId());
@@ -165,8 +172,7 @@ public class DAOExportGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sqlCode = "SELECT max(ExportGoods_ID) FROM islabdb.exportgoods;";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

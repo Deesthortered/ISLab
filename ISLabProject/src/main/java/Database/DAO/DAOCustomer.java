@@ -3,13 +3,14 @@ package Database.DAO;
 import Database.ConnectionPool;
 import Entity.Customer;
 import Entity.Entity;
+import Utility.DateHandler;
 
 import javax.servlet.ServletException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DAOCustomer implements DAOAbstract {
+public class DAOCustomer extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -23,6 +24,29 @@ public class DAOCustomer implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.customer " +
+            "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.customer " +
+            "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
+            "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
+            "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.customer where Customer_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.customer SET Customer_Name = ?, " +
+            "Customer_Country = ?, " +
+            "Customer_Description = ? " +
+            "WHERE Customer_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Customer_ID) FROM islabdb.customer";
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -30,14 +54,7 @@ public class DAOCustomer implements DAOAbstract {
         Customer castedFilteringEntity = (Customer) filteringEntity;
         List<Entity> result = new ArrayList<>();
 
-        String sqlQuery = "SELECT * FROM islabdb.customer " +
-                "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\')" +
-                ( limited ? " limit ? offset ?" : "");
-
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -70,7 +87,7 @@ public class DAOCustomer implements DAOAbstract {
         Connection connection = pool.getConnection();
         for (Entity item : list) {
             Customer castedItem = (Customer) item;
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO islabdb.customer (Customer_Name, Customer_Country, Customer_Description) VALUES (?, ?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setString(index++, castedItem.getName());
             statement.setString(index++, castedItem.getCountry());
@@ -86,12 +103,7 @@ public class DAOCustomer implements DAOAbstract {
         Connection connection = pool.getConnection();
         Customer castedFilteringEntity = (Customer) filteringEntity;
 
-        String sqlQuery = "DELETE FROM islabdb.customer " +
-                "WHERE (Customer_ID = ?          OR ? = "   + Entity.UNDEFINED_LONG +   ") AND " +
-                "(Customer_Name = ?        OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Customer_Country = ?     OR ? = \'" + Entity.UNDEFINED_STRING + "\') AND " +
-                "(Customer_Description = ? OR ? = \'" + Entity.UNDEFINED_STRING + "\');";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -111,7 +123,7 @@ public class DAOCustomer implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.customer where Customer_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -129,12 +141,7 @@ public class DAOCustomer implements DAOAbstract {
         Connection connection = pool.getConnection();
         Customer customer = (Customer) editingEntity;
 
-        String sqlCode =   "UPDATE islabdb.customer SET Customer_Name = ?, " +
-                "Customer_Country = ?, " +
-                "Customer_Description = ? " +
-                "WHERE Customer_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
         statement.setString(1, customer.getName());
         statement.setString(2, customer.getCountry());
         statement.setString(3, customer.getDescription());
@@ -151,8 +158,7 @@ public class DAOCustomer implements DAOAbstract {
         Connection connection = pool.getConnection();
         long res = -1;
 
-        String sqlCode = "SELECT max(Customer_ID) FROM islabdb.customer";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);

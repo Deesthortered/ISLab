@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class DAOAvailableGoods implements DAOAbstract {
+public class DAOAvailableGoods extends DAOAbstract {
 
     private static DAOAbstract instance;
 
@@ -25,6 +25,42 @@ public class DAOAvailableGoods implements DAOAbstract {
         return instance;
     }
 
+    private static final String SQL_GET_QUERY = "SELECT * FROM islabdb.availablegoods " +
+            "WHERE (Available_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_GoodsID = ?       OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_GoodsCount = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_ProviderID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_Current = ?       OR ? = false) AND " +
+            "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\')";
+
+    private static final String SQL_ADD_QUERY = "INSERT INTO islabdb.availablegoods " +
+            "(Available_GoodsID, Available_GoodsCount, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
+            "VALUES (?, ?, ?, ?, ?, ?);";
+
+    private static final String SQL_DELETE_QUERY = "DELETE FROM islabdb.availablegoods " +
+            "WHERE (Available_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_GoodsID = ?       OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_GoodsCount = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_ProviderID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
+            "(Available_Current = ?       OR ? = false) AND " +
+            "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\')";
+
+    private static final String SQL_IS_EXIST_QUERY = "SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?";
+
+    private static final String SQL_EDIT_QUERY = "UPDATE islabdb.availablegoods SET " +
+            "Available_GoodsID = ?, " +
+            "Available_GoodsCount = ?, " +
+            "Available_ProviderID = ?, " +
+            "Available_StorageID = ?, " +
+            "Available_Current = ?, " +
+            "Available_SnapshotDate = ? " +
+            "WHERE Available_ID = ?;";
+
+    private static final String SQL_GET_LAST_ID_QUERY = "SELECT max(Available_ID) FROM islabdb.availablegoods;";
+
+
     @Override
     public List<Entity> getEntityList(Entity filteringEntity, boolean limited, int startIndex, int countOfRecords) throws ClassNotFoundException, SQLException, ServletException {
         ConnectionPool pool = ConnectionPool.getInstance();
@@ -32,17 +68,8 @@ public class DAOAvailableGoods implements DAOAbstract {
 
         AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
         List<Entity> result = new ArrayList<>();
-        String sqlGetQuery = "SELECT * FROM islabdb.availablegoods " +
-                "WHERE (Available_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_GoodsID = ?       OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_GoodsCount = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_ProviderID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_Current = ?       OR ? = false) AND " +
-                "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\')" +
-                ( limited ? " limit ? offset ?" : "");
 
-        PreparedStatement statement = connection.prepareStatement(sqlGetQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_QUERY + ( limited ? " limit ? offset ?" : ""));
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -85,10 +112,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
         for (Entity item : list) {
             AvailableGoods castedItem = (AvailableGoods) item;
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO islabdb.availablegoods " +
-                            "(Available_GoodsID, Available_GoodsCount, Available_ProviderID, Available_StorageID, Available_Current, Available_SnapshotDate) " +
-                            "VALUES (?, ?, ?, ?, ?, ?);");
+            PreparedStatement statement = connection.prepareStatement(SQL_ADD_QUERY);
             int index = 1;
             statement.setLong(index++, castedItem.getGoodsId());
             statement.setLong(index++, castedItem.getGoodsCount());
@@ -106,15 +130,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         AvailableGoods castedFilteringEntity = (AvailableGoods) filteringEntity;
-        String sqlQuery = "DELETE FROM islabdb.availablegoods " +
-                "WHERE (Available_ID = ?            OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_GoodsID = ?       OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_GoodsCount = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_ProviderID = ?    OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_StorageID = ?     OR ? = " + Entity.UNDEFINED_LONG + ") AND " +
-                "(Available_Current = ?       OR ? = false) AND " +
-                "(Available_SnapshotDate = ?  OR ? = \'" + DateHandler.javaDateToSQLDate(Entity.UNDEFINED_DATE) + "\')";
-        PreparedStatement statement = connection.prepareStatement(sqlQuery);
+        PreparedStatement statement = connection.prepareStatement(SQL_DELETE_QUERY);
 
         int index = 1;
         statement.setLong(index++, castedFilteringEntity.getId());
@@ -141,7 +157,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
 
-        PreparedStatement statement = connection.prepareStatement("SELECT COUNT(*) from islabdb.availablegoods where Available_ID = ?");
+        PreparedStatement statement = connection.prepareStatement(SQL_IS_EXIST_QUERY);
         statement.setLong(1, id);
         ResultSet set = statement.executeQuery();
         if (!set.next())
@@ -159,16 +175,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         AvailableGoods document = (AvailableGoods) editingEntity;
-        String sqlCode =   "UPDATE islabdb.availablegoods SET " +
-                "Available_GoodsID = ?, " +
-                "Available_GoodsCount = ?, " +
-                "Available_ProviderID = ?, " +
-                "Available_StorageID = ?, " +
-                "Available_Current = ?, " +
-                "Available_SnapshotDate = ? " +
-                "WHERE Available_ID = ?;";
-
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_EDIT_QUERY);
 
         int index = 1;
         statement.setLong(index++, document.getGoodsId());
@@ -189,8 +196,7 @@ public class DAOAvailableGoods implements DAOAbstract {
         Connection connection = pool.getConnection();
 
         long res = -1;
-        String sqlCode = "SELECT max(Available_ID) FROM islabdb.availablegoods;";
-        PreparedStatement statement = connection.prepareStatement(sqlCode);
+        PreparedStatement statement = connection.prepareStatement(SQL_GET_LAST_ID_QUERY);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             res = resultSet.getLong(1);
