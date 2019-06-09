@@ -443,12 +443,12 @@ class ListPage {
         let http = new XMLHttpRequest();
         let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
         let params = '?' +
-            'filter=' + JSON.stringify(this.filter) + '&' +
             'limited=' + String(this.limited) + '&' +
             'listBeginInd=' + String(this.list_begin_ind) + '&' +
             'listSize=' + String(ListPage.list_size);
         http.open('GET', Common.url + servlet + params, true);
         http.onreadystatechange = this.TableLoadCallback(callback, http, this);
+        http.()
         http.send();
     }
     TableLoadCallback(callback, http, obj) {

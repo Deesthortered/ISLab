@@ -45,7 +45,8 @@ public abstract class EntityQueryHandler {
         Entity filteringEntity = dao.createEntity();
 
         try {
-            filteringEntity.setByJSON(new JSONObject(request.getHeader("filter")));
+            String json = request.getHeader("filter");
+            filteringEntity.setByJSON(new JSONObject(json));
         } catch (JSONException e) {
             throw new ServletException(e.getMessage());
         }
