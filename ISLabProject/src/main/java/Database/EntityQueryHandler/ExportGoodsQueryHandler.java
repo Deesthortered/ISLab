@@ -1,7 +1,7 @@
 package Database.EntityQueryHandler;
 
 import Database.DAO.DAOAbstract;
-import Database.DAO.DAOExportGoods;
+import EntityHandler.*;
 
 public class ExportGoodsQueryHandler extends EntityQueryHandler {
     private static ExportGoodsQueryHandler instance = new ExportGoodsQueryHandler();
@@ -14,5 +14,10 @@ public class ExportGoodsQueryHandler extends EntityQueryHandler {
     @Override
     public DAOAbstract getDAO() {
         return this.daoExportGoods;
+    }
+
+    @Override
+    public EntityHandler getHandler() {
+        return ExportGoodsHandler.getInstance();
     }
 }

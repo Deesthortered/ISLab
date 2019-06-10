@@ -2,6 +2,7 @@ package Database.EntityQueryHandler;
 
 import Database.DAO.*;
 import Entity.Entity;
+import EntityHandler.EntityHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,18 +44,20 @@ public abstract class EntityQueryHandler {
         PrintWriter writer = response.getWriter();
 
         DAOAbstract dao = getDAO();
-        Entity filteringEntity = dao.createEntity();
+        EntityHandler entityHandler;
+        Entity filteringEntity;
 
         try {
-            String json = request.getHeader("filter");
-            filteringEntity.setByJSON(new JSONObject(json));
+            String json = java.net.URLDecoder.decode(request.getHeader("filter"), StandardCharsets.UTF_8.name());;
+            entityHandler = getHandler();
+            filteringEntity = entityHandler.setByJSON(new JSONObject(json));
         } catch (JSONException e) {
             throw new ServletException(e.getMessage());
         }
 
-        boolean limited = Boolean.parseBoolean((String) request.getAttribute("limited"));
-        int beginIndex = Integer.parseInt((String) request.getAttribute("listBeginInd"));
-        int countOfRecords = Integer.parseInt((String) request.getAttribute("listSize"));
+        boolean limited = Boolean.parseBoolean(request.getHeader("limited"));
+        int beginIndex = Integer.parseInt(request.getHeader("listBeginInd"));
+        int countOfRecords = Integer.parseInt(request.getHeader("listSize"));
 
         List<Entity> list;
         try {
@@ -65,21 +69,21 @@ public abstract class EntityQueryHandler {
         JSONArray json_list = new JSONArray();
         for (Entity entity : list) {
             List<String> represantiveData = new ArrayList<>();
-            List<Long> foreingKeys = entity.getForeingKeys();
-            List<DAOAbstract> dao_array = entity.getForeingDAO();
+            List<Long> foreingKeys = entityHandler.getForeingKeys(entity);
+            List<DAOAbstract> dao_array = entityHandler.getForeingDAO(entity);
             if (dao_array != null)
             for (int i = 0; i < dao_array.size(); i++) {
-                Entity sub_filter = dao_array.get(i).createEntity();
-                sub_filter.setId(foreingKeys.get(i));
-                Entity sub_entity;
+                Entity subFilter = dao_array.get(i).createEntity();
+                subFilter.setId(foreingKeys.get(i));
+                Entity subEntity;
                 try {
-                    sub_entity = dao_array.get(i).getEntityList(sub_filter, limited, 0, 1).get(0);
+                    subEntity = dao_array.get(i).getEntityList(subFilter, limited, 0, 1).get(0);
                 } catch (ClassNotFoundException | SQLException | InterruptedException e) {
                     throw new ServletException(e.getMessage());
                 }
-                represantiveData.add(sub_entity.getRepresentantiveData());
+                represantiveData.add(entityHandler.getRepresentantiveData(subEntity));
             }
-            json_list.put(entity.getJSON(represantiveData));
+            json_list.put(entityHandler.getJSON(entity, represantiveData));
         }
         writer.write(json_list.toString());
     }
@@ -97,7 +101,8 @@ public abstract class EntityQueryHandler {
         } catch (JSONException e) {
             throw new IOException();
         }
-        entity.setByJSON(json);
+        EntityHandler handler = getHandler();
+        entity = handler.setByJSON(json);
 
         List<Entity> list = new ArrayList<>();
         list.add(entity);
@@ -136,9 +141,10 @@ public abstract class EntityQueryHandler {
         PrintWriter writer = response.getWriter();
 
         DAOAbstract dao = getDAO();
-        Entity entity = dao.createEntity();
+        EntityHandler handler = getHandler();
+        Entity entity;
         try {
-            entity.setByJSON(new JSONObject(reader.readLine()));
+            entity = handler.setByJSON(new JSONObject(reader.readLine()));
         } catch (JSONException e) {
             throw new IOException();
         }
@@ -157,4 +163,5 @@ public abstract class EntityQueryHandler {
     }
 
     public abstract DAOAbstract getDAO();
+    public abstract EntityHandler getHandler();
 }

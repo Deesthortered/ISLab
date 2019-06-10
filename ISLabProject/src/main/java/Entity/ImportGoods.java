@@ -1,15 +1,5 @@
 package Entity;
 
-import Database.DAO.DAOAbstract;
-import Database.DAO.DAOGoods;
-import Database.DAO.DAOImportDocument;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ImportGoods implements Entity {
     private long id;
     private long documentId;
@@ -64,51 +54,5 @@ public class ImportGoods implements Entity {
     }
     public void setGoodsPrice(long goodsPrice) {
         this.goodsPrice = goodsPrice;
-    }
-
-    @Override
-    public JSONObject getJSON(List<String> representativeData) throws ServletException {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id",         id);
-            object.put("documentId","(" + documentId + ") " + representativeData.get(0));
-            object.put("goodsId",   "(" + goodsId + ") " +  representativeData.get(1));
-            object.put("goodsCount", goodsCount);
-            object.put("goodsPrice", goodsPrice);
-        } catch (JSONException e) {
-            throw new ServletException(e.getMessage());
-        }
-        return object;
-    }
-    @Override
-    public void setByJSON(JSONObject json) throws ServletException {
-        try {
-            this.id         = (!json.has("id")         || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
-            this.documentId = (!json.has("documentId") || json.getString("documentId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("documentId")));
-            this.goodsId    = (!json.has("goodsId")    || json.getString("goodsId").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsId")));
-            this.goodsCount = (!json.has("goodsCount") || json.getString("goodsCount").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsCount")));
-            this.goodsPrice = (!json.has("goodsPrice") || json.getString("goodsPrice").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("goodsPrice")));
-        } catch (JSONException e) {
-            throw new ServletException(e.getMessage());
-        }
-    }
-
-    @Override
-    public String getRepresentantiveData() {
-        return null;
-    }
-    @Override
-    public ArrayList<DAOAbstract> getForeingDAO() {
-        ArrayList<DAOAbstract> result = new ArrayList<>();
-        result.add(DAOImportDocument.getInstance());
-        result.add(DAOGoods.getInstance());
-        return result;
-    }
-    @Override
-    public ArrayList<Long> getForeingKeys() {
-        ArrayList<Long> result = new ArrayList<>();
-        result.add(documentId);
-        result.add(goodsId);
-        return result;
     }
 }

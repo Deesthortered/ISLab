@@ -441,14 +441,14 @@ class ListPage {
 
     TableLoad(callback) {
         let http = new XMLHttpRequest();
-        let servlet = EntityFilters.getServletPath(this.current_entity) + '/';
-        let params = '?' +
-            'limited=' + String(this.limited) + '&' +
-            'listBeginInd=' + String(this.list_begin_ind) + '&' +
-            'listSize=' + String(ListPage.list_size);
-        http.open('GET', Common.url + servlet + params, true);
+        let servlet = EntityFilters.getServletPath(this.current_entity);
+        http.open('GET', Common.url + servlet, true);
         http.onreadystatechange = this.TableLoadCallback(callback, http, this);
-        http.()
+
+        http.setRequestHeader('filter',encodeURIComponent(JSON.stringify(this.filter)));
+        http.setRequestHeader('limited',String(this.limited));
+        http.setRequestHeader('listBeginInd',String(this.list_begin_ind));
+        http.setRequestHeader('listSize',  String(ListPage.list_size));
         http.send();
     }
     TableLoadCallback(callback, http, obj) {

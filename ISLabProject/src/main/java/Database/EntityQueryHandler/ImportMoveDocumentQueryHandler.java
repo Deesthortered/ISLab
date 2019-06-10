@@ -1,7 +1,7 @@
 package Database.EntityQueryHandler;
 
 import Database.DAO.DAOAbstract;
-import Database.DAO.DAOImportMoveDocument;
+import EntityHandler.*;
 
 public class ImportMoveDocumentQueryHandler extends EntityQueryHandler {
     private static ImportMoveDocumentQueryHandler instance = new ImportMoveDocumentQueryHandler();
@@ -14,5 +14,10 @@ public class ImportMoveDocumentQueryHandler extends EntityQueryHandler {
     @Override
     public DAOAbstract getDAO() {
         return this.daoImportMoveDocument;
+    }
+
+    @Override
+    public EntityHandler getHandler() {
+        return ImportMoveDocumentHandler.getInstance();
     }
 }

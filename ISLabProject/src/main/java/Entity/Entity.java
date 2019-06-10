@@ -16,11 +16,4 @@ public interface Entity {
 
     long getId();
     void setId(long id);
-
-    JSONObject getJSON(List<String> representativeData) throws ServletException;
-    void setByJSON(JSONObject json) throws ServletException;
-
-    String getRepresentantiveData();
-    ArrayList<DAOAbstract> getForeingDAO();
-    ArrayList<Long> getForeingKeys();
 }

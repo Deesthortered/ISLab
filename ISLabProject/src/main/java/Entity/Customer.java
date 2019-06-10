@@ -1,13 +1,5 @@
 package Entity;
 
-import Database.DAO.DAOAbstract;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import javax.servlet.ServletException;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Customer implements Entity {
     private long   id;
     private String name;
@@ -62,42 +54,5 @@ public class Customer implements Entity {
     }
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public JSONObject getJSON(List<String> representativeData) throws ServletException {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("id",          id);
-            object.put("name",        name);
-            object.put("country",     country);
-            object.put("description", description);
-        } catch (JSONException e) {
-            throw new ServletException(e.getMessage());
-        }
-        return object;
-    }
-    @Override
-    public void setByJSON(JSONObject json) throws ServletException {
-        try {
-            this.id          = (!json.has("id")          || json.getString("id").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_LONG : Long.parseLong(json.getString("id")));
-            this.name        = (!json.has("name")        || json.getString("name").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_STRING : json.getString("name"));
-            this.country     = (!json.has("country")     || json.getString("country").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_STRING : json.getString("country"));
-            this.description = (!json.has("description") || json.getString("description").equals(Entity.UNDEFINED_STRING) ? Entity.UNDEFINED_STRING : json.getString("description"));
-        } catch (JSONException e) {
-            throw new ServletException(e.getMessage());
-        }
-    }
-
-    @Override
-    public String getRepresentantiveData() {
-        return this.name;
-    }
-    @Override
-    public ArrayList<DAOAbstract> getForeingDAO() {
-        return null;
-    }
-    public ArrayList<Long> getForeingKeys() {
-        return null;
     }
 }

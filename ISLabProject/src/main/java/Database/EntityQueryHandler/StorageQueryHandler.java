@@ -1,7 +1,7 @@
 package Database.EntityQueryHandler;
 
 import Database.DAO.DAOAbstract;
-import Database.DAO.DAOStorage;
+import EntityHandler.*;
 
 public class StorageQueryHandler extends EntityQueryHandler {
     private static StorageQueryHandler instance = new StorageQueryHandler();
@@ -14,5 +14,10 @@ public class StorageQueryHandler extends EntityQueryHandler {
     @Override
     public DAOAbstract getDAO() {
         return this.daoStorage;
+    }
+
+    @Override
+    public EntityHandler getHandler() {
+        return StorageHandler.getInstance();
     }
 }
