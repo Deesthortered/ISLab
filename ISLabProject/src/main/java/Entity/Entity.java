@@ -1,12 +1,6 @@
 package Entity;
 
-import Database.DAO.DAOAbstract;
-import org.json.JSONObject;
-
-import javax.servlet.ServletException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public interface Entity {
     int    UNDEFINED_INT    = -1;
