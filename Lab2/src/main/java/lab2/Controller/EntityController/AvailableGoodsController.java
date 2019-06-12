@@ -1,6 +1,6 @@
 package lab2.Controller.EntityController;
 
-import lab2.Model.AvailableGoods;
+import lab2.Entity.AvailableGoods;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

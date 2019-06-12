@@ -1,6 +1,6 @@
 package lab2.Controller.EntityController;
 
-import lab2.Model.ExportDocument;
+import lab2.Entity.ExportDocument;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

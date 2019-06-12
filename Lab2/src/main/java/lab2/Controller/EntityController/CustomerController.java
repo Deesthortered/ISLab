@@ -1,6 +1,6 @@
 package lab2.Controller.EntityController;
 
-import lab2.Model.Customer;
+import lab2.Entity.Customer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

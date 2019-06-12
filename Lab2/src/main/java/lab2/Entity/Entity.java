@@ -1,4 +1,4 @@
-package lab2.Model;
+package lab2.Entity;
 
 import java.util.Date;
 
@@ -7,7 +7,4 @@ public interface Entity {
     long   UNDEFINED_LONG   = -1;
     String UNDEFINED_STRING = "____undefined____";
     Date   UNDEFINED_DATE   = new Date(Long.MIN_VALUE);
-
-    long getId();
-    void setId(long id);
 }
