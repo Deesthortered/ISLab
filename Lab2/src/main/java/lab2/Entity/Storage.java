@@ -1,9 +1,6 @@
 package lab2.Entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -25,4 +22,13 @@ public class Storage implements Entity {
 
     @Column(name = "Storage_Description")
     private String description;
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

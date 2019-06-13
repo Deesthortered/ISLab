@@ -1,8 +1,12 @@
 package lab2.Controller.EntityController;
 
 import lab2.Entity.Goods;
+import lab2.EntityQueryHandler.EntityQueryHandler;
+import lab2.EntityQueryHandler.GoodsQueryHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 public class GoodsController {
@@ -11,25 +15,29 @@ public class GoodsController {
     public String get(@RequestHeader("filter") String filter,
                       @RequestHeader("limited") String limited,
                       @RequestHeader("listBeginInd") String listBeginInd,
-                      @RequestHeader("listSize") String listSize) {
-        return "getGoods";
+                      @RequestHeader("listSize") String listSize) throws IOException {
+        EntityQueryHandler handler = GoodsQueryHandler.getInstance();
+        return handler.getEntityList(filter, limited, listBeginInd, listSize);
     }
 
     @PostMapping("/Goods")
     @ResponseBody
     public String post(@RequestBody Goods entity) {
-        return "postGoods";
+        EntityQueryHandler handler = GoodsQueryHandler.getInstance();
+        return handler.addEntity(entity);
     }
 
     @PutMapping("/Goods")
     @ResponseBody
     public String put(@RequestBody Goods entity) {
-        return "putGoods";
+        EntityQueryHandler handler = GoodsQueryHandler.getInstance();
+        return handler.editEntity(entity);
     }
 
     @DeleteMapping("/Goods")
     @ResponseBody
     public String delete(@RequestBody String id) {
-        return "deleteGoods";
+        EntityQueryHandler handler = GoodsQueryHandler.getInstance();
+        return handler.deleteEntity(id);
     }
 }

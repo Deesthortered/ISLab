@@ -1,8 +1,12 @@
 package lab2.Controller.EntityController;
 
 import lab2.Entity.ExportGoods;
+import lab2.EntityQueryHandler.EntityQueryHandler;
+import lab2.EntityQueryHandler.ExportGoodsQueryHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 public class ExportGoodsController {
@@ -11,25 +15,29 @@ public class ExportGoodsController {
     public String get(@RequestHeader("filter") String filter,
                       @RequestHeader("limited") String limited,
                       @RequestHeader("listBeginInd") String listBeginInd,
-                      @RequestHeader("listSize") String listSize) {
-        return "getExportGoods";
+                      @RequestHeader("listSize") String listSize) throws IOException {
+        EntityQueryHandler handler = ExportGoodsQueryHandler.getInstance();
+        return handler.getEntityList(filter, limited, listBeginInd, listSize);
     }
 
     @PostMapping("/ExportGoods")
     @ResponseBody
     public String post(@RequestBody ExportGoods entity) {
-        return "postExportGoods";
+        EntityQueryHandler handler = ExportGoodsQueryHandler.getInstance();
+        return handler.addEntity(entity);
     }
 
     @PutMapping("/ExportGoods")
     @ResponseBody
     public String put(@RequestBody ExportGoods entity) {
-        return "putExportGoods";
+        EntityQueryHandler handler = ExportGoodsQueryHandler.getInstance();
+        return handler.editEntity(entity);
     }
 
     @DeleteMapping("/ExportGoods")
     @ResponseBody
     public String delete(@RequestBody String id) {
-        return "deleteExportGoods";
+        EntityQueryHandler handler = ExportGoodsQueryHandler.getInstance();
+        return handler.deleteEntity(id);
     }
 }

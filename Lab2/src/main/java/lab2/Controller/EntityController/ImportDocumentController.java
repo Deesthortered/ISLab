@@ -1,8 +1,12 @@
 package lab2.Controller.EntityController;
 
 import lab2.Entity.ImportDocument;
+import lab2.EntityQueryHandler.EntityQueryHandler;
+import lab2.EntityQueryHandler.ImportDocumentQueryHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @Controller
 public class ImportDocumentController {
@@ -11,25 +15,29 @@ public class ImportDocumentController {
     public String get(@RequestHeader("filter") String filter,
                       @RequestHeader("limited") String limited,
                       @RequestHeader("listBeginInd") String listBeginInd,
-                      @RequestHeader("listSize") String listSize) {
-        return "getImportDocument";
+                      @RequestHeader("listSize") String listSize) throws IOException {
+        EntityQueryHandler handler = ImportDocumentQueryHandler.getInstance();
+        return handler.getEntityList(filter, limited, listBeginInd, listSize);
     }
 
     @PostMapping("/ImportDocument")
     @ResponseBody
     public String post(@RequestBody ImportDocument entity) {
-        return "postImportDocument";
+        EntityQueryHandler handler = ImportDocumentQueryHandler.getInstance();
+        return handler.addEntity(entity);
     }
 
     @PutMapping("/ImportDocument")
     @ResponseBody
     public String put(@RequestBody ImportDocument entity) {
-        return "putImportDocument";
+        EntityQueryHandler handler = ImportDocumentQueryHandler.getInstance();
+        return handler.editEntity(entity);
     }
 
     @DeleteMapping("/ImportDocument")
     @ResponseBody
     public String delete(@RequestBody String id) {
-        return "deleteImportDocument";
+        EntityQueryHandler handler = ImportDocumentQueryHandler.getInstance();
+        return handler.deleteEntity(id);
     }
 }
