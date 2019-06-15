@@ -3,6 +3,7 @@ package lab2.Controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
@@ -16,12 +17,13 @@ public class MainController {
         return "login_page";
     }
 
-    @GetMapping("/menu")
+    @GetMapping("/menu") // Логаут или задать сессию/куки
     public String getMenu() {
         return "menu";
     }
-    @PostMapping("/menu")
+    @PostMapping("/menu") // Возвращает роль
+    @ResponseBody
     public String postMenu() {
-        return "menu";
+        return "Admin";
     }
 }

@@ -77,6 +77,10 @@ class Common {
         Common.AvailableList          = new ListPage('AvailableList', 'dynamic_panel',         Common.EntityMap.AvailableGoods,     true, false, false, true, false, false);
         Common.StorageList            = new ListPage('StorageList',   'dynamic_panel',         Common.EntityMap.Storage       ,     true, false, false, false, false, false);
     }
+    static showError(text) {
+        let win = window.open("", "Title", "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=780,height=200,top="+(screen.height-400)+",left="+(screen.width-840));
+        win.document.body.innerHTML = text;
+    }
 }
 class TemplateHandler {
     static Render(templateName, data = {}) {
@@ -445,7 +449,7 @@ class ListPage {
         http.open('GET', Common.url + servlet, true);
         http.onreadystatechange = this.TableLoadCallback(callback, http, this);
 
-        http.setRequestHeader('filter',encodeURIComponent(JSON.stringify(this.filter)));
+        http.setRequestHeader('filter', encodeURIComponent(JSON.stringify(this.filter)));
         http.setRequestHeader('limited',String(this.limited));
         http.setRequestHeader('listBeginInd',String(this.list_begin_ind));
         http.setRequestHeader('listSize',  String(ListPage.list_size));
@@ -458,7 +462,7 @@ class ListPage {
                 callback(new_data, obj);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The Load request finished not successful, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         }
     }
@@ -667,11 +671,11 @@ class ListPage {
                 }
                 else {
                     alert("The " + obj.current_entity + " was not deleted, some trouble happened on the server side.");
-                    document = jQuery.parseHTML(http.responseText);
+                    Common.showError(http.responseText);
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not deleted, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         }
     }
@@ -723,7 +727,7 @@ class ListPage {
         http.open('POST', Common.url + servlet, true);
         http.onreadystatechange = this.TableAddCallback(http, this);
         let query_body = JSON.stringify(new_entry) + '\n';
-        http.send(query_body);
+        http.send(encodeURIComponent(query_body));
     }
     TableAddCallback(http, obj) {
         return function () {
@@ -733,11 +737,11 @@ class ListPage {
                 }
                 else {
                     alert("The " + obj.current_entity + " was not added, some trouble happened on the server side.");
-                    document = jQuery.parseHTML(http.responseText);
+                    Common.showError(http.responseText);
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not added, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         }
     }
@@ -766,7 +770,7 @@ class ListPage {
         http.open('PUT', Common.url + servlet, true);
         http.onreadystatechange = this.TableEditCallback(http, this);
         let query_body = JSON.stringify(new_entry) + '\n';
-        http.send(query_body);
+        http.send(encodeURIComponent(query_body));
     }
     TableEditCallback(http, obj) {
         return function () {
@@ -776,11 +780,11 @@ class ListPage {
                 }
                 else {
                     alert("The " + obj.current_entity + " was not edited, some trouble happened on the server side.");
-                    document = jQuery.parseHTML(http.responseText);
+                    Common.showError(http.responseText);
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The " + obj.current_entity + " was not edited, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         }
     }
@@ -917,7 +921,7 @@ class InterfaceHashHandler {
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The role is not defined, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         };
         http.send();
@@ -1068,7 +1072,7 @@ class InterfaceHashHandler {
                     alert("Done");
                 } else if (http.readyState === XMLHttpRequest.DONE) {
                     alert("The Rebuild request finished not successful, some trouble happened with the request.");
-                    document = jQuery.parseHTML(http.responseText);
+                    Common.showError(http.responseText);
                 }
             };
             http.send();
@@ -1106,10 +1110,10 @@ class InterfaceHashHandler {
                 }
                 else
                     alert("The import was not added, some trouble happened on the server side.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The import was not added, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         };
         let query_body =
@@ -1147,11 +1151,11 @@ class InterfaceHashHandler {
                 }
                 else {
                     alert("The export was not added, some trouble happened on the server side.");
-                    document = jQuery.parseHTML(http.responseText);
+                    Common.showError(http.responseText);
                 }
             } else if (http.readyState === XMLHttpRequest.DONE) {
                 alert("The export was not added, some trouble happened with the request.");
-                document = jQuery.parseHTML(http.responseText);
+                Common.showError(http.responseText);
             }
         };
         let query_body =
