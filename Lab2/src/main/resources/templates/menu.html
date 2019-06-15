@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="cache-control" content="no-cache, must-revalidate, post-check=0, pre-check=0" />
@@ -40,7 +40,10 @@
     <!-- There are scripts -->
     <script id="username_template" type="text/template" >
         <p class="username_corner"><b>User:</b> <u>{{ username }}</u></p>
-        <button class="logout" onclick="InterfaceHashHandler.Logout()">Logout</button>
+        <form th:action="@{/logout}" method="post">
+            <input class="logout" type="submit" value="Sign Out"/>
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}">
+        </form>
     </script>
 
     <!-- Menu for each role -->

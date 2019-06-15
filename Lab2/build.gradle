@@ -38,5 +38,7 @@ dependencies {
     compile 'mysql:mysql-connector-java'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-thymeleaf', version: '2.1.5.RELEASE'
 
+    compile("org.springframework.boot:spring-boot-starter-security")
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

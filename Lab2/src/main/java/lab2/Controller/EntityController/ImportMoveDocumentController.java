@@ -1,6 +1,5 @@
 package lab2.Controller.EntityController;
 
-import lab2.Entity.ImportMoveDocument;
 import lab2.EntityQueryHandler.EntityQueryHandler;
 import lab2.EntityQueryHandler.ImportMoveDocumentQueryHandler;
 import org.springframework.stereotype.Controller;
@@ -22,14 +21,14 @@ public class ImportMoveDocumentController {
 
     @PostMapping("/ImportMoveDocument")
     @ResponseBody
-    public String post(@RequestBody ImportMoveDocument entity) {
+    public String post(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = ImportMoveDocumentQueryHandler.getInstance();
         return handler.addEntity(entity);
     }
 
     @PutMapping("/ImportMoveDocument")
     @ResponseBody
-    public String put(@RequestBody ImportMoveDocument entity) {
+    public String put(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = ImportMoveDocumentQueryHandler.getInstance();
         return handler.editEntity(entity);
     }

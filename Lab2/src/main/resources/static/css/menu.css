@@ -44,7 +44,7 @@ p.username_corner {
     font-size: 16px;
     margin-bottom: 0;
 }
-button.logout {
+input.logout {
     cursor: pointer;
     margin-top: 5px;
     padding: 5px 20px;

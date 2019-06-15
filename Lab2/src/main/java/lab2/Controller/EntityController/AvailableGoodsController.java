@@ -22,14 +22,14 @@ public class AvailableGoodsController {
 
     @PostMapping("/AvailableGoods")
     @ResponseBody
-    public String post(@RequestBody AvailableGoods entity) {
+    public String post(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = AvailableGoodsQueryHandler.getInstance();
         return handler.addEntity(entity);
     }
 
     @PutMapping("/AvailableGoods")
     @ResponseBody
-    public String put(@RequestBody AvailableGoods entity) {
+    public String put(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = AvailableGoodsQueryHandler.getInstance();
         return handler.editEntity(entity);
     }

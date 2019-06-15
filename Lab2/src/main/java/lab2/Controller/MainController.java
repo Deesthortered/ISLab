@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
+    @GetMapping("/")
+    public String getDefault() {
+        return "redirect:login.mustache";
+    }
 
     @GetMapping("/login")
     public String getLoginPage() {
-        return "login_page";
+        return "login.mustache";
     }
     @PostMapping("/login")
     public String postLoginPage() {
-        return "login_page";
+        return "login.mustache";
     }
 
     @GetMapping("/menu") // Логаут или задать сессию/куки

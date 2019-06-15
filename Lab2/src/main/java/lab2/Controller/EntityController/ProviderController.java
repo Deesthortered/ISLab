@@ -1,6 +1,5 @@
 package lab2.Controller.EntityController;
 
-import lab2.Entity.Provider;
 import lab2.EntityQueryHandler.EntityQueryHandler;
 import lab2.EntityQueryHandler.ProviderQueryHandler;
 import org.springframework.stereotype.Controller;
@@ -22,14 +21,14 @@ public class ProviderController {
 
     @PostMapping("/Provider")
     @ResponseBody
-    public String post(@RequestBody Provider entity) {
+    public String post(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = ProviderQueryHandler.getInstance();
         return handler.addEntity(entity);
     }
 
     @PutMapping("/Provider")
     @ResponseBody
-    public String put(@RequestBody Provider entity) {
+    public String put(@RequestBody String entity) throws IOException {
         EntityQueryHandler handler = ProviderQueryHandler.getInstance();
         return handler.editEntity(entity);
     }
